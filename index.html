@@ -46,13 +46,13 @@
             <div class="col s12 question">
               <h5>Your gender? <span class="mustChoose">*</span></h5>
               <div class="row">
-                <div class="col s6">
+                <div class="col s2">
                   <p>
                     <input class="with-gap" name="gender" type="radio" id="male" />
                     <label for="male">Male</label>
                   </p>
                 </div>
-                <div class="col s6">
+                <div class="col s2">
                   <p>
                     <input class="with-gap" name="gender" type="radio" id="female" />
                     <label for="female">Female</label>
@@ -66,9 +66,13 @@
                 <div class="input-field col s12">
                   <select>
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <option value="under18">Under 18</option>
+                    <option value="18to24">18-24</option>
+                    <option value="25to34">25-34</option>
+                    <option value="35to44">35-44</option>
+                    <option value="45to54">45-54</option>
+                    <option value="55to64">55-64</option>
+                    <option value="65above">65 or Above</option>
                   </select>
                 </div>
               </div>
@@ -79,15 +83,18 @@
                 <div class="input-field col s12">
                   <select id="income">
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <option value="under120,000">&lt;120,000</option>
+                    <option value="120,000to239,999">120,000-239,999</option>
+                    <option value="240,000to239,999">240,000-239,999</option>
+                    <option value="240,000to359,999">240,000-359,999</option>
+                    <option value="360,000to479,999">360,000-479,999</option>
+                    <option value="480,000above">&ge;480,000</option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="col s12 question">
-              <h5>Travel Expenditure? <span class="mustChoose">*</span></h5>
+              <h5>Occupation ? <span class="mustChoose">*</span></h5>
               <div class="row">
                 <div class="input-field col s12">
                   <select id="expenditure">
@@ -105,6 +112,36 @@
               <h5 class="light">Travel Perference <span class="mustChoose">*</span></h5>
               <div class="progress title-indicator">
                 <div class="determinate" style="width: 100%"></div>
+              </div>
+            </div>
+            <div class="col s12 question">
+              <h5>Select a destination from the most popular travel destinations.<span class="mustChoose">*</span></h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <select>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">Bangkok, Thailand</option>
+                    <option value="2">London, England</option>
+                    <option value="3">Paris, France</option>
+                    <option value="4">Dubai, United Arab Emirates</option>
+                    <option value="5">New York, America</option>
+                    <option value="6">Singapore</option>
+                    <option value="7">Kuala Lumpur, Malaysia</option>
+                    <option value="8">Istanbul, Turkey</option>
+                    <option value="9">Tokyo, Japan</option>
+                    <option value="10">Seoul, South Korea</option>
+                    <option value="11">Hong Kong, China</option>
+                    <option value="12">Barcelona, Spain</option>
+                    <option value="13">Amsterdam, the Netherlands</option>
+                    <option value="14">Milan, Italy</option>
+                    <option value="15">Taipei, Taiwan</option>
+                    <option value="16">Rome, Italy</option>
+                    <option value="17">Osaka, Japan</option>
+                    <option value="18">Vienna, Austria</option>
+                    <option value="19">Shanghai, China</option>
+                    <option value="20">Prague, Czech Republic</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="col s12">
