@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Triple</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="menu_home"></string>
+</resources>
