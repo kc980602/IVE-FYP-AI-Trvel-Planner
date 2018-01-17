@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_home"
+        android:title=""
+        android:icon="@drawable/ic_home_24dp"/>
+    <item android:id="@+id/action_search"
+        android:title=""
+        android:iconTintMode="src_in"
+        android:icon="@drawable/ic_search_24dp" />
+    <item android:id="@+id/action_mytrip"
+        android:title=""
+        android:icon="@drawable/ic_suitcase_24dp" />
+    <item android:id="@+id/action_profile"
+        android:title=""
+        android:icon="@drawable/ic_account_circle_24dp" />
+</menu>
