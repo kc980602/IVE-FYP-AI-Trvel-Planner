@@ -5,6 +5,7 @@ App/Triple/app/proguard-rules.pro
 App/Triple/.idea/compiler.xml
 App/Triple/.idea/copyright/profiles_settings.xml
 App/Triple/.idea/gradle.xml
+App/Triple/.idea/misc.xml
 App/Triple/.idea/modules.xml
 App/Triple/.idea/runConfigurations.xml
 App/Triple/app/build.gradle
