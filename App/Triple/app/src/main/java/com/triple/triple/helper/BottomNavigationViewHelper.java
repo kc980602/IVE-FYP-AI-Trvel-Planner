@@ -1,56 +1,58 @@
 package com.triple.triple.helper;
 
-import android.support.annotation.IdRes;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.view.menu.MenuView;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.MenuItem;
 
-import java.lang.reflect.Field;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.triple.triple.Home.HomeActivity;
+import com.triple.triple.Mytrips.MytripsActivity;
+import com.triple.triple.Profile.ProfileActivity;
+import com.triple.triple.R;
+import com.triple.triple.Search.SearchActivity;
+
 /**
- * Created by KC on 1/18/2018.
+ * Created by Kevin on 2018/1/19.
  */
+
 public class BottomNavigationViewHelper {
-    public static void disableShiftMode(BottomNavigationView view) {
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
-            shiftingMode.setAccessible(false);
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                //noinspection RestrictedApi
-                item.setShiftingMode(false);
-                // set once again checked value, so view will be updated
-                //noinspection RestrictedApi
-                item.setChecked(item.getItemData().isChecked());
+
+    private static final String TAG = "BottomNavigationViewHel";
+
+    public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx){
+        Log.d(TAG, "setupBottomNavigationView: Setting up BottomNavigationView");
+        bottomNavigationViewEx.enableAnimation(false);
+        bottomNavigationViewEx.enableItemShiftingMode(false);
+        bottomNavigationViewEx.enableShiftingMode(false);
+        bottomNavigationViewEx.setTextVisibility(false);
+    }
+    public static void enableNavigation(final Context context, BottomNavigationViewEx view) {
+        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.ic_home:
+                        Intent i_home = new Intent(context, HomeActivity.class); //ACTIVITY_NUM 0
+                        context.startActivity(i_home);
+                        break;
+                    case R.id.ic_search:
+                        Intent i_search = new Intent(context, SearchActivity.class); //ACTIVITY_NUM 1
+                        context.startActivity(i_search);
+                        break;
+                    case R.id.ic_suitcase:
+                        Intent i_mytrips = new Intent(context, MytripsActivity.class); //ACTIVITY_NUM 2
+                        context.startActivity(i_mytrips);
+                        break;
+                    case R.id.ic_account:
+                        Intent i_account = new Intent(context, ProfileActivity.class); //ACTIVITY_NUM 3
+                        context.startActivity(i_account);
+                        break;
+                }
+                return false;
             }
-        } catch (NoSuchFieldException e) {
-            Log.e("BNVHelper", "Unable to get shift mode field", e);
-        } catch (IllegalAccessException e) {
-            Log.e("BNVHelper", "Unable to change value of shift mode", e);
-        }
+        });
     }
-
-    private static <T> T getField(Class targetClass, Object instance, String fieldName) {
-        try {
-            Field field = targetClass.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return (T) field.get(instance);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
 }
