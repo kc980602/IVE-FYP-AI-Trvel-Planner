@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Triple</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_mytrips">My Trips</string>
+    <string name="title_profile">Profile</string>
+</resources>
