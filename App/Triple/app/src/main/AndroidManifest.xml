@@ -9,20 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".Home.HomeActivity">
+        <activity
+            android:name=".Home.HomeActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mytrips.MytripsActivity" />
-        <activity android:name=".Search.SearchActivity" />
-        <activity android:name=".Profile.ProfileActivity" />
+        <activity
+            android:name=".Mytrips.MytripsActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Search.SearchActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Profile.ProfileActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".Mytrips.TripCreateActivity"
             android:theme="@style/AppTheme"
-            android:parentActivityName="com.triple.triple.Mytrips.MytripsActivity"></activity>
+            android:parentActivityName="com.triple.triple.Mytrips.MytripsActivity"
+            android:windowSoftInputMode="stateVisible"></activity>
     </application>
 
 </manifest>
