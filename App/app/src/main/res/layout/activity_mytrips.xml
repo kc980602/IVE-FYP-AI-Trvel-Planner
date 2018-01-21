@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    tools:context="com.triple.triple.Mytrips.MytripsActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relLayout1">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/AppThemeNoActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="8dp" />
+        </RelativeLayout>
+
+        <!-- body section -->
+        <RelativeLayout
+            android:id="@+id/relLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relLayout1">
+
+            <ListView
+                android:id="@+id/data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:divider="@color/colorGrey"
+                android:dividerHeight="4dp"/>
+        </RelativeLayout>
+
+        <!-- bottom navigation -->
+        <include layout="@layout/layout_bottom_navigation_view" />
+
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
