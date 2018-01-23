@@ -42,10 +42,10 @@ public class TripDetailActivity extends AppCompatActivity {
                 map = new HashMap<String, Object>();
                 map.put("image1", img[(int) Math.ceil(Math.random() * 6)]);
                 map.put("tv_attId", "1234567");
-                map.put("tv_attName", "Your Ass");
+                map.put("tv_attName", "Temple");
                 map.put("iv_rate", imgRate[(int) Math.ceil(Math.random() * 5)]);
                 map.put("tv_attReview", (int) Math.ceil(Math.random() * 9999) + " Reviews");
-                map.put("tv_attAddress", "China, BeiJing");
+                map.put("tv_attAddress", "China");
                 map.put("tv_attType", "Land Mark");
                 listData.add(map);
             }

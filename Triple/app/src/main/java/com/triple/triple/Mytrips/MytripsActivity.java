@@ -19,6 +19,14 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.R;
 import com.triple.triple.helper.BottomNavigationViewHelper;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -129,5 +137,46 @@ public class MytripsActivity extends AppCompatActivity {
                 new String[]{"tv_tripname", "tv_owner", "tv_tripdate", "image1", "image2"},
                 new int[]{R.id.tv_tripname, R.id.tv_owner, R.id.tv_tripdate, R.id.image1, R.id.image2});
         lv_tripPlan.setAdapter(show);
+    }
+
+    protected void onPostExecute(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray QuestionsArray = jsonObject.getJSONArray("Questions");
+
+            for (int i = 0; i < QuestionsArray.length(); i++) {
+                String question = QuestionsArray.getJSONObject(i).getString("question");
+                String answer = QuestionsArray.getJSONObject(i).getString("answer");
+
+//                questionList.add(new Question(question, answer));
+            }
+//            startGame();
+        } catch (Exception e) {
+//            showMessage("ERROR: " + e.toString());
+        }
+    }
+}
+
+    public String getResponseFromWebServer(String webLink) {
+        InputStream inputStream = null;
+        String result = "";
+        URL url = null;
+        try {
+            url = new URL(webLink);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            //Get Request
+            con.setRequestMethod("GET");
+            con.connect();
+            // Get response string from inputstream of the connection
+            inputStream = con.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null)
+                result += line;
+            inputStream.close();
+        } catch (Exception e) {
+            result = "ERROR: " + e.toString();
+        }
+        return result;
     }
 }
