@@ -1,4 +1,4 @@
-package com.triple.triple.helper.Model;
+package com.triple.triple.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

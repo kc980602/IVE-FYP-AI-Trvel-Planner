@@ -1,7 +1,6 @@
 package com.triple.triple.Mytrips;
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.triple.triple.R;
-import com.triple.triple.helper.Model.TripPlanDetail;
+import com.triple.triple.Model.TripPlanDetail;
 
 import java.util.ArrayList;
 import java.util.HashMap;

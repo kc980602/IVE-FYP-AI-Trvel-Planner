@@ -33,4 +33,5 @@ dependencies {
     //custom UI control library
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     compile 'com.borax12.materialdaterangepicker:library:1.9'
+    compile 'com.wang.avi:library:2.1.3'
 }
