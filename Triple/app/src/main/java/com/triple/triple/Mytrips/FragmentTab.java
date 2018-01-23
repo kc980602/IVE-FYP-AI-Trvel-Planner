@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.triple.triple.R;
-import com.triple.triple.helper.Model.TripPlanDetail;
+import com.triple.triple.Model.TripPlanDetail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
