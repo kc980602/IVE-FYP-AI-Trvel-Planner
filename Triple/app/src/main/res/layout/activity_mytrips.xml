@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrey"
-    tools:context="com.triple.triple.Mytrips.MytripsActivity">
+    android:background="@color/white"
+    tools:context=".View.Mytrips.MytripsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

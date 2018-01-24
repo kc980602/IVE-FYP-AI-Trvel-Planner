@@ -1,4 +1,4 @@
-package com.triple.triple.Profile;
+package com.triple.triple.View.Profile;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

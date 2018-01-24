@@ -1,4 +1,4 @@
-package com.triple.triple.Mytrips;
+package com.triple.triple.View.Mytrips;
 
 
 import android.os.Bundle;
