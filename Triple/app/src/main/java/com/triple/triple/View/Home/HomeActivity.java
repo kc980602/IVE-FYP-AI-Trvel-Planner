@@ -1,4 +1,4 @@
-package com.triple.triple.Search;
+package com.triple.triple.View.Home;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -11,23 +11,25 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.R;
 import com.triple.triple.helper.BottomNavigationViewHelper;
 
-public class SearchActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
-    private static final String TAG = "SearchActivity";
-    private static final int ACTIVITY_NUM = 1;
+    private static final String TAG = "HomeActivity";
+    private static final int ACTIVITY_NUM = 0;
 
-    private Context mcontext = SearchActivity.this;
+    private Context mcontext = HomeActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_home);
+        Log.d(TAG, "onCreate: starting.");
+
         setupBottomNavigationView();
     }
 
     /**
-     * BottomNavigationView setup
-     */
+        * BottomNavigationView setup
+        */
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
@@ -37,4 +39,5 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
     }
+
 }

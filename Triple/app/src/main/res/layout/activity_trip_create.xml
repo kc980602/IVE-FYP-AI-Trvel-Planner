@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white"
-    tools:context="com.triple.triple.Mytrips.TripCreateActivity">
+    tools:context=".View.Mytrips.TripCreateActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

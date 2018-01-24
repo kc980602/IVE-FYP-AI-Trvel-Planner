@@ -1,4 +1,4 @@
-package com.triple.triple.Mytrips;
+package com.triple.triple.View.Mytrips;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTabHost;

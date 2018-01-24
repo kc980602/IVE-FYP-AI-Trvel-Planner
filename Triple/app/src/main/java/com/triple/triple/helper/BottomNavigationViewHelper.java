@@ -8,11 +8,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.triple.triple.Home.HomeActivity;
-import com.triple.triple.Mytrips.MytripsActivity;
-import com.triple.triple.Profile.ProfileActivity;
+import com.triple.triple.View.Home.HomeActivity;
+import com.triple.triple.View.Mytrips.MytripsActivity;
+import com.triple.triple.View.Profile.ProfileActivity;
 import com.triple.triple.R;
-import com.triple.triple.Search.SearchActivity;
+import com.triple.triple.View.Search.SearchActivity;
 
 /**
  * Created by Kevin on 2018/1/19.
