@@ -1,4 +1,4 @@
-package com.triple.triple.View.Search;
+package com.triple.triple.Presenter.Search;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

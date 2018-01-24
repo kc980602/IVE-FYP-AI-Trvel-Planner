@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
         <activity
-            android:name=".View.Home.HomeActivity"
+            android:name=".Presenter.Home.HomeActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,22 +21,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.Mytrips.MytripsActivity"
+            android:name=".Presenter.Mytrips.MytripsActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".View.Search.SearchActivity"
+            android:name=".Presenter.Search.SearchActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".View.Profile.ProfileActivity"
+            android:name=".Presenter.Profile.ProfileActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".View.Mytrips.TripCreateActivity"
-            android:parentActivityName=".View.Mytrips.MytripsActivity"
+            android:name=".Presenter.Mytrips.TripCreateActivity"
+            android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".View.Mytrips.TripDetailActivity"
-            android:parentActivityName=".View.Mytrips.MytripsActivity"
+            android:name=".Presenter.Mytrips.TripDetailActivity"
+            android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 
