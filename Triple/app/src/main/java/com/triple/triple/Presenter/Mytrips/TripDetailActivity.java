@@ -1,6 +1,7 @@
 package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,16 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.triple.triple.R;
 import com.triple.triple.Model.TripPlanDetail;
+import com.triple.triple.Sync.SynchronousGet;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TripDetailActivity extends AppCompatActivity {
     private static final String TAG = "TripCreateActivity";
@@ -84,4 +90,45 @@ public class TripDetailActivity extends AppCompatActivity {
         tv.setText(title);
         return view;
     }
+
+//    private class RequestTrip extends AsyncTask<Void, Void, String> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            startAnim();
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... voids) {
+//            String respone = "Error";
+//            try {
+//                String url =  getResources().getString(R.string.api_showTripPlan);
+//                Log.d(TAG, url);
+//                respone = new SynchronousGet().run(url);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return respone;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            super.onPostExecute(result);
+//            Type type = new TypeToken<List<Trip>>(){}.getType();
+//            Gson gson = new Gson();
+//            List<Trip> trips = (List<Trip>) gson.fromJson(result, type);
+//            TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
+//            lv_tripPlan.setAdapter(adapter);
+//            stopAnim();
+//        }
+//
+//    }
+//
+//    public void startAnim() {
+//        avi.smoothToShow();
+//    }
+//
+//    public void stopAnim() {
+//        avi.smoothToHide();
+//    }
 }

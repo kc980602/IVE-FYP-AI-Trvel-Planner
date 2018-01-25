@@ -6,7 +6,11 @@ package com.triple.triple.Sync;
 
 import android.util.Log;
 
+import com.triple.triple.R;
+
 import java.io.IOException;
+import java.net.URL;
+
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,9 +19,9 @@ import okhttp3.Response;
 public final class SynchronousGet {
     private final OkHttpClient client = new OkHttpClient();
 
-    public String run() throws Exception {
+    public String run(String url) throws Exception {
         Request request = new Request.Builder()
-                .url("http://www.json-generator.com/api/json/get/bTXWAGkHIi?indent=2")
+                .url(url)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
