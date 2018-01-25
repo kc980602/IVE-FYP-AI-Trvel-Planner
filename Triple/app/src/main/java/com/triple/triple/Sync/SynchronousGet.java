@@ -15,9 +15,9 @@ import okhttp3.Response;
 public final class SynchronousGet {
     private final OkHttpClient client = new OkHttpClient();
 
-    public void run() throws Exception {
+    public String run() throws Exception {
         Request request = new Request.Builder()
-                .url("https://api.myjson.com/bins/14c0ld")
+                .url("https://api.myjson.com/bins/c1cix")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -27,7 +27,7 @@ public final class SynchronousGet {
             for (int i = 0; i < responseHeaders.size(); i++) {
                 System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
             }
-            Log.d("sss", response.body().string());
+            return response.body().string();
         }
     }
 

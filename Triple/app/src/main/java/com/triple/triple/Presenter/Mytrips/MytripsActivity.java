@@ -17,7 +17,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.triple.triple.Model.Mapper.TripAdapter;
+import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.SynchronousGet;
 import com.triple.triple.helper.BottomNavigationViewHelper;
@@ -30,12 +34,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -147,7 +153,7 @@ public class MytripsActivity extends AppCompatActivity {
         lv_tripPlan.setAdapter(show);
     }
 
-    private class RequestTrip extends AsyncTask<Void, Void, Void> {
+    private class RequestTrip extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -155,84 +161,28 @@ public class MytripsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(Void... voids) {
+            String respone = "Error";
             try {
-                new SynchronousGet().run();
+                respone = new SynchronousGet().run();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
+            return respone;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Type type = new TypeToken<List<Trip>>(){}.getType();
+            Gson gson = new Gson();
+            List<Trip> trips = (List<Trip>) gson.fromJson(result, type);
+            TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
+//            lv_tripPlan.setAdapter(adapter);
+            stopAnim();
         }
 
-
-        //        protected void onPostEcute(String result) {
-//            try {
-//                JSONObject jsonObject = new JSONObject(result);
-//                JSONArray DateArray = jsonObject.getJSONArray("data");
-//
-//                ArrayList<HashMap<String, Object>> listData = new ArrayList<HashMap<String, Object>>();
-//                HashMap<String, Object> map = null;
-//
-////                URL url = new URL("http://image10.bizrate-images.com/resize?sq=60&uid=2216744464");
-////                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-////                imageView.setImageBitmap(bmp);
-//
-//                int[] img = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a5, R.drawable.a6};
-//                for (int i = 0; i < DateArray.length(); i++) {
-//                    JSONObject trip = DateArray.getJSONObject(i);
-//
-//                    String id = String.valueOf(trip.getInt("id"));
-//                    String title = trip.getString("title");
-//                    String owner = trip.getString("owner");
-//                    String date = trip.getString("visit_date");
-//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//                    Calendar c = Calendar.getInstance();
-//                    c.setTime(sdf.parse(date));
-//                    c.add(Calendar.DATE, trip.getInt("visit_length"));
-//                    date += " - " + sdf.format(c.getTime());
-//
-//                    map = new HashMap<String, Object>();
-//                    map.put("tv_tripid", id);
-//                    map.put("tv_tripname", title);
-//                    map.put("tv_owner", owner);
-//                    map.put("tv_tripdate", date);
-//                    map.put("image1", img[(int) Math.ceil(Math.random() * 6)]);
-//                    map.put("image2", img[(int) Math.ceil(Math.random() * 6)]);
-//                    listData.add(map);
-//                }
-//                loadData(listData);
-//                stopAnim();
-//            } catch (Exception e) {
-//
-//            }
-//        }
     }
-//
-//    public String getResponseFromWebServer(String webLink) {
-//        InputStream inputStream = null;
-//        String result = "";
-//        URL url = null;
-//        try {
-//            url = new URL(webLink);
-//            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//            con.setRequestMethod("GET");
-//            con.connect();
-//            inputStream = con.getInputStream();
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//            String line = "";
-//            while ((line = bufferedReader.readLine()) != null)
-//                result += line;
-//            inputStream.close();
-//        } catch (Exception e) {
-//            result = "ERROR: " + e.toString();
-//        }
-//        return result;
-//    }
 
     public void startAnim() {
         avi.show();
