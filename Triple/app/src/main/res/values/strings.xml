@@ -5,6 +5,8 @@
     <string name="title_mytrips">My Trips</string>
     <string name="title_profile">Profile</string>
 
+    <string name="home_des_button">Going somewhere?</string>
+
     <string name="mytrips_create_title">Create a trip</string>
     <string name="mytrips_create_button">Create</string>
     <string name="mytrips_create_button_cap">CREATE</string>
@@ -24,4 +26,8 @@
         <item>assssssss</item>
         <item>assssssssss</item>
     </string-array>
+
+    <!--api-->
+    <string name="api_showTripPlan">http://www.json-generator.com/api/json/get/bTXWAGkHIi?indent=2</string>
+
 </resources>

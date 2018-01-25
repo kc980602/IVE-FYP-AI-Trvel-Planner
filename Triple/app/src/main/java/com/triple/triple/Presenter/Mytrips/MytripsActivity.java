@@ -164,7 +164,9 @@ public class MytripsActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                respone = new SynchronousGet().run();
+                String url =  getResources().getString(R.string.api_showTripPlan);
+                Log.d(TAG, url);
+                respone = new SynchronousGet().run(url);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -185,13 +187,11 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     public void startAnim() {
-        avi.show();
-        // or avi.smoothToShow();
+        avi.smoothToShow();
     }
 
     public void stopAnim() {
-        avi.hide();
-        // or avi.smoothToHide();
+        avi.smoothToHide();
     }
 
 }
