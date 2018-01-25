@@ -178,7 +178,7 @@ public class MytripsActivity extends AppCompatActivity {
             Gson gson = new Gson();
             List<Trip> trips = (List<Trip>) gson.fromJson(result, type);
             TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-//            lv_tripPlan.setAdapter(adapter);
+            lv_tripPlan.setAdapter(adapter);
             stopAnim();
         }
 

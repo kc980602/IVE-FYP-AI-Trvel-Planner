@@ -17,7 +17,7 @@ public final class SynchronousGet {
 
     public String run() throws Exception {
         Request request = new Request.Builder()
-                .url("https://api.myjson.com/bins/c1cix")
+                .url("http://www.json-generator.com/api/json/get/bTXWAGkHIi?indent=2")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {

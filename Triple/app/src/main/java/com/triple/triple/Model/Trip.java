@@ -1,21 +1,40 @@
 package com.triple.triple.Model;
 
+
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Kevin on 2018/1/23.
  */
 
 public class Trip {
 
-    private String id, name, date, owner, image1, image2;
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("title")
+    @Expose
+    private String name;
+    @SerializedName("visit_date")
+    @Expose
+    private String visit_date;
+    @SerializedName("visit_length")
+    @Expose
+    private int visit_length;
+    @SerializedName("owner")
+    @Expose
+    private String owner;
+    @SerializedName("photos")
+    @Expose
+    private Image[] images;
 
-    public Trip() {
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -27,12 +46,20 @@ public class Trip {
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public String getVisit_date() {
+        return visit_date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setVisit_date(String visit_date) {
+        this.visit_date = visit_date;
+    }
+
+    public int getVisit_length() {
+        return visit_length;
+    }
+
+    public void setVisit_length(int visit_length) {
+        this.visit_length = visit_length;
     }
 
     public String getOwner() {
@@ -43,19 +70,11 @@ public class Trip {
         this.owner = owner;
     }
 
-    public String getImage1() {
-        return image1;
+    public Image[] getImages() {
+        return images;
     }
 
-    public void setImage1(String image1) {
-        this.image1 = image1;
-    }
-
-    public String getImage2() {
-        return image2;
-    }
-
-    public void setImage2(String image2) {
-        this.image2 = image2;
+    public void setImages(Image[] images) {
+        this.images = images;
     }
 }

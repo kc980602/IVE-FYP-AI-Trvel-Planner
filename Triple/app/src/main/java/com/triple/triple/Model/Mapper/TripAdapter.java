@@ -13,6 +13,9 @@ import com.squareup.picasso.Picasso;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -61,7 +64,7 @@ public class TripAdapter extends BaseAdapter {
             holder.tv_owner = (TextView) convertView.findViewById(R.id.tv_owner);
             holder.tv_tripdate = (TextView) convertView.findViewById(R.id.tv_tripdate);
             holder.image1 = (ImageView) convertView.findViewById(R.id.image1);
-            holder.image1 = (ImageView) convertView.findViewById(R.id.image2);
+            holder.image2 = (ImageView) convertView.findViewById(R.id.image2);
 
             convertView.setTag(holder);
         } else
@@ -69,15 +72,25 @@ public class TripAdapter extends BaseAdapter {
 
         Trip trip = trips.get(position);
 
-        holder.tv_tripid.setText(trip.getId());
+        holder.tv_tripid.setText(String.valueOf(trip.getId()));
         holder.tv_tripname.setText(trip.getName());
         holder.tv_owner.setText(trip.getOwner());
-        holder.tv_tripdate.setText(trip.getDate());
+        String date = trip.getVisit_date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DATE, trip.getVisit_length());
+        date += " - " + sdf.format(c.getTime());
+        holder.tv_tripdate.setText(date);
         Picasso.with(activity)
-                .load(trip.getImage1())
+                .load(trip.getImages()[0].getImages())
                 .into(holder.image1);
         Picasso.with(activity)
-                .load(trip.getImage2())
+                .load(trip.getImages()[1].getImages())
                 .into(holder.image2);
 
         return convertView;
