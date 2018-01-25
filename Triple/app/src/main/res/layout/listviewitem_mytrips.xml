@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
-                android:text="Trip name"
                 android:textColor="@color/textPrimary"
                 android:textSize="15dp"
                 android:textStyle="bold" />
@@ -36,7 +35,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="70"
-                android:text="Owner"
                 android:textColor="@color/textSecondary"
                 android:textDirection="rtl"
                 android:textSize="13dp" />
@@ -46,7 +44,6 @@
             android:id="@+id/tv_tripdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trip date"
             android:textColor="@color/textSecondary"
             android:textDirection="ltr"
             android:textSize="13dp" />
@@ -55,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
@@ -65,8 +61,7 @@
                 android:layout_marginRight="4dp"
                 android:layout_weight="50"
                 android:background="@color/colorPrimary"
-                android:scaleType="centerCrop"
-                android:src="@drawable/a2" />
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/image2"
@@ -75,8 +70,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_weight="50"
                 android:background="@color/colorPrimaryDark"
-                android:scaleType="centerCrop"
-                android:src="@drawable/a1" />
+                android:scaleType="centerCrop" />
 
         </LinearLayout>
 
