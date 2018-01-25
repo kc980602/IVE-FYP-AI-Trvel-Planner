@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Presenter.Mytrips.TripDetailActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="73dp">
+
+            <Button
+                android:id="@+id/bt_invite"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/button_background"
+                android:drawableLeft="@drawable/ic_invite"
+                android:drawablePadding="15dp"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="5dp"
+                android:stateListAnimator="@null"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="13dp" />
+
+            <Button
+                android:id="@+id/bt_date"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/button_background"
+                android:drawableLeft="@drawable/ic_date"
+                android:drawablePadding="15dp"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="5dp"
+                android:stateListAnimator="@null"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+        <android.support.v4.app.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom" />
+                </HorizontalScrollView>
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </android.support.v4.app.FragmentTabHost>
+    </LinearLayout>
+
+
+</LinearLayout>
