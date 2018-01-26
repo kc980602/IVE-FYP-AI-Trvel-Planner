@@ -23,10 +23,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/mytrips_create_tripname"
-                android:inputType="text">
+                android:inputType="text"
+                android:lines="1">
                 <requestFocus />
             </EditText>
-
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
+                android:lines="1"
                 android:hint="@string/mytrips_create_tripdates" />
         </android.support.design.widget.TextInputLayout>
 
@@ -49,6 +50,7 @@
                 android:id="@+id/actw_detination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lines="1"
                 android:hint="@string/mytrips_create_tripdestination"/>
         </android.support.design.widget.TextInputLayout>
 

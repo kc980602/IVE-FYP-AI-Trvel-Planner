@@ -127,6 +127,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 Log.d(TAG, "onOptionsItemSelected: android.R.id.home, return to parent activity");
                 Intent i_create = new Intent(mcontext, MytripsActivity.class);
                 startActivity(i_create);
+                finish();
                 break;
         }
         return true;
@@ -151,6 +152,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
             Intent i_create = new Intent(mcontext, MytripsActivity.class);
             startActivity(i_create);
+            finish();
         }
 
         return true;

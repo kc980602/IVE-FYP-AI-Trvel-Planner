@@ -12,14 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
         <activity
-            android:name=".Presenter.Home.HomeActivity"
+            android:name=".Presenter.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Presenter.Home.HomeActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
             android:launchMode="singleTask" />
@@ -38,7 +40,7 @@
             android:name=".Presenter.Mytrips.TripDetailActivity"
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Presenter.Account.LoginActivity"></activity>
+        <activity android:name=".Presenter.Account.LoginActivity" />
     </application>
 
 </manifest>
