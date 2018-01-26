@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.triple.triple">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -37,7 +37,8 @@
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Presenter.Account.LoginActivity"></activity>
     </application>
 
 </manifest>
