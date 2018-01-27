@@ -1,0 +1,7 @@
+age,gender,income,family_holiday_maker,foodie,backpacker,history_buff,nightlife_seeker,eco_tourist,trendsetter,nature_lover,urban_explorer,thrill_seeker,beach_goer,sixty_traveller,like_a_local,luxury_traveller,vegetarian,shopping_fanatic,thrifty_traveller,art_and_architecture_lover
+0,m,0,0,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,0,1
+3,m,1,0,1,0,0,0,0,0,1,0,1,1,0,1,0,1,1,0,1
+1,f,1,0,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,0,0
+6,f,2,0,1,0,0,0,1,1,0,0,1,1,1,0,0,1,1,0,1
+6,f,1,1,1,0,1,1,1,0,1,0,0,1,1,0,0,0,1,0,0
+6,f,7,1,1,1,1,1,0,0,1,0,0,1,1,1,0,1,0,0,1
