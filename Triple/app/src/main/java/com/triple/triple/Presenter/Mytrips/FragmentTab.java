@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.triple.triple.R;
 import com.triple.triple.Model.TripPlanDetail;
@@ -28,10 +29,13 @@ public class FragmentTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mytrips_detail_tab, container, false);
+        TextView tv_tabTitle = (TextView) v.findViewById(R.id.tv_tabTitle);
         ListView lv_tripDetail = (ListView) v.findViewById(R.id.lv_tripDetail);
+        tv_tabTitle.setText("");
 
         Bundle arguments = getArguments();
         TripPlanDetail listDataObject = (TripPlanDetail) arguments.getSerializable("listDataObject");
+        tv_tabTitle.setText(listDataObject.getDate().toString());
         ArrayList<HashMap<String, Object>> listData = listDataObject.getListData();
         SimpleAdapter show = new SimpleAdapter(v.getContext(), listData, R.layout.listviewitem_mytrips_details,
                 new String[]{"image1", "tv_attId", "tv_attName", "iv_rate", "tv_attReview", "tv_attAddress", "tv_attType"},

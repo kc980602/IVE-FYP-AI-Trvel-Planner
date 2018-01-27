@@ -18,7 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/layout_center_viewpager" />
+
+            <Button
+                android:id="@+id/bt_signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="22dp"
+                android:background="@color/colorPrimary"
+                android:onClick="onButtonSignOutClicked"
+                android:text="Sign out"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
         </RelativeLayout>
 
         <!-- bottom navigation -->

@@ -55,13 +55,14 @@ public class TripDetailActivity extends AppCompatActivity {
                 listData.add(map);
             }
             TripPlanDetail listDataObject = new TripPlanDetail();
+            String newTabSpec = (i + 1) + "/1";
+
+            listDataObject.setDate(newTabSpec);
             listDataObject.setListData(listData);
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("listDataObject", listDataObject);
-            String newTabSpec = "tab" + (i + 1);
-            String setIndicator = "Tab" + (i + 1);
-            mTabHost.addTab(mTabHost.newTabSpec(newTabSpec).setIndicator(getTabIndicator(mTabHost.getContext(), setIndicator)), FragmentTab.class, bundle);
+            mTabHost.addTab(mTabHost.newTabSpec(newTabSpec).setIndicator(getTabIndicator(mTabHost.getContext(), newTabSpec)), FragmentTab.class, bundle);
         }
     }
 
@@ -70,7 +71,7 @@ public class TripDetailActivity extends AppCompatActivity {
      */
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle("Fucking trip ");
+        ab.setTitle("New York Trip");
         getSupportActionBar().setElevation(0);
     }
 

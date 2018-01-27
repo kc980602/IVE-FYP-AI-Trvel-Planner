@@ -3,6 +3,7 @@ package com.triple.triple.Presenter.Account;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +12,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.securepreferences.SecurePreferences;
+import com.triple.triple.Model.AuthData;
 import com.triple.triple.Presenter.Home.HomeActivity;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.Authentication;
-import com.triple.triple.Sync.SynchronousGet;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
@@ -29,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private Toolbar myToolbar;
     private AVLoadingIndicatorView avi;
     private AlertDialog dialog;
+    private EditText et_username, et_password;
+    private String username, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         setupToolbar();
+        et_username = (EditText) findViewById(R.id.et_username);
+        et_password = (EditText) findViewById(R.id.et_password);
     }
 
     /**
@@ -75,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onButtonLoginClicked(View view) {
         int id = view.getId();
         if (id == R.id.bt_login) {
+            username = et_username.getText().toString();
+            password = et_password.getText().toString();
             new LoginActivity.RequestLogin().execute();
         }
         return true;
@@ -92,23 +107,48 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                String url =  getResources().getString(R.string.api_login);
-                Log.d(TAG, url);
-                respone = new Authentication().run(url);
+                String url = getResources().getString(R.string.api_login);
+                respone = new Authentication().run(url, username, password);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return respone;
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            dialog.dismiss();
-            Toast.makeText(mcontext, R.string.login_success, Toast.LENGTH_SHORT).show();
-            Log.d(TAG, result);
-        }
+            if (result.equals("Error")) {
+                dialog.dismiss();
+                Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
+            } else {
+                String editResult = "[" + result + "]";
 
+                Type type = new TypeToken<List<AuthData>>() {
+                }.getType();
+                Gson gson = new Gson();
+                try {
+                    List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);
+                    AuthData auth = authList.get(0);
+                    auth.toString();
+                    //save data using SharedPreferences
+//                    SharedPreferences data = new SecurePreferences(mcontext);
+                    SharedPreferences data = getSharedPreferences("user", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putString("token", auth.getToken());
+                    editor.putInt("userid", auth.getUser().getId());
+                    editor.putString("username", auth.getUser().getUsername());
+                    editor.commit();
+                    String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
+                    Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Intent i_home = new Intent(mcontext, HomeActivity.class);
+                    startActivity(i_home);
+                    finish();
+                } catch (Exception e) {
+                    Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
  */
 
 public class TripPlanDetail implements Serializable {
+    private String date;
     private ArrayList<HashMap<String, Object>> listData = new ArrayList<HashMap<String, Object>>();
 
     public TripPlanDetail() {
@@ -22,4 +23,11 @@ public class TripPlanDetail implements Serializable {
         this.listData = listData;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

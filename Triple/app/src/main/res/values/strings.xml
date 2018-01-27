@@ -10,7 +10,9 @@
     <string name="login_forget">Forget Password?</string>
     <string name="login_create">No account yet? Create one</string>
     <string name="login_signin">Sign in</string>
-    <string name="login_success">Welcome back!</string>
+    <string name="login_success">Welcome</string>
+    <string name="login_error_data">The username or password is not correct!</string>
+    <string name="login_error_process">Something went wrong while login!</string>
 
     <string name="home_des_button">Going somewhere?</string>
 
