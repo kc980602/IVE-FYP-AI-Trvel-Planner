@@ -1,7 +1,7 @@
 package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,16 +11,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.triple.triple.R;
 import com.triple.triple.Model.TripPlanDetail;
-import com.triple.triple.Sync.SynchronousGet;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TripDetailActivity extends AppCompatActivity {
     private static final String TAG = "TripCreateActivity";
@@ -34,6 +29,8 @@ public class TripDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
         setupActionBar();
+
+
 
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -71,7 +68,8 @@ public class TripDetailActivity extends AppCompatActivity {
      */
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle("New York Trip");
+        Intent i= getIntent();
+        ab.setTitle(i.getStringExtra("name"));
         getSupportActionBar().setElevation(0);
     }
 
@@ -105,7 +103,7 @@ public class TripDetailActivity extends AppCompatActivity {
 //            try {
 //                String url =  getResources().getString(R.string.api_showTripPlan);
 //                Log.d(TAG, url);
-//                respone = new SynchronousGet().run(url);
+//                respone = new GetTrip().run(url);
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }

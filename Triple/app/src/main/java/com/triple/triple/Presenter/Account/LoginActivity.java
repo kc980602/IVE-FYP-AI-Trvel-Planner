@@ -95,6 +95,15 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean onButtonRegisterClicked(View view) {
+        int id = view.getId();
+        if (id == R.id.link_signup) {
+            Intent i_register = new Intent(mcontext, RegisterActivity.class);
+            startActivity(i_register);
+        }
+        return true;
+    }
+
     private class RequestLogin extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -107,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                String url = getResources().getString(R.string.api_login);
+                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_login);
                 respone = new Authentication().run(url, username, password);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,9 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
             } else {
                 String editResult = "[" + result + "]";
-
-                Type type = new TypeToken<List<AuthData>>() {
-                }.getType();
+                Type type = new TypeToken<List<AuthData>>() {}.getType();
                 Gson gson = new Gson();
                 try {
                     List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);

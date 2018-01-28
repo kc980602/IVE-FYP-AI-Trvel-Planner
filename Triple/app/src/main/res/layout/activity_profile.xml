@@ -18,25 +18,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-            <Button
-                android:id="@+id/bt_signout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="22dp"
-                android:background="@color/colorPrimary"
-                android:onClick="onButtonSignOutClicked"
-                android:text="Sign out"
-                android:textAllCaps="false"
-                android:textColor="#fff"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true">
 
+                <Button
+                    android:id="@+id/bt_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="22dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onButtonSignInClicked"
+                    android:text="Sign in"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/bt_preference"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="22dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onButtonPreferenceClicked"
+                    android:text="My Perference"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/bt_signout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="22dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onButtonSignOutClicked"
+                    android:text="Sign out"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </LinearLayout>
         </RelativeLayout>
 
         <!-- bottom navigation -->
         <include layout="@layout/layout_bottom_navigation_view" />
 
     </RelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

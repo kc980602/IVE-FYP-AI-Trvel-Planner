@@ -5,6 +5,47 @@
     <string name="title_mytrips">My Trips</string>
     <string name="title_profile">Profile</string>
 
+    <string name="register_title">Create an account</string>
+    <string name="register_advise">Enter your personal infotmation to create account.</string>
+    <string name="register_username">Username (At least 6 characters)</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">Password (At least 6 characters)</string>
+    <string name="register_cpassword">Confirm Password</string>
+    <string name="register_age">Age Group</string>
+    <string name="register_gender">Gender</string>
+    <string name="register_income">Income Group</string>
+    <string name="register_error_username">Username require at least 6 characters!</string>
+    <string name="register_error_username2">Username have been used!</string>
+    <string name="register_error_password">Password require at least 6 characters!</string>
+    <string name="register_error_password2">Password not match!</string>
+    <string name="register_error_email">Not a valid email address!</string>
+    <string name="register_error_age">Select your age group!</string>
+    <string name="register_error_gender">Select your gender!</string>
+    <string name="register_error_income">Select your income group!</string>
+    <string name="register_error_create">Something went wrong! (Error code: 1003)</string>
+    <string name="register_success_create">Click the link in the verify email to activate your account.</string>
+    <string-array name="age">
+        <item>--Select your age group--</item>
+        <item>0-12</item>
+        <item>13-17</item>
+        <item>18-24</item>
+        <item>25-34</item>
+        <item>35-49</item>
+        <item>50-64</item>
+        <item>65+</item>
+    </string-array>
+    <string-array name="gender">
+        <item>--Select your gender--</item>
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+    <string-array name="income">
+        <item>--Select your income group--</item>
+        <item>1-100</item>
+        <item>101-200</item>
+    </string-array>
+
+
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_forget">Forget Password?</string>
@@ -12,22 +53,24 @@
     <string name="login_signin">Sign in</string>
     <string name="login_success">Welcome</string>
     <string name="login_error_data">The username or password is not correct!</string>
-    <string name="login_error_process">Something went wrong while login!</string>
+    <string name="login_error_process">Something went wrong! (Error code: 1000)</string>
 
     <string name="home_des_button">Going somewhere?</string>
 
+    <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
     <string name="mytrips_create_title">Create a trip</string>
+    <string name="mytrips_create_advise">Remark: The trip dates cannot be changed after creating the trip. Please select the trip dates carefully.</string>
     <string name="mytrips_create_button">Create</string>
     <string name="mytrips_create_button_cap">CREATE</string>
     <string name="mytrips_create_tripname">Trip name</string>
     <string name="mytrips_create_tripdestination">Destination</string>
-    <string name="mytrips_create_tripdates">Trip dates (optional)</string>
+    <string name="mytrips_create_tripdates">Trip dates</string>
     <string name="mytrips_create_checkbox">Add attraction for me</string>
     <string name="mytrips_create_success">Trip created</string>
-
+    <string name="mytrips_create_error_date">End date need to greater than Start date!</string>
+    <string name="mytrips_create_error_process">Something went wrong! (Error code: 1001)</string>
     <string name="mytrips_detail_edit">Edit trip</string>
     <string name="mytrips_detail_delete">Delete trip</string>
-
 
     <string-array name="destination">
         <item>asssss</item>
@@ -37,6 +80,9 @@
     </string-array>
 
     <!--api-->
-    <string name="api_showTripPlan">http://www.json-generator.com/api/json/get/bTXWAGkHIi?indent=2</string>
-    <string name="api_login">http://10.0.2.2:8000/member/authentication</string>
+    <string name="api_prefix">http://tripleapi-env.ap-southeast-1.elasticbeanstalk.com</string>
+    <string name="api_login">/member/authentication</string>
+    <string name="api_registration">/member/register</string>
+    <string name="api_trip_create">/trip</string>
+    <string name="api_trip_get">/trip</string>
 </resources>

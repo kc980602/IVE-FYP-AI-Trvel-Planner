@@ -13,6 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mytrips_create_advise"
+            android:layout_marginBottom="10dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -40,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:hint="@string/mytrips_create_tripdates"
-                android:inputType="text"
+                android:inputType="number"
                 android:lines="1" />
         </android.support.design.widget.TextInputLayout>
 
@@ -58,7 +63,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/cb_generate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mytrips_create_checkbox" />

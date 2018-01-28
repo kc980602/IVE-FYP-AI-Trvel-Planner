@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,9 +23,12 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.Model.Adapter.TripAdapter;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
-import com.triple.triple.Sync.SynchronousGet;
+import com.triple.triple.Sync.GetTrip;
 import com.triple.triple.helper.BottomNavigationViewHelper;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -119,9 +123,10 @@ public class MytripsActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             TextView tripPlanId = (TextView) view.findViewById(R.id.tv_tripid);
-            String tpid = tripPlanId.getText().toString();
+            TextView tripPlanName = (TextView) view.findViewById(R.id.tv_tripname);
             Intent i_tripPlan = new Intent(mcontext, TripDetailActivity.class);
-            i_tripPlan.putExtra("tid", tpid);
+            i_tripPlan.putExtra("tid", tripPlanId.getText().toString());
+            i_tripPlan.putExtra("name", tripPlanName.getText().toString());
             mcontext.startActivity(i_tripPlan);
         }
     };
@@ -147,9 +152,9 @@ public class MytripsActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                String url =  getResources().getString(R.string.api_showTripPlan);
+                String url =  getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
                 Log.d(TAG, url);
-                respone = new SynchronousGet().run(url);
+                respone = new GetTrip().run(url, mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -159,22 +164,26 @@ public class MytripsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Type type = new TypeToken<List<Trip>>(){}.getType();
-            Gson gson = new Gson();
-            List<Trip> trips = (List<Trip>) gson.fromJson(result, type);
-            TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-            lv_tripPlan.setAdapter(adapter);
+            Log.d(TAG, result);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray DateArray = jsonObject.getJSONArray("data");
+                Type type = new TypeToken<List<Trip>>(){}.getType();
+                Gson gson = new Gson();
+                List<Trip> trips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
+                TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
+                lv_tripPlan.setAdapter(adapter);
+            } catch (Exception e) {
+                Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_SHORT).show();
+            }
             stopAnim();
         }
-
     }
 
-    public void startAnim() {
-        avi.smoothToShow();
-    }
+    public void startAnim() {avi.show();}
 
     public void stopAnim() {
-        avi.smoothToHide();
+        avi.hide();
     }
 
 }

@@ -2,6 +2,7 @@ package com.triple.triple.Model.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,23 +76,29 @@ public class TripAdapter extends BaseAdapter {
         holder.tv_tripid.setText(String.valueOf(trip.getId()));
         holder.tv_tripname.setText(trip.getName());
         holder.tv_owner.setText(trip.getOwner());
-        String date = trip.getVisit_date();
+        String date = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
         Calendar c = Calendar.getInstance();
         try {
-            c.setTime(sdf.parse(date));
+            c.setTime(sdf.parse(trip.getVisit_date()));
+            date = sdf2.format(c.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
         c.add(Calendar.DATE, trip.getVisit_length());
-        date += " - " + sdf.format(c.getTime());
+        date += " - " + sdf2.format(c.getTime());
+
         holder.tv_tripdate.setText(date);
-        Picasso.with(activity)
-                .load(trip.getImages()[0].getImages())
-                .into(holder.image1);
-        Picasso.with(activity)
-                .load(trip.getImages()[1].getImages())
-                .into(holder.image2);
+        if (trip.getImages()!=null) {
+            Picasso.with(activity)
+                    .load(trip.getImages()[0].getImages())
+                    .into(holder.image1);
+            Picasso.with(activity)
+                    .load(trip.getImages()[1].getImages())
+                    .into(holder.image2);
+        }
+
 
         return convertView;
     }
