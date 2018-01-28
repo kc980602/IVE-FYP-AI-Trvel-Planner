@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
      * Toolbar setup
      */
     private void setupToolbar() {
-        Log.d(TAG, "setupToolbar: setting up Toolbar");
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("");

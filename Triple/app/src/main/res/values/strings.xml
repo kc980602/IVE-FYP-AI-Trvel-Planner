@@ -72,6 +72,8 @@
     <string name="mytrips_detail_edit">Edit trip</string>
     <string name="mytrips_detail_delete">Delete trip</string>
 
+    <string name="profile_preference">Your Travel Style</string>
+    <string name="profile_preference_edit">Edit</string>
     <string-array name="destination">
         <item>asssss</item>
         <item>assssss</item>

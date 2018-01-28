@@ -64,7 +64,6 @@ public class MytripsActivity extends AppCompatActivity {
         setupBottomNavigationView();
         setupToolbar();
 
-
         new MytripsActivity.RequestTrip().execute();
 
     }
@@ -152,8 +151,7 @@ public class MytripsActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                String url =  getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
-                Log.d(TAG, url);
+                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
                 respone = new GetTrip().run(url, mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -168,7 +166,8 @@ public class MytripsActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray DateArray = jsonObject.getJSONArray("data");
-                Type type = new TypeToken<List<Trip>>(){}.getType();
+                Type type = new TypeToken<List<Trip>>() {
+                }.getType();
                 Gson gson = new Gson();
                 List<Trip> trips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
                 TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
@@ -180,7 +179,9 @@ public class MytripsActivity extends AppCompatActivity {
         }
     }
 
-    public void startAnim() {avi.show();}
+    public void startAnim() {
+        avi.show();
+    }
 
     public void stopAnim() {
         avi.hide();
