@@ -22,7 +22,7 @@ import pandas as pd
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch_size', default=100, type=int, help='batch size')
-parser.add_argument('--train_steps', default=1000, type=int,
+parser.add_argument('--train_steps', default=2000, type=int,
                     help='number of training steps')
 
 
@@ -40,10 +40,12 @@ def load_data(y_name='family_holiday_maker'):
     test_path = './data/preference_test.csv'
 
     train = pd.read_csv(train_path, names=CSV_COLUMN_NAMES, header=0)
-    train_x, train_y = train, train.pop(y_name)
+    # train_x, train_y = train, train.pop(y_name)
+    train_x, train_y = train.iloc[:, :3], train.pop(y_name)
 
     test = pd.read_csv(test_path, names=CSV_COLUMN_NAMES, header=0)
-    test_x, test_y = test, test.pop(y_name)
+    # test_x, test_y = test, test.pop(y_name)
+    test_x, test_y = test.iloc[:, :3], test.pop(y_name)
 
     return (train_x, train_y), (test_x, test_y)
 
@@ -127,13 +129,33 @@ def main(argv):
     for key in train_x.keys():
         my_feature_columns.append(tf.feature_column.numeric_column(key=key))
 
+    age = tf.feature_column.categorical_column_with_identity(key='age', num_buckets=7)
+
+    gender = tf.feature_column.categorical_column_with_identity(key='gender', num_buckets=2)
+
+    income = tf.feature_column.categorical_column_with_identity(key='income', num_buckets=8)
+
+    age_x_gender = tf.feature_column.crossed_column(
+            [age, gender], hash_bucket_size=1000)
+    age_x_income = tf.feature_column.crossed_column(
+        [age, income], hash_bucket_size=1000)
+    gender_x_income = tf.feature_column.crossed_column(
+        [gender, income], hash_bucket_size=1000)
+    age_x_gender_x_income = tf.feature_column.crossed_column(
+            [age, gender, income], hash_bucket_size=1000)
+
+    my_feature_columns.append(tf.feature_column.embedding_column(age_x_gender, 1))
+    my_feature_columns.append(tf.feature_column.embedding_column(age_x_income, 1))
+    my_feature_columns.append(tf.feature_column.embedding_column(gender_x_income, 1))
+    my_feature_columns.append(tf.feature_column.embedding_column(age_x_gender_x_income, 1))
+
     # Build 2 hidden layer DNN with 10, 10 units respectively.
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # Two hidden layers of 10 nodes each.
         hidden_units=[10, 10],
-        # The model must choose between 3 classes.
-        n_classes=3)
+        # The model must choose between 2 classes.
+        n_classes=2)
 
     # Train the Model.
     classifier.train(
@@ -151,9 +173,9 @@ def main(argv):
     # Generate predictions from the model
     expected = ['Yes', 'No']
     predict_x = {
-        'age': [4, 6], 'gender': [1, 0], 'income': [2, 5], 'foodie': [1, 1],
+        'age': [1, 1], 'gender': [0, 1], 'income': [3, 5], 'foodie': [1, 1],
         'backpacker': [0, 0], 'history_buff': [1, 0], 'nightlife_seeker': [1, 0], 'eco_tourist': [0, 0], 'trendsetter': [0, 0],
-        'nature_lover': [0, 0], 'urban_explorer': [0, 1], 'thrill_seeker': [1, 0], 'beach_goer': [1, 1], 'sixty_traveller': [0, 0],
+        'nature_lover': [1, 0], 'urban_explorer': [1, 1], 'thrill_seeker': [1, 0], 'beach_goer': [1, 1], 'sixty_traveller': [0, 0],
         'like_a_local': [0, 0], 'luxury_traveller': [0, 1], 'vegetarian': [0, 0], 'shopping_fanatic': [1, 0], 'thrifty_traveller': [0, 0],
         'art_and_architecture_lover': [0, 1], 'peace_and_quiet_seeker': [0, 0],
     }
