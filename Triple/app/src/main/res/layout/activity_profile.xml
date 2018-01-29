@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="22dp"
                     android:onClick="onButtonPreferenceClicked"
-                    android:text="preference"
+                    android:text="my preference"
                     android:theme="@style/MyButton"/>
 
                 <Button

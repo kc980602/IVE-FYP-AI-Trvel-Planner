@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +49,7 @@ public class MytripsActivity extends AppCompatActivity {
     private ListView lv_tripPlan;
 
     private AVLoadingIndicatorView avi;
+    private  SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,15 @@ public class MytripsActivity extends AppCompatActivity {
         setupToolbar();
 
         new MytripsActivity.RequestTrip().execute();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new MytripsActivity.RequestTrip().execute();
+            }
+        });
 
     }
 
@@ -176,6 +187,9 @@ public class MytripsActivity extends AppCompatActivity {
                 Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_SHORT).show();
             }
             stopAnim();
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 

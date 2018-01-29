@@ -21,8 +21,8 @@ public class GetPreference {
         String token = "Bearer ";
         token += GetToken.getToken(mcontext);
         Request request = new Request.Builder()
-//                .header("Authorization", token)
-                .url("https://api.myjson.com/bins/x0r1p")
+                .header("Authorization", token)
+                .url(url)
                 .build();
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

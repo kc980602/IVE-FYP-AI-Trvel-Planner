@@ -7,17 +7,17 @@
     tools:context=".Presenter.Home.HomeActivity">
 
     <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:parallax_factor="1.9"
-        tools:context=".MainActivity" >
+        tools:context=".MainActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -53,9 +53,12 @@
                     android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" />
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </LinearLayout>
+
+
                 </HorizontalScrollView>
             </RelativeLayout>
         </LinearLayout>
@@ -69,6 +72,15 @@
         android:layout_alignParentBottom="true">
 
         <include layout="@layout/layout_bottom_navigation_view" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="382dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="201dp"
+            android:src="@drawable/fake_home" />
     </RelativeLayout>
 
 

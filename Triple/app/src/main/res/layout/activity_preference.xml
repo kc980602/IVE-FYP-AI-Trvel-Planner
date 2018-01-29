@@ -60,7 +60,6 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
-                    android:background="@color/colorAccent"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -89,7 +88,6 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
-                    android:background="@color/colorAccent"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -110,7 +108,6 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
-                    android:background="@color/colorAccent"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -138,7 +135,6 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
-                    android:background="@color/colorAccent"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -159,7 +155,6 @@
                     android:layout_height="100dp"
                     android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
-                    android:background="@color/colorAccent"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -173,6 +168,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="48dp"
             android:layout_marginRight="48dp"
             android:text="@string/profile_preference_edit"

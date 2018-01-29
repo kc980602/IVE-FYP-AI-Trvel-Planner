@@ -94,7 +94,7 @@ public class PreferenceActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "";
             try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
+                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_profile_preference);
                 respone = new GetPreference().run(url, mcontext);
             } catch (Exception e) {
                 e.printStackTrace();

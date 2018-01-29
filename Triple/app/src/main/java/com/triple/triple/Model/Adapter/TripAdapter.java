@@ -90,14 +90,20 @@ public class TripAdapter extends BaseAdapter {
         date += " - " + sdf2.format(c.getTime());
 
         holder.tv_tripdate.setText(date);
-        if (trip.getImages()!=null) {
+//            Picasso.with(activity)
+//                    .load(trip.getImages()[0].getImages())
+//                    .into(holder.image1);
+//            Picasso.with(activity)
+//                    .load(trip.getImages()[1].getImages())
+//                    .into(holder.image2);
+
             Picasso.with(activity)
-                    .load(trip.getImages()[0].getImages())
+                    .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
                     .into(holder.image1);
             Picasso.with(activity)
-                    .load(trip.getImages()[1].getImages())
+                    .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTbrmTGR3UlYoUKYqW6AMyb_9HSfqNxSgV9vWMER4T9w-v-xPx")
                     .into(holder.image2);
-        }
+
 
 
         return convertView;

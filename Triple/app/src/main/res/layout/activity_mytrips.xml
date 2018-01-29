@@ -51,15 +51,22 @@
                     app:indicatorName="BallClipRotateIndicator" />
             </RelativeLayout>
 
-            <ListView
-                android:id="@+id/lv_tripPlan"
+            <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="50dp"
-                android:clipToPadding="false"
-                android:divider="@color/colorGrey"
-                android:dividerHeight="5dp"
-                android:scrollbarStyle="outsideOverlay"/>
+                android:layout_marginBottom="50dp">
+
+                <ListView
+                    android:id="@+id/lv_tripPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    android:clipToPadding="false"
+                    android:divider="@color/colorGrey"
+                    android:dividerHeight="5dp"
+                    android:scrollbarStyle="outsideOverlay" />
+            </android.support.v4.widget.SwipeRefreshLayout>
         </RelativeLayout>
 
         <!-- bottom navigation -->

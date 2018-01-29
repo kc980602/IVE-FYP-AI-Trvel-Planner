@@ -30,7 +30,9 @@ public final class GetTrip {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            return response.body().string();
+            String re = response.body().string();
+            response.body().close();
+            return re;
         }
     }
 }

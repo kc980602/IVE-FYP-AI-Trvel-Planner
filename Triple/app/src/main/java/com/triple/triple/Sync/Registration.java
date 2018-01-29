@@ -26,6 +26,7 @@ public class Registration {
                 .add("gender", gender)
                 .add("age", age)
                 .add("email", email)
+                .add("income", income)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
