@@ -121,7 +121,7 @@ public class PreferenceActivity extends AppCompatActivity {
                     textViewsList[i].setText(percent + "% you will like it");
                 }
             } catch (Exception e) {
-                Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
             }
             stopAnim();
         }
