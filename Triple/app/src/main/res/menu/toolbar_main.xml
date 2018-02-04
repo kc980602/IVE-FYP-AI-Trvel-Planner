@@ -2,14 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Presenter.Mytrips.MytripsActivity">
-
+    tools:context=".Presenter.MainActivity">
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white"
         android:orderInCategory="300"
-        android:title="Create"
-        android:icon="@drawable/ic_add"
-        android:iconTint="@color/white"
+        android:title=" "
         app:showAsAction="ifRoom"></item>
-
 </menu>

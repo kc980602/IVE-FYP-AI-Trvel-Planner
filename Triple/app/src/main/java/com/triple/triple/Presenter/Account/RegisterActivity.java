@@ -1,14 +1,18 @@
 package com.triple.triple.Presenter.Account;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mukesh.countrypicker.fragments.CountryPicker;
+import com.mukesh.countrypicker.interfaces.CountryPickerListener;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.R;
 import com.triple.triple.Sync.Registration;
@@ -29,13 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Context mcontext = RegisterActivity.this;
 
-    private EditText et_username, et_email, et_password, et_cpassword;
-    private Spinner sp_age, sp_gender, sp_income;
-    private String username, password, cPassword, email, age, gender, income;
-    private String[] ageList;
-    private String[] genderList;
-    private String[] incomeList;
-    private AlertDialog dialog;
+
+    private EditText et_username, et_email, et_password, et_cpassword, et_age, et_gender, et_country;
+    private String username, password, cPassword, email, age, gender, country;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +49,13 @@ public class RegisterActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
         et_cpassword = (EditText) findViewById(R.id.et_cpassword);
-        sp_age = (Spinner) findViewById(R.id.sp_age);
-        sp_gender = (Spinner) findViewById(R.id.sp_gender);
-        sp_income = (Spinner) findViewById(R.id.sp_income);
-        //load option for spinner
-        ageList = getResources().getStringArray(R.array.age);
-        genderList = getResources().getStringArray(R.array.gender);
-        incomeList = getResources().getStringArray(R.array.income);
+        et_age = (EditText) findViewById(R.id.et_age);
+        et_gender = (EditText) findViewById(R.id.et_gender);
+        et_country = (EditText) findViewById(R.id.et_country);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, ageList);
-        sp_age.setAdapter(adapter);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, genderList);
-        sp_gender.setAdapter(adapter1);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, incomeList);
-        sp_income.setAdapter(adapter2);
+        et_age.setOnClickListener(et_ageListener);
+        et_gender.setOnClickListener(et_genderListener);
+        et_country.setOnClickListener(et_countryListener);
 
         setupActionBar();
     }
@@ -69,6 +65,60 @@ public class RegisterActivity extends AppCompatActivity {
         ab.setTitle(R.string.register_title);
     }
 
+    View.OnClickListener et_ageListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final String[] singleChoiceItems = getResources().getStringArray(R.array.age);
+            int itemSelected = 0;
+            new AlertDialog.Builder(mcontext)
+                    .setTitle(getString(R.string.register_age_guide))
+                    .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            et_age.setText(singleChoiceItems[i].toString());
+                            age = String.valueOf(i);
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.dialog_cancel), null)
+                    .show();
+        }
+    };
+    View.OnClickListener et_genderListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final String[] singleChoiceItems = getResources().getStringArray(R.array.gender);
+            int itemSelected = 0;
+            new AlertDialog.Builder(mcontext)
+                    .setTitle(getString(R.string.register_gender_guide))
+                    .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            et_gender.setText(singleChoiceItems[i].toString());
+                            gender = String.valueOf(i);
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.dialog_cancel), null)
+                    .show();
+        }
+    };
+    View.OnClickListener et_countryListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final CountryPicker picker = CountryPicker.newInstance(getString(R.string.register_country_guide));
+            picker.setListener(new CountryPickerListener() {
+                @Override
+                public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+                    picker.dismiss();
+                    Log.d("country", name + ", " + code + ", " + dialCode + ", " + flagDrawableResID);
+                    et_country.setText(name);
+                    country = code;
+                }
+            });
+            picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_account_register, menu);
@@ -100,12 +150,12 @@ public class RegisterActivity extends AppCompatActivity {
             et_password.setError(getResources().getString(R.string.register_error_password));
         } else if (!et_password.getText().toString().equals(et_cpassword.getText().toString())) {
             et_password.setError(getResources().getString(R.string.register_error_password2));
-        } else if (sp_age.getSelectedItemPosition() == 0) {
+        } else if (et_age.getText().toString().equals("")) {
             Toast.makeText(mcontext, R.string.register_error_age, Toast.LENGTH_SHORT).show();
-        } else if (sp_gender.getSelectedItemPosition() == 0) {
+        } else if (et_gender.getText().toString().equals("")) {
             Toast.makeText(mcontext, R.string.register_error_gender, Toast.LENGTH_SHORT).show();
-        } else if (sp_income.getSelectedItemPosition() == 0) {
-            Toast.makeText(mcontext, R.string.register_error_income, Toast.LENGTH_SHORT).show();
+        } else if (et_country.getText().toString().equals("")) {
+            Toast.makeText(mcontext, R.string.register_error_country, Toast.LENGTH_SHORT).show();
         } else {
             isSuccess = true;
         }
@@ -115,9 +165,6 @@ public class RegisterActivity extends AppCompatActivity {
             password = et_password.getText().toString();
             cPassword = et_cpassword.getText().toString();
             email = et_email.getText().toString();
-            age = String.valueOf(sp_age.getSelectedItemPosition()-1);
-            gender = genderList[sp_gender.getSelectedItemPosition()];
-            income = String.valueOf(sp_gender.getSelectedItemPosition()-1);
             new RegisterActivity.RequestRegister().execute();
         }
     }
@@ -130,8 +177,9 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new SpotsDialog(mcontext, R.style.CustomDialog);
-            dialog.show();
+            progressDialog = new ProgressDialog(mcontext);
+            progressDialog.setMessage(getString(R.string.dialog_progress_title));
+            progressDialog.show();
         }
 
         @Override
@@ -139,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
             String respone = "";
             try {
                 String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_registration);
-                respone = new Registration().run(url, username, password, cPassword, email, age, gender, income);
+                respone = new Registration().run(url, username, password, cPassword, email, age, gender, country);
             } catch (Exception e) {
             }
             return respone;
@@ -165,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
                 Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
             }
-            dialog.dismiss();
+            progressDialog.hide();
         }
     }
 }

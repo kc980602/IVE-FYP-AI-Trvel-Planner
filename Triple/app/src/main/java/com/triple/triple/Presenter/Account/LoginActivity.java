@@ -1,6 +1,7 @@
 package com.triple.triple.Presenter.Account;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +9,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +20,6 @@ import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Presenter.Home.HomeActivity;
-import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.Authentication;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -40,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private EditText et_username, et_password;
     private String username, password;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +107,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new SpotsDialog(mcontext, R.style.CustomDialog);
-            dialog.show();
+            progressDialog = new ProgressDialog(mcontext);
+            progressDialog.setMessage(getString(R.string.dialog_progress_title));
+            progressDialog.show();
         }
 
         @Override
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result.equals("Error")) {
-                dialog.dismiss();
+                progressDialog.hide();
                 Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
             } else {
                 String editResult = "[" + result + "]";
@@ -138,8 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                     AuthData auth = authList.get(0);
                     auth.toString();
                     //save data using SharedPreferences
-//                    SharedPreferences data = new SecurePreferences(mcontext);
-                    SharedPreferences data = getSharedPreferences("user", Context.MODE_PRIVATE);
+                    SharedPreferences data = new SecurePreferences(mcontext);
                     SharedPreferences.Editor editor = data.edit();
                     editor.putString("token", auth.getToken());
                     editor.putInt("userid", auth.getUser().getId());
@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
                     Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    progressDialog.hide();
                     Intent i_home = new Intent(mcontext, HomeActivity.class);
                     startActivity(i_home);
                     finish();

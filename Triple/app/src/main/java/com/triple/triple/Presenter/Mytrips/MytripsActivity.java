@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.triple.triple.Model.Adapter.TripAdapter;
+import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
@@ -63,7 +63,6 @@ public class MytripsActivity extends AppCompatActivity {
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
 
-        setupBottomNavigationView();
         setupToolbar();
 
         new MytripsActivity.RequestTrip().execute();
@@ -77,19 +76,6 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    /**
-     * BottomNavigationView setup
-     */
-    private void setupBottomNavigationView() {
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mcontext, bottomNavigationViewEx);
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
     }
 
     /**

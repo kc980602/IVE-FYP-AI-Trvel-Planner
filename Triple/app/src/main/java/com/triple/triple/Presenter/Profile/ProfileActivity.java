@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Presenter.Account.LoginActivity;
 import com.triple.triple.R;
 import com.triple.triple.helper.BottomNavigationViewHelper;
@@ -33,12 +34,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        setupBottomNavigationView();
 
         bt_signin = (Button) findViewById(R.id.bt_signin);
         bt_preference = (Button) findViewById(R.id.bt_preference);
         bt_signout = (Button) findViewById(R.id.bt_signout);
-        SharedPreferences data = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences data = new SecurePreferences(mcontext);
         String token = data.getString("token", DEFAULT);
         if (token.equals(DEFAULT)) {
             bt_preference.setVisibility(View.INVISIBLE);
@@ -51,23 +51,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * BottomNavigationView setup
-     */
-    private void setupBottomNavigationView() {
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mcontext, bottomNavigationViewEx);
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
-
     public boolean onButtonSignOutClicked(View view) {
         int id = view.getId();
         if (id == R.id.bt_signout) {
-            SharedPreferences data = getSharedPreferences("user", Context.MODE_PRIVATE);
+            SharedPreferences data = new SecurePreferences(mcontext);
             data.edit().clear().commit();
             PackageManager packageManager = mcontext.getPackageManager();
             Intent intent = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());

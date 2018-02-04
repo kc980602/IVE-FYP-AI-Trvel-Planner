@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrey"
-    tools:context=".Presenter.Mytrips.MytripsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.triple.triple.Presenter.Mytrips.MyTripsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,12 +52,14 @@
             <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp">
 
                 <ListView
                     android:id="@+id/lv_tripPlan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
                     android:clipToPadding="false"
                     android:divider="@color/colorGrey"
                     android:dividerHeight="5dp"
@@ -67,8 +67,7 @@
             </android.support.v4.widget.SwipeRefreshLayout>
         </RelativeLayout>
 
-
     </RelativeLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

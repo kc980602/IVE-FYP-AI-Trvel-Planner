@@ -1,4 +1,4 @@
-package com.triple.triple.Model.Adapter;
+package com.triple.triple.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
