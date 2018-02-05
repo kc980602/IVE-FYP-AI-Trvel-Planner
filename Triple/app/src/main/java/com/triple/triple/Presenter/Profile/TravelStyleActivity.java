@@ -1,8 +1,8 @@
 package com.triple.triple.Presenter.Profile;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,9 +23,9 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class PreferenceActivity extends AppCompatActivity {
+public class TravelStyleActivity extends AppCompatActivity {
 
-    private Context mcontext = PreferenceActivity.this;
+    private Context mcontext = TravelStyleActivity.this;
 
     private Toolbar myToolbar;
     private AVLoadingIndicatorView avi;
@@ -35,7 +35,7 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+        setContentView(R.layout.activity_travel_style);
 
         int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4, R.id.iv_5};
         int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4, R.id.tv_5};
@@ -48,37 +48,30 @@ public class PreferenceActivity extends AppCompatActivity {
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
 
-        setupToolbar();
+        setupActionBar();
 
-        new PreferenceActivity.RequestPreference().execute();
+        new TravelStyleActivity.RequestPreference().execute();
     }
 
-    private void setupToolbar() {
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("");
+    private void setupActionBar() {
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.title_travelstyle);
     }
 
-    /**
-     * Toolbar setup
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_account_login, menu);
+        getMenuInflater().inflate(R.menu.actionbar_travel_style, menu);
         return true;
     }
 
-    /**
-     * Toolbar "+" listener
-     */
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_close) {
-            Intent i_home = new Intent(mcontext, ProfileActivity.class);
-            startActivity(i_home);
-            finish();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
         }
         return true;
     }

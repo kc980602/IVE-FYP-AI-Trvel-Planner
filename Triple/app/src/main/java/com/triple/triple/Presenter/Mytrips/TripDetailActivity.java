@@ -3,11 +3,12 @@ package com.triple.triple.Presenter.Mytrips;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,14 +24,14 @@ public class TripDetailActivity extends AppCompatActivity {
     private Context mcontext = TripDetailActivity.this;
 
     private FragmentTabHost mTabHost;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
+        i = getIntent();
         setupActionBar();
-
-
 
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -63,25 +64,33 @@ public class TripDetailActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Action Bar setup
-     */
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        Intent i= getIntent();
         ab.setTitle(i.getStringExtra("name"));
-        getSupportActionBar().setElevation(0);
+        ab.setElevation(0);
     }
 
-    /**
-     * Action Bar  menu setup
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(TAG, "onCreateOptionsMenu: setting up Toolbar");
-        getMenuInflater().inflate(R.menu.toolbar_mytrips_detail, menu);
+        getMenuInflater().inflate(R.menu.actionbar_mytrips_detail, menu);
         return true;
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+
+                break;
+            case R.id.action_delete:
+
+                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+        }
+        return true;
+    }
+
 
     private View getTabIndicator(Context context, String title) {
         View view = LayoutInflater.from(context).inflate(R.layout.tab_layout_mytrips_detail, null);

@@ -11,23 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/relLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="?attr/colorPrimary"
-                android:elevation="4dp"
-                android:theme="@style/AppThemeNoActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="0dp" />
-        </RelativeLayout>
-
         <!-- body section -->
         <RelativeLayout
             android:id="@+id/relLayout2"

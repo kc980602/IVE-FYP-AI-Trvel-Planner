@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.triple.triple.Presenter.Profile.PreferenceActivity">
+    tools:context="com.triple.triple.Presenter.Profile.TravelStyleActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -164,15 +164,6 @@
                     android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
-            android:text="@string/profile_preference_edit"
-            android:theme="@style/MyButton"/>
 
     </LinearLayout>
     <RelativeLayout

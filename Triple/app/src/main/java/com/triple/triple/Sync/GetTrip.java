@@ -5,15 +5,11 @@ package com.triple.triple.Sync;
  */
 
 import android.content.Context;
-import android.util.Log;
 
-import com.triple.triple.R;
-import com.triple.triple.helper.GetToken;
+import com.triple.triple.Helper.GetToken;
 
 import java.io.IOException;
-import java.net.URL;
 
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

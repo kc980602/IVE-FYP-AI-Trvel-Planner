@@ -3,6 +3,7 @@ package com.triple.triple.Presenter.Mytrips;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +21,7 @@ import android.widget.Toast;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.triple.triple.R;
 import com.triple.triple.Sync.CreateTrip;
-import com.triple.triple.helper.HideKeyboardHelper;
+import com.triple.triple.Helper.HideKeyboardHelper;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -43,7 +44,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_create);
-        Log.d(TAG, "onCreate: starting.");
         setupActionBar();
 
         et_tripname = (EditText) findViewById(R.id.et_tripname);
@@ -59,26 +59,29 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
     }
 
-    /**
-     * Action Bar setup
-     */
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.mytrips_create_title);
     }
 
-    /**
-     * Action Bar  menu setup
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_mytrips_create, menu);
+        getMenuInflater().inflate(R.menu.actionbar_mytrips_create, menu);
         return true;
     }
 
-    /**
-     * Edit Text Listener : et_tripname
-     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_create:
+                requestCreateTrip();
+                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+        }
+        return true;
+    }
+
     View.OnFocusChangeListener et_tripnameListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
@@ -88,9 +91,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         }
     };
 
-    /**
-     * Edit Text Listener : et_tripdate
-     */
     View.OnFocusChangeListener et_tripdateListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
@@ -108,12 +108,8 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         }
     };
 
-    /**
-     * onDateSet : DatePickerDialog
-     */
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
-        Log.d("onDateSet", "i am in");
         et_tripdate.clearFocus();
         String date = dayOfMonth + "/" + (++monthOfYear) + "/" + year + " - " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
         LocalDate Start = new LocalDate(year, monthOfYear, dayOfMonth);
@@ -136,26 +132,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         return true;
     }
 
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_create:
-                Log.d(TAG, "onOptionsItemSelected: Create,  send to process");
-                requestCreateTrip();
-                break;
-            case android.R.id.home:
-                Log.d(TAG, "onOptionsItemSelected: android.R.id.home, return to parent activity");
-                Intent i_create = new Intent(mcontext, MytripsActivity.class);
-                startActivity(i_create);
-                finish();
-                break;
-        }
-        return true;
-    }
-
-    /**
-     * Process use case logic opertion
-     */
     public void requestCreateTrip() {
         Boolean isSuccess = false;
 

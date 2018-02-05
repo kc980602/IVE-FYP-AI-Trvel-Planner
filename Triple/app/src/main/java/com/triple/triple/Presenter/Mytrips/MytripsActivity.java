@@ -2,8 +2,8 @@ package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +20,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
-import com.triple.triple.helper.BottomNavigationViewHelper;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -49,7 +47,7 @@ public class MytripsActivity extends AppCompatActivity {
     private ListView lv_tripPlan;
 
     private AVLoadingIndicatorView avi;
-    private  SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class MytripsActivity extends AppCompatActivity {
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
 
-        setupToolbar();
+        setupActionBar();
 
         new MytripsActivity.RequestTrip().execute();
 
@@ -78,36 +76,26 @@ public class MytripsActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Toolbar setup
-     */
-    private void setupToolbar() {
-        Log.d(TAG, "setupToolbar: setting up Toolbar");
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle(R.string.title_mytrips);
-        myToolbar.setTitleTextColor(Color.WHITE);
+    private void setupActionBar() {
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.title_mytrips);
     }
 
-    /**
-     * Toolbar setup
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_mytrips, menu);
+        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
         return true;
     }
 
-    /**
-     * Toolbar "+" listener
-     */
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_add) {
-            Intent i_create = new Intent(mcontext, TripCreateActivity.class);
-            startActivity(i_create);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
+                startActivity(i_create);
+                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
         }
         return true;
     }
@@ -159,7 +147,6 @@ public class MytripsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d(TAG, result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray DateArray = jsonObject.getJSONArray("data");

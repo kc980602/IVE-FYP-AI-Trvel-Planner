@@ -5,10 +5,10 @@
     tools:context=".Presenter.Mytrips.TripDetailActivity">
 
     <item
-        android:id="@+id/edit_trip"
+        android:id="@+id/action_edit"
         android:title="@string/mytrips_detail_edit" />
     <item
-        android:id="@+id/delete_trip"
+        android:id="@+id/action_delete"
         android:title="@string/mytrips_detail_delete" />
 
 </menu>

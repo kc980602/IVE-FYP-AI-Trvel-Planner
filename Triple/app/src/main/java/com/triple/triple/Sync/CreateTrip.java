@@ -1,11 +1,8 @@
 package com.triple.triple.Sync;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.triple.triple.helper.GetToken;
-
-import java.io.IOException;
+import com.triple.triple.Helper.GetToken;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

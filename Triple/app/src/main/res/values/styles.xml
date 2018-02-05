@@ -17,6 +17,16 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
+    <style name="AppThemeWhite" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:tint">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+
     <style name="tabs">
         <item name="android:textColor">@color/white</item>
     </style>

@@ -29,7 +29,7 @@
     <string name="register_error_username2">Username have been used!</string>
     <string name="register_error_password">Password require at least 6 characters!</string>
     <string name="register_error_password2">Password not match!</string>
-    <string name="register_error_email">Not a valid email address!</string>
+    <string name="register_error_email">Enter valid email!</string>
     <string name="register_error_email2">Email have been used!</string>
     <string name="register_error_age">Select your age group!</string>
     <string name="register_error_gender">Select your gender!</string>
@@ -49,8 +49,6 @@
         <item>M</item>
         <item>F</item>
     </string-array>
-
-
 
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
@@ -79,7 +77,9 @@
     <string name="mytrips_detail_delete">Delete trip</string>
 
     <string name="profile_preference">Your Travel Style</string>
-    <string name="profile_preference_edit">Edit</string>
+    <string name="profile_preference_edit">Edit travel style</string>
+
+
     <string-array name="destination">
         <item>asssss</item>
         <item>assssss</item>

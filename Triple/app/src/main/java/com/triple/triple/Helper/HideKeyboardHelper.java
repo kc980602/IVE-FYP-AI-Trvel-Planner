@@ -1,13 +1,9 @@
-package com.triple.triple.helper;
+package com.triple.triple.Helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
-
-import com.triple.triple.R;
 
 /**
  * Created by Kevin on 2018/1/20.

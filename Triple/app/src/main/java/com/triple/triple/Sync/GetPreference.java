@@ -2,7 +2,7 @@ package com.triple.triple.Sync;
 
 import android.content.Context;
 
-import com.triple.triple.helper.GetToken;
+import com.triple.triple.Helper.GetToken;
 
 import java.io.IOException;
 

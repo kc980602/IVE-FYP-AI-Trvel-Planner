@@ -16,7 +16,7 @@ import okhttp3.Response;
 public class Registration {
     private final OkHttpClient client = new OkHttpClient();
 
-    public String run(String url, String username, String password, String cPassword, String email, String age, String gender, String income) throws Exception {
+    public String run(String url, String username, String password, String cPassword, String email, String age, String gender, String country) throws Exception {
         RequestBody formBody = new FormBody.Builder()
                 .add("username", username)
                 .add("password", password)
@@ -26,7 +26,7 @@ public class Registration {
                 .add("gender", gender)
                 .add("age", age)
                 .add("email", email)
-                .add("income", income)
+                .add("income", "0")
                 .build();
         Request request = new Request.Builder()
                 .url(url)

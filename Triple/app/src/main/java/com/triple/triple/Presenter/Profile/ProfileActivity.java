@@ -8,17 +8,12 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Presenter.Account.LoginActivity;
 import com.triple.triple.R;
-import com.triple.triple.helper.BottomNavigationViewHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -69,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onButtonPreferenceClicked(View view) {
         int id = view.getId();
         if (id == R.id.bt_preference) {
-            Intent i = new Intent(mcontext, PreferenceActivity.class);
+            Intent i = new Intent(mcontext, TravelStyleActivity.class);
             startActivity(i);
             finish();
         }

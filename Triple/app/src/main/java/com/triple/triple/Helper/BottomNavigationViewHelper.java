@@ -1,4 +1,4 @@
-package com.triple.triple.helper;
+package com.triple.triple.Helper;
 
 import android.content.Context;
 import android.content.Intent;

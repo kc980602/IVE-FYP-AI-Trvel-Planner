@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +28,6 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
-
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
@@ -46,38 +45,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressDialog = new ProgressDialog(mcontext);
+        progressDialog.setMessage(getString(R.string.dialog_progress_title));
+
         setupToolbar();
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
     }
 
-    /**
-     * Toolbar setup
-     */
     private void setupToolbar() {
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("");
     }
 
-    /**
-     * Toolbar setup
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_account_login, menu);
+        getMenuInflater().inflate(R.menu.actionbar_account_login, menu);
         return true;
     }
 
-    /**
-     * Toolbar "+" listener
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_close) {
-            Intent i_home = new Intent(mcontext, HomeActivity.class);
-            startActivity(i_home);
+            NavUtils.navigateUpFromSameTask(this);
             finish();
             return true;
         }
@@ -107,8 +99,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(mcontext);
-            progressDialog.setMessage(getString(R.string.dialog_progress_title));
             progressDialog.show();
         }
 

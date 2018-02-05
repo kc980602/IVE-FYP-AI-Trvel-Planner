@@ -41,12 +41,13 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/icon" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textAlignment="center"
-                    android:textSize="30dp" />
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/icon_text"
+                    android:tint="@color/grey2" />
+
             </LinearLayout>
 
 
@@ -54,9 +55,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp" >
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,7 +65,7 @@
                     android:drawablePadding="5dp"
                     android:drawableTint="@color/grey2"
                     android:hint="@string/login_username"
-                    android:inputType="text"
+                    android:inputType="textAutoComplete"
                     android:lines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -73,18 +74,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_lock"
+                    android:drawableStart="@drawable/ic_lock"
                     android:drawablePadding="5dp"
                     android:drawableTint="@color/grey2"
                     android:hint="@string/login_password"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:lines="1" />
+                    android:lines="1"
+                    app:passwordToggleEnabled="true" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -97,15 +101,16 @@
                 android:onClick="onButtonLoginClicked"
                 android:padding="12dp"
                 android:text="@string/login_signin"
-                android:theme="@style/MyButton"/>
+                android:theme="@style/MyButton" />
+
             <TextView
                 android:id="@+id/link_signup"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="No account yet? Create one"
+                android:gravity="center"
                 android:onClick="onButtonRegisterClicked"
+                android:text="No account yet? Create one"
                 android:textSize="16dip" />
 
         </LinearLayout>

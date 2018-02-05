@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.R;
-import com.triple.triple.helper.BottomNavigationViewHelper;
+import com.triple.triple.Helper.BottomNavigationViewHelper;
 
 public class SearchActivity extends AppCompatActivity {
 

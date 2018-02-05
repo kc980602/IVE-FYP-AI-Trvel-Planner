@@ -1,12 +1,4 @@
-package com.triple.triple.helper;
-
-import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.view.View;
-
-import com.triple.triple.R;
-import com.wang.avi.AVLoadingIndicatorView;
+package com.triple.triple.Helper;
 
 /**
  * Created by Kevin on 2018/1/23.

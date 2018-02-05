@@ -1,20 +1,11 @@
 package com.triple.triple.Presenter;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,20 +14,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
-import com.securepreferences.SecurePreferences;
-import com.triple.triple.Presenter.Home.HomeFragment;
+import com.triple.triple.Helper.GetToken;
+import com.triple.triple.Presenter.Account.LoginActivity;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
-import com.triple.triple.Presenter.Profile.PreferenceActivity;
 import com.triple.triple.Presenter.Profile.ProfileActivity;
+import com.triple.triple.Presenter.Profile.TravelStyleActivity;
 import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
 
@@ -50,17 +39,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Context mcontext = MainActivity.this;
     private static boolean isShowPageStart = true;
-    public static final String DEFAULT = "N/A";
-    private final int MESSAGE_SHOW_DRAWER_LAYOUT = 0x001;
+    private final int MESSAGE_SHOW_LOGIN = 0x001;
     private final int MESSAGE_SHOW_START_PAGE = 0x002;
 
     public Handler mHandler = new Handler() {
 
         public void handleMessage(Message msg) {
-            Log.d("Handler", "handleMemmmssage");
             switch (msg.what) {
+                case MESSAGE_SHOW_LOGIN:
+                    Intent intent = new Intent();
+                    intent.setClass(mcontext, LoginActivity.class);
+                    startActivity(intent);
+                    break;
                 case MESSAGE_SHOW_START_PAGE:
-                    Log.d("Handler", "MESSAGE_SHOW_START_PAGE in");
                     AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
                     alphaAnimation.setDuration(300);
                     alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -93,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initView();
         initViewPager();
 
-        SharedPreferences data = new SecurePreferences(mcontext);
-        final String token = data.getString("token", DEFAULT);
         if (isShowPageStart) {
             relative_main.setVisibility(View.VISIBLE);
             mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 2000);
@@ -104,6 +93,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 1000);
 //            }
             isShowPageStart = false;
+        }
+
+        if (GetToken.getToken(mcontext).equals(GetToken.DEFAULT)) {
+            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_LOGIN, 2000);
         }
     }
 
@@ -162,11 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         Intent intent = new Intent();
-
         int id = item.getItemId();
-
         if (id == R.id.nav_mytrips) {
             intent.setClass(this, MytripsActivity.class);
             startActivity(intent);
@@ -174,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.setClass(this, SearchActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_travelstyle) {
-            intent.setClass(this, PreferenceActivity.class);
+            intent.setClass(this, TravelStyleActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_help) {
 
