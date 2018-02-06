@@ -34,7 +34,6 @@ public class Registration {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            Log.d("abc", response.message() + "end" + response.isSuccessful());
             return response.body().string();
         }
 

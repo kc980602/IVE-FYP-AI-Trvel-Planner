@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp" >
+                android:layout_marginTop="8dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/et_username"
@@ -77,12 +77,12 @@
                 android:layout_marginTop="8dp"
                 app:passwordToggleEnabled="true">
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_lock"
                     android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/ic_lock"
                     android:drawableTint="@color/grey2"
                     android:hint="@string/login_password"
                     android:imeOptions="actionDone"
@@ -91,6 +91,16 @@
                     app:passwordToggleEnabled="true" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/link_forget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:onClick="onClick"
+                android:text="@string/login_forget"
+                android:textColor="@color/grey2"
+                android:textSize="16dip" />
 
             <Button
                 android:id="@+id/bt_login"
@@ -103,15 +113,29 @@
                 android:text="@string/login_signin"
                 android:theme="@style/MyButton" />
 
-            <TextView
-                android:id="@+id/link_signup"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-                android:onClick="onButtonRegisterClicked"
-                android:text="No account yet? Create one"
-                android:textSize="16dip" />
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/login_signup_guide"
+                    android:textSize="16dip" />
+
+                <TextView
+                    android:id="@+id/link_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="onClick"
+                    android:text="@string/login_signup"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16dip"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

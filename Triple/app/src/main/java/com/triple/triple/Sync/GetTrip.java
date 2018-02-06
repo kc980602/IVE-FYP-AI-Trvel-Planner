@@ -6,7 +6,7 @@ package com.triple.triple.Sync;
 
 import android.content.Context;
 
-import com.triple.triple.Helper.GetToken;
+import com.triple.triple.Helper.Token;
 
 import java.io.IOException;
 
@@ -14,12 +14,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public final class GetTrip {
+public class GetTrip {
     private final OkHttpClient client = new OkHttpClient();
 
     public String run(String url, Context mcontext) throws Exception {
         String token = "Bearer ";
-        token += GetToken.getToken(mcontext);
+        token += Token.getToken(mcontext);
         Request request = new Request.Builder()
                 .header("Authorization", token)
                 .url(url)
@@ -27,7 +27,7 @@ public final class GetTrip {
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String re = response.body().string();
-            response.body().close();
+            response.close();
             return re;
         }
     }

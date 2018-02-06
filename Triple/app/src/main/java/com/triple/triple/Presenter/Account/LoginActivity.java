@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Presenter.Home.HomeActivity;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.Authentication;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -36,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private Toolbar myToolbar;
     private AVLoadingIndicatorView avi;
     private AlertDialog dialog;
-    private EditText et_username, et_password;
+    private TextInputEditText et_username, et_password;
     private String username, password;
     private ProgressDialog progressDialog;
 
@@ -49,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
 
         setupToolbar();
-        et_username = (EditText) findViewById(R.id.et_username);
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_username = (TextInputEditText) findViewById(R.id.et_username);
+        et_password = (TextInputEditText) findViewById(R.id.et_password);
     }
 
     private void setupToolbar() {
@@ -86,13 +88,18 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onButtonRegisterClicked(View view) {
+    public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.link_signup) {
-            Intent i_register = new Intent(mcontext, RegisterActivity.class);
-            startActivity(i_register);
+        Intent indent = new Intent();
+        switch (id) {
+            case R.id.link_signup:
+                indent.setClass(mcontext, RegisterActivity.class);
+                break;
+            case R.id.link_forget:
+                indent.setClass(mcontext, ForgetPasswordActivity.class);
+                break;
         }
-        return true;
+        startActivity(indent);
     }
 
     private class RequestLogin extends AsyncTask<Void, Void, String> {
@@ -122,7 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
             } else {
                 String editResult = "[" + result + "]";
-                Type type = new TypeToken<List<AuthData>>() {}.getType();
+                Type type = new TypeToken<List<AuthData>>() {
+                }.getType();
                 Gson gson = new Gson();
                 try {
                     List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);
@@ -138,8 +146,8 @@ public class LoginActivity extends AppCompatActivity {
                     String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
                     Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
                     progressDialog.hide();
-                    Intent i_home = new Intent(mcontext, HomeActivity.class);
-                    startActivity(i_home);
+                    Intent indent = new Intent(mcontext, MainActivity.class);
+                    startActivity(indent);
                     finish();
                 } catch (Exception e) {
                     Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Adapter.TripAdapter;
+import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
@@ -63,7 +64,7 @@ public class MytripsActivity extends AppCompatActivity {
 
         setupActionBar();
 
-        new MytripsActivity.RequestTrip().execute();
+
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -74,6 +75,11 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
+        if (CheckLogin.directLogin(mcontext)) {
+            finish();
+        } else {
+            new MytripsActivity.RequestTrip().execute();
+        }
     }
 
     private void setupActionBar() {
