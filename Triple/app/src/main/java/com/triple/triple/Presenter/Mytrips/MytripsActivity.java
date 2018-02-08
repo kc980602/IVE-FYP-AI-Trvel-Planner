@@ -23,7 +23,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Adapter.TripAdapter;
+<<<<<<< HEAD
 import com.triple.triple.Adapter.TripRecyclerViewAdapter;
+=======
+import com.triple.triple.Helper.CheckLogin;
+>>>>>>> bdf916ba0035b9fdf96b7b049c9d0400dbcfd411
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
@@ -85,7 +89,11 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
-
+        if (CheckLogin.directLogin(mcontext)) {
+            finish();
+        } else {
+            new MytripsActivity.RequestTrip().execute();
+        }
     }
 
     private void setupActionBar() {

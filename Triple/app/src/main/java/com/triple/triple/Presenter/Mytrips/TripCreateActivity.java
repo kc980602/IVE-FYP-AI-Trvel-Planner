@@ -1,8 +1,10 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
+import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.R;
 import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
@@ -34,9 +37,10 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private Context mcontext = TripCreateActivity.this;
 
     private Toolbar myToolbar;
-    private EditText et_tripname, et_tripdate;
+    private TextInputEditText et_tripname, et_tripdate;
     private AutoCompleteTextView actw_detination;
     private CheckBox cb_generate;
+    private ProgressDialog progressDialog;
 
     private String tripname, tripdateStart, dateCount, destination, generate;
 
@@ -46,8 +50,11 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_trip_create);
         setupActionBar();
 
-        et_tripname = (EditText) findViewById(R.id.et_tripname);
-        et_tripdate = (EditText) findViewById(R.id.et_tripdate);
+        progressDialog = new ProgressDialog(mcontext);
+        progressDialog.setMessage(getString(R.string.dialog_progress_title));
+
+        et_tripname = (TextInputEditText) findViewById(R.id.et_tripname);
+        et_tripdate = (TextInputEditText) findViewById(R.id.et_tripdate);
         actw_detination = (AutoCompleteTextView) findViewById(R.id.actw_detination);
         cb_generate = (CheckBox) findViewById(R.id.cb_generate);
 
@@ -57,6 +64,9 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.destination));
         actw_detination.setAdapter(adapter);
 
+        if (CheckLogin.directLogin(mcontext)) {
+            finish();
+        }
     }
 
     private void setupActionBar() {
@@ -157,6 +167,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.show();
         }
 
         @Override
@@ -177,6 +188,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             if (!result.equals("201")) {
                 Toast.makeText(mcontext, R.string.mytrips_create_error_process, Toast.LENGTH_SHORT).show();
             } else {
+                progressDialog.hide();
                 Intent i_home = new Intent(mcontext, MytripsActivity.class);
                 startActivity(i_home);
                 finish();

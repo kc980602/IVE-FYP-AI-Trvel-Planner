@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Model.Preference;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetPreference;
@@ -49,8 +50,11 @@ public class TravelStyleActivity extends AppCompatActivity {
         avi.setIndicator(indicator);
 
         setupActionBar();
-
-        new TravelStyleActivity.RequestPreference().execute();
+        if (CheckLogin.directLogin(mcontext)) {
+            finish();
+        } else {
+            new TravelStyleActivity.RequestPreference().execute();
+        }
     }
 
     private void setupActionBar() {

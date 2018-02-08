@@ -21,7 +21,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.triple.triple.Helper.GetToken;
+import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.Token;
 import com.triple.triple.Presenter.Account.LoginActivity;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
 import com.triple.triple.Presenter.Profile.ProfileActivity;
@@ -47,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_SHOW_LOGIN:
-                    Intent intent = new Intent();
-                    intent.setClass(mcontext, LoginActivity.class);
-                    startActivity(intent);
+                    CheckLogin.directLogin(mcontext);
                     break;
                 case MESSAGE_SHOW_START_PAGE:
                     AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             isShowPageStart = false;
         }
 
-        if (GetToken.getToken(mcontext).equals(GetToken.DEFAULT)) {
+        if (Token.getToken(mcontext).equals(Token.DEFAULT)) {
             mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_LOGIN, 2000);
         }
     }
