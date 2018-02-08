@@ -7,6 +7,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Adapter.TripAdapter;
+import com.triple.triple.Adapter.TripRecyclerViewAdapter;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
@@ -45,7 +48,9 @@ public class MytripsActivity extends AppCompatActivity {
 
     private Toolbar myToolbar;
     private ListView lv_tripPlan;
+    private RecyclerView rv_trips;
 
+    private TripRecyclerViewAdapter adapter;
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -54,15 +59,21 @@ public class MytripsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips);
 
-        lv_tripPlan = (ListView) findViewById(R.id.lv_tripPlan);
-        lv_tripPlan.setOnItemClickListener(lv_tripPlanListener);
+//        lv_tripPlan = (ListView) findViewById(R.id.lv_tripPlan);
+//        lv_tripPlan.setOnItemClickListener(lv_tripPlanListener);
+
+
 
         String indicator = getIntent().getStringExtra("indicator");
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
 
         setupActionBar();
-
+        RecyclerView rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
+        rv_trips.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(mcontext);
+        rv_trips.setLayoutManager(llm);
+        rv_trips.setAdapter(adapter);
         new MytripsActivity.RequestTrip().execute();
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
@@ -73,6 +84,7 @@ public class MytripsActivity extends AppCompatActivity {
                 new MytripsActivity.RequestTrip().execute();
             }
         });
+
 
     }
 
@@ -103,27 +115,17 @@ public class MytripsActivity extends AppCompatActivity {
     /**
      * ListView Listener : lv_tripPlan
      */
-    AdapterView.OnItemClickListener lv_tripPlanListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            TextView tripPlanId = (TextView) view.findViewById(R.id.tv_tripid);
-            TextView tripPlanName = (TextView) view.findViewById(R.id.tv_tripname);
-            Intent i_tripPlan = new Intent(mcontext, TripDetailActivity.class);
-            i_tripPlan.putExtra("tid", tripPlanId.getText().toString());
-            i_tripPlan.putExtra("name", tripPlanName.getText().toString());
-            mcontext.startActivity(i_tripPlan);
-        }
-    };
-
-    /**
-     * make get request to obtain trip plan related to user
-     */
-    private void loadData(ArrayList<HashMap<String, Object>> listData) {
-        SimpleAdapter show = new SimpleAdapter(this, listData, R.layout.listviewitem_mytrips,
-                new String[]{"tv_tripname", "tv_owner", "tv_tripdate", "image1", "image2"},
-                new int[]{R.id.tv_tripname, R.id.tv_owner, R.id.tv_tripdate, R.id.image1, R.id.image2});
-        lv_tripPlan.setAdapter(show);
-    }
+//    AdapterView.OnItemClickListener lv_tripPlanListener = new AdapterView.OnItemClickListener() {
+//        @Override
+//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            TextView tripPlanId = (TextView) view.findViewById(R.id.tv_tripid);
+//            TextView tripPlanName = (TextView) view.findViewById(R.id.tv_tripname);
+//            Intent i_tripPlan = new Intent(mcontext, TripDetailActivity.class);
+//            i_tripPlan.putExtra("tid", tripPlanId.getText().toString());
+//            i_tripPlan.putExtra("name", tripPlanName.getText().toString());
+//            mcontext.startActivity(i_tripPlan);
+//        }
+//    };
 
     private class RequestTrip extends AsyncTask<Void, Void, String> {
         @Override
@@ -154,8 +156,10 @@ public class MytripsActivity extends AppCompatActivity {
                 }.getType();
                 Gson gson = new Gson();
                 List<Trip> trips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
-                TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-                lv_tripPlan.setAdapter(adapter);
+//                TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
+//                lv_tripPlan.setAdapter(adapter);
+                adapter = new TripRecyclerViewAdapter(MytripsActivity.this, trips);
+
             } catch (Exception e) {
                 Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_SHORT).show();
             }
