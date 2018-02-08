@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Model.Preference;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetPreference;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -75,6 +76,7 @@ public class TravelStyleActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                MainActivity.openDrawer();
                 break;
         }
         return true;

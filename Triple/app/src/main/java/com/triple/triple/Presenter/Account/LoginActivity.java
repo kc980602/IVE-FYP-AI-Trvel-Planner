@@ -14,14 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Model.AuthData;
-import com.triple.triple.Presenter.Home.HomeActivity;
 import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.Authentication;

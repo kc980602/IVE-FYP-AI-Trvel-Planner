@@ -25,9 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Presenter.Home.HomeActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
-        <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity

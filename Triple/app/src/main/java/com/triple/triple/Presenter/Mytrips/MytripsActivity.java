@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -101,6 +104,7 @@ public class MytripsActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                MainActivity.openDrawer();
                 break;
         }
         return true;
@@ -162,9 +166,12 @@ public class MytripsActivity extends AppCompatActivity {
                 List<Trip> trips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
                 TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
                 lv_tripPlan.setAdapter(adapter);
+                RelativeLayout relative_main = (RelativeLayout) findViewById(R.id.relative_main);
+                relative_main.setBackgroundColor(getColor(R.color.colorGrey));
             } catch (Exception e) {
-                Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_SHORT).show();
+                new MytripsActivity.RequestTrip().execute();
             }
+
             stopAnim();
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
