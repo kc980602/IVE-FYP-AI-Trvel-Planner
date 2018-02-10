@@ -1,17 +1,17 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
 import java.text.ParseException;
@@ -20,98 +20,89 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by KC on 1/25/2018.
+ * Created by KC on 2/8/2018.
  */
-public class TripAdapter extends BaseAdapter {
 
-    Activity activity;
-    List<Trip> trips;
-    LayoutInflater inflater;
+public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
+
+    private Activity activity;
+    private List<Trip> trips;
 
     public TripAdapter(Activity activity, List<Trip> trips) {
         this.activity = activity;
         this.trips = trips;
-        this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public class TripViewHolder extends RecyclerView.ViewHolder {
+        public TextView tv_tripid;
+        public TextView tv_tripname;
+        public TextView tv_owner;
+        public TextView tv_tripdestination;
+        public TextView tv_tripdate;
+        public RoundedImageView image1;
+
+        public TripViewHolder(View itemView) {
+            super(itemView);
+            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
+            tv_tripid = (TextView) itemView.findViewById(R.id.tv_tripid);
+            tv_tripname = (TextView) itemView.findViewById(R.id.tv_tripname);
+            tv_owner = (TextView) itemView.findViewById(R.id.tv_owner);
+            tv_tripdestination = (TextView) itemView.findViewById(R.id.tv_tripdestination);
+            tv_tripdate = (TextView) itemView.findViewById(R.id.tv_tripdate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Intent i_tripPlan = new Intent(activity, TripDetailActivity.class);
+                    i_tripPlan.putExtra("tid", tv_tripid.getText());
+                    i_tripPlan.putExtra("name", tv_tripname.getText());
+                    activity.startActivity(i_tripPlan);
+                }
+            });
+        }
+    }
+
+
+    @Override
+    public TripViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.recyclerviewitem_mytrips, viewGroup, false);
+        return new TripViewHolder(itemView);
     }
 
     @Override
-    public int getCount() {
-        return trips.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder = null;
-
-        if (convertView == null) {
-
-            convertView = inflater.inflate(R.layout.listviewitem_mytrips, parent, false);
-
-            holder = new ViewHolder();
-
-            holder.tv_tripid = (TextView) convertView.findViewById(R.id.tv_tripid);
-            holder.tv_tripname = (TextView) convertView.findViewById(R.id.tv_tripname);
-            holder.tv_owner = (TextView) convertView.findViewById(R.id.tv_owner);
-            holder.tv_tripdate = (TextView) convertView.findViewById(R.id.tv_tripdate);
-            holder.image1 = (ImageView) convertView.findViewById(R.id.image1);
-            holder.image2 = (ImageView) convertView.findViewById(R.id.image2);
-
-            convertView.setTag(holder);
-        } else
-            holder = (ViewHolder) convertView.getTag();
-
-        Trip trip = trips.get(position);
-
-        holder.tv_tripid.setText(String.valueOf(trip.getId()));
-        holder.tv_tripname.setText(trip.getName());
-        holder.tv_owner.setText(trip.getOwner());
+    public void onBindViewHolder(TripViewHolder holder, int i) {
+        Trip trip = trips.get(i);
         String date = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
         Calendar c = Calendar.getInstance();
+
         try {
             c.setTime(sdf.parse(trip.getVisit_date()));
             date = sdf2.format(c.getTime());
         } catch (ParseException e) {
-            e.printStackTrace();
         }
         c.add(Calendar.DATE, trip.getVisit_length());
         date += " - " + sdf2.format(c.getTime());
 
-        holder.tv_tripdate.setText(date);
-//            Picasso.with(activity)
-//                    .load(trip.getImages()[0].getImages())
-//                    .into(holder.image1);
-//            Picasso.with(activity)
-//                    .load(trip.getImages()[1].getImages())
-//                    .into(holder.image2);
-
+        if (trip.getImage() == null) {
+            holder.image1.setImageResource(R.drawable.image_null);
+        } else {
             Picasso.with(activity)
-                    .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
+                    .load(trip.getImage())
                     .into(holder.image1);
-            Picasso.with(activity)
-                    .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTbrmTGR3UlYoUKYqW6AMyb_9HSfqNxSgV9vWMER4T9w-v-xPx")
-                    .into(holder.image2);
-
-
-
-        return convertView;
+        }
+        holder.tv_tripid.setText(String.valueOf(trip.getId()));
+        holder.tv_tripname.setText(trip.getName());
+        holder.tv_owner.setText(trip.getOwner());
+        holder.tv_tripdate.setText(date);
     }
 
-    public class ViewHolder {
-        TextView tv_tripid, tv_tripname, tv_owner, tv_tripdate;
-        ImageView image1, image2;
+    @Override
+    public int getItemCount() {
+        return trips.size();
     }
+
 }
-

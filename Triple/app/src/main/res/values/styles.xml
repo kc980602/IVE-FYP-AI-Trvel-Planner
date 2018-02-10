@@ -47,6 +47,7 @@
     <style name="MyToolbar" parent="AppTheme">
         <item name="colorControlNormal">#FFFFFF</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="AppThemeNoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

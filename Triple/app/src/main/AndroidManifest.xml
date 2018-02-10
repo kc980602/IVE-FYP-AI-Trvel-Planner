@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />

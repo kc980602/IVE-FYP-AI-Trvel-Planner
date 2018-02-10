@@ -5,6 +5,8 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 /**
  * Created by Kevin on 2018/1/23.
  */
@@ -28,7 +30,7 @@ public class Trip {
     private String owner;
     @SerializedName("photos")
     @Expose
-    private Image[] images;
+    private String image;
 
     public int getId() {
         return id;
@@ -70,11 +72,11 @@ public class Trip {
         this.owner = owner;
     }
 
-    public Image[] getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(Image[] images) {
-        this.images = images;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

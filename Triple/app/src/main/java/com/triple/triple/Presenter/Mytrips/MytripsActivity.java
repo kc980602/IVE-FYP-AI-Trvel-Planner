@@ -3,35 +3,36 @@ package com.triple.triple.Presenter.Mytrips;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import com.triple.triple.Adapter.TripAdapter;
-<<<<<<< HEAD
-import com.triple.triple.Adapter.TripRecyclerViewAdapter;
-=======
 import com.triple.triple.Helper.CheckLogin;
->>>>>>> bdf916ba0035b9fdf96b7b049c9d0400dbcfd411
+import com.triple.triple.Helper.DrawerUtil;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.MainActivity;
+import com.triple.triple.Presenter.Profile.ProfileActivity;
+import com.triple.triple.Presenter.Profile.TravelStyleActivity;
+import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -41,10 +42,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 public class MytripsActivity extends AppCompatActivity {
 
@@ -53,35 +51,37 @@ public class MytripsActivity extends AppCompatActivity {
 
     private Context mcontext = MytripsActivity.this;
 
+    private DrawerLayout drawer;
     private Toolbar myToolbar;
     private ListView lv_tripPlan;
     private RecyclerView rv_trips;
-
-    private TripRecyclerViewAdapter adapter;
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private List<Trip> trips = new ArrayList<>();
+    private TripAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips);
-
-//        lv_tripPlan = (ListView) findViewById(R.id.lv_tripPlan);
-//        lv_tripPlan.setOnItemClickListener(lv_tripPlanListener);
-
-
-
+//        setupActionBar();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        DrawerUtil.getDrawer(this, toolbar);
         String indicator = getIntent().getStringExtra("indicator");
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
 
-        setupActionBar();
-        RecyclerView rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
+        rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
+
+        adapter = new TripAdapter(MytripsActivity.this, trips);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rv_trips.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(mcontext);
-        rv_trips.setLayoutManager(llm);
+        rv_trips.setLayoutManager(mLayoutManager);
+        rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter);
-        new MytripsActivity.RequestTrip().execute();
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -99,45 +99,30 @@ public class MytripsActivity extends AppCompatActivity {
         }
     }
 
-    private void setupActionBar() {
-        android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.title_mytrips);
-    }
+//    private void setupActionBar() {
+//        android.support.v7.app.ActionBar ab = getSupportActionBar();
+//        ab.setTitle(R.string.title_mytrips);
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
-                startActivity(i_create);
-                break;
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                MainActivity.openDrawer();
-                break;
-        }
-        return true;
-    }
-
-    /**
-     * ListView Listener : lv_tripPlan
-     */
-//    AdapterView.OnItemClickListener lv_tripPlanListener = new AdapterView.OnItemClickListener() {
-//        @Override
-//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            TextView tripPlanId = (TextView) view.findViewById(R.id.tv_tripid);
-//            TextView tripPlanName = (TextView) view.findViewById(R.id.tv_tripname);
-//            Intent i_tripPlan = new Intent(mcontext, TripDetailActivity.class);
-//            i_tripPlan.putExtra("tid", tripPlanId.getText().toString());
-//            i_tripPlan.putExtra("name", tripPlanName.getText().toString());
-//            mcontext.startActivity(i_tripPlan);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
+//        return true;
+//    }
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_add:
+//                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
+//                startActivity(i_create);
+//                break;
+//            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+//                MainActivity.openDrawer();
+//                break;
 //        }
-//    };
+//        return true;
+//    }
 
     private class RequestTrip extends AsyncTask<Void, Void, String> {
         @Override
@@ -167,22 +152,14 @@ public class MytripsActivity extends AppCompatActivity {
                 Type type = new TypeToken<List<Trip>>() {
                 }.getType();
                 Gson gson = new Gson();
-                List<Trip> trips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
-<<<<<<< HEAD
-                TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-                lv_tripPlan.setAdapter(adapter);
-                RelativeLayout relative_main = (RelativeLayout) findViewById(R.id.relative_main);
-                relative_main.setBackgroundColor(getColor(R.color.colorGrey));
-=======
-//                TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-//                lv_tripPlan.setAdapter(adapter);
-                adapter = new TripRecyclerViewAdapter(MytripsActivity.this, trips);
-
->>>>>>> 235ea52245c364898cbaa4d715abcfeca8b5c57b
+                List<Trip> newTrips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
+                for (int i=0; i<newTrips.size(); i++) {
+                    trips.add(newTrips.get(i));
+                }
+                adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 new MytripsActivity.RequestTrip().execute();
             }
-
             stopAnim();
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
