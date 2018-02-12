@@ -35,7 +35,7 @@
                 android:id="@+id/tv_tripname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/text_primary"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                 android:id="@+id/tv_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textSecondary"
+                android:textColor="@color/text_secondary"
                 android:textDirection="rtl"
                 android:textSize="13dp" />
 
@@ -51,7 +51,7 @@
                 android:id="@+id/tv_tripdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textSecondary"
+                android:textColor="@color/text_secondary"
                 android:textDirection="ltr"
                 android:textSize="13dp" />
         </LinearLayout>

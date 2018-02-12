@@ -8,13 +8,7 @@
     android:background="@color/main_background"
     tools:context=".Presenter.Mytrips.MytripsActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            theme="@style/MyToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
+    <include layout="@layout/toolbar_stadand" />
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
@@ -33,6 +27,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:translationZ="100dp">
 

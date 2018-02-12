@@ -52,7 +52,7 @@ public class MytripsActivity extends AppCompatActivity {
     private Context mcontext = MytripsActivity.this;
 
     private DrawerLayout drawer;
-    private Toolbar myToolbar;
+    private Toolbar toolbar;
     private ListView lv_tripPlan;
     private RecyclerView rv_trips;
     private AVLoadingIndicatorView avi;
@@ -65,23 +65,25 @@ public class MytripsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips);
-//        setupActionBar();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+
+        initView();
+
+        if (CheckLogin.directLogin(mcontext)) {
+            finish();
+        } else {
+            new MytripsActivity.RequestTrip().execute();
+        }
+    }
+
+    private void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
+
         String indicator = getIntent().getStringExtra("indicator");
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
-
-        rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
-
-        adapter = new TripAdapter(MytripsActivity.this, trips);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rv_trips.setHasFixedSize(true);
-        rv_trips.setLayoutManager(mLayoutManager);
-        rv_trips.setItemAnimator(new DefaultItemAnimator());
-        rv_trips.setAdapter(adapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -92,37 +94,34 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
-        if (CheckLogin.directLogin(mcontext)) {
-            finish();
-        } else {
-            new MytripsActivity.RequestTrip().execute();
-        }
+        rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
+        adapter = new TripAdapter(MytripsActivity.this, trips);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rv_trips.setHasFixedSize(true);
+        rv_trips.setLayoutManager(mLayoutManager);
+        rv_trips.setItemAnimator(new DefaultItemAnimator());
+        rv_trips.setAdapter(adapter);
     }
 
-//    private void setupActionBar() {
-//        android.support.v7.app.ActionBar ab = getSupportActionBar();
-//        ab.setTitle(R.string.title_mytrips);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
-//        return true;
-//    }
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_add:
-//                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
-//                startActivity(i_create);
-//                break;
-//            case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(this);
-//                MainActivity.openDrawer();
-//                break;
-//        }
-//        return true;
-//    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
+                startActivity(i_create);
+                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                MainActivity.openDrawer();
+                break;
+        }
+        return true;
+    }
 
     private class RequestTrip extends AsyncTask<Void, Void, String> {
         @Override

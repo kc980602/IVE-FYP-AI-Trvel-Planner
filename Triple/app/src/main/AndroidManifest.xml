@@ -13,11 +13,10 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeNoActionBar">
         <activity
             android:name=".Presenter.MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeNoActionBar">
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +25,7 @@
         </activity>
         <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
-            android:parentActivityName=".Presenter.MainActivity"
-            android:theme="@style/AppThemeNoActionBar" />
+            android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />

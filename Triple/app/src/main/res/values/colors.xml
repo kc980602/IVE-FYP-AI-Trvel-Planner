@@ -20,9 +20,12 @@
     <color name="main_background">#EEEEEE</color>
     <color name="google_assistant_background">#F5F5F5</color>
 
-    <color name="textPrimary">#212121</color>
-    <color name="textSecondary">#616161</color>
+    <color name="text_primary">#202020</color>
+    <color name="text_secondary">#616161</color>
+
+    <color name="icon_grey">#737373</color>
 
     <color name="button_pressed">#8AB73F</color>
     <color name="button_default">#8AC148</color>
+
 </resources>
