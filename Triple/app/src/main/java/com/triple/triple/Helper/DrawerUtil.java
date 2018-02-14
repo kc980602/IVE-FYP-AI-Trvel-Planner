@@ -30,14 +30,13 @@ public class DrawerUtil {
     public static void getDrawer(final Activity activity, Toolbar toolbar) {
         int iconColor = activity.getResources().getColor(R.color.icon_grey);
         //if you want to update the items at a later time it is recommended to keep it in a variable
-        PrimaryDrawerItem drawerEmptyItem= new PrimaryDrawerItem().withIdentifier(0).withName("");drawerEmptyItem.withEnabled(false);
-        PrimaryDrawerItem drawer_home = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.title_home).withIcon(R.drawable.ic_home).withIconColor(iconColor).withIconTintingEnabled(true);
-        PrimaryDrawerItem drawer_mytrips = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.title_mytrips).withIcon(R.drawable.ic_suitcase).withIconColor(iconColor).withIconTintingEnabled(true);
-        PrimaryDrawerItem drawer_search = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.title_search).withIcon(R.drawable.ic_search).withIconColor(iconColor).withIconTintingEnabled(true);
-        PrimaryDrawerItem drawer_travelstyle = new PrimaryDrawerItem().withIdentifier(4).withName(R.string.title_travelstyle).withIcon(R.drawable.ic_tag_faces).withIconColor(iconColor).withIconTintingEnabled(true);
-        SecondaryDrawerItem drawer_help = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.title_help).withIcon(R.drawable.ic_help).withIconColor(iconColor).withIconTintingEnabled(true);
-        SecondaryDrawerItem drawer_settings = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.title_settings).withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
-        SecondaryDrawerItem drawer_about = new SecondaryDrawerItem().withIdentifier(7).withName(R.string.title_about).withIcon(R.drawable.ic_info).withIconColor(iconColor).withIconTintingEnabled(true);
+        PrimaryDrawerItem drawer_home = new PrimaryDrawerItem().withIdentifier(0).withName(R.string.title_home).withIcon(R.drawable.ic_home).withIconColor(iconColor).withIconTintingEnabled(true);
+        PrimaryDrawerItem drawer_mytrips = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.title_mytrips).withIcon(R.drawable.ic_suitcase).withIconColor(iconColor).withIconTintingEnabled(true);
+        PrimaryDrawerItem drawer_search = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.title_search).withIcon(R.drawable.ic_search).withIconColor(iconColor).withIconTintingEnabled(true);
+        PrimaryDrawerItem drawer_travelstyle = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.title_travelstyle).withIcon(R.drawable.ic_tag_faces).withIconColor(iconColor).withIconTintingEnabled(true);
+        SecondaryDrawerItem drawer_help = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.title_help).withIcon(R.drawable.ic_help).withIconColor(iconColor).withIconTintingEnabled(true);
+        SecondaryDrawerItem drawer_settings = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.title_settings).withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
+        SecondaryDrawerItem drawer_about = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.title_about).withIcon(R.drawable.ic_info).withIconColor(iconColor).withIconTintingEnabled(true);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(activity)
@@ -79,30 +78,34 @@ public class DrawerUtil {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (!(activity instanceof MainActivity)) {
                             Intent intent = new Intent();
-                            switch (((int) drawerItem.getIdentifier())) {
-                                case 1:
+                            int id = (int) drawerItem.getIdentifier();
+                            switch (id) {
+                                case 0:
                                     intent.setClass(activity, MainActivity.class);
                                     break;
-                                case 2:
+                                case 1:
                                     intent.setClass(activity, MytripsActivity.class);
                                     break;
-                                case 3:
+                                case 2:
                                     intent.setClass(activity, SearchActivity.class);
                                     break;
-                                case 4:
+                                case 3:
                                     intent.setClass(activity, TravelStyleActivity.class);
                                     break;
+                                case 4:
+                                    intent.setClass(activity, ProfileActivity.class);
+                                    break;
                                 case 5:
+                                    intent.setClass(activity, ProfileActivity.class);
+                                    break;
+                                case 6:
                                     intent.setClass(activity, ProfileActivity.class);
                                     break;
                                 default:
                                     intent.setClass(activity, MainActivity.class);
                             }
                             view.getContext().startActivity(intent);
-                        }
-
                         return true;
                     }
                 })

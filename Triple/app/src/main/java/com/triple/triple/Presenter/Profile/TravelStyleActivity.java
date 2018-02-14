@@ -76,7 +76,6 @@ public class TravelStyleActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                MainActivity.openDrawer();
                 break;
         }
         return true;

@@ -2,6 +2,7 @@ package com.triple.triple.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,13 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Model.TripDay;
 import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,10 +58,19 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Intent i_tripPlan = new Intent(activity, TripDetailActivity.class);
-                    i_tripPlan.putExtra("tid", tv_tripid.getText());
-                    i_tripPlan.putExtra("name", tv_tripname.getText());
-                    activity.startActivity(i_tripPlan);
+                    int tripId = Integer.parseInt(tv_tripid.getText().toString());
+                    for(Trip trip: trips){
+                        if(trip.getId() == tripId){
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("trip", trip);
+                            Intent indent = new Intent(activity, TripDetailActivity.class);
+                            indent.putExtras(bundle);
+                            activity.startActivity(indent);
+                            break;
+                        }
+                    }
+
+
                 }
             });
         }
@@ -74,18 +87,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     @Override
     public void onBindViewHolder(TripViewHolder holder, int i) {
         Trip trip = trips.get(i);
-        String date = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar c = Calendar.getInstance();
-
-        try {
-            c.setTime(sdf.parse(trip.getVisit_date()));
-            date = sdf2.format(c.getTime());
-        } catch (ParseException e) {
-        }
-        c.add(Calendar.DATE, trip.getVisit_length());
-        date += " - " + sdf2.format(c.getTime());
+        String date = CalendarHelper.castDateToLocale(trip.getVisit_date()) + " - " + CalendarHelper.castDateToLocale(CalendarHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
 
         if (trip.getImage() == null) {
             holder.image1.setImageResource(R.drawable.image_null);

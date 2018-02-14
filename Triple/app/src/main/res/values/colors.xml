@@ -28,4 +28,6 @@
     <color name="button_pressed">#8AB73F</color>
     <color name="button_default">#8AC148</color>
 
+    <color name="gradient_black">#99000000</color>
+
 </resources>

@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
@@ -47,7 +46,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_create);
+        setContentView(R.layout.activity_mytrips_create);
         setupActionBar();
 
         progressDialog = new ProgressDialog(mcontext);
@@ -87,6 +86,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                finish();
                 break;
         }
         return true;
@@ -129,8 +129,10 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         } else {
             et_tripdate.setText(date);
             Days days = Days.daysBetween(Start, End);
-            dateCount = String.valueOf(days.getDays());
+            dateCount = String.valueOf(days.getDays() + 1);
             tripdateStart = year + "-" + monthOfYear + "-" + dayOfMonth;
+            Log.d("aac", dateCount + "ddd" + tripdateStart);
+
         }
     }
 
@@ -191,9 +193,15 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 progressDialog.hide();
                 Intent i_home = new Intent(mcontext, MytripsActivity.class);
                 startActivity(i_home);
-                finish();
                 Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

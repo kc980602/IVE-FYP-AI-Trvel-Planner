@@ -5,13 +5,14 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by Kevin on 2018/1/23.
  */
 
-public class Trip {
+public class Trip implements Serializable {
 
     @SerializedName("id")
     @Expose

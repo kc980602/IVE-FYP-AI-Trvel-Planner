@@ -19,13 +19,10 @@ import com.triple.triple.Presenter.Search.SearchActivity;
 
 public class BottomNavigationViewHelper {
 
-    private static final String TAG = "BottomNavigationViewHel";
-
     public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx){
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.enableShiftingMode(false);
-        bottomNavigationViewEx.setTextVisibility(false);
     }
 
     public static void enableNavigation(final Context context, BottomNavigationViewEx view) {
@@ -33,17 +30,17 @@ public class BottomNavigationViewHelper {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.ic_search:
-                        Intent i_search = new Intent(context, SearchActivity.class); //ACTIVITY_NUM 1
-                        context.startActivity(i_search);
+                    case R.id.action_info:
+
                         break;
-                    case R.id.ic_suitcase:
-                        Intent i_mytrips = new Intent(context, MytripsActivity.class); //ACTIVITY_NUM 2
-                        context.startActivity(i_mytrips);
+                    case R.id.action_itenary:
+
                         break;
-                    case R.id.ic_account:
-                        Intent i_account = new Intent(context, ProfileActivity.class); //ACTIVITY_NUM 3
-                        context.startActivity(i_account);
+                    case R.id.action_invite:
+
+                        break;
+                    case R.id.action_save:
+
                         break;
                 }
                 return false;

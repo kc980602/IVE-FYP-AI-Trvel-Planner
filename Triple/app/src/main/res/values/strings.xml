@@ -77,8 +77,15 @@
     <string name="mytrips_create_success">Trip created</string>
     <string name="mytrips_create_error_date">End date need to greater than Start date!</string>
     <string name="mytrips_create_error_process">Something went wrong! (Error code: 1001)</string>
+
     <string name="mytrips_detail_edit">Edit trip</string>
     <string name="mytrips_detail_delete">Delete trip</string>
+    <string name="mytrips_detail_info">Info</string>
+    <string name="mytrips_detail_itinerary">Itinerary</string>
+    <string name="mytrips_detail_invite">Invite</string>
+    <string name="mytrips_detail_save">Save</string>
+    <string name="mytrips_detail_daysleft_after">Your trip is started!</string>
+    <string name="mytrips_detail_daysleft_before">Days Left</string>
 
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>

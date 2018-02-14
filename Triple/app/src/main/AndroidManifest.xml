@@ -35,10 +35,12 @@
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
-            android:parentActivityName=".Presenter.Mytrips.MytripsActivity" />
+            android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".Presenter.Account.LoginActivity"
             android:parentActivityName=".Presenter.Profile.ProfileActivity"

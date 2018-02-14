@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.DrawerUtil;
 import com.triple.triple.Helper.Token;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
@@ -32,12 +33,9 @@ import com.triple.triple.Presenter.Profile.TravelStyleActivity;
 import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawer;
-    private static DrawerLayout drawer2;
     private FloatingActionButton fab;
-    private FrameLayout mFrame;
     private RelativeLayout relative_main;
     private ImageView img_page_start;
 
@@ -88,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (isShowPageStart) {
             relative_main.setVisibility(View.VISIBLE);
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 2000);
+            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 1000);
             isShowPageStart = false;
         }
 
@@ -101,18 +99,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        DrawerUtil.getDrawer(this, toolbar);
 
         relative_main = findViewById(R.id.relative_main);
         img_page_start = findViewById(R.id.img_page_start);
-
-        drawer2 = drawer;
     }
 
     private void initViewPager() {
@@ -120,16 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment != null) {
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -147,51 +127,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        Fragment fragment = new Fragment();
-        int id = item.getItemId();
-        Intent intent = new Intent();
-        switch (id) {
-            case R.id.nav_home:
-                fragment = new HomeFragment();
-                break;
-            case R.id.nav_mytrips:
-                intent.setClass(this, MytripsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_search:
-                intent.setClass(this, SearchActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_travelstyle:
-                intent.setClass(this, TravelStyleActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_settings:
-                intent.setClass(this, ProfileActivity.class);
-                startActivity(intent);
-                break;
-
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    public static void openDrawer() {
-        drawer2.openDrawer(GravityCompat.START);
-    }
-
-    public void closeDrawer() {
-        drawer2.closeDrawer(GravityCompat.START);
     }
 }

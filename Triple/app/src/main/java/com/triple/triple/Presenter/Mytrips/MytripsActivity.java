@@ -3,14 +3,9 @@ package com.triple.triple.Presenter.Mytrips;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,11 +23,7 @@ import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
 import com.triple.triple.Model.Trip;
-import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.MainActivity;
-import com.triple.triple.Presenter.Profile.ProfileActivity;
-import com.triple.triple.Presenter.Profile.TravelStyleActivity;
-import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -105,7 +96,7 @@ public class MytripsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_mytrips, menu);
+        getMenuInflater().inflate(R.menu.toolbar_mytrips, menu);
         return true;
     }
 
@@ -114,10 +105,6 @@ public class MytripsActivity extends AppCompatActivity {
             case R.id.action_add:
                 Intent i_create = new Intent(mcontext, TripCreateActivity.class);
                 startActivity(i_create);
-                break;
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                MainActivity.openDrawer();
                 break;
         }
         return true;
@@ -159,10 +146,10 @@ public class MytripsActivity extends AppCompatActivity {
             } catch (Exception e) {
                 new MytripsActivity.RequestTrip().execute();
             }
-            stopAnim();
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
+            stopAnim();
         }
     }
 
