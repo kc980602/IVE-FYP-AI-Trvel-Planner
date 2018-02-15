@@ -2,9 +2,14 @@ package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,14 +18,23 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripDayAdapter;
 import com.triple.triple.Helper.BottomNavigationViewHelper;
 import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.R;
+import com.triple.triple.Sync.GetTrip;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +51,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private TripDayAdapter adapter;
     private Trip trip;
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
+    private AVLoadingIndicatorView avi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +100,16 @@ public class TripDetailActivity extends AppCompatActivity {
         ab.setTitle(trip.getName());
         ab.setElevation(0);
 
+        String indicator = getIntent().getStringExtra("indicator");
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+        avi.setIndicator(indicator);
+        avi.hide();
+
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mcontext, bottomNavigationViewEx);
+        bottomNavigationViewEx.enableAnimation(false);
+        bottomNavigationViewEx.enableItemShiftingMode(false);
+        bottomNavigationViewEx.enableShiftingMode(false);
+        bottomNavigationViewEx.setOnNavigationItemSelectedListener(bottomNavigationViewExListener);
         Menu menu = bottomNavigationViewEx.getMenu();
 
         tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
@@ -134,15 +156,6 @@ public class TripDetailActivity extends AppCompatActivity {
         }
     }
 
-
-    private void setupBottomNavigationView() {
-
-    }
-
-    private void setupActionBar() {
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_mytrips_detail, menu);
@@ -165,54 +178,96 @@ public class TripDetailActivity extends AppCompatActivity {
         return true;
     }
 
+     private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
+         @Override
+         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+             switch (item.getItemId()) {
+                 case R.id.action_info:
+                     Log.d("aac", "action_info");
+                     break;
+                 case R.id.action_itenary:
+                     Log.d("aac", "action_itenary");
+                     break;
+                 case R.id.action_invite:
+                     Log.d("aac", "action_invite");
+                     break;
+                 case R.id.action_save:
+                     saveTripToLocal();
+                     break;
+             }
+             return false;
+         }
+     };
 
-    private View getTabIndicator(Context context, String title) {
-        View view = LayoutInflater.from(context).inflate(R.layout.tab_layout_mytrips_detail, null);
-//        TextView tv = (TextView) view.findViewById(R.id.tv_tab);
-//        tv.setText(title);
-        return view;
+    private void saveTripToLocal() {
+        List<Trip> savedTrips;
+        Type type = new TypeToken<List<Trip>>() {
+        }.getType();
+        Gson gson = new Gson();
+        SharedPreferences data = new SecurePreferences(mcontext);
+        SharedPreferences.Editor editor = data.edit();
+        String jsonTripList = data.getString("savedTrips", null);
+        if (jsonTripList == null || jsonTripList.equals("[]")) {
+            savedTrips =  new ArrayList<>();
+            savedTrips.add(trip);
+        } else {
+            savedTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
+            Boolean isFound = false;
+            for(Trip tmpTrip: savedTrips){
+                if(tmpTrip.getId() == trip.getId()){
+                    savedTrips.remove(tmpTrip);
+                    savedTrips.add(trip);
+                    isFound = true;
+                    break;
+                }
+            }
+            if (!isFound) {
+                savedTrips.add(trip);
+            }
+        }
+        String json = gson.toJson(savedTrips);
+        editor.putString("savedTrips", json);
+        editor.commit();
     }
 
-//    private class RequestTrip extends AsyncTask<Void, Void, String> {
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            startAnim();
-//        }
-//
-//        @Override
-//        protected String doInBackground(Void... voids) {
-//            String respone = "Error";
-//            try {
-//                String url =  getResources().getString(R.string.api_showTripPlan);
-//                Log.d(TAG, url);
-//                respone = new GetTrip().run(url);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return respone;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//            Type type = new TypeToken<List<Trip>>(){}.getType();
-//            Gson gson = new Gson();
-//            List<Trip> trips = (List<Trip>) gson.fromJson(result, type);
-//            TripAdapter adapter = new TripAdapter(MytripsActivity.this, trips);
-//            lv_tripPlan.setAdapter(adapter);
-//            stopAnim();
-//        }
-//
-//    }
-//
-//    public void startAnim() {
-//        avi.smoothToShow();
-//    }
-//
-//    public void stopAnim() {
-//        avi.smoothToHide();
-//    }
+    private class RequestTripItinerary  extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startAnim();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String respone = "Error";
+            try {
+                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
+                respone = new GetTrip().run(url, mcontext);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return respone;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                SharedPreferences data = new SecurePreferences(mcontext);
+                data.getString("token", "ll");
+            } catch (Exception e) {
+            }
+            stopAnim();
+        }
+    }
+
+    public void startAnim() {
+        avi.smoothToShow();
+    }
+
+    public void stopAnim() {
+        avi.smoothToHide();
+    }
 
     @Override
     public void finish() {

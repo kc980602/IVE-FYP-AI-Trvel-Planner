@@ -69,8 +69,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                             break;
                         }
                     }
-
-
                 }
             });
         }

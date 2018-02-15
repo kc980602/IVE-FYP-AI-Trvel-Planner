@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
                     Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                     Intent indent = new Intent(mcontext, MainActivity.class);
                     startActivity(indent);
                     finish();

@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
+import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.R;
 import com.triple.triple.Sync.CreateTrip;
@@ -113,6 +114,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                         now.get(Calendar.DAY_OF_MONTH)
                 );
                 dpd.setMinDate(now);
+                dpd.setMaxDate(CalendarHelper.twoYearsLater());
                 dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         }
@@ -131,8 +133,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             Days days = Days.daysBetween(Start, End);
             dateCount = String.valueOf(days.getDays() + 1);
             tripdateStart = year + "-" + monthOfYear + "-" + dayOfMonth;
-            Log.d("aac", dateCount + "ddd" + tripdateStart);
-
         }
     }
 
@@ -190,12 +190,12 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             if (!result.equals("201")) {
                 Toast.makeText(mcontext, R.string.mytrips_create_error_process, Toast.LENGTH_SHORT).show();
             } else {
-                progressDialog.hide();
                 Intent i_home = new Intent(mcontext, MytripsActivity.class);
                 startActivity(i_home);
                 Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
                 finish();
             }
+            progressDialog.dismiss();
         }
     }
 

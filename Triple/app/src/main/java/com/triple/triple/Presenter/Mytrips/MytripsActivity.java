@@ -2,7 +2,9 @@ package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,13 +14,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
@@ -48,50 +53,63 @@ public class MytripsActivity extends AppCompatActivity {
     private RecyclerView rv_trips;
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TabLayout tabLayout;
 
-    private List<Trip> trips = new ArrayList<>();
-    private TripAdapter adapter;
+    private List<Trip> allTrips = new ArrayList<>();
+    private List<Trip> savedTrips = new ArrayList<>();
+    private TripAdapter adapter_allTrips, adapter_savedTrips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips);
-
+        findViews();
         initView();
 
         if (CheckLogin.directLogin(mcontext)) {
             finish();
         } else {
-            new MytripsActivity.RequestTrip().execute();
+            refreshData();
         }
     }
 
-    private void initView() {
+    private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
+    }
+
+    private void initView() {
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
 
         String indicator = getIntent().getStringExtra("indicator");
-        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+
         avi.setIndicator(indicator);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_saved)).setTag("saved"));
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setOnTabSelectedListener(tabLayoutListener);
+
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new MytripsActivity.RequestTrip().execute();
+                refreshData();
             }
         });
 
-        rv_trips = (RecyclerView) findViewById(R.id.rv_trips);
-        adapter = new TripAdapter(MytripsActivity.this, trips);
+        adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips);
+        adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rv_trips.setHasFixedSize(true);
         rv_trips.setLayoutManager(mLayoutManager);
         rv_trips.setItemAnimator(new DefaultItemAnimator());
-        rv_trips.setAdapter(adapter);
+        rv_trips.setAdapter(adapter_allTrips);
     }
 
     @Override
@@ -108,6 +126,48 @@ public class MytripsActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private TabLayout.OnTabSelectedListener tabLayoutListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            switch (tab.getTag().toString()) {
+                case "all":
+                    rv_trips.swapAdapter(adapter_allTrips, false);
+                    break;
+                case "saved":
+                    rv_trips.swapAdapter(adapter_savedTrips, false);
+                    break;
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
+
+
+    private void refreshData() {
+        new MytripsActivity.RequestTrip().execute();
+        Type type = new TypeToken<List<Trip>>() {
+        }.getType();
+        Gson gson = new Gson();
+        SharedPreferences data = new SecurePreferences(mcontext);
+        String jsonTripList = data.getString("savedTrips", null);
+        if (jsonTripList != null) {
+            List<Trip> newTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
+            savedTrips.clear();
+            for (int i=0; i<newTrips.size(); i++) {
+                savedTrips.add(newTrips.get(i));
+            }
+            adapter_savedTrips.notifyDataSetChanged();
+        }
     }
 
     private class RequestTrip extends AsyncTask<Void, Void, String> {
@@ -139,10 +199,11 @@ public class MytripsActivity extends AppCompatActivity {
                 }.getType();
                 Gson gson = new Gson();
                 List<Trip> newTrips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
+                allTrips.clear();
                 for (int i=0; i<newTrips.size(); i++) {
-                    trips.add(newTrips.get(i));
+                    allTrips.add(newTrips.get(i));
                 }
-                adapter.notifyDataSetChanged();
+                adapter_allTrips.notifyDataSetChanged();
             } catch (Exception e) {
                 new MytripsActivity.RequestTrip().execute();
             }

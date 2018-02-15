@@ -1,15 +1,10 @@
 package com.triple.triple.Helper;
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
-import com.triple.triple.Presenter.Account.LoginActivity;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Kevin on 2018/2/14.
@@ -58,18 +53,29 @@ public class CalendarHelper {
     public static int daysLeft(String date) {
         int dateLeft;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar currDate = Calendar.getInstance();
-        Calendar targetDate = Calendar.getInstance();
+        Calendar target = Calendar.getInstance();
+        Calendar curr = Calendar.getInstance();
         try {
-            targetDate.setTime(sdf.parse(date));
+            target.setTime(sdf.parse(date));
         } catch (ParseException e) {
         }
 
-        if(targetDate.after(currDate)){
-            dateLeft = targetDate.get(Calendar.DAY_OF_MONTH) -(currDate.get(Calendar.DAY_OF_MONTH));
+        if(target.after(curr)){
+            Date targetDate = target.getTime();
+            Date currDate = new Date();
+            long diff = targetDate.getTime() - currDate.getTime();
+            dateLeft = (int) (diff / (1000L*60L*60L*24L));
         } else {
             dateLeft = 0;
         }
         return dateLeft;
+    }
+
+    public static Calendar twoYearsLater() {
+        String date = "";
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 730);
+        return c;
+
     }
 }
