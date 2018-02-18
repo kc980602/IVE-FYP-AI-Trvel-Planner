@@ -16,7 +16,7 @@
         android:theme="@style/AppThemeNoActionBar">
         <activity
             android:name=".Presenter.MainActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,26 +25,29 @@
         </activity>
         <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.MainActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Profile.ProfileActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.MainActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".Presenter.Account.LoginActivity"
             android:parentActivityName=".Presenter.Profile.ProfileActivity"
-            android:theme="@style/AppThemeNoActionBar"/>
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Presenter.Account.RegisterActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
@@ -53,7 +56,13 @@
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Account.ForgetPasswordActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity" ></activity>
+            android:parentActivityName=".Presenter.Account.LoginActivity" />
+        <activity
+            android:name=".Presenter.Mytrips.ItineraryActivity"
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
+        <activity
+            android:name=".Presenter.Mytrips.Main2Activity"
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity"></activity>
     </application>
 
 </manifest>

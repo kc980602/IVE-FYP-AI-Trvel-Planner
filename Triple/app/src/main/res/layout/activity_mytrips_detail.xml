@@ -99,7 +99,20 @@
                         android:background="@color/transparent"
                         app:itemIconTint="@color/white"
                         app:itemTextColor="@color/white"
-                        app:menu="@menu/nav_mytrips_detail_card">
+                        app:menu="@menu/nav_mytrips_detail_card"
+                        android:visibility="visible" >
+                    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
+
+                    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+                        android:id="@+id/nav_trip_card_saved"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/transparent"
+                        app:itemIconTint="@color/white"
+                        app:itemTextColor="@color/white"
+                        app:menu="@menu/nav_mytrips_detail_card_saved"
+                        android:visibility="invisible">
                     </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
 
                 </RelativeLayout>

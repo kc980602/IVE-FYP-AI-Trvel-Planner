@@ -103,8 +103,8 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
-        adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips);
-        adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips);
+        adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips, "false");
+        adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips, "true");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rv_trips.setHasFixedSize(true);
         rv_trips.setLayoutManager(mLayoutManager);
@@ -193,6 +193,7 @@ public class MytripsActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
+                Log.d("aac", result);
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray DateArray = jsonObject.getJSONArray("data");
                 Type type = new TypeToken<List<Trip>>() {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,9 @@ import com.triple.triple.Helper.BottomNavigationViewHelper;
 import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
+import com.triple.triple.Model.TripDetail;
+import com.triple.triple.Model.TripItinerary;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -47,65 +51,47 @@ public class TripDetailActivity extends AppCompatActivity {
 
 
     private ListView lv_tripdaylist;
+    private BottomNavigationViewEx bottomNavigationViewEx, bottomNavigationViewEx_all, bottomNavigationViewEx_saved;
     private List<TripDay> tripdays = new ArrayList<>();
     private TripDayAdapter adapter;
     private Trip trip;
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
+    private Boolean isSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_detail);
         initView();
-//
-//        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-//        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
-//
-//        for (int i = 0; i <= 30; i++) {
-//            ArrayList<HashMap<String, Object>> listData = new ArrayList<HashMap<String, Object>>();
-//            HashMap<String, Object> map = null;
-//            int[] img = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a5, R.drawable.a6};
-//            int[] imgRate = {R.drawable.ic_rate0, R.drawable.ic_rate1, R.drawable.ic_rate2, R.drawable.ic_rate3, R.drawable.ic_rate4, R.drawable.ic_rate5};
-//            for (int x = 0; x <= 3; x++) {
-//                map = new HashMap<String, Object>();
-//                map.put("image1", img[(int) Math.ceil(Math.random() * 6)]);
-//                map.put("tv_attId", "1234567");
-//                map.put("tv_attName", "Temple");
-//                map.put("iv_rate", imgRate[(int) Math.ceil(Math.random() * 5)]);
-//                map.put("tv_attReview", (int) Math.ceil(Math.random() * 9999) + " Reviews");
-//                map.put("tv_attAddress", "China");
-//                map.put("tv_attType", "Land Mark");
-//                listData.add(map);
-//            }
-//            TripPlanDetail listDataObject = new TripPlanDetail();
-//            String newTabSpec = (i + 1) + "/1";
-//
-//            listDataObject.setDate(newTabSpec);
-//            listDataObject.setListData(listData);
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("listDataObject", listDataObject);
-//            mTabHost.addTab(mTabHost.newTabSpec(newTabSpec).setIndicator(getTabIndicator(mTabHost.getContext(), newTabSpec)), FragmentTab.class, bundle);
-//        }
     }
 
     private void initView() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
+        isSaved = (Boolean) bundle.getBoolean("isSaved");
         trip = (Trip) bundle.getSerializable("trip");
 
+        String addOn = isSaved ? " (" + getString(R.string.mytrips_offline) + ")" : "";
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle(trip.getName());
+        ab.setTitle(trip.getName() + addOn);
         ab.setElevation(0);
-
         String indicator = getIntent().getStringExtra("indicator");
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.setIndicator(indicator);
         avi.hide();
 
-        BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
+        bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
+        bottomNavigationViewEx_saved = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card_saved);
+        if (isSaved) {
+            bottomNavigationViewEx_all.setVisibility(View.INVISIBLE);
+            bottomNavigationViewEx_saved.setVisibility(View.VISIBLE);
+            bottomNavigationViewEx = bottomNavigationViewEx_saved;
+        } else {
+            bottomNavigationViewEx_all.setVisibility(View.VISIBLE);
+            bottomNavigationViewEx_saved.setVisibility(View.INVISIBLE);
+            bottomNavigationViewEx = bottomNavigationViewEx_all;
+        }
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.enableShiftingMode(false);
@@ -115,7 +101,6 @@ public class TripDetailActivity extends AppCompatActivity {
         tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
         tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
         tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
-
 
         tv_tripdate.setText(CalendarHelper.castDateToLocale(trip.getVisit_date()) + " - " + CalendarHelper.castDateToLocale(CalendarHelper.endDate(trip.getVisit_date(), trip.getVisit_length())));
         int dayLeft = CalendarHelper.daysLeft(trip.getVisit_date());
@@ -127,6 +112,7 @@ public class TripDetailActivity extends AppCompatActivity {
         tv_tripdaysleft.setText(String.valueOf(dayLeft));
 
         prepareTripDays();
+        new TripDetailActivity.RequestTripItinerary().execute();
         lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
         List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < tripdays.size(); i++) {
@@ -186,13 +172,23 @@ public class TripDetailActivity extends AppCompatActivity {
                      Log.d("aac", "action_info");
                      break;
                  case R.id.action_itenary:
+                     Intent i = new Intent(mcontext, Main2Activity.class);
+                     startActivity(i);
                      Log.d("aac", "action_itenary");
                      break;
                  case R.id.action_invite:
                      Log.d("aac", "action_invite");
                      break;
                  case R.id.action_save:
+                     View view = getWindow().getDecorView().findViewById(android.R.id.content);
                      saveTripToLocal();
+                     Snackbar.make(view, getString(R.string.mytrips_detail_tripsaved), Snackbar.LENGTH_LONG)
+                             .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                                 @Override
+                                 public void onClick(View view) {
+
+                                 }
+                             }).show();
                      break;
              }
              return false;
@@ -241,8 +237,8 @@ public class TripDetailActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
-                respone = new GetTrip().run(url, mcontext);
+                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get_detail) + trip.getId();
+                respone = new GetTrip().run("https://api.myjson.com/bins/h6evd", mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -253,9 +249,27 @@ public class TripDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-                SharedPreferences data = new SecurePreferences(mcontext);
-                data.getString("token", "ll");
+                Log.d("aac", result);
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+
+                Type type = new TypeToken<TripDetail>() {
+                }.getType();
+                Gson gson = new Gson();
+                TripDetail newTripDetail = (TripDetail) gson.fromJson(data.toString(), type);
+
+                JSONObject jsonItinerary = new JSONObject(newTripDetail.getItinerary().toString());
+                JSONArray dataItinerary = jsonItinerary.getJSONArray("data");
+
+                Type typeItinerary = new TypeToken<List<TripItinerary>>() {
+                }.getType();
+                newTripDetail.setItineraryList((List<TripItinerary>) gson.fromJson(dataItinerary.toString(), typeItinerary));
+
+
+                Log.d("aac", newTripDetail.toString());
             } catch (Exception e) {
+//                new TripDetailActivity.RequestTripItinerary().execute();
+                Log.d("newTripDetail", e.toString());
             }
             stopAnim();
         }

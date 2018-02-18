@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +32,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     private Activity activity;
     private List<Trip> trips;
+    private String isSaved;
 
-    public TripAdapter(Activity activity, List<Trip> trips) {
+    public TripAdapter(Activity activity, List<Trip> trips, String isSaved) {
         this.activity = activity;
         this.trips = trips;
+        this.isSaved = isSaved;
     }
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
@@ -43,6 +46,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         public TextView tv_owner;
         public TextView tv_tripdestination;
         public TextView tv_tripdate;
+        public TextView tv_saved;
         public RoundedImageView image1;
 
         public TripViewHolder(View itemView) {
@@ -53,16 +57,20 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             tv_owner = (TextView) itemView.findViewById(R.id.tv_owner);
             tv_tripdestination = (TextView) itemView.findViewById(R.id.tv_tripdestination);
             tv_tripdate = (TextView) itemView.findViewById(R.id.tv_tripdate);
+            tv_saved = (TextView) itemView.findViewById(R.id.tv_saved);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     int tripId = Integer.parseInt(tv_tripid.getText().toString());
-                    for(Trip trip: trips){
-                        if(trip.getId() == tripId){
+                    for (Trip trip : trips) {
+                        if (trip.getId() == tripId) {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("trip", trip);
+                            if (tv_saved.getVisibility() == View.VISIBLE) {
+                                bundle.putBoolean("isSaved", true);
+                            }
                             Intent indent = new Intent(activity, TripDetailActivity.class);
                             indent.putExtras(bundle);
                             activity.startActivity(indent);
@@ -98,6 +106,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         holder.tv_tripname.setText(trip.getName());
         holder.tv_owner.setText(trip.getOwner());
         holder.tv_tripdate.setText(date);
+        if (isSaved.equals("true")) {
+            holder.tv_saved.setVisibility(View.VISIBLE);
+        } else {
+            holder.tv_saved.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
