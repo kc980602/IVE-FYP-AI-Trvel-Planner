@@ -1,6 +1,7 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +11,19 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.CalendarHelper;
+import com.triple.triple.Interface.onMoveAndSwipedListener;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripItinerary;
 import com.triple.triple.R;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Kevin on 2018/2/18.
  */
 
-public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdapter.TripItineraryViewHolder> {
+public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdapter.TripItineraryViewHolder> implements onMoveAndSwipedListener {
 
     private Activity activity;
     private List<TripItinerary> tripItineraries;
@@ -30,6 +33,27 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         this.activity = activity;
         this.tripItineraries = tripItineraries;
 //        this.isSaved = isSaved;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(tripItineraries, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        tripItineraries.remove(position);
+        notifyItemRemoved(position);
+//
+//        Snackbar.make(parentView, context.getString(R.string.item_swipe_dismissed), Snackbar.LENGTH_SHORT)
+//                .setAction(context.getString(R.string.item_swipe_undo), new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        addItem(position, mItems.get(position));
+//                    }
+//                }).show();
     }
 
     public class TripItineraryViewHolder extends RecyclerView.ViewHolder {

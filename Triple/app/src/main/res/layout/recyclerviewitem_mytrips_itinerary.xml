@@ -3,49 +3,106 @@
     android:id="@+id/cv_itinerary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:background="@color/transparent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/layout_attraction"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/image1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/a7"
-            app:riv_border_color="@color/white"
-            app:riv_border_width="2dp"
-            app:riv_corner_radius="1000dp"
-            app:riv_mutate_background="true" />
+        <LinearLayout
+            android:id="@+id/layout_time"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="5dp">
 
-        <com.daasuu.bl.BubbleLayout
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/main_background"
+                android:text="55:55-58:55" />
+
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/image1"
-            android:padding="8dp"
-
-            app:bl_arrowDirection="left"
-            app:bl_arrowHeight="15dp"
-            app:bl_arrowPosition="23dp"
-            app:bl_arrowWidth="10dp"
-            app:bl_strokeWidth="1dp">
+            android:layout_below="@+id/layout_time">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/layout_image"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/image1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/a7"
+                    app:riv_border_color="@color/white"
+                    app:riv_border_width="2dp"
+                    app:riv_corner_radius="1000dp"
+                    app:riv_mutate_background="true" />
+
+            </LinearLayout>
+
+
+            <com.daasuu.bl.BubbleLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/layout_image"
+                android:padding="8dp"
+                app:bl_arrowDirection="left"
+                app:bl_arrowHeight="15dp"
+                app:bl_arrowPosition="27dp"
+                app:bl_arrowWidth="10dp"
+                app:bl_strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="50"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true" />
+
+
+                        <TextView
+                            android:id="@+id/tv_duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_duration"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/colorPrimary"
+                            android:gravity="right|center"
+                            android:text="1 hour" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_name"
-                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:id="@+id/tv_tags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="50"
@@ -56,33 +113,67 @@
                         android:scrollHorizontally="true"
                         android:singleLine="true" />
 
-
-                    <TextView
-                        android:id="@+id/tv_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_duration"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/colorPrimary"
-                        android:gravity="right|center"
-                        android:text="1 hour" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_tags"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true" />
+            </com.daasuu.bl.BubbleLayout>
 
-            </LinearLayout>
-
-        </com.daasuu.bl.BubbleLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_attraction"
+        android:layout_marginLeft="90dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_distance"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"
+                android:gravity="right|center"
+                android:text="1 km" />
+
+            <TextView
+                android:id="@+id/tv_traveltime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_directions"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimary"
+                android:gravity="right|center"
+                android:paddingLeft="20dp"
+                android:text="15 min" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_keyboard_arrow_right"
+                android:tint="@color/colorPrimary" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

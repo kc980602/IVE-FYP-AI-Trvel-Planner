@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorGrey"
+    android:background="@color/main_background"
     android:gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
+    <com.daasuu.bl.BubbleLayout
+        android:id="@+id/layout_daytag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:bl_arrowDirection="right"
+        app:bl_arrowHeight="20dp"
+        app:bl_arrowPosition="0dp"
+        android:translationZ="30dp"
+        app:bl_arrowWidth="15dp"
+        app:bl_bubbleColor="@color/colorPrimary"
+        app:bl_strokeWidth="0dp">
+
+        <TextView
+            android:id="@+id/tv_daytag"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="Monday, January 15, 2018"
+            android:textColor="@color/white" />
+
+    </com.daasuu.bl.BubbleLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
@@ -24,16 +49,17 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:translationZ="10dp"
         android:layout_marginLeft="8dp"
-        android:gravity="center">
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:translationZ="10dp">
 
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/grey"/>
+            android:background="@color/grey" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -61,7 +61,7 @@
             android:name=".Presenter.Mytrips.ItineraryActivity"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
-            android:name=".Presenter.Mytrips.Main2Activity"
+            android:name=".Presenter.Mytrips.ItineraryActivity"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity"></activity>
     </application>
 

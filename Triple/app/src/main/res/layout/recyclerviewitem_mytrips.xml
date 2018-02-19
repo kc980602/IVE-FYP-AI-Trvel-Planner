@@ -3,7 +3,8 @@
     android:id="@+id/cv_trip"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:background="?attr/selectableItemBackgroundBorderless">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,14 +24,16 @@
             android:scaleType="centerCrop"
             app:riv_corner_radius_top_left="2dp"
             app:riv_corner_radius_top_right="2dp"
-            app:riv_mutate_background="true" />
+            app:riv_mutate_background="true"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image1"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <LinearLayout
                 android:layout_width="match_parent"

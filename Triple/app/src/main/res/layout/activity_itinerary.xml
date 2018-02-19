@@ -4,44 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.triple.triple.Presenter.Mytrips.ItineraryActivity">
 
-    <include layout="@layout/toolbar_stadand" />
-
-    <android.support.v4.app.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@android:id/tabhost"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/id_toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_below="@+id/toolbar"
-        android:background="@color/colorPrimary">
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/MyToolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:navigationIcon="?homeAsUpIndicator"
+            app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
 
-            <HorizontalScrollView
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/id_toolbar_container">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/id_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbars="none">
-                <TabWidget
-                    android:id="@android:id/tabs"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom" />
-            </HorizontalScrollView>
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:tabIndicatorColor="@color/white" />
+            </android.support.design.widget.CollapsingToolbarLayout>
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
 
-    </android.support.v4.app.FragmentTabHost>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-
-
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>
