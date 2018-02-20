@@ -8,13 +8,23 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class TripDay {
-
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("desc")
     @Expose
     private String desc;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

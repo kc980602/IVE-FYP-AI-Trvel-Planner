@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -59,7 +60,18 @@ public class TripDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_detail);
+        findView();
         initView();
+    }
+
+    private void  findView() {
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+        bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
+        bottomNavigationViewEx_saved = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card_saved);
+        tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
+        tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
+        tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
+        lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
     }
 
     private void initView() {
@@ -73,12 +85,10 @@ public class TripDetailActivity extends AppCompatActivity {
         ab.setTitle(trip.getName() + addOn);
         ab.setElevation(0);
         String indicator = getIntent().getStringExtra("indicator");
-        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+
         avi.setIndicator(indicator);
         avi.hide();
 
-        bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
-        bottomNavigationViewEx_saved = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card_saved);
         if (isSaved) {
             bottomNavigationViewEx_all.setVisibility(View.INVISIBLE);
             bottomNavigationViewEx_saved.setVisibility(View.VISIBLE);
@@ -94,10 +104,6 @@ public class TripDetailActivity extends AppCompatActivity {
         bottomNavigationViewEx.setOnNavigationItemSelectedListener(bottomNavigationViewExListener);
         Menu menu = bottomNavigationViewEx.getMenu();
 
-        tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
-        tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
-        tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
-
         tv_tripdate.setText(CalendarHelper.castDateToLocale(trip.getVisit_date()) + " - " + CalendarHelper.castDateToLocale(CalendarHelper.endDate(trip.getVisit_date(), trip.getVisit_length())));
         int dayLeft = CalendarHelper.daysLeft(trip.getVisit_date());
         if (dayLeft == 0) {
@@ -109,34 +115,37 @@ public class TripDetailActivity extends AppCompatActivity {
 
         prepareTripDays();
         new TripDetailActivity.RequestTripItinerary().execute();
-        lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
-        List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < tripdays.size(); i++) {
-            Map<String, Object> item = new HashMap<String, Object>();
-            TripDay tripDay = tripdays.get(i);
-            item.put("name", tripDay.getName());
-            item.put("desc", tripDay.getDesc());
-            items.add(item);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(this,
-                items, R.layout.listviewitem_mytrips_detail_day, new String[]{"name", "desc"},
-                new int[]{R.id.tv_day, R.id.tv_desc});
+        adapter = new TripDayAdapter(mcontext, tripdays);
         lv_tripdaylist.setAdapter(adapter);
     }
 
     private void prepareTripDays() {
         TripDay tripday = new TripDay();
+        tripday.setId(1);
         tripday.setName("Day" + 1);
         tripday.setDesc(CalendarHelper.castDateToLocaleFull(trip.getVisit_date()));
         tripdays.add(tripday);
 
         for (int i = 2; i <= trip.getVisit_length(); i++) {
             tripday = new TripDay();
+            tripday.setId(i);
             tripday.setName("Day" + (i));
             tripday.setDesc(CalendarHelper.castDateToLocaleFull(CalendarHelper.endDate(trip.getVisit_date(), i)));
             tripdays.add(tripday);
         }
     }
+
+    private ListView.OnItemClickListener lv_tripdaylistListener = new ListView.OnItemClickListener() {
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -168,9 +177,11 @@ public class TripDetailActivity extends AppCompatActivity {
                      Log.d("aac", "action_info");
                      break;
                  case R.id.action_itenary:
+                     Bundle bundle = new Bundle();
+                     bundle.putSerializable("trip", trip);
                      Intent i = new Intent(mcontext, ItineraryActivity.class);
+                     i.putExtras(bundle);
                      startActivity(i);
-                     Log.d("aac", "action_itenary");
                      break;
                  case R.id.action_invite:
                      Log.d("aac", "action_invite");

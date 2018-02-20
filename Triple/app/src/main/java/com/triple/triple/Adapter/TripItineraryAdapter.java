@@ -1,6 +1,8 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Interface.onMoveAndSwipedListener;
@@ -42,29 +43,29 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         return true;
     }
 
-    @Override
-    public void onItemDismiss(int position) {
-        tripItineraries.remove(position);
-        notifyItemRemoved(position);
-//
-//        Snackbar.make(parentView, context.getString(R.string.item_swipe_dismissed), Snackbar.LENGTH_SHORT)
-//                .setAction(context.getString(R.string.item_swipe_undo), new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        addItem(position, mItems.get(position));
-//                    }
-//                }).show();
-    }
+//    @Override
+//    public void onItemDismiss(int position) {
+////        tripItineraries.remove(position);
+////        notifyItemRemoved(position);
+////
+////        Snackbar.make(parentView, context.getString(R.string.item_swipe_dismissed), Snackbar.LENGTH_SHORT)
+////                .setAction(context.getString(R.string.item_swipe_undo), new View.OnClickListener() {
+////                    @Override
+////                    public void onClick(View v) {
+////                        addItem(position, mItems.get(position));
+////                    }
+////                }).show();
+//    }
 
     public class TripItineraryViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_name;
         public TextView tv_duration;
         public TextView tv_tags;
-        public RoundedImageView image1;
+//        public RoundedImageView image1;
 
         public TripItineraryViewHolder(View itemView) {
             super(itemView);
-            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
+//            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_duration = (TextView) itemView.findViewById(R.id.tv_duration);
             tv_tags = (TextView) itemView.findViewById(R.id.tv_tags);
@@ -72,7 +73,10 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=25.033965,121.564472");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    activity.startActivity(mapIntent);
                 }
             });
         }
@@ -92,9 +96,9 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         holder.tv_name.setSelected(true);
         holder.tv_duration.setText(itinerary.getDuration());
         holder.tv_tags.setText(itinerary.getTags());
-        Picasso.with(activity)
-                .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
-                .into(holder.image1);
+//        Picasso.with(activity)
+//                .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
+//                .into(holder.image1);
     }
 
     public int getItemCount() {

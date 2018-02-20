@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.makeramen.roundedimageview.RoundedImageView
+            <com.itheima.roundedimageview.RoundedImageView
                 android:id="@+id/image1"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -31,7 +31,9 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/a7"
                 app:riv_corner_radius="10dp"
-                app:riv_mutate_background="true" />
+                app:riv_mutate_background="true"  />
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

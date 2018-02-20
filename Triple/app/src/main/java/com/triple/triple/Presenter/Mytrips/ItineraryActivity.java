@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 
 public class ItineraryActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class ItineraryActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    private Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,11 @@ public class ItineraryActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        toolbar.setTitle(getString(R.string.title_mytrips));
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        trip = (Trip) bundle.getSerializable("trip");
+
+        toolbar.setTitle(trip.getName());
         setSupportActionBar(toolbar);
 
         // Create the adapter that will return a fragment for each of the three

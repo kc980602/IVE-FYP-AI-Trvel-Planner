@@ -41,16 +41,17 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <com.makeramen.roundedimageview.RoundedImageView
+
+                <com.itheima.roundedimageview.RoundedImageView
                     android:id="@+id/image1"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:src="@drawable/a6"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/a7"
-                    app:riv_border_color="@color/white"
-                    app:riv_border_width="2dp"
                     app:riv_corner_radius="1000dp"
-                    app:riv_mutate_background="true" />
+                    app:riv_border_width="2dip"
+                    app:riv_border_color="@color/white"
+                    app:riv_oval="false" />
 
             </LinearLayout>
 
@@ -122,6 +123,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_direction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_attraction"

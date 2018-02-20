@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.CalendarHelper;
 import com.triple.triple.Model.Trip;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="?attr/selectableItemBackgroundBorderless">
+    android:foreground="?selectableItemBackgroundBorderless">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <com.itheima.roundedimageview.RoundedImageView
             android:id="@+id/image1"
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -24,16 +24,14 @@
             android:scaleType="centerCrop"
             app:riv_corner_radius_top_left="2dp"
             app:riv_corner_radius_top_right="2dp"
-            app:riv_mutate_background="true"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+            app:riv_mutate_background="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image1"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

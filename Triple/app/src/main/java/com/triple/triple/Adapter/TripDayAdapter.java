@@ -1,10 +1,14 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.triple.triple.Model.TripDay;
@@ -16,54 +20,65 @@ import java.util.List;
  * Created by Kevin on 2018/2/14.
  */
 
-public class TripDayAdapter extends RecyclerView.Adapter<TripDayAdapter.TripDayViewHolder> {
+public class TripDayAdapter extends BaseAdapter {
 
-    private Activity activity;
-    private List<TripDay> tripdays;
+    Context context;
+    List<TripDay> tripDays;
 
-    public TripDayAdapter(Activity activity, List<TripDay> tripdays) {
-        this.activity = activity;
-        this.tripdays = tripdays;
+    public TripDayAdapter(Context context, List<TripDay> tripDays) {
+        this.context = context;
+        this.tripDays = tripDays;
     }
 
-    public class TripDayViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_id;
-        public TextView tv_day;
-        public TextView tv_desc;
+    @Override
+    public int getCount() {
+        return tripDays.size();
+    }
 
-        public TripDayViewHolder(View itemView) {
-            super(itemView);
-            tv_id = (TextView) itemView.findViewById(R.id.tv_id);
-            tv_day = (TextView) itemView.findViewById(R.id.tv_day);
-            tv_desc = (TextView) itemView.findViewById(R.id.tv_desc);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
+    @Override
+    public Object getItem(int position) {
+        return  tripDays.get(position);
+    }
 
-                }
-            });
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.listviewitem_mytrips_detail_day, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        TripDay tripDay = tripDays.get(position);
+        holder.tv_tripdayid.setText(String.valueOf(tripDay.getId()));
+        holder.tv_day.setText(tripDay.getName());
+        holder.tv_desc.setText(tripDay.getDesc());
+
+        return convertView;
+    }
+
+    private class ViewHolder {
+        ImageView image1;
+        TextView tv_tripdayid;
+        TextView tv_day;
+        TextView tv_desc;
+
+        public ViewHolder(View view) {
+            image1 = (ImageView)  view.findViewById(R.id.image1);
+            tv_tripdayid = (TextView) view.findViewById(R.id.tv_tripdayid);
+            tv_day = (TextView) view.findViewById(R.id.tv_day);
+            tv_desc = (TextView) view.findViewById(R.id.tv_desc);
         }
     }
 
-    @Override
-    public TripDayViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.listviewitem_mytrips_detail_day, viewGroup, false);
-        return new TripDayViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(TripDayViewHolder holder, int i) {
-        TripDay tripday = tripdays.get(i);
-
-        holder.tv_day.setText(tripday.getName());
-        holder.tv_desc.setText(tripday.getDesc());
-    }
-
-    @Override
-    public int getItemCount() {
-        return tripdays.size();
-    }
 }
+
+

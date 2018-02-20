@@ -30,7 +30,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
         } else {
             // for recyclerView with linearLayoutManager, support drag up and down, and swipe lift and right
             final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-            final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+            final int swipeFlags =  0;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
     }
@@ -47,6 +47,6 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        moveAndSwipedListener.onItemDismiss(viewHolder.getAdapterPosition());
+//        moveAndSwipedListener.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }
