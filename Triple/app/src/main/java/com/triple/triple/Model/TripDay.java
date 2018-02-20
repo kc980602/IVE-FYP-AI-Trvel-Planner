@@ -16,7 +16,7 @@ public class TripDay {
     private String name;
     @SerializedName("desc")
     @Expose
-    private String desc;
+    private String date;
 
     public int getId() {
         return id;
@@ -35,10 +35,10 @@ public class TripDay {
     }
 
     public String getDesc() {
-        return desc;
+        return date;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        this.date = desc;
     }
 }

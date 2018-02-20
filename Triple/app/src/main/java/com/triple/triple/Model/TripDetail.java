@@ -3,13 +3,14 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Kevin on 2018/2/17.
  */
 
-public class TripDetail {
+public class TripDetail implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -26,13 +27,13 @@ public class TripDetail {
     @SerializedName("visit_length")
     @Expose
     private String visit_length;
-    @SerializedName("collaborators")
+    @SerializedName("tripCollaborators")
     @Expose
-    private Object collaborators;
+    private List<TripCollaborator> tripCollaborators;
     @SerializedName("itinerary")
     @Expose
-    private Object itinerary;
-    private List<TripItinerary> itineraryList;
+    private List<TripItinerary> itinerary;
+
     public int getId() {
         return id;
     }
@@ -73,28 +74,20 @@ public class TripDetail {
         this.visit_length = visit_length;
     }
 
-    public Object getCollaborators() {
-        return collaborators;
+    public List<TripCollaborator> getTripCollaborators() {
+        return tripCollaborators;
     }
 
-    public void setCollaborators(Object collaborators) {
-        this.collaborators = collaborators;
+    public void setTripCollaborators(List<TripCollaborator> tripCollaborators) {
+        this.tripCollaborators = tripCollaborators;
     }
 
-    public Object getItinerary() {
+    public List<TripItinerary> getItinerary() {
         return itinerary;
     }
 
-    public void setItinerary(Object itinerary) {
+    public void setItinerary(List<TripItinerary> itinerary) {
         this.itinerary = itinerary;
-    }
-
-    public List<TripItinerary> getItineraryList() {
-        return itineraryList;
-    }
-
-    public void setItineraryList(List<TripItinerary> itineraryList) {
-        this.itineraryList = itineraryList;
     }
 
     @Override
@@ -105,8 +98,8 @@ public class TripDetail {
                 ", owner_id='" + owner_id + '\'' +
                 ", visit_date='" + visit_date + '\'' +
                 ", visit_length='" + visit_length + '\'' +
-                ", collaborators=" + collaborators +
-                ", itineraryList=" + itineraryList +
+                ", tripCollaborators=" + tripCollaborators +
+                ", itinerary=" + itinerary +
                 '}';
     }
 }

@@ -55,7 +55,7 @@ public class ItineraryActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        trip = (Trip) bundle.getSerializable("trip");
+        trip = (Trip) bundle.getSerializable("tripDetail");
 
         toolbar.setTitle(trip.getName());
         setSupportActionBar(toolbar);

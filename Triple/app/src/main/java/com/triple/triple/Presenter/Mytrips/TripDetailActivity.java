@@ -36,7 +36,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +56,26 @@ public class TripDetailActivity extends AppCompatActivity {
     private List<TripDay> tripdays = new ArrayList<>();
     private TripDayAdapter adapter;
     private Trip trip;
+    private TripDetail tripDetail;
+
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
     private Boolean isSaved;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_detail);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        isSaved = (Boolean) bundle.getBoolean("isSaved");
+        trip = (Trip) bundle.getSerializable("trip");
+
         findView();
         initView();
+        new TripDetailActivity.RequestTripItinerary().execute();
     }
 
     private void  findView() {
@@ -75,11 +89,6 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        isSaved = (Boolean) bundle.getBoolean("isSaved");
-        trip = (Trip) bundle.getSerializable("trip");
-
         String addOn = isSaved ? " (" + getString(R.string.mytrips_offline) + ")" : "";
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(trip.getName() + addOn);
@@ -113,24 +122,18 @@ public class TripDetailActivity extends AppCompatActivity {
         }
         tv_tripdaysleft.setText(String.valueOf(dayLeft));
 
-        prepareTripDays();
-        new TripDetailActivity.RequestTripItinerary().execute();
         adapter = new TripDayAdapter(mcontext, tripdays);
         lv_tripdaylist.setAdapter(adapter);
     }
 
-    private void prepareTripDays() {
-        TripDay tripday = new TripDay();
-        tripday.setId(1);
-        tripday.setName("Day" + 1);
-        tripday.setDesc(CalendarHelper.castDateToLocaleFull(trip.getVisit_date()));
-        tripdays.add(tripday);
+    private void initData() {
+        List<TripItinerary> itineraryList = tripDetail.getItinerary();
 
-        for (int i = 2; i <= trip.getVisit_length(); i++) {
-            tripday = new TripDay();
-            tripday.setId(i);
-            tripday.setName("Day" + (i));
-            tripday.setDesc(CalendarHelper.castDateToLocaleFull(CalendarHelper.endDate(trip.getVisit_date(), i)));
+        for (int i = 1; i <= itineraryList.size(); i++) {
+            TripDay tripday = new TripDay();
+            tripday.setId(itineraryList.get(i).getId());
+            tripday.setName("Day" + i);
+            tripday.setDesc(CalendarHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
             tripdays.add(tripday);
         }
     }
@@ -156,7 +159,7 @@ public class TripDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-
+                Log.d("TripDetailActivity", tripDetail.toString());
                 break;
             case R.id.action_delete:
 
@@ -178,7 +181,7 @@ public class TripDetailActivity extends AppCompatActivity {
                      break;
                  case R.id.action_itenary:
                      Bundle bundle = new Bundle();
-                     bundle.putSerializable("trip", trip);
+                     bundle.putSerializable("tripDetail", tripDetail);
                      Intent i = new Intent(mcontext, ItineraryActivity.class);
                      i.putExtras(bundle);
                      startActivity(i);
@@ -234,6 +237,7 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private class RequestTripItinerary  extends AsyncTask<Void, Void, String> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -245,7 +249,7 @@ public class TripDetailActivity extends AppCompatActivity {
             String respone = "Error";
             try {
                 String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get_detail) + trip.getId();
-                respone = new GetTrip().run("https://api.myjson.com/bins/h6evd", mcontext);
+                respone = new GetTrip().run("https://api.myjson.com/bins/812e1", mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -256,27 +260,22 @@ public class TripDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-                Log.d("aac", result);
                 JSONObject jsonObject = new JSONObject(result);
-                JSONObject data = jsonObject.getJSONObject("data");
-
-                Type type = new TypeToken<TripDetail>() {
-                }.getType();
+                Type type = new TypeToken<TripDetail>() {}.getType();
                 Gson gson = new Gson();
-                TripDetail newTripDetail = (TripDetail) gson.fromJson(data.toString(), type);
+                tripDetail = (TripDetail) gson.fromJson(jsonObject.toString(), type);
+                List<TripItinerary> itineraryList = tripDetail.getItinerary();
 
-                JSONObject jsonItinerary = new JSONObject(newTripDetail.getItinerary().toString());
-                JSONArray dataItinerary = jsonItinerary.getJSONArray("data");
-
-                Type typeItinerary = new TypeToken<List<TripItinerary>>() {
-                }.getType();
-                newTripDetail.setItineraryList((List<TripItinerary>) gson.fromJson(dataItinerary.toString(), typeItinerary));
-
-
-                Log.d("aac", newTripDetail.toString());
+                for (int i = 0; i <= itineraryList.size(); i++) {
+                    TripDay tripday = new TripDay();
+                    tripday.setId(itineraryList.get(i).getId());
+                    tripday.setName("Day" + (i+1));
+                    tripday.setDesc(CalendarHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
+                    tripdays.add(tripday);
+                }
+                adapter.notifyDataSetChanged();
             } catch (Exception e) {
 //                new TripDetailActivity.RequestTripItinerary().execute();
-                Log.d("newTripDetail", e.toString());
             }
             stopAnim();
         }

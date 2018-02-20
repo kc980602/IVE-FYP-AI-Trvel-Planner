@@ -80,4 +80,16 @@ public class Trip implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", visit_date='" + visit_date + '\'' +
+                ", visit_length=" + visit_length +
+                ", owner='" + owner + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

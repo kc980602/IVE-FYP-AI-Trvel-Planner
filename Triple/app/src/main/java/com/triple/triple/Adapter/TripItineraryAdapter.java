@@ -92,10 +92,10 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
     public void onBindViewHolder(TripItineraryViewHolder holder, int i) {
         TripItinerary itinerary = tripItineraries.get(i);
 
-        holder.tv_name.setText(itinerary.getName());
-        holder.tv_name.setSelected(true);
-        holder.tv_duration.setText(itinerary.getDuration());
-        holder.tv_tags.setText(itinerary.getTags());
+//        holder.tv_name.setText(itinerary.getName());
+//        holder.tv_name.setSelected(true);
+//        holder.tv_duration.setText(itinerary.getDuration());
+//        holder.tv_tags.setText(itinerary.getTags());
 //        Picasso.with(activity)
 //                .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
 //                .into(holder.image1);

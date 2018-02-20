@@ -3,6 +3,8 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Kevin on 2018/1/25.
  */
@@ -15,12 +17,9 @@ public class TripItinerary {
     @SerializedName("visit_date")
     @Expose
     private String visit_date;
-    //    @SerializedName("nodes")
-//    @Expose
-//    private String nodes;
-    private String name;
-    private String duration;
-    private String tags;
+    @SerializedName("nodes")
+    @Expose
+    private List<TripItineraryNode> nodes;
 
     public int getId() {
         return id;
@@ -38,35 +37,11 @@ public class TripItinerary {
         this.visit_date = visit_date;
     }
 
-    public String getName() {
-        return name;
+    public List<TripItineraryNode> getNodes() {
+        return nodes;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-    @Override
-    public String toString() {
-        return "TripItinerary{" +
-                "id=" + id +
-                ", visit_date='" + visit_date + '\'' +
-                '}';
+    public void setNodes(List<TripItineraryNode> nodes) {
+        this.nodes = nodes;
     }
 }
