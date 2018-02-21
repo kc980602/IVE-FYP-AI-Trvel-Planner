@@ -90,16 +90,4 @@ public class TripDetail implements Serializable {
         this.itinerary = itinerary;
     }
 
-    @Override
-    public String toString() {
-        return "TripDetail{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", owner_id='" + owner_id + '\'' +
-                ", visit_date='" + visit_date + '\'' +
-                ", visit_length='" + visit_length + '\'' +
-                ", tripCollaborators=" + tripCollaborators +
-                ", itinerary=" + itinerary +
-                '}';
-    }
 }

@@ -25,8 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/main_background"
-                android:text="55:55-58:55" />
+                android:background="@color/main_background" />
 
         </LinearLayout>
 

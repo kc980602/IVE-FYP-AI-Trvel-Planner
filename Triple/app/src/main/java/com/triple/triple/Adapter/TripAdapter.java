@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,11 @@ import android.widget.TextView;
 
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
-import com.triple.triple.Helper.CalendarHelper;
+import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Trip;
-import com.triple.triple.Model.TripDay;
 import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -93,7 +87,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     @Override
     public void onBindViewHolder(TripViewHolder holder, int i) {
         Trip trip = trips.get(i);
-        String date = CalendarHelper.castDateToLocale(trip.getVisit_date()) + " - " + CalendarHelper.castDateToLocale(CalendarHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
+        String date = DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
 
         if (trip.getImage() == null) {
             holder.image1.setImageResource(R.drawable.image_null);

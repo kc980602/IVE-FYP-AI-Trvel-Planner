@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -23,7 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripDayAdapter;
-import com.triple.triple.Helper.CalendarHelper;
+import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.Model.TripDetail;
@@ -32,18 +31,11 @@ import com.triple.triple.R;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TripDetailActivity extends AppCompatActivity {
     private static final String TAG = "TripCreateActivity";
@@ -113,8 +105,8 @@ public class TripDetailActivity extends AppCompatActivity {
         bottomNavigationViewEx.setOnNavigationItemSelectedListener(bottomNavigationViewExListener);
         Menu menu = bottomNavigationViewEx.getMenu();
 
-        tv_tripdate.setText(CalendarHelper.castDateToLocale(trip.getVisit_date()) + " - " + CalendarHelper.castDateToLocale(CalendarHelper.endDate(trip.getVisit_date(), trip.getVisit_length())));
-        int dayLeft = CalendarHelper.daysLeft(trip.getVisit_date());
+        tv_tripdate.setText(DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length())));
+        int dayLeft = DateTimeHelper.daysLeft(trip.getVisit_date());
         if (dayLeft == 0) {
             tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_after));
         } else {
@@ -133,7 +125,7 @@ public class TripDetailActivity extends AppCompatActivity {
             TripDay tripday = new TripDay();
             tripday.setId(itineraryList.get(i).getId());
             tripday.setName("Day" + i);
-            tripday.setDesc(CalendarHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
+            tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
             tripdays.add(tripday);
         }
     }
@@ -270,7 +262,7 @@ public class TripDetailActivity extends AppCompatActivity {
                     TripDay tripday = new TripDay();
                     tripday.setId(itineraryList.get(i).getId());
                     tripday.setName("Day" + (i+1));
-                    tripday.setDesc(CalendarHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
+                    tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
                     tripdays.add(tripday);
                 }
                 adapter.notifyDataSetChanged();

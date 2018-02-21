@@ -89,6 +89,9 @@
     <string name="mytrips_detail_daysleft_before">Days Left</string>
     <string name="mytrips_detail_tripsaved">Your trip is saved offline.</string>
 
+    <string name="mytrips_detail_itinerary_dayname_pre">Day</string>
+    <string name="mytrips_detail_itinerary_dayname_post"></string>
+    <string name="mytrips_detail_itinerary_hour">Hour</string>
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>
 

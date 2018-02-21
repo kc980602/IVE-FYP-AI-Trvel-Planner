@@ -3,13 +3,14 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Kevin on 2018/1/25.
  */
 
-public class TripItinerary {
+public class TripItinerary implements Serializable {
 
     @SerializedName("id")
     @Expose

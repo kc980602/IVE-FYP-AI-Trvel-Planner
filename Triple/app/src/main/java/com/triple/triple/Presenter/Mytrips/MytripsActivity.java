@@ -206,7 +206,7 @@ public class MytripsActivity extends AppCompatActivity {
                 }
                 adapter_allTrips.notifyDataSetChanged();
             } catch (Exception e) {
-                new MytripsActivity.RequestTrip().execute();
+//                new MytripsActivity.RequestTrip().execute();
             }
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);

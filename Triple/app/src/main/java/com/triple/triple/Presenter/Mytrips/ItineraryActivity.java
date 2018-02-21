@@ -13,8 +13,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.triple.triple.Model.Trip;
+import com.triple.triple.Model.TripDetail;
+import com.triple.triple.Model.TripItinerary;
 import com.triple.triple.R;
+
+import java.util.List;
 
 public class ItineraryActivity extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class ItineraryActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private Trip trip;
+    private TripDetail tripDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,6 @@ public class ItineraryActivity extends AppCompatActivity {
 
         findViews();
         initView();
-
     }
 
     private void findViews() {
@@ -55,22 +57,23 @@ public class ItineraryActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        trip = (Trip) bundle.getSerializable("tripDetail");
+        tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
 
-        toolbar.setTitle(trip.getName());
+        toolbar.setTitle(tripDetail.getTitle());
         setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tripDetail);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
+        List<TripItinerary> itineraryList = tripDetail.getItinerary();
+
+        for (int i = 0; i < itineraryList.size(); i++) {
+            TripItinerary itinerary = itineraryList.get(i);
+            String dayName = getString(R.string.mytrips_detail_itinerary_dayname_pre) + (i+1) + getString(R.string.mytrips_detail_itinerary_dayname_post);
+            tabLayout.addTab(tabLayout.newTab().setText(dayName).setTag(itinerary.getId()));
+        }
+
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -101,31 +104,27 @@ public class ItineraryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private TripDetail tripDetail;
+
+        public SectionsPagerAdapter(FragmentManager fm, TripDetail tripDetail) {
             super(fm);
+            this.tripDetail = tripDetail;
         }
 
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = new ItineraryFragment();
-            Bundle args = new Bundle();
-            args.putInt("no", position + 1);
-            fragment.setArguments(args);
-
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("itinerary", tripDetail.getItinerary().get(position));
+            fragment.setArguments(bundle);
             return fragment;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return tripDetail.getItinerary().size();
         }
     }
 }

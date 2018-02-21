@@ -5,12 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Kevin on 2018/2/14.
  */
 
-public class CalendarHelper {
+public class DateTimeHelper {
 
     public static String endDate(String startDate, int duration) {
         String date = "";
@@ -21,7 +22,7 @@ public class CalendarHelper {
             c.setTime(sdf.parse(startDate));
         } catch (ParseException e) {
         }
-        c.add(Calendar.DATE, duration -1);
+        c.add(Calendar.DATE, duration - 1);
         return sdf.format(c.getTime());
 
     }
@@ -60,11 +61,11 @@ public class CalendarHelper {
         } catch (ParseException e) {
         }
 
-        if(target.after(curr)){
+        if (target.after(curr)) {
             Date targetDate = target.getTime();
             Date currDate = new Date();
             long diff = targetDate.getTime() - currDate.getTime();
-            dateLeft = (int) (diff / (1000L*60L*60L*24L));
+            dateLeft = (int) (diff / (1000L * 60L * 60L * 24L));
         } else {
             dateLeft = 0;
         }
@@ -76,6 +77,27 @@ public class CalendarHelper {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 730);
         return c;
+
+    }
+
+    public static double millisToHourMin(int millis) {
+        return (double) ((millis / (1000 * 60 * 60)) % 24);
+    }
+
+
+    public static String endTime(String startTime, int duration) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Date d = null;
+        try {
+            d = sdf.parse(startTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(Calendar.MILLISECOND, duration);
+        String newTime = sdf.format(cal.getTime());
+        return newTime;
 
     }
 }

@@ -20,7 +20,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
-import com.triple.triple.Helper.CalendarHelper;
+import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.R;
 import com.triple.triple.Sync.CreateTrip;
@@ -114,7 +114,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                         now.get(Calendar.DAY_OF_MONTH)
                 );
                 dpd.setMinDate(now);
-                dpd.setMaxDate(CalendarHelper.twoYearsLater());
+                dpd.setMaxDate(DateTimeHelper.twoYearsLater());
                 dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         }

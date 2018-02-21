@@ -3,45 +3,42 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
-import com.triple.triple.Helper.CalendarHelper;
-import com.triple.triple.Interface.onMoveAndSwipedListener;
-import com.triple.triple.Model.Trip;
-import com.triple.triple.Model.TripItinerary;
+import com.triple.triple.Helper.DateTimeHelper;
+import com.triple.triple.Model.TripItineraryNode;
 import com.triple.triple.R;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Kevin on 2018/2/18.
  */
 
-public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdapter.TripItineraryViewHolder> implements onMoveAndSwipedListener {
+public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdapter.TripItineraryViewHolder> {
 
     private Activity activity;
-    private List<TripItinerary> tripItineraries;
+    private List<TripItineraryNode> itineraryNodes;
     private String isSaved;
 
-    public TripItineraryAdapter(Activity activity, List<TripItinerary> tripItineraries) {
+    public TripItineraryAdapter(Activity activity, List<TripItineraryNode> itineraryNodes) {
         this.activity = activity;
-        this.tripItineraries = tripItineraries;
+        this.itineraryNodes = itineraryNodes;
 //        this.isSaved = isSaved;
     }
 
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(tripItineraries, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
-    }
+//    @Override
+//    public boolean onItemMove(int fromPosition, int toPosition) {
+//        Collections.swap(itinerary.getNodes(), fromPosition, toPosition);
+//        notifyItemMoved(fromPosition, toPosition);
+//        return true;
+//    }
 
 //    @Override
 //    public void onItemDismiss(int position) {
@@ -58,25 +55,32 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
 //    }
 
     public class TripItineraryViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_name;
-        public TextView tv_duration;
-        public TextView tv_tags;
-//        public RoundedImageView image1;
+
+        private TextView tv_name;
+        private TextView tv_time;
+        private TextView tv_duration;
+        private TextView tv_tags;
+        private TextView tv_distance;
+        private TextView tv_traveltime;
+        private RoundedImageView image1;
 
         public TripItineraryViewHolder(View itemView) {
             super(itemView);
-//            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
+            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             tv_duration = (TextView) itemView.findViewById(R.id.tv_duration);
             tv_tags = (TextView) itemView.findViewById(R.id.tv_tags);
+            tv_distance = (TextView) itemView.findViewById(R.id.tv_distance);
+            tv_traveltime = (TextView) itemView.findViewById(R.id.tv_traveltime);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q=25.033965,121.564472");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    activity.startActivity(mapIntent);
+//                    Uri gmmIntentUri = Uri.parse("google.navigation:q=25.033965,121.564472");
+//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//                    mapIntent.setPackage("com.google.android.apps.maps");
+//                    activity.startActivity(mapIntent);
                 }
             });
         }
@@ -90,19 +94,25 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
 
     @Override
     public void onBindViewHolder(TripItineraryViewHolder holder, int i) {
-        TripItinerary itinerary = tripItineraries.get(i);
+        TripItineraryNode tripItineraryNode = itineraryNodes.get(i);
 
-//        holder.tv_name.setText(itinerary.getName());
-//        holder.tv_name.setSelected(true);
-//        holder.tv_duration.setText(itinerary.getDuration());
-//        holder.tv_tags.setText(itinerary.getTags());
-//        Picasso.with(activity)
-//                .load("http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1446143216/tokyo-header-dg1015.jpg?itok=nOef-qJm")
-//                .into(holder.image1);
+        holder.tv_name.setText(tripItineraryNode.getName());
+        holder.tv_name.setSelected(true);
+        holder.tv_time.setText(tripItineraryNode.getTime() + "-" + DateTimeHelper.endTime(tripItineraryNode.getTime(), tripItineraryNode.getDuration()));
+        holder.tv_duration.setText(activity.getString(R.string.mytrips_detail_itinerary_hour) + DateTimeHelper.millisToHourMin(tripItineraryNode.getDuration()));
+        holder.tv_tags.setText(tripItineraryNode.getTag());
+//        if (tripItineraryNode.getImage().isEmpty()) {
+//            holder.image1.setImageResource(R.drawable.image_null);
+//        } else {
+        Picasso.with(activity)
+                .load("http://nationalinterest.org/files/styles/main_image_on_posts/public/main_images/16141602477_82d6d91a2d_c.jpg?itok=XY14Fs06")
+                .into(holder.image1);
+//        }
+
     }
 
     public int getItemCount() {
-        return tripItineraries.size();
+        return itineraryNodes.size();
     }
 
 }
