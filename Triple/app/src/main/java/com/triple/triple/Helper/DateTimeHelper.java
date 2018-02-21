@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
 
 /**
  * Created by Kevin on 2018/2/14.
@@ -80,10 +80,18 @@ public class DateTimeHelper {
 
     }
 
-    public static double millisToHourMin(int millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        return calendar.;
+    public static String secondToHourMinutes(int second, String hourTag, String minTag) {
+        long hour = second / 3600;
+        long minutes = (long) Math.floor((second % 3600) / 60);
+        String result = null;
+        if (hour == 0) {
+            result = minutes + " " + minTag;
+        } else if (minutes == 0) {
+            result = hour + " " + hourTag;
+        } else if (hour != 0 && minutes != 0) {
+            result = hour + " " + hourTag + " " + minutes + " " + minTag;
+        }
+        return result;
     }
 
 
@@ -97,7 +105,7 @@ public class DateTimeHelper {
         }
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
-        cal.add(Calendar.MILLISECOND, duration);
+        cal.add(Calendar.SECOND, duration);
         String newTime = sdf.format(cal.getTime());
         return newTime;
 

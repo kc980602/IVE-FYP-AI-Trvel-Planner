@@ -1,8 +1,6 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,17 +97,24 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         holder.tv_name.setText(tripItineraryNode.getName());
         holder.tv_name.setSelected(true);
         holder.tv_time.setText(tripItineraryNode.getTime() + "-" + DateTimeHelper.endTime(tripItineraryNode.getTime(), tripItineraryNode.getDuration()));
-        holder.tv_duration.setText(DateTimeHelper.millisToHourMin(tripItineraryNode.getDuration()) + activity.getString(R.string.mytrips_detail_itinerary_hour));
+        holder.tv_duration.setText(DateTimeHelper.secondToHourMinutes(tripItineraryNode.getDuration(), activity.getString(R.string.mytrips_detail_itinerary_hour), activity.getString(R.string.mytrips_detail_itinerary_minutes)));
         holder.tv_tags.setText(tripItineraryNode.getTag());
-        holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()));
-        holder.tv_traveltime.setText(String.valueOf(tripItineraryNode.getTravel_duration()));
-//        if (tripItineraryNode.getImage().isEmpty()) {
-//            holder.image1.setImageResource(R.drawable.image_null);
-//        } else {
-        Picasso.with(activity)
-                .load("http://nationalinterest.org/files/styles/main_image_on_posts/public/main_images/16141602477_82d6d91a2d_c.jpg?itok=XY14Fs06")
-                .into(holder.image1);
-//        }
+        if (tripItineraryNode.getDistance() >= 1000) {
+            holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
+        } else {
+            holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_meters));
+        }
+
+        if (tripItineraryNode.getMode().equals("walking")) {
+            holder.tv_traveltime.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_directions_walk, 0, 0, 0);
+        }
+        holder.tv_traveltime.setText(DateTimeHelper.secondToHourMinutes(tripItineraryNode.getTravel_duration(), activity.getString(R.string.mytrips_detail_itinerary_hour), activity.getString(R.string.mytrips_detail_itinerary_minutes)));
+
+        if (!tripItineraryNode.getImage().isEmpty() && tripItineraryNode.getImage() != null) {
+            Picasso.with(activity)
+                    .load(tripItineraryNode.getImage())
+                    .into(holder.image1);
+        }
 
     }
 

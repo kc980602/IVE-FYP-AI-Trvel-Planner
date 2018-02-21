@@ -45,7 +45,7 @@
                     android:id="@+id/image1"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/a6"
+                    android:src="@drawable/ic_image_null_square"
                     android:scaleType="centerCrop"
                     app:riv_corner_radius="1000dp"
                     app:riv_border_width="2dip"
@@ -53,7 +53,6 @@
                     app:riv_oval="false" />
 
             </LinearLayout>
-
 
             <com.daasuu.bl.BubbleLayout
                 android:layout_width="match_parent"
@@ -135,7 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:gravity="center">
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_distance"

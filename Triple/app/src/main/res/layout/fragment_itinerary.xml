@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:translationZ="30dp"
         app:bl_arrowDirection="right"
         app:bl_arrowHeight="20dp"
         app:bl_arrowPosition="0dp"
-        android:translationZ="30dp"
         app:bl_arrowWidth="15dp"
         app:bl_bubbleColor="@color/colorPrimary"
         app:bl_strokeWidth="0dp">
@@ -32,20 +32,13 @@
 
     </com.daasuu.bl.BubbleLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_itinerary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:translationZ="20dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:scrollbars="vertical"
+        android:translationZ="20dp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_itinerary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:layout_width="80dp"

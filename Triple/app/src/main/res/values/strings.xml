@@ -92,6 +92,9 @@
     <string name="mytrips_detail_itinerary_dayname_pre">Day</string>
     <string name="mytrips_detail_itinerary_dayname_post"></string>
     <string name="mytrips_detail_itinerary_hour">Hour</string>
+    <string name="mytrips_detail_itinerary_minutes">Minutes</string>
+    <string name="mytrips_detail_itinerary_meters">M</string>
+    <string name="mytrips_detail_itinerary_kilometers">KM</string>
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>
 
