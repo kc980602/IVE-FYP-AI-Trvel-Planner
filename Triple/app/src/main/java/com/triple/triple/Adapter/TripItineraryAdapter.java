@@ -99,8 +99,10 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         holder.tv_name.setText(tripItineraryNode.getName());
         holder.tv_name.setSelected(true);
         holder.tv_time.setText(tripItineraryNode.getTime() + "-" + DateTimeHelper.endTime(tripItineraryNode.getTime(), tripItineraryNode.getDuration()));
-        holder.tv_duration.setText(activity.getString(R.string.mytrips_detail_itinerary_hour) + DateTimeHelper.millisToHourMin(tripItineraryNode.getDuration()));
+        holder.tv_duration.setText(DateTimeHelper.millisToHourMin(tripItineraryNode.getDuration()) + activity.getString(R.string.mytrips_detail_itinerary_hour));
         holder.tv_tags.setText(tripItineraryNode.getTag());
+        holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()));
+        holder.tv_traveltime.setText(String.valueOf(tripItineraryNode.getTravel_duration()));
 //        if (tripItineraryNode.getImage().isEmpty()) {
 //            holder.image1.setImageResource(R.drawable.image_null);
 //        } else {

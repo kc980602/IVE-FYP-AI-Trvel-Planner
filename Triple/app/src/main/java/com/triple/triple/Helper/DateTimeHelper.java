@@ -81,7 +81,9 @@ public class DateTimeHelper {
     }
 
     public static double millisToHourMin(int millis) {
-        return (double) ((millis / (1000 * 60 * 60)) % 24);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return calendar.;
     }
 
 
