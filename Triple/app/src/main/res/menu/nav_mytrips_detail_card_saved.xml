@@ -10,10 +10,4 @@
         android:id="@+id/action_itenary"
         android:icon="@drawable/ic_date_range"
         android:title="@string/mytrips_detail_itinerary"></item>
-
-    <item
-        android:id="@+id/action_invite"
-        android:icon="@drawable/ic_invite"
-        android:title="@string/mytrips_detail_invite"></item>
-
 </menu>

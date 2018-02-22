@@ -33,8 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Context mcontext = RegisterActivity.this;
 
 
-    private TextInputEditText et_username, et_email, et_password, et_cpassword, et_age, et_gender, et_country;
-    private String username, password, cPassword, email, age, gender, country;
+    private TextInputEditText et_username, et_fname, et_lname, et_email, et_password, et_cpassword, et_age, et_gender, et_country;
+    private String username, fname, lname, password, cPassword, email, age, gender, country;
     private ProgressDialog progressDialog;
 
     @Override
@@ -46,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
 
         et_username = (TextInputEditText) findViewById(R.id.et_username);
+        et_fname = (TextInputEditText) findViewById(R.id.et_fname);
+        et_lname = (TextInputEditText) findViewById(R.id.et_lname);
         et_email = (TextInputEditText) findViewById(R.id.et_email);
         et_password = (TextInputEditText) findViewById(R.id.et_password);
         et_cpassword = (TextInputEditText) findViewById(R.id.et_cpassword);
@@ -142,8 +144,12 @@ public class RegisterActivity extends AppCompatActivity {
     public void requestRegister() {
         Boolean isSuccess = false;
 
-        if (TextUtils.isEmpty(et_username.getText()) || et_username.getText().toString().length() < 6) {
+        if (et_username.getText().toString().length() < 6) {
             et_username.setError(getResources().getString(R.string.register_error_username));
+        } else if (TextUtils.isEmpty(et_fname.getText())) {
+            et_fname.setError(getResources().getString(R.string.register_error_required));
+        } else if (TextUtils.isEmpty(et_lname.getText())) {
+            et_lname.setError(getResources().getString(R.string.register_error_required));
         } else if (checkEmail(et_email.getText().toString())) {
             et_email.setError(getResources().getString(R.string.register_error_email));
         } else if (et_password.getText().toString().equals("") || et_password.getText().toString().length() < 6) {
@@ -162,6 +168,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (isSuccess) {
             username = et_username.getText().toString();
+            fname = et_fname.getText().toString();
+            lname = et_lname.getText().toString();
             password = et_password.getText().toString();
             cPassword = et_cpassword.getText().toString();
             email = et_email.getText().toString();
@@ -178,7 +186,6 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.show();
-            Log.d("data", username + ",  " + password + ",  " + cPassword + ",  " + email + ",  " + age + ",  " + gender + ",  " + country);
         }
 
         @Override
@@ -186,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
             String respone = "";
             try {
                 String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_registration);
-                respone = new Registration().run(url, username, password, cPassword, email, age, gender, country);
+                respone = new Registration().run(url, username, fname, lname, password, cPassword, email, age, gender, country);
             } catch (Exception e) {
             }
             return respone;

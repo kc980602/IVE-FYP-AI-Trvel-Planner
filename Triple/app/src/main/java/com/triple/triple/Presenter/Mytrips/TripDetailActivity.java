@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
     private Boolean isSaved;
+    private CardView cv_trip;
 
 
     @Override
@@ -71,6 +73,7 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void  findView() {
+        cv_trip = (CardView) findViewById(R.id.cv_trip);
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
         bottomNavigationViewEx_saved = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card_saved);
@@ -86,6 +89,8 @@ public class TripDetailActivity extends AppCompatActivity {
         ab.setTitle(trip.getName() + addOn);
         ab.setElevation(0);
         String indicator = getIntent().getStringExtra("indicator");
+
+        cv_trip.setVisibility(View.INVISIBLE);
 
         avi.setIndicator(indicator);
         avi.hide();
@@ -241,7 +246,7 @@ public class TripDetailActivity extends AppCompatActivity {
             String respone = "Error";
             try {
                 String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get_detail) + trip.getId();
-                respone = new GetTrip().run("https://api.myjson.com/bins/812e1", mcontext);
+                respone = new GetTrip().run("https://api.myjson.com/bins/oc6yp", mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -258,7 +263,7 @@ public class TripDetailActivity extends AppCompatActivity {
                 tripDetail = (TripDetail) gson.fromJson(jsonObject.toString(), type);
                 List<TripItinerary> itineraryList = tripDetail.getItinerary();
 
-                for (int i = 0; i <= itineraryList.size(); i++) {
+                for (int i = 0; i < itineraryList.size(); i++) {
                     TripDay tripday = new TripDay();
                     tripday.setId(itineraryList.get(i).getId());
                     tripday.setName("Day" + (i+1));
@@ -266,7 +271,18 @@ public class TripDetailActivity extends AppCompatActivity {
                     tripdays.add(tripday);
                 }
                 adapter.notifyDataSetChanged();
+                cv_trip.setVisibility(View.VISIBLE);
             } catch (Exception e) {
+
+                Log.d("aac", e.toString());
+                View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        }).show();
 //                new TripDetailActivity.RequestTripItinerary().execute();
             }
             stopAnim();

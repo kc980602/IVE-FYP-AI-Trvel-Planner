@@ -27,6 +27,8 @@
     <string name="register_title">Create an account</string>
     <string name="register_guide">Enter your personal infotmation to create account.</string>
     <string name="register_username">Username (At least 6 characters)</string>
+    <string name="register_fname">First Name</string>
+    <string name="register_lname">Last Name</string>
     <string name="register_email">Email</string>
     <string name="register_password">Password (At least 6 characters)</string>
     <string name="register_cpassword">Confirm Password</string>
@@ -36,6 +38,7 @@
     <string name="register_age_guide">Select your age group</string>
     <string name="register_gender_guide">Select your gender</string>
     <string name="register_country_guide">Where are you from?</string>
+    <string name="register_error_required">Required!</string>
     <string name="register_error_username">Username require at least 6 characters!</string>
     <string name="register_error_username2">Username have been used!</string>
     <string name="register_error_password">Password require at least 6 characters!</string>

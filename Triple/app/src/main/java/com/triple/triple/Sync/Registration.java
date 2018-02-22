@@ -16,13 +16,13 @@ import okhttp3.Response;
 public class Registration {
     private final OkHttpClient client = new OkHttpClient();
 
-    public String run(String url, String username, String password, String cPassword, String email, String age, String gender, String country) throws Exception {
+    public String run(String url, String username, String fname, String lname, String password, String cPassword, String email, String age, String gender, String country) throws Exception {
         RequestBody formBody = new FormBody.Builder()
                 .add("username", username)
+                .add("first_name", fname)
+                .add("last_name", lname)
                 .add("password", password)
                 .add("password_confirmation", cPassword)
-                .add("first_name", "N/A")
-                .add("last_name", "N/A")
                 .add("gender", gender)
                 .add("age", age)
                 .add("email", email)

@@ -194,8 +194,8 @@ public class MytripsActivity extends AppCompatActivity {
             super.onPostExecute(result);
             try {
                 Log.d("aac", result);
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray DateArray = jsonObject.getJSONArray("data");
+//                JSONObject jsonObject = new JSONObject(result);
+                JSONArray DateArray = new JSONArray(result);
                 Type type = new TypeToken<List<Trip>>() {
                 }.getType();
                 Gson gson = new Gson();
