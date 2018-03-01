@@ -15,6 +15,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
 import com.triple.triple.Presenter.Profile.ProfileActivity;
@@ -38,14 +39,15 @@ public class DrawerUtil {
         SecondaryDrawerItem drawer_settings = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.title_settings).withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
         SecondaryDrawerItem drawer_about = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.title_about).withIcon(R.drawable.ic_info).withIconColor(iconColor).withIconTintingEnabled(true);
 
+        User user = UserInfo.getUserInfo(activity);
+
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.side_nav_bar)
                 .withSelectionListEnabledForSingleProfile(false)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(activity.getResources().getDrawable(R.drawable.icon))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                        new ProfileDrawerItem().withName(user.getFirst_name() + " " + user.getLast_name()).withEmail(user.getEmail()).withIcon(activity.getResources().getDrawable(R.drawable.ic_account_circle))
+                )                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
                         return false;

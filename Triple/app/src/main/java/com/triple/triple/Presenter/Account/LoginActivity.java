@@ -138,8 +138,8 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences data = new SecurePreferences(mcontext);
                     SharedPreferences.Editor editor = data.edit();
                     editor.putString("token", auth.getToken());
-                    editor.putInt("userid", auth.getUser().getId());
-                    editor.putString("username", auth.getUser().getUsername());
+                    String json = gson.toJson(auth.getUser());
+                    editor.putString("userInfo", json);
                     editor.commit();
                     String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
                     Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();

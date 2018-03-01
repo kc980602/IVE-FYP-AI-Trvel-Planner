@@ -273,7 +273,6 @@ public class TripDetailActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 cv_trip.setVisibility(View.VISIBLE);
             } catch (Exception e) {
-
                 Log.d("aac", e.toString());
                 View view = getWindow().getDecorView().findViewById(android.R.id.content);
                 Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)

@@ -1,6 +1,7 @@
 package com.triple.triple.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.TripItineraryNode;
+import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.R;
 
 import java.util.List;
@@ -76,10 +78,8 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-//                    Uri gmmIntentUri = Uri.parse("google.navigation:q=25.033965,121.564472");
-//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                    mapIntent.setPackage("com.google.android.apps.maps");
-//                    activity.startActivity(mapIntent);
+                    Intent mapIntent = new Intent(activity, AttractionDetailActivity.class);
+                    activity.startActivity(mapIntent);
                 }
             });
         }
