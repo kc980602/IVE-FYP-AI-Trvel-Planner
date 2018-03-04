@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -14,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".Presenter.MainActivity"
             android:launchMode="singleTop">
@@ -61,10 +72,10 @@
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
+            android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
-            android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:launchMode="singleTask" ></activity>
+            android:name=".Presenter.Attraction.AttractionDetailActivity" ></activity>
     </application>
 
 </manifest>

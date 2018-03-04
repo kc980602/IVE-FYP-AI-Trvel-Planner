@@ -16,6 +16,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.triple.triple.Model.User;
+import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
 import com.triple.triple.Presenter.Profile.ProfileActivity;
@@ -38,6 +39,7 @@ public class DrawerUtil {
         SecondaryDrawerItem drawer_help = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.title_help).withIcon(R.drawable.ic_help).withIconColor(iconColor).withIconTintingEnabled(true);
         SecondaryDrawerItem drawer_settings = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.title_settings).withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
         SecondaryDrawerItem drawer_about = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.title_about).withIcon(R.drawable.ic_info).withIconColor(iconColor).withIconTintingEnabled(true);
+        SecondaryDrawerItem drawer_test = new SecondaryDrawerItem().withIdentifier(7).withName("Testing Link").withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
 
         User user = UserInfo.getUserInfo(activity);
 
@@ -75,7 +77,8 @@ public class DrawerUtil {
                         new DividerDrawerItem(),
                         drawer_help,
                         drawer_settings,
-                        drawer_about
+                        drawer_about,
+                        drawer_test
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -103,6 +106,9 @@ public class DrawerUtil {
                                     break;
                                 case 6:
                                     intent.setClass(activity, ProfileActivity.class);
+                                    break;
+                                case 7:
+                                    intent.setClass(activity, AttractionDetailActivity.class);
                                     break;
                                 default:
                                     intent.setClass(activity, MainActivity.class);

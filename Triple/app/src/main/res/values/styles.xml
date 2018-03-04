@@ -56,10 +56,15 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="MyToolbar" parent="AppTheme">
+    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="MyTextDisplay1" parent="Base.TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="AppThemeNoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

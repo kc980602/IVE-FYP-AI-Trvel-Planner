@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case MESSAGE_SHOW_START_PAGE:
                     AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-                    alphaAnimation.setDuration(300);
+                    alphaAnimation.setDuration(100);
                     alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
