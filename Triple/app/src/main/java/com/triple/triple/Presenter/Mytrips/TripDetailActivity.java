@@ -246,7 +246,7 @@ public class TripDetailActivity extends AppCompatActivity {
             String respone = "Error";
             try {
                 String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get_detail) + trip.getId();
-                respone = new GetTrip().run("https://api.myjson.com/bins/oc6yp", mcontext);
+                respone = new GetTrip().run(url, mcontext);
             } catch (Exception e) {
                 e.printStackTrace();
             }

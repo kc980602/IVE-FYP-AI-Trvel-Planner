@@ -56,6 +56,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private GoogleMap map;
     private ImageView image_map;
     private LinearLayout insertPoint;
+    private LinearLayout layout_gallery;
+    private LayoutInflater mInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         image_map = (ImageView) findViewById(R.id.image_map);
         insertPoint = (LinearLayout) findViewById(R.id.layout_info);
+        mInflater = LayoutInflater.from(this);
     }
 
     private void initView() {
@@ -96,31 +99,16 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         image_map.getViewTreeObserver().addOnGlobalLayoutListener(new MyGlobalListenerClass());
 
-        String[] info = new String[2];
-        info[0] = "info 1";
-        info[1] = "info 2";
+        layout_gallery = (LinearLayout) findViewById(R.id.layout_gallery);
 
-        LayoutInflater layoutInflator = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        List<View> views = new ArrayList();
+        int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7};
+        for (int i = 0; i < data.length; i++) {
 
-        HashMap infoMap = new HashMap();
-        infoMap.put("phone", "+886287890111");
-        infoMap.put("website", "http://www.homehotel.com.tw");
-        infoMap.put("phone", "+886287890111");
-        Iterator it = infoMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-
-            View view = layoutInflator.inflate(R.layout.listitem_attraction_info, null);
-            TextView textView = (TextView) view.findViewById(R.id.tv_attInfo);
-            textView.setText(pair.getValue().toString());
-            views.add(view);
-            it.remove();
+            View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery, false);
+            ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
+            img.setImageResource(data[i]);
+            layout_gallery.addView(view);
         }
-
-        for(int i = 0; i < views.size(); i++)
-            insertPoint.addView((View) views.get(i));
     }
 
     class MyGlobalListenerClass implements ViewTreeObserver.OnGlobalLayoutListener {
