@@ -7,6 +7,12 @@
     android:layout_marginRight="8dp"
     android:background="@color/transparent">
 
+    <TextView
+        android:id="@+id/tv_attId"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"/>
+
     <RelativeLayout
         android:id="@+id/layout_attraction"
         android:layout_width="wrap_content"

@@ -27,9 +27,9 @@ public class TripDetail implements Serializable {
     @SerializedName("visit_length")
     @Expose
     private String visit_length;
-    @SerializedName("tripCollaborators")
+    @SerializedName("collaborators")
     @Expose
-    private List<TripCollaborator> tripCollaborators;
+    private List<TripCollaborator> collaborators;
     @SerializedName("itinerary")
     @Expose
     private List<TripItinerary> itinerary;
@@ -74,12 +74,12 @@ public class TripDetail implements Serializable {
         this.visit_length = visit_length;
     }
 
-    public List<TripCollaborator> getTripCollaborators() {
-        return tripCollaborators;
+    public List<TripCollaborator> getCollaborators() {
+        return collaborators;
     }
 
-    public void setTripCollaborators(List<TripCollaborator> tripCollaborators) {
-        this.tripCollaborators = tripCollaborators;
+    public void setCollaborators(List<TripCollaborator> collaborators) {
+        this.collaborators = collaborators;
     }
 
     public List<TripItinerary> getItinerary() {

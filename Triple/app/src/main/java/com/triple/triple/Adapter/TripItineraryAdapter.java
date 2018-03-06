@@ -2,6 +2,7 @@ package com.triple.triple.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
 
     public class TripItineraryViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView tv_attId;
         private TextView tv_name;
         private TextView tv_time;
         private TextView tv_duration;
@@ -67,6 +69,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
 
         public TripItineraryViewHolder(View itemView) {
             super(itemView);
+            tv_attId = (TextView) itemView.findViewById(R.id.tv_attId);
             image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
@@ -78,8 +81,13 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Intent mapIntent = new Intent(activity, AttractionDetailActivity.class);
-                    activity.startActivity(mapIntent);
+
+                    int attractionId = Integer.parseInt(tv_attId.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("attractionId", attractionId);
+                    Intent indent = new Intent(activity, AttractionDetailActivity.class);
+                    indent.putExtras(bundle);
+                    activity.startActivity(indent);
                 }
             });
         }
@@ -94,28 +102,32 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
     @Override
     public void onBindViewHolder(TripItineraryViewHolder holder, int i) {
         TripItineraryNode tripItineraryNode = itineraryNodes.get(i);
-
-        holder.tv_name.setText(tripItineraryNode.getName());
+        holder.tv_attId.setText(String.valueOf(tripItineraryNode.getAttraction().getId()));
+        holder.tv_name.setText(tripItineraryNode.getAttraction().getName());
         holder.tv_name.setSelected(true);
-        holder.tv_time.setText(tripItineraryNode.getTime() + "-" + DateTimeHelper.endTime(tripItineraryNode.getTime(), tripItineraryNode.getDuration()));
+        holder.tv_time.setText(DateTimeHelper.removeSec(tripItineraryNode.getVisit_time()) + "-" + DateTimeHelper.endTime(tripItineraryNode.getVisit_time(), tripItineraryNode.getDuration()));
         holder.tv_duration.setText(DateTimeHelper.secondToHourMinutes(tripItineraryNode.getDuration(), activity.getString(R.string.mytrips_detail_itinerary_hour), activity.getString(R.string.mytrips_detail_itinerary_minutes)));
-        holder.tv_tags.setText(tripItineraryNode.getTag());
+        holder.tv_tags.setText(tripItineraryNode.getType());
         if (tripItineraryNode.getDistance() >= 1000) {
-            holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
+            holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance() / 1000) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
         } else {
             holder.tv_distance.setText(String.valueOf(tripItineraryNode.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_meters));
         }
 
-        if (tripItineraryNode.getMode().equals("walking")) {
-            holder.tv_traveltime.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_directions_walk, 0, 0, 0);
+        if (tripItineraryNode.getMode() != null) {
+            switch (tripItineraryNode.getMode()) {
+                case "walking":
+                    holder.tv_traveltime.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_directions_walk, 0, 0, 0);
+                    break;
+            }
         }
         holder.tv_traveltime.setText(DateTimeHelper.secondToHourMinutes(tripItineraryNode.getTravel_duration(), activity.getString(R.string.mytrips_detail_itinerary_hour), activity.getString(R.string.mytrips_detail_itinerary_minutes)));
 
-        if (!tripItineraryNode.getImage().isEmpty() && tripItineraryNode.getImage() != null) {
-            Picasso.with(activity)
-                    .load(tripItineraryNode.getImage())
-                    .into(holder.image1);
-        }
+//        if (!tripItineraryNode.getImage().isEmpty() && tripItineraryNode.getImage() != null) {
+//            Picasso.with(activity)
+//                    .load(tripItineraryNode.getImage())
+//                    .into(holder.image1);
+//        }
 
     }
 

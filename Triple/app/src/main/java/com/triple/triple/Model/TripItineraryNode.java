@@ -17,39 +17,33 @@ public class TripItineraryNode implements Serializable {
     @SerializedName("attraction_id")
     @Expose
     private int attraction_id;
-    @SerializedName("name")
+    @SerializedName("visit_time")
     @Expose
-    private String name;
-    @SerializedName("image")
-    @Expose
-    private String image;
-    @SerializedName("type")
-    @Expose
-    private Object type;
-    @SerializedName("tag")
-    @Expose
-    private String tag;
-    @SerializedName("time")
-    @Expose
-    private String time;
+    private String visit_time;
     @SerializedName("duration")
     @Expose
     private int duration;
-    @SerializedName("distance")
-    @Expose
-    private int distance;
     @SerializedName("travel_duration")
     @Expose
     private int travel_duration;
+    @SerializedName("type")
+    @Expose
+    private String type;
+    @SerializedName("distance")
+    @Expose
+    private int distance;
     @SerializedName("fare")
     @Expose
     private Object fare;
+    @SerializedName("peak_hour")
+    @Expose
+    private Boolean peak_hour;
     @SerializedName("mode")
     @Expose
-    private Object mode;
-    @SerializedName("route")
+    private String mode;
+    @SerializedName("attraction")
     @Expose
-    private Object route;
+    private Attraction attraction;
 
     public int getId() {
         return id;
@@ -67,44 +61,12 @@ public class TripItineraryNode implements Serializable {
         this.attraction_id = attraction_id;
     }
 
-    public String getName() {
-        return name;
+    public String getVisit_time() {
+        return visit_time;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Object getType() {
-        return type;
-    }
-
-    public void setType(Object type) {
-        this.type = type;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setVisit_time(String visit_time) {
+        this.visit_time = visit_time;
     }
 
     public int getDuration() {
@@ -115,20 +77,28 @@ public class TripItineraryNode implements Serializable {
         this.duration = duration;
     }
 
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
     public int getTravel_duration() {
         return travel_duration;
     }
 
     public void setTravel_duration(int travel_duration) {
         this.travel_duration = travel_duration;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public Object getFare() {
@@ -139,19 +109,27 @@ public class TripItineraryNode implements Serializable {
         this.fare = fare;
     }
 
-    public Object getMode() {
+    public Boolean getPeak_hour() {
+        return peak_hour;
+    }
+
+    public void setPeak_hour(Boolean peak_hour) {
+        this.peak_hour = peak_hour;
+    }
+
+    public String getMode() {
         return mode;
     }
 
-    public void setMode(Object mode) {
+    public void setMode(String mode) {
         this.mode = mode;
     }
 
-    public Object getRoute() {
-        return route;
+    public Attraction getAttraction() {
+        return attraction;
     }
 
-    public void setRoute(Object route) {
-        this.route = route;
+    public void setAttraction(Attraction attraction) {
+        this.attraction = attraction;
     }
 }

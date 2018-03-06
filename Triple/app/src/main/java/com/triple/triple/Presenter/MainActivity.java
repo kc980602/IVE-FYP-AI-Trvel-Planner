@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (isShowPageStart) {
             relative_main.setVisibility(View.VISIBLE);
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 1000);
+            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 100);
             isShowPageStart = false;
         }
 
         if (!Token.checkTokenExist(mcontext)) {
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_LOGIN, 2000);
+            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_LOGIN, 0);
         }
     }
 

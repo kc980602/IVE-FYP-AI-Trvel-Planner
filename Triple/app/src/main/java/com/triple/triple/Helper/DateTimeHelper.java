@@ -1,5 +1,7 @@
 package com.triple.triple.Helper;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,28 +87,44 @@ public class DateTimeHelper {
         long minutes = (long) Math.floor((second % 3600) / 60);
         String result = null;
         if (hour == 0) {
-            result = minutes + " " + minTag;
+            result = minutes + minTag;
         } else if (minutes == 0) {
-            result = hour + " " + hourTag;
+            result = hour + hourTag;
         } else if (hour != 0 && minutes != 0) {
-            result = hour + " " + hourTag + " " + minutes + " " + minTag;
+            result = hour + hourTag + " " + minutes + minTag;
         }
         return result;
     }
 
-
-    public static String endTime(String startTime, int duration) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    public static String removeSec(String time) {
+        SimpleDateFormat sdfIn = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdfOut = new SimpleDateFormat("HH:mm");
         Date d = null;
         try {
-            d = sdf.parse(startTime);
+            d = sdfIn.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        String newTime = sdfOut.format(cal.getTime());
+        return newTime;
+    }
+
+
+    public static String endTime(String startTime, int duration) {
+        SimpleDateFormat sdfIn = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdfOut = new SimpleDateFormat("HH:mm");
+        Date d = null;
+        try {
+            d = sdfIn.parse(startTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
         cal.add(Calendar.SECOND, duration);
-        String newTime = sdf.format(cal.getTime());
+        String newTime = sdfOut.format(cal.getTime());
         return newTime;
 
     }

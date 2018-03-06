@@ -75,7 +75,8 @@
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
-            android:name=".Presenter.Attraction.AttractionDetailActivity" ></activity>
+            android:name=".Presenter.Attraction.AttractionDetailActivity"
+            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity"></activity>
     </application>
 
 </manifest>

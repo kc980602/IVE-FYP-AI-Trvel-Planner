@@ -174,7 +174,6 @@ public class TripDetailActivity extends AppCompatActivity {
          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
              switch (item.getItemId()) {
                  case R.id.action_info:
-                     Log.d("aac", "action_info");
                      break;
                  case R.id.action_itenary:
                      Bundle bundle = new Bundle();
@@ -184,7 +183,6 @@ public class TripDetailActivity extends AppCompatActivity {
                      startActivity(i);
                      break;
                  case R.id.action_invite:
-                     Log.d("aac", "action_invite");
                      break;
                  case R.id.action_save:
                      View view = getWindow().getDecorView().findViewById(android.R.id.content);
@@ -273,7 +271,6 @@ public class TripDetailActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 cv_trip.setVisibility(View.VISIBLE);
             } catch (Exception e) {
-                Log.d("aac", e.toString());
                 View view = getWindow().getDecorView().findViewById(android.R.id.content);
                 Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
@@ -282,7 +279,7 @@ public class TripDetailActivity extends AppCompatActivity {
 
                             }
                         }).show();
-//                new TripDetailActivity.RequestTripItinerary().execute();
+                new TripDetailActivity.RequestTripItinerary().execute();
             }
             stopAnim();
         }

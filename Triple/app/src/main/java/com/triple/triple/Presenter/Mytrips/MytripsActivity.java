@@ -193,7 +193,6 @@ public class MytripsActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-                Log.d("aac", result);
 //                JSONObject jsonObject = new JSONObject(result);
                 JSONArray DateArray = new JSONArray(result);
                 Type type = new TypeToken<List<Trip>>() {
@@ -206,7 +205,7 @@ public class MytripsActivity extends AppCompatActivity {
                 }
                 adapter_allTrips.notifyDataSetChanged();
             } catch (Exception e) {
-//                new MytripsActivity.RequestTrip().execute();
+                new MytripsActivity.RequestTrip().execute();
             }
             if (swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);

@@ -79,6 +79,9 @@ public class ItineraryActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+
+//        TabLayout.Tab tab = tabLayout.getTag("");
+//        tab.select();
     }
 
 
