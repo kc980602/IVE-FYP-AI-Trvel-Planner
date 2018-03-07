@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -30,7 +28,6 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -76,7 +73,9 @@
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity"></activity>
+            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
+
+        </activity>
     </application>
 
 </manifest>

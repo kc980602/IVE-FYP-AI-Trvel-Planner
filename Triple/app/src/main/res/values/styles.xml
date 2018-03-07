@@ -67,6 +67,10 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="MyTextTransparent">
+        <item name="android:textColor">@color/transparent</item>
+    </style>
+
     <style name="AppThemeNoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppThemeNoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

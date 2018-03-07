@@ -75,10 +75,12 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
     private AVLoadingIndicatorView avi;
     private CoordinatorLayout layout_main;
-    private TextView tv_intro, tv_attInfo_phone, tv_attInfo_website, tv_attInfo_email, tv_attInfo_address;
+    private TextView tv_intro, tv_attInfo_phone, tv_attInfo_website, tv_attInfo_address;
     private Attraction attraction;
     private String url;
     private Integer attractionId;
+    private String attractionName = "";
+    private TextView tv_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +105,10 @@ public class AttractionDetailActivity extends AppCompatActivity {
         image_map = (ImageView) findViewById(R.id.image_map);
         insertPoint = (LinearLayout) findViewById(R.id.layout_info);
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
+        tv_title = (TextView) findViewById(R.id.tv_title);
         tv_intro = (TextView) findViewById(R.id.tv_intro);
         tv_attInfo_phone = (TextView) findViewById(R.id.tv_attInfo_phone);
         tv_attInfo_website = (TextView) findViewById(R.id.tv_attInfo_website);
-        tv_attInfo_email = (TextView) findViewById(R.id.tv_attInfo_email);
         tv_attInfo_address = (TextView) findViewById(R.id.tv_attInfo_address);
     }
 
@@ -115,6 +117,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        layout_collapsing.setTitle("");
         layout_appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
@@ -178,20 +181,18 @@ public class AttractionDetailActivity extends AppCompatActivity {
     }
 
     private void loadDataToView() {
-        layout_collapsing.setTitle(attraction.getName());
-        if (attraction.getPhone() != null) {
+        attractionName = attraction.getName();
+        layout_collapsing.setTitle(attractionName);
+        tv_title.setText(attraction.getName());
+        if (!attraction.getPhone().equals("")) {
             tv_attInfo_phone.setText(attraction.getPhone().toString());
             tv_attInfo_phone.setVisibility(View.VISIBLE);
         }
-        if (attraction.getWebsite() != null) {
+        if (!attraction.getWebsite().equals("")) {
             tv_attInfo_website.setText(attraction.getWebsite().toString());
             tv_attInfo_website.setVisibility(View.VISIBLE);
         }
-        if (attraction.getEmail() != null) {
-            tv_attInfo_email.setText(attraction.getEmail().toString());
-            tv_attInfo_email.setVisibility(View.VISIBLE);
-        }
-        if (attraction.getAddress() != null) {
+        if (!attraction.getAddress().equals("")) {
             tv_attInfo_address.setText(attraction.getAddress().toString());
             tv_attInfo_address.setVisibility(View.VISIBLE);
         }
