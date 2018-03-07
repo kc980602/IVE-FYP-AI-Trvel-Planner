@@ -2,6 +2,7 @@ package com.triple.triple.Helper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -108,6 +109,9 @@ public class DrawerUtil {
                                     intent.setClass(activity, ProfileActivity.class);
                                     break;
                                 case 7:
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("attractionId", 1643);
+                                    intent.putExtras(bundle);
                                     intent.setClass(activity, AttractionDetailActivity.class);
                                     break;
                                 default:

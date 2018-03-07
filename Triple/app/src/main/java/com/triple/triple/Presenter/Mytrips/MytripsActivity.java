@@ -193,7 +193,6 @@ public class MytripsActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-//                JSONObject jsonObject = new JSONObject(result);
                 JSONArray DateArray = new JSONArray(result);
                 Type type = new TypeToken<List<Trip>>() {
                 }.getType();

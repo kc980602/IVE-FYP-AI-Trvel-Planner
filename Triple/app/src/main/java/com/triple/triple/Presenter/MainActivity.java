@@ -2,6 +2,7 @@ package com.triple.triple.Presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +26,9 @@ import android.widget.RelativeLayout;
 
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
+import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Helper.Token;
+import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
 import com.triple.triple.Presenter.Profile.ProfileActivity;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new MainActivity.RequestData().execute();
         initView();
         initViewPager();
 
@@ -127,5 +131,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class RequestData extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String respone = "Error";
+            try {
+                SystemPropertyHelper.refreshData(mcontext);
+                respone = "Success";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return respone;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+        }
     }
 }

@@ -97,10 +97,12 @@
     <string name="mytrips_detail_itinerary_hour">h</string>
     <string name="mytrips_detail_itinerary_minutes">min</string>
     <string name="mytrips_detail_itinerary_meters">m</string>
-    <string name="mytrips_detail_itinerary_kilometers">km</string>
+    <string name="mytrips_detail_itinerary_kilometers">km </string>
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>
 
+
+    <string name="attraction_detail_seeall">See All</string>
     <string name="attraction_detail_share">Share</string>
     <string name="attraction_detail_bookmark">Add to trip</string>
 
@@ -113,14 +115,16 @@
 
     <!--api-->
     <string name="api_prefix">http://tripleapi-env.ap-southeast-1.elasticbeanstalk.com</string>
+    <string name="api_system_protery">/system/property</string>
     <string name="api_login">/member/authentication</string>
     <string name="api_registration">/member/register</string>
     <string name="api_trip_create">/trip</string>
     <string name="api_trip_get">/trip</string>
     <string name="api_trip_get_detail">/trip/</string>
-    <string name="api_profile_preference">/member/perference</string>
+    <string name="api_profile_preference">/member/preference</string>
     <string name="api_forget_password">/forgetpassword</string>
     <string name="api_attraction">/attraction</string>
+    <string name="local_api_prefix">http://com.triple</string>
 
     <string name="google_maps_key">AIzaSyAgZtMqnGYDJLeajhqUV9g1_Eabe1xcuKY</string>
 
@@ -133,7 +137,7 @@
     <string name="intent_share_header">Share this by</string>
 
     <string name="intent_share_message_attraction">
-        Check out %1$s in Triple!\nTriple - An A.I. Driven Travel Planner\n%2$s
+        %1$s\nCheck it out in Triple!\nTriple - An A.I. Driven Travel Planner\n%2$s
     </string>
 
 </resources>

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Kevin on 2018/1/29.
  */
 
-public class Preference {
+public class KeyValue {
     @SerializedName("key")
     @Expose
     private String key;

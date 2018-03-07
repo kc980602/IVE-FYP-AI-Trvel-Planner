@@ -2,6 +2,7 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -88,8 +89,15 @@ public class AttractionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attraction_detail);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        attractionId = (Integer) bundle.getInt("attractionId");
+        String appLinkAction = intent.getAction();
+        Uri appLinkData = intent.getData();
+        if (appLinkData!=null) {
+            attractionId = Integer.valueOf(appLinkData.getLastPathSegment());
+        } else {
+            Bundle bundle = intent.getExtras();
+            attractionId = (Integer) bundle.getInt("attractionId");
+        }
+
         findViews();
         initView();
         new AttractionDetailActivity.RequestAttractionDetail().execute();
@@ -130,6 +138,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 }
             }
         });
+        image_map.setOnClickListener(image_mapListener);
+
         layout_main.setVisibility(View.INVISIBLE);
         layout_main.invalidate();
     }
@@ -175,8 +185,18 @@ public class AttractionDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    View.OnClickListener image_mapListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Uri gmmIntentUri = Uri.parse(String.format("geo:%f,%f?z=%d", attraction.getLatitude(), attraction.getLongitude(), 17));
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        }
+    };
     private String prepareShareMessage() {
-        String message = String.format(getResources().getString(R.string.intent_share_message_attraction), attraction.getName(), url);
+        String link = getResources().getString(R.string.local_api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attraction.getId();
+        String message = String.format(getResources().getString(R.string.intent_share_message_attraction), attraction.getName(), link);
         return message;
     }
 
@@ -207,7 +227,12 @@ public class AttractionDetailActivity extends AppCompatActivity {
             ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
             img.setImageResource(data[i]);
             layout_gallery.addView(view);
+            if (i==9) {
+                break;
+            }
         }
+        View view = mInflater.inflate(R.layout.listitem_gallery_more, layout_gallery, false);
+        layout_gallery.addView(view);
         layout_main.setVisibility(View.VISIBLE);
         layout_main.invalidate();
     }

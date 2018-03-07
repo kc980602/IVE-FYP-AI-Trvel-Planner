@@ -16,8 +16,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Helper.CheckLogin;
-import com.triple.triple.Model.Preference;
-import com.triple.triple.Presenter.MainActivity;
+import com.triple.triple.Model.KeyValue;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetPreference;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -105,17 +104,17 @@ public class TravelStyleActivity extends AppCompatActivity {
             super.onPostExecute(respone);
             Log.d("aac", respone);
             try {
-                Type type = new TypeToken<List<Preference>>() {
+                Type type = new TypeToken<List<KeyValue>>() {
                 }.getType();
                 Gson gson = new Gson();
-                List<Preference> preferenceList = (List<Preference>) gson.fromJson(respone, type);
+                List<KeyValue> keyValueList = (List<KeyValue>) gson.fromJson(respone, type);
                 for (int i = 0; i <= 4; i++) {
-                    String filename = "preference_" + preferenceList.get(i).getKey();
-                    if (preferenceList.get(i).getKey().equals("60+_traveller")) {
+                    String filename = "preference_" + keyValueList.get(i).getKey();
+                    if (keyValueList.get(i).getKey().equals("60+_traveller")) {
                         filename = "preference_60_traveller";
                     }
                     imageViewsList[i].setImageResource(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()));
-                    int percent = (int) Math.floor(Double.parseDouble(preferenceList.get(i).getValue()) * 100);
+                    int percent = (int) Math.floor(Double.parseDouble(keyValueList.get(i).getValue()) * 100);
                     textViewsList[i].setText(percent + "% you will like it");
                 }
             } catch (Exception e) {

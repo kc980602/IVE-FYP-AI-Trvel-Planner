@@ -8,13 +8,13 @@
         android:id="@+id/galleryitem_id"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="" />
+        android:text="more" />
 
-    <ImageView
-        android:id="@+id/image_gallery_item"
+    <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
-        android:scaleType="centerCrop" />
+        android:background="@drawable/button_border"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/attraction_detail_seeall"/>
 
 </RelativeLayout>

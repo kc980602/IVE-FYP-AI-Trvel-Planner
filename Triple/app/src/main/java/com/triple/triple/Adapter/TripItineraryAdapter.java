@@ -88,9 +88,9 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
                     int attractionId = Integer.parseInt(tv_attId.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("attractionId", attractionId);
-                    Intent indent = new Intent(activity, AttractionDetailActivity.class);
-                    indent.putExtras(bundle);
-                    activity.startActivity(indent);
+                    Intent intent = new Intent(activity, AttractionDetailActivity.class);
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
                 }
             });
         }
