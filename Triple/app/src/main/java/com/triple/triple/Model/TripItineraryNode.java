@@ -132,4 +132,21 @@ public class TripItineraryNode implements Serializable {
     public void setAttraction(Attraction attraction) {
         this.attraction = attraction;
     }
+
+    @Override
+    public String toString() {
+        return "TripItineraryNode{" +
+                "id=" + id +
+                ", attraction_id=" + attraction_id +
+                ", visit_time='" + visit_time + '\'' +
+                ", duration=" + duration +
+                ", travel_duration=" + travel_duration +
+                ", type='" + type + '\'' +
+                ", distance=" + distance +
+                ", fare=" + fare +
+                ", peak_hour=" + peak_hour +
+                ", mode='" + mode + '\'' +
+                ", attraction=" + attraction +
+                '}';
+    }
 }

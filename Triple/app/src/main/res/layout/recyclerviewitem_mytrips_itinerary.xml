@@ -75,7 +75,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,7 +84,7 @@
 
                         <TextView
                             android:id="@+id/tv_name"
-                            style="@style/TextAppearance.AppCompat.Medium"
+                            style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
@@ -102,12 +103,11 @@
                             android:drawableLeft="@drawable/ic_duration"
                             android:drawablePadding="5dp"
                             android:drawableTint="@color/colorPrimary"
-                            android:gravity="right|center"
-                            android:text="1 hour" />
+                            android:gravity="right|center" />
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_tags"
+                        android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="50"
@@ -149,8 +149,7 @@
                 android:drawableLeft="@drawable/ic_distance"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/colorPrimary"
-                android:gravity="right|center"
-                android:text="1 km" />
+                android:gravity="right|center" />
 
             <TextView
                 android:id="@+id/tv_traveltime"
@@ -160,8 +159,7 @@
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/colorPrimary"
                 android:gravity="right|center"
-                android:paddingLeft="20dp"
-                android:text="15 min" />
+                android:paddingLeft="20dp" />
 
 
         </LinearLayout>

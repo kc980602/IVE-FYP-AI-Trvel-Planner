@@ -52,11 +52,10 @@ public class ItineraryFragment extends Fragment {
         rv_itinerary.setLayoutManager(mLayoutManager);
         rv_itinerary.setItemAnimator(new DefaultItemAnimator());
         rv_itinerary.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
         rv_itinerary.addItemDecoration(dividerItemDecoration);
-//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(adapter);
-//        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
-//        mItemTouchHelper.attachToRecyclerView(rv_itinerary);
+
     }
 
 }

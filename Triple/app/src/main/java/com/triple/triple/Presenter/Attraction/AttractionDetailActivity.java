@@ -2,6 +2,8 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -226,6 +228,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
             View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery, false);
             ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
             img.setImageResource(data[i]);
+            Bitmap myBitmap = BitmapFactory.decodeResource(this.getResources(), data[i]);
+            img.setImageBitmap(myBitmap);
             layout_gallery.addView(view);
             if (i==9) {
                 break;
