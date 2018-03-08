@@ -21,50 +21,38 @@ import java.lang.reflect.Type;
  */
 
 public class SystemPropertyHelper {
+    public static final String DEFAULT = "N/A";
+
 
     public static void refreshData(Context mcontext) {
         String respone;
         String url = mcontext.getString(R.string.api_prefix) + mcontext.getString(R.string.api_system_protery);
         try {
             respone = new GetSystemProperty().run(url);
+            SharedPreferences data = new SecurePreferences(mcontext);
+            SharedPreferences.Editor editor = data.edit();
+            editor.putString("systemProperty", respone.toString());
+            editor.commit();
         } catch (Exception e) {
-            respone = null;
+            e.printStackTrace();
         }
+    }
+
+    public static SystemProperty getSystemProperty(Context mcontext) {
+        SharedPreferences data = new SecurePreferences(mcontext);
+        String json = data.getString("systemProperty", DEFAULT);
         try {
-            JSONObject jsonObject = new JSONObject(respone);
+            JSONObject jsonObject = new JSONObject(json);
             Type type = new TypeToken<SystemProperty>() {
             }.getType();
             Gson gson = new Gson();
             SystemProperty systemProperty = (SystemProperty) gson.fromJson(jsonObject.toString(), type);
-            Log.d("SystemPropertyHelper", systemProperty.toString());
-        } catch (JSONException e) {
-
+            return systemProperty;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-//        SharedPreferences data = new SecurePreferences(mcontext);
-//        SharedPreferences.Editor editor = data.edit();
-//
-//        if (jsonTripList == null || jsonTripList.equals("[]")) {
-//            savedTrips =  new ArrayList<>();
-//            savedTrips.add(trip);
-//        } else {
-//            savedTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
-//            Boolean isFound = false;
-//            for(Trip tmpTrip: savedTrips){
-//                if(tmpTrip.getId() == trip.getId()){
-//                    savedTrips.remove(tmpTrip);
-//                    savedTrips.add(trip);
-//                    isFound = true;
-//                    break;
-//                }
-//            }
-//            if (!isFound) {
-//                savedTrips.add(trip);
-//            }
-//        }
-//        String json = gson.toJson(savedTrips);
-//        editor.putString("savedTrips", json);
-//        editor.commit();
+        return null;
     }
+
 
 }

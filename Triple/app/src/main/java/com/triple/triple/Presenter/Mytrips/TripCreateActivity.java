@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.SystemPropertyHelper;
+import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
 import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
@@ -48,25 +50,27 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_create);
+        findViews();
         setupActionBar();
 
         progressDialog = new ProgressDialog(mcontext);
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
 
-        et_tripname = (TextInputEditText) findViewById(R.id.et_tripname);
-        et_tripdate = (TextInputEditText) findViewById(R.id.et_tripdate);
-        actw_detination = (AutoCompleteTextView) findViewById(R.id.actw_detination);
-        cb_generate = (CheckBox) findViewById(R.id.cb_generate);
-
         et_tripname.setOnFocusChangeListener(et_tripnameListener);
         et_tripdate.setOnFocusChangeListener(et_tripdateListener);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.destination));
-        actw_detination.setAdapter(adapter);
+//        actw_detination.setText(SystemPropertyHelper.getSystemProperty(mcontext).getCity());
 
         if (CheckLogin.directLogin(mcontext)) {
             finish();
         }
+    }
+
+    private void findViews() {
+        et_tripname = (TextInputEditText) findViewById(R.id.et_tripname);
+        et_tripdate = (TextInputEditText) findViewById(R.id.et_tripdate);
+        actw_detination = (AutoCompleteTextView) findViewById(R.id.actw_detination);
+        cb_generate = (CheckBox) findViewById(R.id.cb_generate);
     }
 
     private void setupActionBar() {

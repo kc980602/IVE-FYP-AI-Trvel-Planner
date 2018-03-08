@@ -26,6 +26,10 @@ import java.util.List;
 
 public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdapter.TripItineraryViewHolder> {
 
+    private static final int TYPE_DEFAULT = 0;
+    private static final int TYPE_ACCOMMODATION = 1;
+    private static final int TYPE_MEAL = 2;
+
     private Activity activity;
     private List<TripItineraryNode> itineraryNodes;
     private String isSaved;
@@ -97,9 +101,30 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
     }
 
     public TripItineraryViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recyclerviewitem_mytrips_itinerary, viewGroup, false);
-        return new TripItineraryViewHolder(itemView);
+        if (i == 1) {
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerviewitem_mytrips_itinerary_accommodation, viewGroup, false);
+            return new TripItineraryViewHolder(itemView);
+        } else if (i == 2) {
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerviewitem_mytrips_itinerary_accommodation, viewGroup, false);
+            return new TripItineraryViewHolder(itemView);
+        } else {
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerviewitem_mytrips_itinerary, viewGroup, false);
+            return new TripItineraryViewHolder(itemView);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        TripItineraryNode tripItineraryNode = itineraryNodes.get(position);
+
+        switch (tripItineraryNode.getType()) {
+            case "LODGING":
+                return 1;
+            case "MEAL":
+                return 2;
+            default:
+                return 0;
+        }
     }
 
     @Override
@@ -114,8 +139,8 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         holder.tv_tags.setText(tripItineraryNode.getType());
 
 
-        if ((i+1) != getItemCount()) {
-            TripItineraryNode tripItineraryNodeNext = itineraryNodes.get(i+1);
+        if ((i + 1) != getItemCount()) {
+            TripItineraryNode tripItineraryNodeNext = itineraryNodes.get(i + 1);
             if (tripItineraryNodeNext.getDistance() >= 1000) {
                 holder.tv_distance.setText(String.valueOf(tripItineraryNodeNext.getDistance() / 1000.0) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
             } else {
@@ -133,7 +158,6 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<TripItineraryAdap
         } else {
             holder.layout_direction.setVisibility(View.INVISIBLE);
         }
-
 
 
 //        if (!tripItineraryNode.getImage().isEmpty() && tripItineraryNode.getImage() != null) {
