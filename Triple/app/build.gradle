@@ -49,6 +49,7 @@ dependencies {
     compile 'com.github.open-android:RoundedImageView:v1.0.0'
     compile 'com.daasuu:BubbleLayout:1.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
         transitive = true
     }

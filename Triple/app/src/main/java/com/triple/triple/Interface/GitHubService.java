@@ -1,5 +1,6 @@
 package com.triple.triple.Interface;
 
+import com.triple.triple.Model.Attraction;
 import com.triple.triple.Sync.GetAttractionDetail;
 
 import java.util.List;
@@ -13,6 +14,10 @@ import retrofit2.http.Path;
  */
 
 public interface GitHubService {
-    @GET("/attraction/{id}")
-    Call<String> getInfo(@Path("id") Integer id);
+
+    @GET("attraction")
+    Call<Attraction> getRows();
+
+    @GET("attraction/{id}")
+    Call<Attraction> getInfo(@Path("id") Integer id);
 }
