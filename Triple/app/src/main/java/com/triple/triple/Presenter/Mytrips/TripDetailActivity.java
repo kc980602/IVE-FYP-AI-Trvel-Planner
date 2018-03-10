@@ -72,7 +72,7 @@ public class TripDetailActivity extends AppCompatActivity {
         new TripDetailActivity.RequestTripItinerary().execute();
     }
 
-    private void  findView() {
+    private void findView() {
         cv_trip = (CardView) findViewById(R.id.cv_trip);
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
@@ -169,36 +169,40 @@ public class TripDetailActivity extends AppCompatActivity {
         return true;
     }
 
-     private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
-         @Override
-         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-             switch (item.getItemId()) {
-                 case R.id.action_info:
-                     break;
-                 case R.id.action_itenary:
-                     Bundle bundle = new Bundle();
-                     bundle.putSerializable("tripDetail", tripDetail);
-                     Intent i = new Intent(mcontext, ItineraryActivity.class);
-                     i.putExtras(bundle);
-                     startActivity(i);
-                     break;
-                 case R.id.action_invite:
-                     break;
-                 case R.id.action_save:
-                     View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                     saveTripToLocal();
-                     Snackbar.make(view, getString(R.string.mytrips_detail_tripsaved), Snackbar.LENGTH_LONG)
-                             .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                                 @Override
-                                 public void onClick(View view) {
+    private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_info:
+                    break;
+                case R.id.action_itenary:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("tripDetail", tripDetail);
+                    Intent i = new Intent(mcontext, ItineraryActivity.class);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                    break;
+                case R.id.action_invite:
+                    break;
+                case R.id.action_save:
+                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                    saveTripToLocal();
+                    Snackbar.make(view, getString(R.string.mytrips_detail_tripsaved), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
 
-                                 }
-                             }).show();
-                     break;
-             }
-             return false;
-         }
-     };
+                                }
+                            }).show();
+                    break;
+                case android.R.id.home:
+                    NavUtils.navigateUpFromSameTask(TripDetailActivity.this);
+                    finish();
+                    break;
+            }
+            return false;
+        }
+    };
 
     private void saveTripToLocal() {
         List<Trip> savedTrips;
@@ -209,13 +213,13 @@ public class TripDetailActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = data.edit();
         String jsonTripList = data.getString("savedTrips", null);
         if (jsonTripList == null || jsonTripList.equals("[]")) {
-            savedTrips =  new ArrayList<>();
+            savedTrips = new ArrayList<>();
             savedTrips.add(trip);
         } else {
             savedTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
             Boolean isFound = false;
-            for(Trip tmpTrip: savedTrips){
-                if(tmpTrip.getId() == trip.getId()){
+            for (Trip tmpTrip : savedTrips) {
+                if (tmpTrip.getId() == trip.getId()) {
                     savedTrips.remove(tmpTrip);
                     savedTrips.add(trip);
                     isFound = true;
@@ -231,7 +235,7 @@ public class TripDetailActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    private class RequestTripItinerary  extends AsyncTask<Void, Void, String> {
+    private class RequestTripItinerary extends AsyncTask<Void, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -256,7 +260,8 @@ public class TripDetailActivity extends AppCompatActivity {
             super.onPostExecute(result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                Type type = new TypeToken<TripDetail>() {}.getType();
+                Type type = new TypeToken<TripDetail>() {
+                }.getType();
                 Gson gson = new Gson();
                 tripDetail = (TripDetail) gson.fromJson(jsonObject.toString(), type);
                 List<TripItinerary> itineraryList = tripDetail.getItinerary();
@@ -264,7 +269,7 @@ public class TripDetailActivity extends AppCompatActivity {
                 for (int i = 0; i < itineraryList.size(); i++) {
                     TripDay tripday = new TripDay();
                     tripday.setId(itineraryList.get(i).getId());
-                    tripday.setName("Day" + (i+1));
+                    tripday.setName("Day" + (i + 1));
                     tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
                     tripdays.add(tripday);
                 }

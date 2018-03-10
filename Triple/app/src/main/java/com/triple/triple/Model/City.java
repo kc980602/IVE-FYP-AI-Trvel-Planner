@@ -14,12 +14,13 @@ public class City implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("country")
     @Expose
     private String country;
-    @SerializedName("Taipei")
-    @Expose
-    private String Taipei;
+
     @SerializedName("photo")
     @Expose
     private String photo;
@@ -32,6 +33,14 @@ public class City implements Serializable {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -40,19 +49,21 @@ public class City implements Serializable {
         this.country = country;
     }
 
-    public String getTaipei() {
-        return Taipei;
-    }
-
-    public void setTaipei(String taipei) {
-        Taipei = taipei;
-    }
-
     public String getPhoto() {
         return photo;
     }
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
     }
 }

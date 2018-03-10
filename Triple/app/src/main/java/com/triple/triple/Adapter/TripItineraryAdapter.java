@@ -109,6 +109,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
         private RelativeLayout layout_direction;
         private TextView tv_distance;
         private TextView tv_traveltime;
+
         public TripItineraryViewHolderAccommodation(View itemView) {
             super(itemView);
             tv_attId = (TextView) itemView.findViewById(R.id.tv_attId);
@@ -214,7 +215,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
         if ((pos + 1) != getItemCount()) {
             TripItineraryNode tripItineraryNodeNext = itineraryNodes.get(pos + 1);
             if (tripItineraryNodeNext.getDistance() >= 1000) {
-                holder.tv_distance.setText(String.format("%.1f",tripItineraryNodeNext.getDistance() / 1000.0) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
+                holder.tv_distance.setText(String.format("%.1f", tripItineraryNodeNext.getDistance() / 1000.0) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
             } else {
                 holder.tv_distance.setText(String.valueOf(tripItineraryNodeNext.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_meters));
             }
@@ -232,11 +233,11 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
 
-//        if (!tripItineraryNode.getImage().isEmpty() && tripItineraryNode.getImage() != null) {
-//            Picasso.with(activity)
-//                    .load(tripItineraryNode.getImage())
-//                    .into(holder.image1);
-//        }
+        Picasso.with(activity)
+                .load(String.valueOf(tripItineraryNode.getAttraction().getPhotos()))
+                .placeholder(R.drawable.ic_image_null_square)
+                .into(holder.image1);
+
 
     }
 
@@ -283,7 +284,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
         if ((pos + 1) != getItemCount()) {
             TripItineraryNode tripItineraryNodeNext = itineraryNodes.get(pos + 1);
             if (tripItineraryNodeNext.getDistance() >= 1000) {
-                holder.tv_distance.setText(String.format("%.1f",tripItineraryNodeNext.getDistance() / 1000.0) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
+                holder.tv_distance.setText(String.format("%.1f", tripItineraryNodeNext.getDistance() / 1000.0) + activity.getString(R.string.mytrips_detail_itinerary_kilometers));
             } else {
                 holder.tv_distance.setText(String.valueOf(tripItineraryNodeNext.getDistance()) + activity.getString(R.string.mytrips_detail_itinerary_meters));
             }

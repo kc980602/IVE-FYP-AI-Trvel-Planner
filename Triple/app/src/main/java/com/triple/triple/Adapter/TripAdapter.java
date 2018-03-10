@@ -90,7 +90,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         String date = DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
 
         if (trip.getImage() == null) {
-            holder.image1.setImageResource(R.drawable.image_null_tran);
+            Picasso.with(activity)
+                    .load(R.drawable.image_null_tran)
+                    .into(holder.image1);
         } else {
             Picasso.with(activity)
                     .load(trip.getImage())

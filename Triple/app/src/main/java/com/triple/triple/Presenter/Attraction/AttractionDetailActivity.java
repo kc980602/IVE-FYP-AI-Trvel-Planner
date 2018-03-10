@@ -93,7 +93,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String appLinkAction = intent.getAction();
         Uri appLinkData = intent.getData();
-        if (appLinkData!=null) {
+        if (appLinkData != null) {
             attractionId = Integer.valueOf(appLinkData.getLastPathSegment());
         } else {
             Bundle bundle = intent.getExtras();
@@ -182,6 +182,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 super.onBackPressed();
+                finish();
                 break;
         }
         return true;
@@ -196,6 +197,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             startActivity(mapIntent);
         }
     };
+
     private String prepareShareMessage() {
         String link = getResources().getString(R.string.local_api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attraction.getId();
         String message = String.format(getResources().getString(R.string.intent_share_message_attraction), attraction.getName(), link);
@@ -227,11 +229,11 @@ public class AttractionDetailActivity extends AppCompatActivity {
         for (int i = 0; i < data.length; i++) {
             View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery, false);
             ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
-            img.setImageResource(data[i]);
-            Bitmap myBitmap = BitmapFactory.decodeResource(this.getResources(), data[i]);
-            img.setImageBitmap(myBitmap);
+            Picasso.with(mcontext)
+                    .load(data[i])
+                    .into(img);
             layout_gallery.addView(view);
-            if (i==9) {
+            if (i == 9) {
                 break;
             }
         }
@@ -252,7 +254,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
+                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId + "/";
                 respone = new GetAttractionDetail().run(url);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -272,7 +274,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 loadDataToView();
             } catch (Exception e) {
                 Log.d("Error", e.toString());
-                new AttractionDetailActivity.RequestAttractionDetail().execute();
+//                new AttractionDetailActivity.RequestAttractionDetail().execute();
 //                View view = getWindow().getDecorView().findViewById(android.R.id.content);
 //                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
 //                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {

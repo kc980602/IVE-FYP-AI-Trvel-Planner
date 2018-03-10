@@ -13,7 +13,26 @@
         android:gravity="center"
         android:theme="@style/AppThemeNoActionBar.AppBarOverlay">
 
-        <include layout="@layout/toolbar_stadand" />
+        <android.support.v7.widget.Toolbar
+            android:theme="@style/MyToolbar"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="?homeAsUpIndicator"
+            app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="12dp"
+                android:paddingTop="16dp"
+                android:tint="@color/white"
+                android:src="@drawable/icon_text"/>
+
+        </android.support.v7.widget.Toolbar>
+
 
     </android.support.design.widget.AppBarLayout>
 

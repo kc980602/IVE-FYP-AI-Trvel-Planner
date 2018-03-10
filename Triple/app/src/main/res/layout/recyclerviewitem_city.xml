@@ -1,0 +1,57 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_trip"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:foreground="?selectableItemBackgroundBorderless">
+
+    <TextView
+        android:id="@+id/tv_cityid"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/gradient_city"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_city"
+                style="@style/TextAppearance.AppCompat.Display2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tokyo"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textAllCaps="true"/>
+
+            <TextView
+                android:id="@+id/tv_country"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Japan"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

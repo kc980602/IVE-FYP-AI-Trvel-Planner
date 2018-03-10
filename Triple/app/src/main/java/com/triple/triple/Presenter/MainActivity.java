@@ -36,6 +36,8 @@ import com.triple.triple.Presenter.Profile.TravelStyleActivity;
 import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.app_name));
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
 
@@ -111,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPager() {
         Fragment fragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("cities", (Serializable) SystemPropertyHelper.getSystemProperty(mcontext).getCity());
+        fragment.setArguments(bundle);
         if (fragment != null) {
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_layout_main, fragment).commit();

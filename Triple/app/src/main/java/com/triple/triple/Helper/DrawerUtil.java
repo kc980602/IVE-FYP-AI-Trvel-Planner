@@ -50,7 +50,7 @@ public class DrawerUtil {
                 .withSelectionListEnabledForSingleProfile(false)
                 .addProfiles(
                         new ProfileDrawerItem().withName(user.getFirst_name() + " " + user.getLast_name()).withEmail(user.getEmail()).withIcon(activity.getResources().getDrawable(R.drawable.ic_account_circle))
-                )                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                ).withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
                         return false;
@@ -84,40 +84,40 @@ public class DrawerUtil {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                            Intent intent = new Intent();
-                            int id = (int) drawerItem.getIdentifier();
-                            switch (id) {
-                                case 0:
-                                    intent.setClass(activity, MainActivity.class);
-                                    break;
-                                case 1:
-                                    intent.setClass(activity, MytripsActivity.class);
-                                    break;
-                                case 2:
-                                    intent.setClass(activity, SearchActivity.class);
-                                    break;
-                                case 3:
-                                    intent.setClass(activity, TravelStyleActivity.class);
-                                    break;
-                                case 4:
-                                    intent.setClass(activity, ProfileActivity.class);
-                                    break;
-                                case 5:
-                                    intent.setClass(activity, ProfileActivity.class);
-                                    break;
-                                case 6:
-                                    intent.setClass(activity, ProfileActivity.class);
-                                    break;
-                                case 7:
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("attractionId", 1643);
-                                    intent.putExtras(bundle);
-                                    intent.setClass(activity, AttractionDetailActivity.class);
-                                    break;
-                                default:
-                                    intent.setClass(activity, MainActivity.class);
-                            }
-                            view.getContext().startActivity(intent);
+                        Intent intent = new Intent();
+                        int id = (int) drawerItem.getIdentifier();
+                        switch (id) {
+                            case 0:
+                                intent.setClass(activity, MainActivity.class);
+                                break;
+                            case 1:
+                                intent.setClass(activity, MytripsActivity.class);
+                                break;
+                            case 2:
+                                intent.setClass(activity, SearchActivity.class);
+                                break;
+                            case 3:
+                                intent.setClass(activity, TravelStyleActivity.class);
+                                break;
+                            case 4:
+                                intent.setClass(activity, ProfileActivity.class);
+                                break;
+                            case 5:
+                                intent.setClass(activity, ProfileActivity.class);
+                                break;
+                            case 6:
+                                intent.setClass(activity, ProfileActivity.class);
+                                break;
+                            case 7:
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("attractionId", 1643);
+                                intent.putExtras(bundle);
+                                intent.setClass(activity, AttractionDetailActivity.class);
+                                break;
+                            default:
+                                intent.setClass(activity, MainActivity.class);
+                        }
+                        view.getContext().startActivity(intent);
                         return true;
                     }
                 })
