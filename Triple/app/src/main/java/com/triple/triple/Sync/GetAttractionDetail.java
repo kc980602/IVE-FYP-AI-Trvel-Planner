@@ -25,6 +25,7 @@ public class GetAttractionDetail {
     private final OkHttpClient client = new OkHttpClient();
 
     String responseString;
+    String url2 = "http://tripleapi-env.ap-southeast-1.elasticbeanstalk.com/";
 
     public String run(String url) throws Exception {
 //        Request request = new Request.Builder()
@@ -35,11 +36,11 @@ public class GetAttractionDetail {
 //            return response.body().string();
 //        }
         Retrofit.Builder builder =new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(url2)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         GitHubService client = retrofit.create(GitHubService.class);
-        Call<Attraction> call = client.getRows();
+        Call<Attraction> call = client.getInfo(1642);
 
         call.enqueue(new Callback<Attraction>() {
             @Override
