@@ -255,9 +255,10 @@ public class AttractionDetailActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
-//                url = getResources().getString(R.string.api_prefix);
-                respone = new GetAttractionDetail().run(url);
+//                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
+//                respone = new GetAttractionDetail().run(url);
+                url = getResources().getString(R.string.api_prefix);
+                respone = new GetAttractionDetail().run(url, attractionId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
