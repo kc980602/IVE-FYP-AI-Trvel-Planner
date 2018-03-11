@@ -24,6 +24,8 @@ public class CreateTrip {
                 .add("title", tripname)
                 .add("visit_date", tripdateStart)
                 .add("visit_length", dateCount)
+                .add("city_id", destination)
+                .add("auto_generate", generate)
                 .build();
         Request request = new Request.Builder()
                 .header("Authorization", token)

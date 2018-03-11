@@ -231,6 +231,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
             Picasso.with(mcontext)
                     .load(data[i])
+                    .placeholder(R.color.white)
                     .into(img);
             layout_gallery.addView(view);
             if (i == 9) {
@@ -254,9 +255,9 @@ public class AttractionDetailActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String respone = "Error";
             try {
-                //url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
-                url = getResources().getString(R.string.api_prefix);
-                respone = new GetAttractionDetail().run(url, attractionId);
+                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
+//                url = getResources().getString(R.string.api_prefix);
+                respone = new GetAttractionDetail().run(url);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -275,17 +276,17 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 loadDataToView();
             } catch (Exception e) {
                 Log.d("Error", e.toString());
+                Log.e("ErroronPostExecute", "exception", e);
 //                new AttractionDetailActivity.RequestAttractionDetail().execute();
-//                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-//                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-//                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//
-//                            }
-//                        }).show();
-            }
+                View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
 
+                            }
+                        }).show();
+            }
             stopAnim();
         }
     }

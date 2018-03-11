@@ -42,7 +42,7 @@ public class DrawerUtil {
         SecondaryDrawerItem drawer_about = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.title_about).withIcon(R.drawable.ic_info).withIconColor(iconColor).withIconTintingEnabled(true);
         SecondaryDrawerItem drawer_test = new SecondaryDrawerItem().withIdentifier(7).withName("Testing Link").withIcon(R.drawable.ic_settings).withIconColor(iconColor).withIconTintingEnabled(true);
 
-        User user = UserInfo.getUserInfo(activity);
+        User user = UserInfoHelper.getUserInfo(activity);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(activity)

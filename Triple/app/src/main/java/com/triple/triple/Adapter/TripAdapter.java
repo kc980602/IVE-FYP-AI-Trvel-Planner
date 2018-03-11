@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.DateTimeHelper;
+import com.triple.triple.Helper.UserInfoHelper;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
@@ -89,19 +91,20 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         Trip trip = trips.get(i);
         String date = DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
 
-        if (trip.getImage() == null) {
-            Picasso.with(activity)
-                    .load(R.drawable.image_null_tran)
-                    .into(holder.image1);
-        } else {
-            Picasso.with(activity)
-                    .load(trip.getImage())
-                    .into(holder.image1);
-        }
+        Picasso.with(activity)
+                .load(trip.getImage())
+                .placeholder(R.drawable.image_null_tran)
+                .into(holder.image1);
+
         holder.tv_tripid.setText(String.valueOf(trip.getId()));
         holder.tv_tripname.setText(trip.getName());
-        holder.tv_owner.setText(trip.getOwner());
+        if (trip.getOwner_id() == UserInfoHelper.getUserInfo(activity).getId()) {
+            holder.tv_owner.setText("");
+        } else {
+            holder.tv_owner.setText(trip.getOwner());
+        }
         holder.tv_tripdate.setText(date);
+        holder.tv_tripdestination.setText("");
         if (isSaved.equals("true")) {
             holder.tv_saved.setVisibility(View.VISIBLE);
         } else {

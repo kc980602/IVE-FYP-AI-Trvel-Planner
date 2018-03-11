@@ -15,13 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itheima.roundedimageview.RoundedImageView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.securepreferences.SecurePreferences;
+import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripDayAdapter;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Trip;
@@ -55,6 +58,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private AVLoadingIndicatorView avi;
     private Boolean isSaved;
     private CardView cv_trip;
+    private ImageView image;
 
 
     @Override
@@ -81,6 +85,7 @@ public class TripDetailActivity extends AppCompatActivity {
         tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
         tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
         lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
+        image = (ImageView) findViewById(R.id.image);
     }
 
     private void initView() {
@@ -121,18 +126,10 @@ public class TripDetailActivity extends AppCompatActivity {
 
         adapter = new TripDayAdapter(mcontext, tripdays);
         lv_tripdaylist.setAdapter(adapter);
-    }
-
-    private void initData() {
-        List<TripItinerary> itineraryList = tripDetail.getItinerary();
-
-        for (int i = 1; i <= itineraryList.size(); i++) {
-            TripDay tripday = new TripDay();
-            tripday.setId(itineraryList.get(i).getId());
-            tripday.setName("Day" + i);
-            tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
-            tripdays.add(tripday);
-        }
+        Picasso.with(mcontext)
+                .load(trip.getImage())
+                .placeholder(R.drawable.image_null_tran)
+                .into(image);
     }
 
     private ListView.OnItemClickListener lv_tripdaylistListener = new ListView.OnItemClickListener() {
@@ -163,6 +160,7 @@ public class TripDetailActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+//                setResult(MytripsActivity.MESSAGE_REFRESH_DATA);
                 finish();
                 break;
         }

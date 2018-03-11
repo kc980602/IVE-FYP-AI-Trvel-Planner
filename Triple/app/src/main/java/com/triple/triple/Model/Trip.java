@@ -29,7 +29,10 @@ public class Trip implements Serializable {
     @SerializedName("owner")
     @Expose
     private String owner;
-    @SerializedName("photos")
+    @SerializedName("owner_id")
+    @Expose
+    private int owner_id;
+    @SerializedName("image")
     @Expose
     private String image;
 
@@ -81,6 +84,14 @@ public class Trip implements Serializable {
         this.image = image;
     }
 
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
     @Override
     public String toString() {
         return "Trip{" +
@@ -89,6 +100,7 @@ public class Trip implements Serializable {
                 ", visit_date='" + visit_date + '\'' +
                 ", visit_length=" + visit_length +
                 ", owner='" + owner + '\'' +
+                ", owner_id=" + owner_id +
                 ", image='" + image + '\'' +
                 '}';
     }

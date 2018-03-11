@@ -31,15 +31,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Presenter.Mytrips.MytripsActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".Presenter.MainActivity" />
-        <activity
             android:name=".Presenter.Search.SearchActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Profile.ProfileActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".Presenter.MainActivity" />
+        <activity
+            android:name=".Presenter.Account.ForgetPasswordActivity"
+            android:parentActivityName=".Presenter.Account.LoginActivity" />
+        <activity
+            android:name=".Presenter.Mytrips.MytripsActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
@@ -53,6 +56,10 @@
             android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".Presenter.Mytrips.ItineraryActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
+        <activity
             android:name=".Presenter.Account.LoginActivity"
             android:parentActivityName=".Presenter.Profile.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
@@ -65,18 +72,11 @@
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Presenter.Account.ForgetPasswordActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity" />
-        <activity
-            android:name=".Presenter.Mytrips.ItineraryActivity"
-            android:launchMode="singleTask"
-            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
+            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 

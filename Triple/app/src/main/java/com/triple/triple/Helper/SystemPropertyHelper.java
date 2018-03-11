@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
+import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
 import com.triple.triple.Sync.GetSystemProperty;
@@ -15,6 +16,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Kevin on 2018/3/7.
@@ -50,6 +55,30 @@ public class SystemPropertyHelper {
             return systemProperty;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static ArrayList<String> getSystemPropertyCityName(Context mcontext) {
+        ArrayList<String> cityName = new ArrayList<String>();
+        List<City> cities = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
+        Iterator<City> itrTemp = cities.iterator();
+        while(itrTemp.hasNext()){
+            City city = itrTemp.next();
+            String strTemp = city.getName() + ", " + city.getCountry();
+            cityName.add(strTemp);
+        }
+        return cityName;
+    }
+
+    public static City getSystemPropertySearchCity(Context mcontext, String name) {
+        List<City> cities = getSystemProperty(mcontext).getCity();
+        for (City city : cities) {
+            String location = city.getName() + ", " + city.getCountry();
+            if (location.equals(name)) {
+                return city;
+            }
         }
         return null;
     }

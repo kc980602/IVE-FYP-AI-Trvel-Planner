@@ -44,6 +44,7 @@ public class MytripsActivity extends AppCompatActivity {
 
     private static final String TAG = "MytripsActivity";
     private static final int ACTIVITY_NUM = 2;
+    public static final int MESSAGE_REFRESH_DATA = 0x001;
 
     private Context mcontext = MytripsActivity.this;
 
@@ -121,8 +122,8 @@ public class MytripsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Intent i_create = new Intent(mcontext, TripCreateActivity.class);
-                startActivity(i_create);
+                Intent intent = new Intent(mcontext, TripCreateActivity.class);
+                startActivityForResult(intent, MESSAGE_REFRESH_DATA);
                 break;
         }
         return true;
@@ -152,6 +153,16 @@ public class MytripsActivity extends AppCompatActivity {
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case MESSAGE_REFRESH_DATA:
+                refreshData();
+                break;
+        }
+    }
 
     private void refreshData() {
         new MytripsActivity.RequestTrip().execute();
@@ -203,6 +214,7 @@ public class MytripsActivity extends AppCompatActivity {
                     allTrips.add(newTrips.get(i));
                 }
                 adapter_allTrips.notifyDataSetChanged();
+
             } catch (Exception e) {
                 new MytripsActivity.RequestTrip().execute();
             }

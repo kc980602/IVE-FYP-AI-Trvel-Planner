@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  * Created by KC on 2/28/2018.
  */
 
-public class UserInfo {
+public class UserInfoHelper {
 
     public static final String DEFAULT = "N/A";
 

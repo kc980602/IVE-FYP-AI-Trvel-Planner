@@ -21,6 +21,9 @@ public class TripDetail implements Serializable {
     @SerializedName("owner_id")
     @Expose
     private String owner_id;
+    @SerializedName("image")
+    @Expose
+    private String image;
     @SerializedName("visit_date")
     @Expose
     private String visit_date;
@@ -56,6 +59,14 @@ public class TripDetail implements Serializable {
 
     public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getVisit_date() {
