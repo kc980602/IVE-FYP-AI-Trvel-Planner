@@ -32,18 +32,15 @@
         </activity>
         <activity
             android:name=".Presenter.Search.SearchActivity"
-            android:launchMode="singleTop"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Profile.ProfileActivity"
-            android:launchMode="singleTop"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Account.ForgetPasswordActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.MytripsActivity"
-            android:launchMode="singleTop"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
@@ -73,10 +70,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -86,7 +84,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Presenter.Attraction.CityDetailActivity"></activity>
     </application>
 
 </manifest>

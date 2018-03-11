@@ -1,18 +1,12 @@
 package com.triple.triple.Sync;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.triple.triple.Interface.GitHubService;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 
-import java.io.IOException;
-
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -47,7 +41,7 @@ public class GetAttractionDetail {
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
-        GitHubService client = retrofit.create(GitHubService.class);
+        ApiInterface client = retrofit.create(ApiInterface.class);
         Call<Attraction> call = client.getInfo(attractionId);
 
         call.enqueue(new Callback<Attraction>() {

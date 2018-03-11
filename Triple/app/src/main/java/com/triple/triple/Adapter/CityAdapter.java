@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Model.City;
+import com.triple.triple.Presenter.Attraction.CityDetailActivity;
 import com.triple.triple.R;
 
 import java.util.ArrayList;
@@ -56,12 +57,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-//                    int cityid = Integer.parseInt(tv_cityid.getText().toString());
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("cityid", cityid);
-//                    Intent indent = new Intent(mcontext, CityDetailActivity.class);
-//                    indent.putExtras(bundle);
-//                    mcontext.startActivity(indent);
+                    int cityid = Integer.parseInt(tv_cityid.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("cityid", cityid);
+                    Intent indent = new Intent(mcontext, CityDetailActivity.class);
+                    indent.putExtras(bundle);
+                    mcontext.startActivity(indent);
                 }
             });
         }

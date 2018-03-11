@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -38,9 +39,11 @@ import com.google.gson.reflect.TypeToken;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.AppBarStateChangeListener;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.GetAttractionDetail;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -55,6 +58,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -84,6 +91,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private Integer attractionId;
     private String attractionName = "";
     private TextView tv_title;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +110,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         findViews();
         initView();
-        new AttractionDetailActivity.RequestAttractionDetail().execute();
+//        new AttractionDetailActivity.RequestAttractionDetail().execute();
+        getUserDetails();
     }
 
     private void findViews() {
@@ -291,6 +300,32 @@ public class AttractionDetailActivity extends AppCompatActivity {
             stopAnim();
         }
     }
+
+    public void getUserDetails() {
+        startAnim();
+
+        Call<Attraction> call = apiService.getInfo(attractionId);
+        call.enqueue(new Callback<Attraction>() {
+            @Override
+            public void onResponse(Call<Attraction> call, Response<Attraction> response) {
+                if (response.body() != null) {
+                    attraction = response.body();
+                    loadDataToView();
+                } else {
+                    Log.d("error", "User details does not exist");
+                }
+                stopAnim();
+            }
+
+            @Override
+            public void onFailure(Call<Attraction> call, Throwable t) {
+                Log.e("error", t.toString());
+                stopAnim();
+            }
+        });
+
+    }
+
 
     public void startAnim() {
         avi.show();

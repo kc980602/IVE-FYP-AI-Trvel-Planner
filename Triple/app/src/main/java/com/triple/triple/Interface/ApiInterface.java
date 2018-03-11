@@ -13,11 +13,12 @@ import retrofit2.http.Path;
  * Created by HaYYY on 2018/3/9.
  */
 
-public interface GitHubService {
+public interface ApiInterface {
 
     @GET("attraction")
     Call<Attraction> getRows();
 
     @GET("attraction/{id}")
     Call<Attraction> getInfo(@Path("id") Integer id);
+
 }
