@@ -68,6 +68,7 @@
     </style>
 
     <style name="MyTextTransparent">
+        <item name="android:textSize">0sp</item>
         <item name="android:textColor">@color/transparent</item>
     </style>
 

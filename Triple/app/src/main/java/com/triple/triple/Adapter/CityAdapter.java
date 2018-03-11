@@ -1,5 +1,6 @@
 package com.triple.triple.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,11 +26,11 @@ import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
-    private Context mcontext;
+    private Activity activity;
     private List<City> cities;
 
-    public CityAdapter(Context mcontext, List<City> cities) {
-        this.mcontext = mcontext;
+    public CityAdapter(Activity activity, List<City> cities) {
+        this.activity = activity;
         this.cities = cities;
     }
 
@@ -60,9 +61,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                     int cityid = Integer.parseInt(tv_cityid.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("cityid", cityid);
-                    Intent indent = new Intent(mcontext, CityDetailActivity.class);
+                    Intent indent = new Intent(activity, CityDetailActivity.class);
                     indent.putExtras(bundle);
-                    mcontext.startActivity(indent);
+                    activity.startActivity(indent);
                 }
             });
         }
@@ -73,7 +74,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         City city = cities.get(position);
 
         if (city.getPhoto() != null) {
-            Picasso.with(mcontext)
+            Picasso.with(activity)
                     .load(city.getPhoto())
                     .placeholder(R.drawable.image_null_tran)
                     .into(holder.image);
