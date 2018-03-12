@@ -23,10 +23,39 @@ AVAILABLE_COLUMN = [
     'like_a_local','luxury_traveller','vegetarian','shopping_fanatic',
     'thrifty_traveller','art_and_architecture_lover','peace_and_quiet_seeker'
 ]
-CATEGORICAL_COLUMNS = ['age', 'gender', 'income']
-GENDER_CHAR = ['Female', 'Male']
-AGE_CHAR = ['Under 12', '12-17', '18-24', '25-34', '35-49', '50-64', '65+']
-INCOME_CHAR = ['0', '1', '2', '3', '4', '5', '6', '7']
+CATEGORICAL_COLUMNS = ['age', 'gender', 'country']
+GENDER_CHAR = ['female', 'male']
+AGE_CHAR = ['Under 12', '13-17', '18-24', '25-34', '35-49', '50-64', '65+']
+# INCOME_CHAR = ['0', '1', '2', '3', '4', '5', '6', '7']
+# COUNTRY_CHAR = ['afghanistan', 'albania', 'algeria', 'andorra', 'angola', 'antigua and barbuda', 'argentina',
+#                          'armenia', 'aruba', 'australia', 'austria', 'azerbaijan', 'bahamas, the', 'bahrain',
+#                          'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'benin', 'bhutan', 'bolivia',
+#                          'bosnia and herzegovina', 'botswana', 'brazil', 'brunei', 'bulgaria', 'burkina faso', 'burma',
+#                          'burundi', 'cabo verde', 'cambodia', 'cameroon', 'canada', 'central african republic', 'chad',
+#                          'chile', 'china', 'colombia', 'comoros', 'congo, democratic republic of the congo',
+#                          'republic of the costa rica', 'croatia', 'cuba', 'curacao', 'cyprus', 'czechia', 'denmark',
+#                          'djibouti', 'dominica', 'dominican republic', 'east timor (see timor-leste)', 'ecuador',
+#                          'egypt', 'el salvador', 'equatorial guinea', 'eritrea', 'estonia', 'ethiopia', 'fiji',
+#                          'finland', 'france', 'gabon', 'gambia, the', 'georgia', 'germany', 'ghana', 'greece',
+#                          'grenada', 'guatemala', 'guinea', 'guinea-bissau', 'guyana', 'haiti', 'holy see', 'honduras',
+#                          'hungary', 'iceland', 'india', 'indonesia', 'iran', 'iraq', 'ireland', 'israel', 'italy',
+#                          'jamaica', 'japan', 'jordan', 'kazakhstan', 'kenya', 'kiribati', 'korea, north',
+#                          'korea, south', 'kosovo', 'kuwait', 'kyrgyzstan', 'laos', 'latvia', 'lebanon', 'lesotho',
+#                          'liberia', 'libya', 'liechtenstein', 'lithuania', 'luxembourg', 'macedonia', 'madagascar',
+#                          'malawi', 'malaysia', 'maldives', 'mali', 'malta', 'marshall islands', 'mauritania',
+#                          'mauritius', 'mexico', 'micronesia', 'moldova', 'monaco', 'mongolia', 'montenegro', 'morocco',
+#                          'mozambique', 'namibia', 'nauru', 'nepal', 'netherlands', 'new zealand', 'nicaragua', 'niger',
+#                          'nigeria', 'north korea', 'norway', 'oman', 'pakistan', 'palau', 'palestinian territories',
+#                          'panama', 'papua new guinea', 'paraguay', 'peru', 'philippines', 'poland', 'portugal', 'qatar',
+#                          'romania', 'russia', 'rwanda', 'saint kitts and nevis', 'saint lucia',
+#                          'saint vincent and the grenadines', 'samoa', 'san marino', 'sao tome and principe',
+#                          'saudi arabia', 'senegal', 'serbia', 'seychelles', 'sierra leone', 'singapore', 'sint maarten',
+#                          'slovakia', 'slovenia', 'solomon islands', 'somalia', 'south africa', 'south korea',
+#                          'south sudan', 'spain', 'sri lanka', 'sudan', 'suriname', 'swaziland', 'sweden', 'switzerland',
+#                          'syria', 'tajikistan', 'tanzania', 'thailand', 'timor-leste', 'togo', 'tonga',
+#                          'trinidad and tobago', 'tunisia', 'turkey', 'turkmenistan', 'tuvalu', 'uganda', 'ukraine',
+#                          'united arab emirates', 'united kingdom', 'uruguay', 'uzbekistan', 'vanuatu', 'venezuela',
+#                          'vietnam', 'yemen', 'zambia', 'zimbabwe']
 
 FEMALE = 0
 MALE = 1
@@ -48,15 +77,15 @@ def hot_encode(X):
     return OneHotEncoder().fit(X)
 
 def preprocess(dataset):
-    X = dataset.iloc[:, 1:4].values
+    X = dataset.iloc[:, 1:3].values
     y = dataset.iloc[:, 4:].values
 
     # encode age
     X[:, 0] = LabelEncoder().fit_transform(X[:, 0])
     # encode gender
     X[:, 1] = LabelEncoder().fit_transform(X[:, 1])
-    # encode income
-    X[:, 2] = LabelEncoder().fit_transform(X[:, 2])
+    # encode country
+    # X[:, 2] = LabelEncoder().fit_transform(X[:, 2])
 
     # dummy variables (binary one-hot encoding)
     enc = hot_encode(X)
@@ -65,7 +94,7 @@ def preprocess(dataset):
     return X,y,enc
 
 def training():
-    dataset = readfile('preference.csv')
+    dataset = readfile('users1.csv')
     X, y, enc = preprocess(dataset)
     # split dataset into training set and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
@@ -78,9 +107,9 @@ def training():
     # build artificial neural network
     # initialize neural network
     model = Sequential()
-    model.add(Dense(units=18, kernel_initializer='uniform', activation='relu', input_shape=(17,)))
+    model.add(Dense(units=11, kernel_initializer='uniform', activation='relu', input_shape=(8,)))
     model.add(Dropout(rate=0.1))
-    model.add(Dense(units=18, kernel_initializer='uniform', activation='relu'))
+    model.add(Dense(units=11, kernel_initializer='uniform', activation='relu'))
     model.add(Dropout(rate=0.1))
     model.add(Dense(units=19, kernel_initializer='uniform', activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
@@ -94,18 +123,18 @@ def training():
     y_pred = (y_pred > 0.5)
     print ("Testing complete!")
 
-    model.save('preference.model')
+    model.save('users.model')
 
-def predict(gender, age, income):
-    dataset = readfile('preference.csv')
+def predict(gender, age):
+    dataset = readfile('users1.csv')
     X, y, enc = preprocess(dataset)
-    data = enc.transform(np.array([[gender, age, income]])).toarray()
+    data = enc.transform(np.array([[age, gender]])).toarray()
 
-    model = load_model('preference.model')
+    model = load_model('users.model')
     print ("\n----------------")
     print ("NEW OBSERVATION:")
     print ("----------------")
-    print ("Gender: {gender}\nAge Group: {age}\nIncome: {income}".format(gender=GENDER_CHAR[gender], age=AGE_CHAR[age], income=INCOME_CHAR[income]))
+    print ("Gender: {gender}\nAge Group: {age}".format(gender=GENDER_CHAR[gender], age=AGE_CHAR[age]))
     # preprocessing new observation
     # scale new observation
     sc_X = StandardScaler()
@@ -122,6 +151,6 @@ def predict(gender, age, income):
 
 
 if __name__ == '__main__':
-    if not Path('preference.model').exists():
+    if not Path('users.model').exists():
         training()
-    predict(FEMALE, UNDER_12, 7)
+    predict(FEMALE, ABOVE_18)
