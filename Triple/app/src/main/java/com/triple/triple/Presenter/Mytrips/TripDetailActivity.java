@@ -27,11 +27,14 @@ import com.securepreferences.SecurePreferences;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripDayAdapter;
 import com.triple.triple.Helper.DateTimeHelper;
+import com.triple.triple.Helper.Token;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.Model.TripItinerary;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -40,6 +43,10 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TripDetailActivity extends AppCompatActivity {
     private static final String TAG = "TripCreateActivity";
@@ -59,6 +66,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private Boolean isSaved;
     private CardView cv_trip;
     private ImageView image;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
 
     @Override
@@ -73,7 +81,8 @@ public class TripDetailActivity extends AppCompatActivity {
 
         findView();
         initView();
-        new TripDetailActivity.RequestTripItinerary().execute();
+//        new TripDetailActivity.RequestTripItinerary().execute();
+        requestTripItinerary();
     }
 
     private void findView() {
@@ -286,6 +295,59 @@ public class TripDetailActivity extends AppCompatActivity {
             }
             stopAnim();
         }
+    }
+
+    public void requestTripItinerary(){
+        startAnim();
+
+        String token = "Bearer ";
+        token += Token.getToken(mcontext);
+
+        Call<TripDetail> call = apiService.listTripByUser(token, trip.getId());
+        call.enqueue(new Callback<TripDetail>() {
+            @Override
+            public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
+                if (response.body() != null) {
+                    try{
+                        Log.i("onSuccess", response.body().toString());
+                        TripDetail tripDetail = response.body();
+                        List<TripItinerary> itineraryList = tripDetail.getItinerary();
+
+                        for (int i = 0; i < itineraryList.size(); i++) {
+                            TripDay tripday = new TripDay();
+                            tripday.setId(itineraryList.get(i).getId());
+                            tripday.setName("Day" + (i + 1));
+                            tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
+                            tripdays.add(tripday);
+                        }
+                        adapter.notifyDataSetChanged();
+                        cv_trip.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                        Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                    }
+                                }).show();
+                        requestTripItinerary();
+                    }
+                    stopAnim();
+                } else {
+                    Log.d("error", "Empty response.");
+                    stopAnim();
+                }
+
+                stopAnim();
+            }
+
+            @Override
+            public void onFailure(Call<TripDetail> call, Throwable t) {
+                Log.e("error", t.toString());
+                stopAnim();
+            }
+        });
     }
 
     public void startAnim() {
