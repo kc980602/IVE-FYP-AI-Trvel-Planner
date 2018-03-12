@@ -28,11 +28,8 @@ public interface ApiInterface {
     @GET("trip/bookmarks")
     Call<List<Trip>> getBookmark();
 
-    @GET("/")
+    @GET("trip")
     Call<List<Trip>> listTrip(
             @Header("Authorization") String authHeader
     );
-
-
-
 }

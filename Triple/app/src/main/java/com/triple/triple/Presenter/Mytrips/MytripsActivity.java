@@ -264,6 +264,9 @@ public class MytripsActivity extends AppCompatActivity {
                 } else {
                     Log.d("error", "Empty response.");
                 }
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
                 stopAnim();
             }
 
