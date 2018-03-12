@@ -309,8 +309,7 @@ public class TripDetailActivity extends AppCompatActivity {
             public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
                 if (response.body() != null) {
                     try{
-                        Log.i("onSuccess", response.body().toString());
-                        TripDetail tripDetail = response.body();
+                        tripDetail = response.body();
                         List<TripItinerary> itineraryList = tripDetail.getItinerary();
 
                         for (int i = 0; i < itineraryList.size(); i++) {
@@ -331,7 +330,6 @@ public class TripDetailActivity extends AppCompatActivity {
 
                                     }
                                 }).show();
-                        requestTripItinerary();
                     }
                     stopAnim();
                 } else {

@@ -104,9 +104,17 @@
     <string name="profile_preference_edit">Edit travel style</string>
 
 
+    <string name="city_detail_discover">Discover</string>
+    <string name="city_detail_info">Need to Know</string>
+    <string name="city_detail_favorities">My Favorities</string>
+    <string name="city_detail_plan">Get Trip Plan</string>
+    <string name="city_detail_topattraction">Top Attractions</string>
+
     <string name="attraction_detail_seeall">See All</string>
     <string name="attraction_detail_share">Share</string>
     <string name="attraction_detail_bookmark">Add to trip</string>
+    <string name="attraction_detail_info">Essential Information</string>
+    <string name="attraction_detail_review">Reviews</string>
 
     <string-array name="destination">
         <item>asssss</item>

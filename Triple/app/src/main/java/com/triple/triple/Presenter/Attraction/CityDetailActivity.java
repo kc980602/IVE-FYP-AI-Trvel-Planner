@@ -1,5 +1,7 @@
 package com.triple.triple.Presenter.Attraction;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +24,7 @@ import com.triple.triple.R;
 
 public class CityDetailActivity extends AppCompatActivity {
 
+    private Context mcontext = CityDetailActivity.this;
 
     private Toolbar toolbar;
     private AppBarLayout layout_appbar;
@@ -64,5 +68,16 @@ public class CityDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void buttonClick(View view) {
+        Intent intent = new Intent();
+        switch (view.getId()) {
+            case R.id.layout_button_info:
+                intent.setClass(mcontext, CityInfoActivity.class);
+                break;
+
+        }
+        startActivity(intent);
     }
 }

@@ -77,7 +77,6 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -88,7 +87,7 @@
             <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/tableLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="150dp">
 
                 <TableRow
                     android:id="@+id/tableRow1"
@@ -96,47 +95,153 @@
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <Button
-                        android:id="@+id/button1"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"
-                        android:background="@drawable/button_grid_top" />
+                        android:layout_weight="1"
+                        android:background="@drawable/button_grid_top_left">
 
+                        <LinearLayout
+                            android:id="@+id/layout_button_discover"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="buttonClick"
+                            android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button2"
-                        android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_compass"
+                                android:tint="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Menu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/city_detail_discover" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"
-                        android:background="@drawable/button_grid_top" />
+                        android:layout_weight="1"
+                        android:background="@drawable/button_grid_top_right">
+
+                        <LinearLayout
+                            android:id="@+id/layout_button_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="buttonClick"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_book"
+                                android:tint="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Menu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/city_detail_info" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/tableRow3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <Button
-                        android:id="@+id/button3"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/button_grid_bottom" />
+                        android:background="@drawable/button_grid_bottom_left">
 
+                        <LinearLayout
+                            android:id="@+id/layout_button_plan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="buttonClick"
+                            android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button4"
-                        android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_trip_plan"
+                                android:tint="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Menu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/title_home" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/button_grid_bottom" />
+                        android:background="@drawable/button_grid_bottom_right">
 
+                        <LinearLayout
+                            android:id="@+id/layout_button_bookmark"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="buttonClick"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_bookmark"
+                                android:tint="@color/colorPrimary" />
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Menu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/city_detail_favorities" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </TableRow>
-
             </TableLayout>
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:text="@string/city_detail_topattraction" />
+
+            <include layout="@layout/devider_short" />
 
         </LinearLayout>
 
