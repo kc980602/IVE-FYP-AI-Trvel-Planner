@@ -21,12 +21,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.interfaces.CountryPickerListener;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.Registration;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText et_username, et_fname, et_lname, et_email, et_password, et_cpassword, et_age, et_gender, et_country;
     private String username, fname, lname, password, cPassword, email, age, gender, country;
     private ProgressDialog progressDialog;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
             cPassword = et_cpassword.getText().toString();
             email = et_email.getText().toString();
             new RegisterActivity.RequestRegister().execute();
+//            register();
         }
     }
 
@@ -222,5 +230,33 @@ public class RegisterActivity extends AppCompatActivity {
             }
             progressDialog.hide();
         }
+    }
+
+    public void register(){
+        progressDialog.show();
+
+        Call<List<ResponeMessage>> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
+        call.enqueue(new Callback<List<ResponeMessage>>() {
+            @Override
+            public void onResponse(Call<List<ResponeMessage>> call, Response<List<ResponeMessage>> response) {
+                try {
+                    List<ResponeMessage> list = response.body();
+                    ResponeMessage message = list.get(0);
+                    Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponeMessage>> call, Throwable t) {
+                Intent i = new Intent(mcontext, LoginActivity.class);
+                startActivity(i);
+                finish();
+                Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        progressDialog.hide();
     }
 }

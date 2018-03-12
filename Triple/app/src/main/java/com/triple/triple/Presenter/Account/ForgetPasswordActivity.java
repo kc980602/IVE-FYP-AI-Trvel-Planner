@@ -17,12 +17,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.ForgetPassword;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 
@@ -32,6 +38,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private String username;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         if (isSuccess) {
             username = et_username.getText().toString();
             new ForgetPasswordActivity.RequestForgetPassword().execute();
+//            requestForgetPassword();
         }
     }
 
@@ -134,5 +142,42 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void requestForgetPassword(){
+        progressDialog.show();
+
+        Call<List<ResponeMessage>> call = apiService.forgetPassword(username);
+        call.enqueue(new Callback<List<ResponeMessage>>() {
+            @Override
+            public void onResponse(Call<List<ResponeMessage>> call, Response<List<ResponeMessage>> response) {
+                if (response.body() != null) {
+                    try{
+                        Log.i("onSuccess", response.body().toString());
+                        Type type = new TypeToken<List<ResponeMessage>>() {
+                        }.getType();
+                        String editResult = "[" + new Gson().toJson(response.body()) + "]";
+                        Gson gson = new Gson();
+                        List<ResponeMessage> list = (List<ResponeMessage>) gson.fromJson(editResult, type);
+                        ResponeMessage message = list.get(0);
+                        Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.d("error", "Empty response.");
+                    progressDialog.hide();
+                    Intent intent = new Intent(mcontext, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponeMessage>> call, Throwable t) {
+                Log.e("error", t.toString());
+            }
+        });
     }
 }

@@ -7,9 +7,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.GetSystemProperty;
 
 import org.json.JSONException;
@@ -21,12 +23,17 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by Kevin on 2018/3/7.
  */
 
 public class SystemPropertyHelper {
     public static final String DEFAULT = "N/A";
+    static ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
 
     public static void refreshData(Context mcontext) {
@@ -34,6 +41,23 @@ public class SystemPropertyHelper {
         String url = mcontext.getString(R.string.api_prefix) + mcontext.getString(R.string.api_system_protery);
         try {
             respone = new GetSystemProperty().run(url);
+//            final Context context = mcontext;
+//            Call<String> call = apiService.getProperty();
+//            call.enqueue(new Callback<String>() {
+//                @Override
+//                public void onResponse(Call<String> call, Response<String> response) {
+//                    SharedPreferences data = new SecurePreferences(context);
+//                    SharedPreferences.Editor editor = data.edit();
+//                    editor.putString("systemProperty", response.body());
+//                    editor.commit();
+//                }
+//
+//                @Override
+//                public void onFailure(Call<String> call, Throwable t) {
+//
+//                }
+//            });
+
             SharedPreferences data = new SecurePreferences(mcontext);
             SharedPreferences.Editor editor = data.edit();
             editor.putString("systemProperty", respone.toString());

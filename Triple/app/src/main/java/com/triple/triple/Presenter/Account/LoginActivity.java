@@ -19,14 +19,20 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.Authentication;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -39,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText et_username, et_password;
     private String username, password;
     private ProgressDialog progressDialog;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             username = et_username.getText().toString();
             password = et_password.getText().toString();
             new LoginActivity.RequestLogin().execute();
+//            requestLogin();
         }
         return true;
     }
@@ -153,4 +161,49 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void requestLogin(){
+        progressDialog.show();
+
+        Call<List<AuthData>> call = apiService.authenticate(username, password);
+        call.enqueue(new Callback<List<AuthData>>() {
+            @Override
+            public void onResponse(Call<List<AuthData>> call, Response<List<AuthData>> response) {
+                String editResult = "[" + new Gson().toJson(response.body()) + "]";
+                Type type = new TypeToken<List<AuthData>>() {
+                }.getType();
+                Gson gson = new Gson();
+                try{
+                    List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);
+                    AuthData auth = authList.get(0);
+                    auth.toString();
+                    //save data using SharedPreferences
+                    SharedPreferences data = new SecurePreferences(mcontext);
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putString("token", auth.getToken());
+                    String json = gson.toJson(auth.getUser());
+                    editor.putString("userInfo", json);
+                    editor.commit();
+                    String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
+                    Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Intent indent = new Intent(mcontext, MainActivity.class);
+                    startActivity(indent);
+                    finish();
+                } catch (Exception e){
+                    Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<AuthData>> call, Throwable t) {
+                progressDialog.hide();
+                Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
 }

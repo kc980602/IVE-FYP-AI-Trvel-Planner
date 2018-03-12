@@ -24,9 +24,12 @@ import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.SystemPropertyHelper;
+import com.triple.triple.Helper.Token;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
 
@@ -40,6 +43,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import me.rohanpeshkar.filterablelistdialog.FilterableListDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TripCreateActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "TripCreateActivity";
@@ -52,6 +58,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private ProgressDialog progressDialog;
 
     private String tripname, tripdateStart, dateCount, destination, generate;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +197,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             tripname = et_tripname.getText().toString();
             generate = String.valueOf((cb_generate.isChecked()) ? 1 : 0);
             new TripCreateActivity.RequestCreateTrip().execute();
+//            createTrip();
         }
     }
 
@@ -233,6 +241,41 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             }
             progressDialog.dismiss();
         }
+    }
+
+    public void createTrip(){
+        progressDialog.show();
+
+        String token = "Bearer ";
+        token += Token.getToken(mcontext);
+        Call<String> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!response.body().equals("201")) {
+                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                    Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).show();
+                } else {
+                    Intent i_home = new Intent(mcontext, MytripsActivity.class);
+                    startActivity(i_home);
+                    Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+        progressDialog.dismiss();
     }
 
     @Override
