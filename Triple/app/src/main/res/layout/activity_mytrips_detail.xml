@@ -31,9 +31,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/a7"
                 app:riv_corner_radius="10dp"
-                app:riv_mutate_background="true"  />
-
-
+                app:riv_mutate_background="true" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -99,11 +97,10 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
+                        android:visibility="visible"
                         app:itemIconTint="@color/white"
                         app:itemTextColor="@color/white"
-                        app:menu="@menu/nav_mytrips_detail_card"
-                        android:visibility="visible" >
-                    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
+                        app:menu="@menu/nav_mytrips_detail_card"></com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
 
                     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
                         android:id="@+id/nav_trip_card_saved"
@@ -111,11 +108,10 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
+                        android:visibility="invisible"
                         app:itemIconTint="@color/white"
                         app:itemTextColor="@color/white"
-                        app:menu="@menu/nav_mytrips_detail_card_saved"
-                        android:visibility="invisible">
-                    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
+                        app:menu="@menu/nav_mytrips_detail_card_saved"></com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
 
                 </RelativeLayout>
 
@@ -125,14 +121,14 @@
     </android.support.v7.widget.CardView>
 
     <ListView
-        android:layout_below="@+id/cv_trip"
         android:id="@+id/lv_tripdaylist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/cv_trip"
+        android:clipToPadding="false"
         android:divider="@color/colorGrey"
         android:dividerHeight="1dp"
-        android:clipToPadding="false"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -147,6 +143,8 @@
             style="@style/AVLoadingIndicatorView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:visibility="visible"
             app:indicatorColor="@color/colorPrimary"
             app:indicatorName="BallClipRotateIndicator" />

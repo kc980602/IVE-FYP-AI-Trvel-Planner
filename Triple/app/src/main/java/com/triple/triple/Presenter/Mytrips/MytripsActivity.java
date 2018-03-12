@@ -243,7 +243,6 @@ public class MytripsActivity extends AppCompatActivity {
 
     public void requestTrip(){
         startAnim();
-
         String token = "Bearer ";
         token += Token.getToken(mcontext);
 //        Map<String, String> map = new HashMap<>();
