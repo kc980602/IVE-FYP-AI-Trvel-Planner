@@ -2,6 +2,8 @@ package com.triple.triple.Interface;
 
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Model.TripDetail;
+import com.triple.triple.Model.TripItinerary;
 import com.triple.triple.Sync.GetAttractionDetail;
 
 import java.util.List;
@@ -23,7 +25,9 @@ public interface ApiInterface {
     Call<Attraction> getRows();
 
     @GET("attraction/{id}")
-    Call<Attraction> getInfo(@Path("id") Integer id);
+    Call<Attraction> getInfo(
+            @Path("id") Integer id
+    );
 
     @GET("trip/bookmarks")
     Call<List<Trip>> getBookmark();
@@ -31,5 +35,11 @@ public interface ApiInterface {
     @GET("trip")
     Call<List<Trip>> listTrip(
             @Header("Authorization") String authHeader
+    );
+
+    @GET("trip/{id}")
+    Call<TripDetail> listTripByUser(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
     );
 }

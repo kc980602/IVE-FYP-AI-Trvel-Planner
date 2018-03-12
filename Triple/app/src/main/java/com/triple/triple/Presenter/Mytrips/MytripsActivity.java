@@ -246,8 +246,6 @@ public class MytripsActivity extends AppCompatActivity {
 
         String token = "Bearer ";
         token += Token.getToken(mcontext);
-//        Map<String, String> map = new HashMap<>();
-//        map.put("Authorization", "token");
 
         Call<List<Trip>> call = apiService.listTrip(token);
         call.enqueue(new Callback<List<Trip>>() {
