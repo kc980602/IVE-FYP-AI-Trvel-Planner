@@ -27,18 +27,32 @@ import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
+import com.triple.triple.Helper.Token;
+import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MytripsActivity extends AppCompatActivity {
 
@@ -59,6 +73,7 @@ public class MytripsActivity extends AppCompatActivity {
     private List<Trip> allTrips = new ArrayList<>();
     private List<Trip> savedTrips = new ArrayList<>();
     private TripAdapter adapter_allTrips, adapter_savedTrips;
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +180,8 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void refreshData() {
-        new MytripsActivity.RequestTrip().execute();
+//        new MytripsActivity.RequestTrip().execute();
+        requestTrip();
         Type type = new TypeToken<List<Trip>>() {
         }.getType();
         Gson gson = new Gson();
@@ -223,6 +239,40 @@ public class MytripsActivity extends AppCompatActivity {
             }
             stopAnim();
         }
+    }
+
+    public void requestTrip(){
+        startAnim();
+
+        String token = "Bearer ";
+        token += Token.getToken(mcontext);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("Authorization", "token");
+
+        Call<List<Trip>> call = apiService.listTrip(token);
+        call.enqueue(new Callback<List<Trip>>() {
+            @Override
+            public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
+                if (response.body() != null) {
+                    Log.i("onSuccess", response.body().toString());
+                    List<Trip> newTrips = response.body();
+                    allTrips.clear();
+                    for (int i=0; i<newTrips.size(); i++) {
+                        allTrips.add(newTrips.get(i));
+                    }
+                    adapter_allTrips.notifyDataSetChanged();
+                } else {
+                    Log.d("error", "Empty response.");
+                }
+                stopAnim();
+            }
+
+            @Override
+            public void onFailure(Call<List<Trip>> call, Throwable t) {
+                Log.e("error", t.toString());
+                stopAnim();
+            }
+        });
     }
 
     public void startAnim() {
