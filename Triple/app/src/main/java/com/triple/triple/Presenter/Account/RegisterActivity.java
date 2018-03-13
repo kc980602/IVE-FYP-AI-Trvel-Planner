@@ -211,13 +211,11 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(String respone) {
             super.onPostExecute(respone);
             if (!respone.equals("")) {
-                String editResult = "[" + respone + "]";
-                Type type = new TypeToken<List<ResponeMessage>>() {
+                Type type = new TypeToken<ResponeMessage>() {
                 }.getType();
                 Gson gson = new Gson();
                 try {
-                    List<ResponeMessage> list = (List<ResponeMessage>) gson.fromJson(editResult, type);
-                    ResponeMessage message = list.get(0);
+                    ResponeMessage message = (ResponeMessage) gson.fromJson(respone, type);
                     Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();

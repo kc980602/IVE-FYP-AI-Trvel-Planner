@@ -36,15 +36,13 @@ public class CityDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
 
-        findViews();
-        initView();
+//        findViews();
+//        initView();
     }
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        layout_appbar = (AppBarLayout) findViewById(R.id.layout_appbar);
-        layout_collapsing = (CollapsingToolbarLayout) findViewById(R.id.layout_collapsing);
-        layout_cityname = (LinearLayout) findViewById(R.id.layout_cityname);
+
     }
 
     private void initView() {
@@ -71,13 +69,13 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     public void buttonClick(View view) {
-        Intent intent = new Intent();
-        switch (view.getId()) {
-            case R.id.layout_button_info:
-                intent.setClass(mcontext, CityInfoActivity.class);
-                break;
-
-        }
-        startActivity(intent);
+//        Intent intent = new Intent();
+//        switch (view.getId()) {
+//            case R.id.layout_button_info:
+//                intent.setClass(mcontext, CityInfoActivity.class);
+//                break;
+//
+//        }
+//        startActivity(intent);
     }
 }
