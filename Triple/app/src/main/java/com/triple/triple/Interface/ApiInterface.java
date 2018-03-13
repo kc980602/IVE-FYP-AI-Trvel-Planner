@@ -28,7 +28,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("member/register")
-    Call<List<ResponeMessage>> register(
+    Call<ResponeMessage> register(
             @Field("username") String username,
             @Field("first_name") String fname,
             @Field("last_name") String lname,
@@ -48,7 +48,7 @@ public interface ApiInterface {
     );
 
     @POST("member/password/forget")
-    Call<List<ResponeMessage>> forgetPassword(
+    Call<ResponeMessage> forgetPassword(
             @Field("username") String username
     );
 

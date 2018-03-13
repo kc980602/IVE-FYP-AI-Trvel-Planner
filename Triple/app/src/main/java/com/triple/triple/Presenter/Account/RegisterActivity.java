@@ -232,14 +232,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register(){
         progressDialog.show();
-
-        Call<List<ResponeMessage>> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
-        call.enqueue(new Callback<List<ResponeMessage>>() {
+        Call<ResponeMessage> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
+        call.enqueue(new Callback<ResponeMessage>() {
             @Override
-            public void onResponse(Call<List<ResponeMessage>> call, Response<List<ResponeMessage>> response) {
+            public void onResponse(Call<ResponeMessage> call, Response<ResponeMessage> response) {
                 try {
-                    List<ResponeMessage> list = response.body();
-                    ResponeMessage message = list.get(0);
+                    ResponeMessage message = response.body();
                     Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
@@ -247,7 +245,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ResponeMessage>> call, Throwable t) {
+            public void onFailure(Call<ResponeMessage> call, Throwable t) {
                 Intent i = new Intent(mcontext, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -255,6 +253,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        progressDialog.hide();
+        progressDialog.dismiss();
     }
 }
