@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         if (id == R.id.bt_login) {
             username = et_username.getText().toString();
             password = et_password.getText().toString();
-            new LoginActivity.RequestLogin().execute();
-//            requestLogin();
+//            new LoginActivity.RequestLogin().execute();
+            requestLogin(username, password);
         }
         return true;
     }
@@ -160,34 +160,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void requestLogin(){
+    public void requestLogin(String username, String password){
         progressDialog.show();
 
-        Call<List<AuthData>> call = apiService.authenticate(username, password);
-        call.enqueue(new Callback<List<AuthData>>() {
+        Call<AuthData> call = apiService.authenticate(username, password);
+        call.enqueue(new Callback<AuthData>() {
             @Override
-            public void onResponse(Call<List<AuthData>> call, Response<List<AuthData>> response) {
-                String editResult = "[" + new Gson().toJson(response.body()) + "]";
-                Type type = new TypeToken<List<AuthData>>() {
-                }.getType();
-                Gson gson = new Gson();
+            public void onResponse(Call<AuthData> call, Response<AuthData> response) {
                 try{
-                    List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);
-                    AuthData auth = authList.get(0);
-                    auth.toString();
-                    //save data using SharedPreferences
-                    SharedPreferences data = new SecurePreferences(mcontext);
-                    SharedPreferences.Editor editor = data.edit();
-                    editor.putString("token", auth.getToken());
-                    String json = gson.toJson(auth.getUser());
-                    editor.putString("userInfo", json);
-                    editor.commit();
-                    String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
-                    Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    Intent indent = new Intent(mcontext, MainActivity.class);
-                    startActivity(indent);
-                    finish();
+                    AuthData auth = response.body();
+                    continueRequestLogin(auth);
                 } catch (Exception e){
                     Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
                 }
@@ -195,13 +177,34 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<AuthData>> call, Throwable t) {
-                progressDialog.hide();
-                Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<AuthData> call, Throwable t) {
+                stopRequestLogin();
             }
         });
 
+    }
 
+    public void continueRequestLogin(AuthData auth){
+        Gson gson = new Gson();
+        auth.toString();
+        //save data using SharedPreferences
+        SharedPreferences data = new SecurePreferences(mcontext);
+        SharedPreferences.Editor editor = data.edit();
+        editor.putString("token", auth.getToken());
+        String json = gson.toJson(auth.getUser());
+        editor.putString("userInfo", json);
+        editor.commit();
+        String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
+        Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
+        Intent indent = new Intent(mcontext, MainActivity.class);
+        startActivity(indent);
+        finish();
+    }
+
+    public void stopRequestLogin(){
+        progressDialog.hide();
+        Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
     }
 
 }
