@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_discover"
+        android:icon="@drawable/ic_compass"
+        android:title="@string/city_detail_discover"></item>
+
+    <item
+        android:id="@+id/action_info"
+        android:icon="@drawable/ic_book"
+        android:title="@string/city_detail_info"></item>
+
+    <item
+        android:id="@+id/action_plan"
+        android:icon="@drawable/ic_trip_plan"
+        android:title="@string/city_detail_plan"></item>
+
+    <item
+        android:id="@+id/action_favorities"
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/city_detail_favorities"></item>
+
+
+</menu>

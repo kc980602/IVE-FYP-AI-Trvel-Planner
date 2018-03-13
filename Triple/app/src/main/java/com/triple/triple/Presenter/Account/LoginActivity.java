@@ -134,13 +134,11 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.hide();
                 Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
             } else {
-                String editResult = "[" + result + "]";
-                Type type = new TypeToken<List<AuthData>>() {
+                Type type = new TypeToken<AuthData>() {
                 }.getType();
                 Gson gson = new Gson();
                 try {
-                    List<AuthData> authList = (List<AuthData>) gson.fromJson(editResult, type);
-                    AuthData auth = authList.get(0);
+                    AuthData auth = (AuthData) gson.fromJson(result, type);
                     auth.toString();
                     //save data using SharedPreferences
                     SharedPreferences data = new SecurePreferences(mcontext);
