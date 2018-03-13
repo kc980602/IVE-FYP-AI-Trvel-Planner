@@ -39,18 +39,20 @@ public class SystemPropertyHelper {
     public static void refreshData(Context mcontext) {
         try {
             final Context context = mcontext;
-            Call<String> call = apiService.getProperty();
-            call.enqueue(new Callback<String>() {
+            Call<SystemProperty> call = apiService.getProperty();
+            call.enqueue(new Callback<SystemProperty>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
+                    SystemProperty sp = response.body();
+                    Gson gson = new Gson();
                     SharedPreferences data = new SecurePreferences(context);
                     SharedPreferences.Editor editor = data.edit();
-                    editor.putString("systemProperty", response.body());
+                    editor.putString("systemProperty", gson.toJson(sp));
                     editor.commit();
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<SystemProperty> call, Throwable t) {
 
                 }
             });
@@ -71,6 +73,7 @@ public class SystemPropertyHelper {
             SystemProperty systemProperty = (SystemProperty) gson.fromJson(jsonObject.toString(), type);
             return systemProperty;
         } catch (Exception e) {
+            Log.e("getSystemProperty", e.toString());
             e.printStackTrace();
             return null;
         }

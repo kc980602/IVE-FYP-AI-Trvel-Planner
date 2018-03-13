@@ -3,13 +3,11 @@ package com.triple.triple.Interface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.ResponeMessage;
+import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
-import com.triple.triple.Model.TripItinerary;
-import com.triple.triple.Sync.GetAttractionDetail;
 
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -25,7 +23,7 @@ import retrofit2.http.Path;
 public interface ApiInterface {
 
     @GET("system/property")
-    Call<String> getProperty();
+    Call<SystemProperty> getProperty();
 
     @POST("member/register")
     Call<List<ResponeMessage>> register(

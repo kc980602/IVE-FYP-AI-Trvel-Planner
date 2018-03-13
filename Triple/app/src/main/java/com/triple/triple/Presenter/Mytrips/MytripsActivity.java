@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Trace;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
+import com.triple.triple.Helper.SMFrameCallback;
 import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
@@ -98,6 +100,7 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Trace.beginSection("MytripsActivity.initView");
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
@@ -126,6 +129,7 @@ public class MytripsActivity extends AppCompatActivity {
         rv_trips.setLayoutManager(mLayoutManager);
         rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter_allTrips);
+        Trace.endSection();
     }
 
     @Override
@@ -180,7 +184,7 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void refreshData() {
-//        new MytripsActivity.RequestTrip().execute();
+        Trace.beginSection("MytripsActivity.refreshData");
         requestTrip();
         Type type = new TypeToken<List<Trip>>() {
         }.getType();
@@ -195,19 +199,18 @@ public class MytripsActivity extends AppCompatActivity {
             }
             adapter_savedTrips.notifyDataSetChanged();
         }
+        Trace.endSection();
     }
 
     public void requestTrip(){
         startAnim();
         String token = "Bearer ";
         token += Token.getToken(mcontext);
-
         Call<List<Trip>> call = apiService.listTrip(token);
         call.enqueue(new Callback<List<Trip>>() {
             @Override
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
                 if (response.body() != null) {
-                    Log.i("onSuccess", response.body().toString());
                     List<Trip> newTrips = response.body();
                     allTrips.clear();
                     for (int i=0; i<newTrips.size(); i++) {
@@ -215,20 +218,33 @@ public class MytripsActivity extends AppCompatActivity {
                     }
                     adapter_allTrips.notifyDataSetChanged();
                 } else {
-                    Log.d("error", "Empty response.");
                 }
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 stopAnim();
             }
-
             @Override
             public void onFailure(Call<List<Trip>> call, Throwable t) {
-                Log.e("error", t.toString());
                 stopAnim();
             }
         });
+    }
+
+    private void requestData() {
+        List<Trip> newTrips = new ArrayList<>();
+        Trip t = new Trip();
+        t.setId(1);
+        t.setImage("http://img.jakpost.net/c/2016/07/19/2016_07_19_8408_1468924519._large.jpg");
+        t.setOwner_id(27);
+        t.setVisit_date("2018-03-12");
+        t.setVisit_length(5);
+        newTrips.add(t);
+        allTrips.clear();
+        for (int i=0; i<newTrips.size(); i++) {
+            allTrips.add(newTrips.get(i));
+        }
+        adapter_allTrips.notifyDataSetChanged();
     }
 
     public void startAnim() {

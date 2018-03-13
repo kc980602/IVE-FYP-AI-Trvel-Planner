@@ -118,9 +118,11 @@ public class DrawerUtil {
                                 intent.setClass(activity, MainActivity.class);
                         }
                         view.getContext().startActivity(intent);
-                        return true;
+                        return false;
                     }
                 })
+                .withCloseOnClick(true)
                 .build();
     }
+
 }

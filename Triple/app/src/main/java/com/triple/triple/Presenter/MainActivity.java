@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
@@ -117,9 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         relative_main = findViewById(R.id.relative_main);
         img_page_start = findViewById(R.id.img_page_start);
-        Log.d("initView", "requestData before");
         requestData();
-        Log.d("initView", "requestData after");
     }
 
     private void initViewPager() {
@@ -150,23 +149,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void requestData(){
-        Log.d("requestData", "in");
-        Call<String> call = apiService.getProperty();
-        call.enqueue(new Callback<String>() {
+        Call<SystemProperty> call = apiService.getProperty();
+        call.enqueue(new Callback<SystemProperty>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.d("onResponse", response.body());
-                Log.d("onResponse", response.body().toString());
-
+            public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
+                SystemProperty sp = response.body();
+                Gson gson = new Gson();
                 SharedPreferences data = new SecurePreferences(mcontext);
                 SharedPreferences.Editor editor = data.edit();
-                editor.putString("systemProperty", response.body().toString());
+                editor.putString("systemProperty", gson.toJson(sp));
                 editor.commit();
                 initViewPager();
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<SystemProperty> call, Throwable t) {
 
             }
         });
