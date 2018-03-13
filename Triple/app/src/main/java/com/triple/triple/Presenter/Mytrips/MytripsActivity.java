@@ -197,50 +197,6 @@ public class MytripsActivity extends AppCompatActivity {
         }
     }
 
-    private class RequestTrip extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            startAnim();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_get);
-                respone = new GetTrip().run(url, mcontext);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return respone;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONArray DateArray = new JSONArray(result);
-                Type type = new TypeToken<List<Trip>>() {
-                }.getType();
-                Gson gson = new Gson();
-                List<Trip> newTrips = (List<Trip>) gson.fromJson(DateArray.toString(), type);
-                allTrips.clear();
-                for (int i=0; i<newTrips.size(); i++) {
-                    allTrips.add(newTrips.get(i));
-                }
-                adapter_allTrips.notifyDataSetChanged();
-
-            } catch (Exception e) {
-                new MytripsActivity.RequestTrip().execute();
-            }
-            if (swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-            stopAnim();
-        }
-    }
-
     public void requestTrip(){
         startAnim();
         String token = "Bearer ";

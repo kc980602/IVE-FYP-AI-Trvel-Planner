@@ -37,10 +37,7 @@ public class SystemPropertyHelper {
 
 
     public static void refreshData(Context mcontext) {
-        String respone;
-        String url = mcontext.getString(R.string.api_prefix) + mcontext.getString(R.string.api_system_protery);
         try {
-            respone = new GetSystemProperty().run(url);
             final Context context = mcontext;
             Call<String> call = apiService.getProperty();
             call.enqueue(new Callback<String>() {
@@ -75,8 +72,9 @@ public class SystemPropertyHelper {
             return systemProperty;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 
 

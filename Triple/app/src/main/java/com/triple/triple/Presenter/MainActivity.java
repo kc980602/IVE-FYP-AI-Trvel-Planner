@@ -2,6 +2,7 @@ package com.triple.triple.Presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +26,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Helper.Token;
+import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsActivity;
@@ -35,8 +39,13 @@ import com.triple.triple.Presenter.Profile.ProfileActivity;
 import com.triple.triple.Presenter.Profile.TravelStyleActivity;
 import com.triple.triple.Presenter.Search.SearchActivity;
 import com.triple.triple.R;
+import com.triple.triple.Sync.ApiClient;
 
 import java.io.Serializable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout relative_main;
     private ImageView img_page_start;
 
+    private ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private Context mcontext = MainActivity.this;
     private static boolean isShowPageStart = true;
     private final int MESSAGE_SHOW_LOGIN = 0x001;
@@ -86,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new MainActivity.RequestData().execute();
         initView();
-        initViewPager();
 
         if (isShowPageStart) {
             relative_main.setVisibility(View.VISIBLE);
@@ -109,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
         relative_main = findViewById(R.id.relative_main);
         img_page_start = findViewById(R.id.img_page_start);
+        Log.d("initView", "requestData before");
+        requestData();
+        Log.d("initView", "requestData after");
     }
 
     private void initViewPager() {
@@ -138,28 +149,26 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class RequestData extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+    public void requestData(){
+        Log.d("requestData", "in");
+        Call<String> call = apiService.getProperty();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("onResponse", response.body());
+                Log.d("onResponse", response.body().toString());
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-                SystemPropertyHelper.refreshData(mcontext);
-                respone = "Success";
-            } catch (Exception e) {
-                e.printStackTrace();
+                SharedPreferences data = new SecurePreferences(mcontext);
+                SharedPreferences.Editor editor = data.edit();
+                editor.putString("systemProperty", response.body().toString());
+                editor.commit();
+                initViewPager();
             }
-            return respone;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
 
-        }
+            }
+        });
     }
 }

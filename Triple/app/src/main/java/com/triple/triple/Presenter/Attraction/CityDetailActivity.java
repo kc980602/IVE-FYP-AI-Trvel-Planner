@@ -43,15 +43,13 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         nav_bar = (BottomNavigationViewEx) findViewById(R.id.nav_bar);
     }
 
     private void initView() {
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle("Tokyo");
+        ab.setElevation(0);
 
         nav_bar.enableAnimation(false);
         nav_bar.enableItemShiftingMode(false);

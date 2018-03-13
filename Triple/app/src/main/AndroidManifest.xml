@@ -87,7 +87,8 @@
         <activity
             android:name=".Presenter.Attraction.CityDetailActivity"
             android:launchMode="singleInstance"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".Presenter.Attraction.CityInfoActivity"></activity>
     </application>
 
