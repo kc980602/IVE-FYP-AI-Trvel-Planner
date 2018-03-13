@@ -180,8 +180,8 @@ public class RegisterActivity extends AppCompatActivity {
             password = et_password.getText().toString();
             cPassword = et_cpassword.getText().toString();
             email = et_email.getText().toString();
-            new RegisterActivity.RequestRegister().execute();
-//            register();
+//            new RegisterActivity.RequestRegister().execute();
+           register();
         }
     }
 

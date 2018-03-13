@@ -28,6 +28,7 @@ public interface ApiInterface {
     @GET("system/property")
     Call<String> getProperty();
 
+    @FormUrlEncoded
     @POST("member/register")
     Call<List<ResponeMessage>> register(
             @Field("username") String username,
