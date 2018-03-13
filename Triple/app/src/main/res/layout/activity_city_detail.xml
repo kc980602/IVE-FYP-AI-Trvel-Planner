@@ -29,7 +29,7 @@
                 android:layout_height="250dp"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerCrop"
-                android:src="@drawable/a7"
+                android:src="@drawable/a8"
                 app:riv_corner_radius="10dp"
                 app:riv_mutate_background="true" />
 
@@ -61,6 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:text="Japan"
                         android:textAllCaps="true"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -72,7 +73,7 @@
                     android:layout_below="@+id/linear_content">
 
                     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-                        android:id="@+id/nav_trip_card"
+                        android:id="@+id/nav_bar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentBottom="true"

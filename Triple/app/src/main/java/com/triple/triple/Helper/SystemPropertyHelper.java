@@ -41,27 +41,23 @@ public class SystemPropertyHelper {
         String url = mcontext.getString(R.string.api_prefix) + mcontext.getString(R.string.api_system_protery);
         try {
             respone = new GetSystemProperty().run(url);
-//            final Context context = mcontext;
-//            Call<String> call = apiService.getProperty();
-//            call.enqueue(new Callback<String>() {
-//                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
-//                    SharedPreferences data = new SecurePreferences(context);
-//                    SharedPreferences.Editor editor = data.edit();
-//                    editor.putString("systemProperty", response.body());
-//                    editor.commit();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
-//
-//                }
-//            });
+            final Context context = mcontext;
+            Call<String> call = apiService.getProperty();
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    SharedPreferences data = new SecurePreferences(context);
+                    SharedPreferences.Editor editor = data.edit();
+                    editor.putString("systemProperty", response.body());
+                    editor.commit();
+                }
 
-            SharedPreferences data = new SecurePreferences(mcontext);
-            SharedPreferences.Editor editor = data.edit();
-            editor.putString("systemProperty", respone.toString());
-            editor.commit();
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

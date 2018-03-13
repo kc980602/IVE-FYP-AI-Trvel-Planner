@@ -3,8 +3,10 @@ package com.triple.triple.Presenter.Attraction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.R;
 
@@ -27,22 +30,21 @@ public class CityDetailActivity extends AppCompatActivity {
     private Context mcontext = CityDetailActivity.this;
 
     private Toolbar toolbar;
-    private AppBarLayout layout_appbar;
-    private CollapsingToolbarLayout layout_collapsing;
     private LinearLayout layout_cityname;
+    private BottomNavigationViewEx nav_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
 
-//        findViews();
-//        initView();
+        findViews();
+        initView();
     }
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        nav_bar = (BottomNavigationViewEx) findViewById(R.id.nav_bar);
     }
 
     private void initView() {
@@ -50,6 +52,12 @@ public class CityDetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        nav_bar.enableAnimation(false);
+        nav_bar.enableItemShiftingMode(false);
+        nav_bar.enableShiftingMode(false);
+        nav_bar.setOnNavigationItemSelectedListener(nav_barListener);
+        Menu menu = nav_bar.getMenu();
     }
 
     @Override
@@ -67,6 +75,27 @@ public class CityDetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private BottomNavigationViewEx.OnNavigationItemSelectedListener nav_barListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_discover:
+
+                    break;
+                case R.id.action_info:
+
+                    break;
+                case R.id.action_plan:
+                    break;
+                case R.id.action_favorities:
+
+                    break;
+            }
+            return false;
+        }
+    };
+
 
     public void buttonClick(View view) {
 //        Intent intent = new Intent();
