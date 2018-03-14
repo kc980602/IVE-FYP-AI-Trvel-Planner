@@ -83,7 +83,6 @@ public class MytripsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mytrips);
         findViews();
         initView();
-
         if (CheckLogin.directLogin(mcontext)) {
             finish();
         } else {
@@ -100,13 +99,11 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Trace.beginSection("MytripsActivity.initView");
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
-        DrawerUtil.getDrawer(this, toolbar);
+//        DrawerUtil.getDrawer(this, toolbar);
 
         String indicator = getIntent().getStringExtra("indicator");
-
         avi.setIndicator(indicator);
 
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
@@ -125,11 +122,10 @@ public class MytripsActivity extends AppCompatActivity {
         adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips, "false");
         adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips, "true");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rv_trips.setHasFixedSize(true);
+//        rv_trips.setHasFixedSize(true);
         rv_trips.setLayoutManager(mLayoutManager);
-        rv_trips.setItemAnimator(new DefaultItemAnimator());
+//        rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter_allTrips);
-        Trace.endSection();
     }
 
     @Override
@@ -153,10 +149,10 @@ public class MytripsActivity extends AppCompatActivity {
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getTag().toString()) {
                 case "all":
-                    rv_trips.swapAdapter(adapter_allTrips, false);
+//                    rv_trips.swapAdapter(adapter_allTrips, false);
                     break;
                 case "saved":
-                    rv_trips.swapAdapter(adapter_savedTrips, false);
+//                    rv_trips.swapAdapter(adapter_savedTrips, false);
                     break;
             }
         }
@@ -184,22 +180,20 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void refreshData() {
-        Trace.beginSection("MytripsActivity.refreshData");
         requestTrip();
-        Type type = new TypeToken<List<Trip>>() {
-        }.getType();
-        Gson gson = new Gson();
-        SharedPreferences data = new SecurePreferences(mcontext);
-        String jsonTripList = data.getString("savedTrips", null);
-        if (jsonTripList != null) {
-            List<Trip> newTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
-            savedTrips.clear();
-            for (int i=0; i<newTrips.size(); i++) {
-                savedTrips.add(newTrips.get(i));
-            }
-            adapter_savedTrips.notifyDataSetChanged();
-        }
-        Trace.endSection();
+//        Type type = new TypeToken<List<Trip>>() {
+//        }.getType();
+//        Gson gson = new Gson();
+//        SharedPreferences data = new SecurePreferences(mcontext);
+//        String jsonTripList = data.getString("savedTrips", null);
+//        if (jsonTripList != null) {
+//            List<Trip> newTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
+//            savedTrips.clear();
+//            for (int i=0; i<newTrips.size(); i++) {
+//                savedTrips.add(newTrips.get(i));
+//            }
+//            adapter_savedTrips.notifyDataSetChanged();
+//        }
     }
 
     public void requestTrip(){
@@ -229,22 +223,6 @@ public class MytripsActivity extends AppCompatActivity {
                 stopAnim();
             }
         });
-    }
-
-    private void requestData() {
-        List<Trip> newTrips = new ArrayList<>();
-        Trip t = new Trip();
-        t.setId(1);
-        t.setImage("http://img.jakpost.net/c/2016/07/19/2016_07_19_8408_1468924519._large.jpg");
-        t.setOwner_id(27);
-        t.setVisit_date("2018-03-12");
-        t.setVisit_length(5);
-        newTrips.add(t);
-        allTrips.clear();
-        for (int i=0; i<newTrips.size(); i++) {
-            allTrips.add(newTrips.get(i));
-        }
-        adapter_allTrips.notifyDataSetChanged();
     }
 
     public void startAnim() {

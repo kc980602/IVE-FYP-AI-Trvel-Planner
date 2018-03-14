@@ -35,6 +35,9 @@ public class Trip implements Serializable {
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("city")
+    @Expose
+    private City city;
 
     public int getId() {
         return id;
@@ -92,16 +95,11 @@ public class Trip implements Serializable {
         this.owner_id = owner_id;
     }
 
-    @Override
-    public String toString() {
-        return "Trip{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", visit_date='" + visit_date + '\'' +
-                ", visit_length=" + visit_length +
-                ", owner='" + owner + '\'' +
-                ", owner_id=" + owner_id +
-                ", image='" + image + '\'' +
-                '}';
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

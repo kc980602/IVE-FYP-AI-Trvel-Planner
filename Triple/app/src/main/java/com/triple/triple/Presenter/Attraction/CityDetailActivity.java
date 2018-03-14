@@ -2,27 +2,14 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
-import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.R;
 
 public class CityDetailActivity extends AppCompatActivity {
@@ -37,7 +24,6 @@ public class CityDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
-
         findViews();
         initView();
     }
@@ -80,7 +66,7 @@ public class CityDetailActivity extends AppCompatActivity {
             Intent intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.action_discover:
-                    intent.
+                    intent.setClass(mcontext, CityInfoActivity.class);
                     break;
                 case R.id.action_info:
 
@@ -91,19 +77,9 @@ public class CityDetailActivity extends AppCompatActivity {
 
                     break;
             }
+            startActivity(intent);
             return false;
         }
     };
 
-
-    public void buttonClick(View view) {
-//        Intent intent = new Intent();
-//        switch (view.getId()) {
-//            case R.id.layout_button_info:
-//                intent.setClass(mcontext, CityInfoActivity.class);
-//                break;
-//
-//        }
-//        startActivity(intent);
-    }
 }

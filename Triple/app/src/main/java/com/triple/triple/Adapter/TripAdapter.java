@@ -3,6 +3,7 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     }
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
+        CardView cv_trip;
         public TextView tv_tripid;
         public TextView tv_tripname;
         public TextView tv_owner;
@@ -47,6 +49,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
         public TripViewHolder(View itemView) {
             super(itemView);
+            cv_trip = (CardView) itemView.findViewById(R.id.cv_trip);
             image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
             tv_tripid = (TextView) itemView.findViewById(R.id.tv_tripid);
             tv_tripname = (TextView) itemView.findViewById(R.id.tv_tripname);
@@ -60,19 +63,14 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     int tripId = Integer.parseInt(tv_tripid.getText().toString());
-                    for (Trip trip : trips) {
-                        if (trip.getId() == tripId) {
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("trip", trip);
-                            if (tv_saved.getVisibility() == View.VISIBLE) {
-                                bundle.putBoolean("isSaved", true);
-                            }
-                            Intent indent = new Intent(activity, TripDetailActivity.class);
-                            indent.putExtras(bundle);
-                            activity.startActivity(indent);
-                            break;
-                        }
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("tripId", tripId);
+                    if (tv_saved.getVisibility() == View.VISIBLE) {
+                        bundle.putBoolean("isSaved", true);
                     }
+                    Intent indent = new Intent(activity, TripDetailActivity.class);
+                    indent.putExtras(bundle);
+                    activity.startActivity(indent);
                 }
             });
         }

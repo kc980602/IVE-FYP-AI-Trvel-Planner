@@ -29,13 +29,16 @@ public class TripDetail implements Serializable {
     private String visit_date;
     @SerializedName("visit_length")
     @Expose
-    private String visit_length;
+    private int visit_length;
     @SerializedName("collaborators")
     @Expose
     private List<TripCollaborator> collaborators;
     @SerializedName("itinerary")
     @Expose
     private List<TripItinerary> itinerary;
+    @SerializedName("city")
+    @Expose
+    private City city;
 
     public int getId() {
         return id;
@@ -77,11 +80,11 @@ public class TripDetail implements Serializable {
         this.visit_date = visit_date;
     }
 
-    public String getVisit_length() {
+    public int getVisit_length() {
         return visit_length;
     }
 
-    public void setVisit_length(String visit_length) {
+    public void setVisit_length(int visit_length) {
         this.visit_length = visit_length;
     }
 
@@ -101,4 +104,11 @@ public class TripDetail implements Serializable {
         this.itinerary = itinerary;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 }
