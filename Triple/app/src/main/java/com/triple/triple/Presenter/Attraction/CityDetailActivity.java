@@ -66,7 +66,11 @@ public class CityDetailActivity extends AppCompatActivity {
             Intent intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.action_discover:
+<<<<<<< HEAD
                     intent.setClass(mcontext, CityInfoActivity.class);
+=======
+
+>>>>>>> dc4481a5defa2c1f42dc3084c083f1abbe934841
                     break;
                 case R.id.action_info:
 

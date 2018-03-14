@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         if (id == R.id.bt_login) {
             username = et_username.getText().toString();
             password = et_password.getText().toString();
-            new LoginActivity.RequestLogin().execute();
-//            requestLogin(username, password);
+//            new LoginActivity.RequestLogin().execute();
+            requestLogin(username, password);
         }
         return true;
     }
@@ -168,10 +168,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AuthData> call, Response<AuthData> response) {
                 try{
-                    AuthData auth = response.body();
-                    continueRequestLogin(auth);
+                    if(response.code() != 201){
+                        AuthData auth = response.body();
+                        continueRequestLogin(auth);
+                    } else {
+                        stopRequestLogin();
+                    }
                 } catch (Exception e){
-                    Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
+                    progressDialog.hide();
+                    Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -204,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void stopRequestLogin(){
         progressDialog.hide();
-        Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
     }
 
 }
