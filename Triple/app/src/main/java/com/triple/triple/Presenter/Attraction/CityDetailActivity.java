@@ -80,7 +80,7 @@ public class CityDetailActivity extends AppCompatActivity {
             Intent intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.action_discover:
-                    intent.
+
                     break;
                 case R.id.action_info:
 
