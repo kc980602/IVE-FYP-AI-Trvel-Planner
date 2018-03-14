@@ -19,10 +19,6 @@
         card_view:cardElevation="4dp"
         card_view:cardMaxElevation="6dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <com.itheima.roundedimageview.RoundedImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
@@ -34,6 +30,8 @@
                 app:riv_mutate_background="true" />
 
             <RelativeLayout
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:background="@drawable/gradient_shape">
@@ -53,7 +51,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="10dp"
-                        android:text="Tokyo, Japan"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -73,7 +70,6 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/textview_round"
                         android:gravity="center"
-                        android:text="23"
                         android:textSize="30dp" />
 
                     <TextView
@@ -114,8 +110,6 @@
                         app:menu="@menu/nav_mytrips_detail_card_saved"></com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
 
                 </RelativeLayout>
-
-            </RelativeLayout>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

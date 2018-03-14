@@ -9,113 +9,216 @@
     android:orientation="vertical"
     tools:context=".Presenter.Mytrips.TripDetailActivity">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cv_trip"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="4dp"
-        card_view:cardMaxElevation="6dp">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <com.itheima.roundedimageview.RoundedImageView
-                android:id="@+id/image1"
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_trip"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/colorPrimary"
-                android:scaleType="centerCrop"
-                android:src="@drawable/a8"
-                app:riv_corner_radius="10dp"
-                app:riv_mutate_background="true" />
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="4dp"
+                card_view:cardMaxElevation="6dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@drawable/gradient_shape">
-
-                <LinearLayout
+                <com.itheima.roundedimageview.RoundedImageView
+                    android:id="@+id/image1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_city"
-                        style="@style/TextAppearance.AppCompat.Display2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textAllCaps="true"
-                        android:text="tokyo"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_country"
-                        style="@style/TextAppearance.AppCompat.Title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Japan"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+                    android:layout_height="250dp"
+                    android:background="@color/colorPrimary"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/a8"
+                    app:riv_corner_radius="10dp"
+                    app:riv_mutate_background="true" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/linear_content">
+                    android:layout_height="250dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/gradient_shape">
 
-                    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-                        android:id="@+id/nav_bar"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_city"
+                                style="@style/TextAppearance.AppCompat.Display2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="tokyo"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_country"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="Japan"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                style="@style/TextAppearance.AppCompat.Display1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="10:35"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_weather"
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="☁ 25.7°"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/transparent"
-                        android:visibility="visible"
-                        app:itemIconTint="@color/white"
-                        app:itemTextColor="@color/white"
-                        app:menu="@menu/nav_city_detail_card"></com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
+                        android:layout_below="@+id/linear_content">
+
+                        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+                            android:id="@+id/nav_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/transparent"
+                            android:visibility="visible"
+                            app:itemIconTint="@color/white"
+                            app:itemTextColor="@color/white"
+                            app:menu="@menu/nav_city_detail_card" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
-            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingVertical="32dp"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/city_detail_topattraction" />
 
-    <ListView
-        android:id="@+id/lv_tripdaylist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/cv_trip"
-        android:clipToPadding="false"
-        android:divider="@color/colorGrey"
-        android:dividerHeight="1dp"
-        android:scrollbars="none" />
+                <include layout="@layout/devider_short" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:translationZ="100dp">
+                <ImageView
+                    android:id="@+id/image_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:elevation="@dimen/cardview_default_elevation"
+                    android:scaleType="fitCenter" />
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi"
-            style="@style/AVLoadingIndicatorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:indicatorColor="@color/colorPrimary"
-            app:indicatorName="BallClipRotateIndicator" />
-    </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/layout_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_attInfo_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="20dp"
+                        android:drawableStart="@drawable/ic_call"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_attInfo_website"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="20dp"
+                        android:drawableStart="@drawable/ic_computer"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/tv_attInfo_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="20dp"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_attInfo_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="20dp"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

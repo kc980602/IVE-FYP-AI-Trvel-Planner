@@ -180,8 +180,8 @@ public class RegisterActivity extends AppCompatActivity {
             password = et_password.getText().toString();
             cPassword = et_cpassword.getText().toString();
             email = et_email.getText().toString();
-//            new RegisterActivity.RequestRegister().execute();
-           register();
+            new RegisterActivity.RequestRegister().execute();
+//            register();
         }
     }
 
@@ -230,29 +230,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void register(){
+    public void register() {
         progressDialog.show();
         Call<ResponeMessage> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
         call.enqueue(new Callback<ResponeMessage>() {
             @Override
             public void onResponse(Call<ResponeMessage> call, Response<ResponeMessage> response) {
-                try {
-                    ResponeMessage message = response.body();
+                ResponeMessage message = response.body();
+                if (message != null) {
+                    Intent i = new Intent(mcontext, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                    Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
+                } else {
                     Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<ResponeMessage> call, Throwable t) {
-                Intent i = new Intent(mcontext, LoginActivity.class);
-                startActivity(i);
-                finish();
-                Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
+                Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_LONG).show();
             }
         });
-
         progressDialog.dismiss();
     }
 }

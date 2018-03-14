@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         if (id == R.id.bt_login) {
             username = et_username.getText().toString();
             password = et_password.getText().toString();
-//            new LoginActivity.RequestLogin().execute();
-            requestLogin(username, password);
+            new LoginActivity.RequestLogin().execute();
+//            requestLogin(username, password);
         }
         return true;
     }

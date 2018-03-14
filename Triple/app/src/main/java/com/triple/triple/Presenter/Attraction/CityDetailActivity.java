@@ -77,9 +77,10 @@ public class CityDetailActivity extends AppCompatActivity {
     private BottomNavigationViewEx.OnNavigationItemSelectedListener nav_barListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.action_discover:
-
+                    intent.
                     break;
                 case R.id.action_info:
 
