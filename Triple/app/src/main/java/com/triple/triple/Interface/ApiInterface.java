@@ -76,7 +76,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("trip")
-    Call<String> createTrip(
+    Call<Void> createTrip(
             @Header("Authorization") String authHeader,
             @Field("title") String tripname,
             @Field("visit_date") String tripdateStart,

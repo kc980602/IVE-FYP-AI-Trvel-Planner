@@ -196,8 +196,8 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         if (isSuccess) {
             tripname = et_tripname.getText().toString();
             generate = String.valueOf((cb_generate.isChecked()) ? 1 : 0);
-            new TripCreateActivity.RequestCreateTrip().execute();
-//            createTrip();
+//            new TripCreateActivity.RequestCreateTrip().execute();
+            createTrip();
         }
     }
 
@@ -248,20 +248,21 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
         String token = "Bearer ";
         token += Token.getToken(mcontext);
-        Call<String> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
-        call.enqueue(new Callback<String>() {
+        Call<Void> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (!response.body().equals("201")) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("Return Response", String.valueOf(response.code()));
+                if (response.code() != 201) {
                     stopCreateTrip();
                 } else {
                     continueCreateTrip();
                 }
             }
-
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("Return Response", t.getMessage());
+                stopCreateTrip();
             }
         });
     }
