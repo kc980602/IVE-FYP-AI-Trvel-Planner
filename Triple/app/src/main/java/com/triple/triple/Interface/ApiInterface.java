@@ -74,6 +74,7 @@ public interface ApiInterface {
             @Path("id") Integer id
     );
 
+    @FormUrlEncoded
     @POST("trip")
     Call<String> createTrip(
             @Header("Authorization") String authHeader,

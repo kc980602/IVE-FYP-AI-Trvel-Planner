@@ -145,10 +145,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     public void requestForgetPassword() {
         progressDialog.show();
 
-        Call<List<ResponeMessage>> call = apiService.forgetPassword(username);
-        call.enqueue(new Callback<List<ResponeMessage>>() {
+        Call<ResponeMessage> call = apiService.forgetPassword(username);
+        call.enqueue(new Callback<ResponeMessage>() {
             @Override
-            public void onResponse(Call<List<ResponeMessage>> call, Response<List<ResponeMessage>> response) {
+            public void onResponse(Call<ResponeMessage> call, Response<ResponeMessage> response) {
                 if (response.body() != null) {
                     try {
                         Log.i("onSuccess", response.body().toString());
@@ -173,7 +173,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ResponeMessage>> call, Throwable t) {
+            public void onFailure(Call<ResponeMessage> call, Throwable t) {
                 Log.e("error", t.toString());
             }
         });

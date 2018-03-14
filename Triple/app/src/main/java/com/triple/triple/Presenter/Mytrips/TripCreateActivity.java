@@ -253,19 +253,9 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.body().equals("201")) {
-                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                    Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            }).show();
+                    stopCreateTrip();
                 } else {
-                    Intent i_home = new Intent(mcontext, MytripsActivity.class);
-                    startActivity(i_home);
-                    Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
-                    finish();
+                    continueCreateTrip();
                 }
             }
 
@@ -274,7 +264,25 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
             }
         });
+    }
 
+    public void continueCreateTrip(){
+        Intent i_home = new Intent(mcontext, MytripsActivity.class);
+        startActivity(i_home);
+        Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
+        finish();
+        progressDialog.dismiss();
+    }
+
+    public void stopCreateTrip(){
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }).show();
         progressDialog.dismiss();
     }
 
