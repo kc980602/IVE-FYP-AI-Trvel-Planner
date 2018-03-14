@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +31,16 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     private Activity activity;
     private List<Trip> trips;
     private String isSaved;
+    private int userid;
 
-    public TripAdapter(Activity activity, List<Trip> trips, String isSaved) {
+    public TripAdapter(Activity activity, List<Trip> trips, String isSaved, int userid) {
         this.activity = activity;
         this.trips = trips;
         this.isSaved = isSaved;
+        this.userid = userid;
     }
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
-        CardView cv_trip;
         public TextView tv_tripid;
         public TextView tv_tripname;
         public TextView tv_owner;
@@ -49,7 +51,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
         public TripViewHolder(View itemView) {
             super(itemView);
-            cv_trip = (CardView) itemView.findViewById(R.id.cv_trip);
             image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
             tv_tripid = (TextView) itemView.findViewById(R.id.tv_tripid);
             tv_tripname = (TextView) itemView.findViewById(R.id.tv_tripname);
@@ -62,9 +63,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    int tripId = Integer.parseInt(tv_tripid.getText().toString());
+                    int tripid = Integer.valueOf(tv_tripid.getText().toString());
                     Bundle bundle = new Bundle();
-                    bundle.putInt("tripId", tripId);
+                    bundle.putInt("tripid", tripid);
                     if (tv_saved.getVisibility() == View.VISIBLE) {
                         bundle.putBoolean("isSaved", true);
                     }
@@ -96,19 +97,25 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
         holder.tv_tripid.setText(String.valueOf(trip.getId()));
         holder.tv_tripname.setText(trip.getName());
-        if (trip.getOwner_id() == UserInfoHelper.getUserInfo(activity).getId()) {
+        if (trip.getOwner_id() == userid) {
             holder.tv_owner.setText("");
         } else {
             holder.tv_owner.setText(trip.getOwner());
         }
         holder.tv_tripdate.setText(date);
-        holder.tv_tripdestination.setText("");
+        holder.tv_tripdestination.setText(trip.getCity().getName() + ", " + trip.getCity().getCountry());
         if (isSaved.equals("true")) {
             holder.tv_saved.setVisibility(View.VISIBLE);
         } else {
             holder.tv_saved.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    public void setTrips(List<Trip> trips) {
+        this.trips.clear();
+        this.trips.addAll(trips);
+        this.notifyDataSetChanged();
     }
 
     @Override

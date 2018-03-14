@@ -63,21 +63,25 @@ public class TripDetailActivity extends AppCompatActivity {
     private ImageView image;
     private ActionBar ab;
     private int tripid;
+    private TextView tv_tripdestination;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestTripItinerary();
         setContentView(R.layout.activity_mytrips_detail);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         isSaved = (Boolean) bundle.getBoolean("isSaved");
         tripid = bundle.getInt("tripid");
-
         findView();
         initView();
-
+        if (isSaved) {
+//            getTripFromLocal();
+            requestTripItinerary();
+        } else {
+            requestTripItinerary();
+        }
     }
 
     private void findView() {
@@ -89,6 +93,7 @@ public class TripDetailActivity extends AppCompatActivity {
         tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
         tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
         lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
+        tv_tripdestination = (TextView) findViewById(R.id.tv_tripdestination);
         image = (ImageView) findViewById(R.id.image);
     }
 
@@ -142,7 +147,6 @@ public class TripDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Log.d("TripDetailActivity", tripDetail.toString());
                 break;
             case R.id.action_delete:
 
@@ -221,47 +225,77 @@ public class TripDetailActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void requestTripItinerary(){
+    private void getTripFromLocal() {
+//        List<TripDetail> savedTrips;
+//        Type type = new TypeToken<List<Trip>>() {
+//        }.getType();
+//        Gson gson = new Gson();
+//        SharedPreferences data = new SecurePreferences(mcontext);
+//        String json = data.getString("savedTrips", "empty");
+//        if (!json.equals("empty")) {
+//            savedTrips = (List<TripDetail>) gson.fromJson(json.toString(), type);
+//            for (TripDetail tmpTripDetail : savedTrips) {
+//                if (tmpTripDetail.getId() == tripDetail.getId()) {
+//                    tripDetail = tmpTripDetail;
+//                    break;
+//                }
+//            }
+//        } else {
+//            View view = getWindow().getDecorView().findViewById(android.R.id.content);
+//            Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+//                    .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                        }
+//                    }).show();
+//        }
+    }
+
+    public void requestTripItinerary() {
         startAnim();
         String token = "Bearer ";
         token += Token.getToken(mcontext);
-
         Call<TripDetail> call = apiService.listTripByUser(token, tripid);
         call.enqueue(new Callback<TripDetail>() {
             @Override
             public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
                 if (response.body() != null) {
-                    try{
+                    try {
                         tripDetail = response.body();
                         afterGetData();
                     } catch (Exception e) {
-                        Log.e(TAG, e.toString());
                         View view = getWindow().getDecorView().findViewById(android.R.id.content);
                         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
                                 .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                                     @Override
-                                    public void onClick(View view) {}}).show();
+                                    public void onClick(View view) {
+                                    }
+                                }).show();
                     }
                 } else {
-                    Log.e(TAG, "Null object reference");
                     View view = getWindow().getDecorView().findViewById(android.R.id.content);
                     Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
                             .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                                 @Override
-                                public void onClick(View view) {}}).show();
+                                public void onClick(View view) {
+                                }
+                            }).show();
                 }
-                stopAnim();
             }
+
             @Override
             public void onFailure(Call<TripDetail> call, Throwable t) {
                 View view = getWindow().getDecorView().findViewById(android.R.id.content);
                 Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {}}).show();
-                stopAnim();
+                            public void onClick(View view) {
+                            }
+                        }).show();
+
             }
         });
+        stopAnim();
     }
 
     private void afterGetData() {
@@ -283,6 +317,7 @@ public class TripDetailActivity extends AppCompatActivity {
         } else {
             tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_before));
         }
+        tv_tripdestination.setText(tripDetail.getCity().getName() + ", " + tripDetail.getCity().getCountry());
         tv_tripdaysleft.setText(String.valueOf(dayLeft));
         Picasso.with(mcontext)
                 .load(tripDetail.getCity().getPhoto())

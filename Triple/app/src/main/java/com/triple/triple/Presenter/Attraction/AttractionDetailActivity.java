@@ -284,8 +284,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 attraction = (Attraction) gson.fromJson(data.toString(), type);
                 loadDataToView();
             } catch (Exception e) {
-                Log.d("Error", e.toString());
-                Log.e("ErroronPostExecute", "exception", e);
 //                new AttractionDetailActivity.RequestAttractionDetail().execute();
                 View view = getWindow().getDecorView().findViewById(android.R.id.content);
                 Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
