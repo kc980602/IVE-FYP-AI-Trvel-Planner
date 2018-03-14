@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Trace;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +31,7 @@ import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
 import com.triple.triple.Helper.SMFrameCallback;
 import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserInfoHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
@@ -83,6 +85,7 @@ public class MytripsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mytrips);
         findViews();
         initView();
+
         if (CheckLogin.directLogin(mcontext)) {
             finish();
         } else {
@@ -99,11 +102,13 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Trace.beginSection("MytripsActivity.initView");
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
-//        DrawerUtil.getDrawer(this, toolbar);
+        DrawerUtil.getDrawer(this, toolbar);
 
         String indicator = getIntent().getStringExtra("indicator");
+
         avi.setIndicator(indicator);
 
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
@@ -119,13 +124,14 @@ public class MytripsActivity extends AppCompatActivity {
             }
         });
 
-        adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips, "false");
-        adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips, "true");
+        adapter_allTrips = new TripAdapter(MytripsActivity.this, allTrips, "false", UserInfoHelper.getUserInfo(mcontext).getId());
+        adapter_savedTrips = new TripAdapter(MytripsActivity.this, savedTrips, "true", UserInfoHelper.getUserInfo(mcontext).getId());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//        rv_trips.setHasFixedSize(true);
+        rv_trips.setHasFixedSize(true);
         rv_trips.setLayoutManager(mLayoutManager);
-//        rv_trips.setItemAnimator(new DefaultItemAnimator());
+        rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter_allTrips);
+        Trace.endSection();
     }
 
     @Override
@@ -149,10 +155,10 @@ public class MytripsActivity extends AppCompatActivity {
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getTag().toString()) {
                 case "all":
-//                    rv_trips.swapAdapter(adapter_allTrips, false);
+                    rv_trips.swapAdapter(adapter_allTrips, false);
                     break;
                 case "saved":
-//                    rv_trips.swapAdapter(adapter_savedTrips, false);
+                    rv_trips.swapAdapter(adapter_savedTrips, false);
                     break;
             }
         }
@@ -181,19 +187,19 @@ public class MytripsActivity extends AppCompatActivity {
 
     private void refreshData() {
         requestTrip();
-//        Type type = new TypeToken<List<Trip>>() {
-//        }.getType();
-//        Gson gson = new Gson();
-//        SharedPreferences data = new SecurePreferences(mcontext);
-//        String jsonTripList = data.getString("savedTrips", null);
-//        if (jsonTripList != null) {
-//            List<Trip> newTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
-//            savedTrips.clear();
-//            for (int i=0; i<newTrips.size(); i++) {
-//                savedTrips.add(newTrips.get(i));
-//            }
-//            adapter_savedTrips.notifyDataSetChanged();
-//        }
+        Type type = new TypeToken<List<Trip>>() {
+        }.getType();
+        Gson gson = new Gson();
+        SharedPreferences data = new SecurePreferences(mcontext);
+        String jsonTripList = data.getString("savedTrips", null);
+        if (jsonTripList != null) {
+            List<Trip> newTrips = (List<Trip>) gson.fromJson(jsonTripList.toString(), type);
+            savedTrips.clear();
+            for (int i=0; i<newTrips.size(); i++) {
+                savedTrips.add(newTrips.get(i));
+            }
+            adapter_savedTrips.notifyDataSetChanged();
+        }
     }
 
     public void requestTrip(){
@@ -206,23 +212,24 @@ public class MytripsActivity extends AppCompatActivity {
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
                 if (response.body() != null) {
                     List<Trip> newTrips = response.body();
-                    allTrips.clear();
-                    for (int i=0; i<newTrips.size(); i++) {
-                        allTrips.add(newTrips.get(i));
-                    }
-                    adapter_allTrips.notifyDataSetChanged();
+                    adapter_allTrips.setTrips(newTrips);
                 } else {
+                    Log.e("onResponse", "Null");
                 }
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-                stopAnim();
             }
             @Override
             public void onFailure(Call<List<Trip>> call, Throwable t) {
-                stopAnim();
+                Log.e("onFailure", t.toString());
+                View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {}}).show();
             }
         });
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        stopAnim();
     }
 
     public void startAnim() {

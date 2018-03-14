@@ -55,6 +55,9 @@ public interface ApiInterface {
     @GET("attraction")
     Call<Attraction> getRows();
 
+    @GET("/")
+    Call<List<Attraction>> getAttractions();
+
     @GET("attraction/{id}")
     Call<Attraction> getInfo(
             @Path("id") Integer id

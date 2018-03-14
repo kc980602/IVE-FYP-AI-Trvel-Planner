@@ -30,6 +30,7 @@ import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
+import com.triple.triple.Sync.ApiClientDuration;
 import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
 
@@ -58,7 +59,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private ProgressDialog progressDialog;
 
     private String tripname, tripdateStart, dateCount, destination, generate;
-    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    ApiInterface apiService = ApiClientDuration.getClient().create(ApiInterface.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,16 +253,17 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("Return Response", String.valueOf(response.code()));
+                Log.d("ReturnResponse", String.valueOf(response.code()));
                 if (response.code() != 201) {
                     stopCreateTrip();
                 } else {
+                    Log.d("ReturnResponse", String.valueOf(response.code()));
                     continueCreateTrip();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("Return Response", t.getMessage());
+                Log.d("ReturnResponse", t.getMessage());
                 stopCreateTrip();
             }
         });

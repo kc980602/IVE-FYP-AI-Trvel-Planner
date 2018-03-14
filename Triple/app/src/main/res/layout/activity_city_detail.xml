@@ -150,12 +150,19 @@
 
                 <include layout="@layout/devider_short" />
 
-                <ImageView
-                    android:id="@+id/image_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:elevation="@dimen/cardview_default_elevation"
-                    android:scaleType="fitCenter" />
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/layout_attraction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"></LinearLayout>
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:id="@+id/layout_info"
