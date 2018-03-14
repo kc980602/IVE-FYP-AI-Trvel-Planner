@@ -232,27 +232,31 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register() {
         progressDialog.show();
-        Call<ResponeMessage> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
-        call.enqueue(new Callback<ResponeMessage>() {
+        Call<Void> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ResponeMessage> call, Response<ResponeMessage> response) {
-                ResponeMessage message = response.body();
-                if (message != null) {
-                    Intent i = new Intent(mcontext, LoginActivity.class);
-                    startActivity(i);
-                    finish();
-                    Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 201){
+                    continueRegister();
                 } else {
-                    Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(mcontext, "Username or password has been used!", Toast.LENGTH_LONG).show();
                 }
+                progressDialog.dismiss();
             }
-
             @Override
-            public void onFailure(Call<ResponeMessage> call, Throwable t) {
-                Toast.makeText(mcontext, R.string.mytrips_error, Toast.LENGTH_LONG).show();
+             public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(mcontext, "Somethings goes wrong!", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
             }
         });
+    }
+
+    public void continueRegister(){
+        Intent i = new Intent(mcontext, LoginActivity.class);
+        startActivity(i);
+        finish();
+        Toast.makeText(mcontext, "Click the link in the verify email to activate your account.", Toast.LENGTH_LONG).show();
+
         progressDialog.dismiss();
     }
 }
