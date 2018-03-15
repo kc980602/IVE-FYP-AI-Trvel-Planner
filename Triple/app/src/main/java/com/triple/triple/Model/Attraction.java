@@ -4,7 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kevin on 2018/3/6.
@@ -35,7 +36,7 @@ public class Attraction implements Serializable {
     private Object tags;
     @SerializedName("photos")
     @Expose
-    private String[] photos;
+    private List<String> photos = new ArrayList<String>();
     @SerializedName("latitude")
     @Expose
     private float latitude;
@@ -51,6 +52,9 @@ public class Attraction implements Serializable {
     @SerializedName("photo_count")
     @Expose
     private int photo_count;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     public int getId() {
         return id;
@@ -108,11 +112,11 @@ public class Attraction implements Serializable {
         this.tags = tags;
     }
 
-    public String[] getPhotos() {
+    public List<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(String[] photos) {
+    public void setPhotos(List<String> photos) {
         this.photos = photos;
     }
 
@@ -156,22 +160,11 @@ public class Attraction implements Serializable {
         this.photo_count = photo_count;
     }
 
-    @Override
-    public String toString() {
-        return "Attraction{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", website='" + website + '\'' +
-                ", address='" + address + '\'' +
-                ", tags=" + tags +
-                ", photos=" + Arrays.toString(photos) +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", rating=" + rating +
-                ", comment_count=" + comment_count +
-                ", photo_count=" + photo_count +
-                '}';
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

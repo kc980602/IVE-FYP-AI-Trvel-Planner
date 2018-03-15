@@ -100,6 +100,9 @@
     <string name="mytrips_detail_itinerary_kilometers">km</string>
     <string name="mytrips_detail_itinerary_departure">Departure time:</string>
     <string name="mytrips_detail_itinerary_return">Return time:</string>
+
+    <string name="mytrips_info_days">Days</string>
+
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>
 

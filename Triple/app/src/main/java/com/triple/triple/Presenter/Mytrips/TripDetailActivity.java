@@ -162,15 +162,20 @@ public class TripDetailActivity extends AppCompatActivity {
     private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.action_info:
+                    bundle.putSerializable("tripDetail", tripDetail);
+                    intent.setClass(mcontext, TripInfoActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
                 case R.id.action_itenary:
-                    Bundle bundle = new Bundle();
                     bundle.putSerializable("tripDetail", tripDetail);
-                    Intent i = new Intent(mcontext, ItineraryActivity.class);
-                    i.putExtras(bundle);
-                    startActivity(i);
+                    intent.setClass(mcontext, ItineraryActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
                 case R.id.action_invite:
                     break;
@@ -265,7 +270,7 @@ public class TripDetailActivity extends AppCompatActivity {
                         afterGetData();
                     } catch (Exception e) {
                         View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                        Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Something went wrong! (Error:1101)", Snackbar.LENGTH_LONG)
                                 .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -274,7 +279,7 @@ public class TripDetailActivity extends AppCompatActivity {
                     }
                 } else {
                     View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                    Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Something went wrong! (Error:1102)", Snackbar.LENGTH_LONG)
                             .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -286,7 +291,8 @@ public class TripDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<TripDetail> call, Throwable t) {
                 View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
+                Log.e("onFailure", t.getMessage());
+                Snackbar.make(view, "Something went wrong! (Error:1103)", Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

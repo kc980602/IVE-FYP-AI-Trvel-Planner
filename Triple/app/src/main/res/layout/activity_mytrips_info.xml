@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Presenter.Mytrips.TripInfoActivity">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/MyToolbar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/transparent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?homeAsUpIndicator"
+        android:translationZ="20dp"
+        app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
+
+    <com.triple.triple.Helper.DragLayout
+        android:id="@+id/draglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/first"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.triple.triple.Helper.DragLayout>
+
+</RelativeLayout>

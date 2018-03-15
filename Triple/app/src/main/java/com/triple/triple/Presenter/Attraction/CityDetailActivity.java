@@ -22,6 +22,7 @@ import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
+import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.CreateTrip;
@@ -118,7 +119,7 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_plan:
-                    intent.setClass(mcontext, CreateTrip.class);
+                    intent.setClass(mcontext, TripCreateActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.action_favorities:
@@ -131,23 +132,28 @@ public class CityDetailActivity extends AppCompatActivity {
     };
 
     private void loadDataToView() {
-        int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9, R.drawable.a9, R.drawable.a7, R.drawable.a7};
+
         for (int i = 0; i < attractions.size(); i++) {
             Attraction attraction = attractions.get(i);
+            Log.e("loadDataToView", attraction.toString());
+            Log.e("loadDataToView", attraction.getPhotos().size() + "is");
             LayoutInflater mInflater = LayoutInflater.from(this);
             View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
             ImageView image = (ImageView) view.findViewById(R.id.image);
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
             TextView tv_rate_review = (TextView) view.findViewById(R.id.tv_rate_review);
 
-            Picasso.with(mcontext)
-                    .load(R.drawable.image_null_tran)
-                    .fit().centerCrop()
-                    .placeholder(R.drawable.image_null_tran)
-                    .into(image);
+//            if (attraction.getPhotos()!=null) {
+//                Picasso.with(mcontext)
+//                        .load(attraction.getPhotos().get(1))
+//                        .fit().centerCrop()
+//                        .placeholder(R.drawable.image_null_tran)
+//                        .into(image);
+//            }
+
 
             tv_name.setText(attraction.getName());
-            tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 " + attraction.getComment_count() + " Reviews");
+            tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 - " + attraction.getComment_count() + " Reviews");
             layout_attraction.addView(view);
             if (i == 9) {
                 break;
@@ -157,7 +163,7 @@ public class CityDetailActivity extends AppCompatActivity {
 
     public void getCityDetail() {
 
-        Call<DataMeta> call = apiService.getAttractions();
+        Call<DataMeta> call = apiService.getAttractions(cityid);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {

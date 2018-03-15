@@ -1,5 +1,6 @@
 package com.triple.triple.Interface;
 
+import com.triple.triple.Model.Article;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.DataMeta;
@@ -53,8 +54,10 @@ public interface ApiInterface {
             @Field("username") String username
     );
 
-    @GET("attraction")
-    Call <DataMeta> getAttractions();
+    @GET("/city/{id}/attractions")
+    Call <DataMeta> getAttractions(
+            @Path("id") Integer id
+    );
 
     @GET("attraction/{id}")
     Call<Attraction> getInfo(
@@ -71,6 +74,12 @@ public interface ApiInterface {
 
     @GET("trip/{id}")
     Call<TripDetail> listTripByUser(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
+
+    @GET("trip/{id}/article")
+    Call<List<Article>> getTripArticle(
             @Header("Authorization") String authHeader,
             @Path("id") Integer id
     );

@@ -216,6 +216,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         attractionName = attraction.getName();
         layout_collapsing.setTitle(attractionName);
         tv_title.setText(attraction.getName());
+        tv_intro.setText(attraction.getDescription());
         if (!attraction.getPhone().equals("")) {
             tv_attInfo_phone.setText(attraction.getPhone().toString());
             tv_attInfo_phone.setVisibility(View.VISIBLE);
