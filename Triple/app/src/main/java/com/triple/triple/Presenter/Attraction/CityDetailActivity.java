@@ -22,10 +22,9 @@ import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
-import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.ApiClientTestingDemo;
+import com.triple.triple.Sync.CreateTrip;
 
 import java.util.List;
 
@@ -41,7 +40,6 @@ public class CityDetailActivity extends AppCompatActivity {
     private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
     private LinearLayout layout_attraction;
-    private LayoutInflater mInflater;
     private List<Attraction> attractions;
     private int cityid;
     private City city;
@@ -52,16 +50,15 @@ public class CityDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        cityid = 1;
+        cityid = bundle.getInt("cityid");
         findViews();
         initView();
         getCityDetail();
     }
 
     private void findViews() {
-        mInflater = LayoutInflater.from(this);
         nav_bar = (BottomNavigationViewEx) findViewById(R.id.nav_bar);
         layout_attraction = (LinearLayout) findViewById(R.id.layout_attraction);
         image = (ImageView) findViewById(R.id.image);
@@ -77,10 +74,11 @@ public class CityDetailActivity extends AppCompatActivity {
 
         Picasso.with(mcontext)
                 .load(city.getPhoto())
+                .fit().centerCrop()
                 .placeholder(R.drawable.image_null)
                 .into(image);
-
         tv_city.setText(city.getName());
+        tv_country.setText(city.getCountry());
 
         nav_bar.enableAnimation(false);
         nav_bar.enableItemShiftingMode(false);
@@ -120,6 +118,8 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_plan:
+                    intent.setClass(mcontext, CreateTrip.class);
+                    startActivity(intent);
                     break;
                 case R.id.action_favorities:
 
@@ -134,15 +134,18 @@ public class CityDetailActivity extends AppCompatActivity {
         int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9, R.drawable.a9, R.drawable.a7, R.drawable.a7};
         for (int i = 0; i < attractions.size(); i++) {
             Attraction attraction = attractions.get(i);
+            LayoutInflater mInflater = LayoutInflater.from(this);
             View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
             ImageView image = (ImageView) view.findViewById(R.id.image);
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
             TextView tv_rate_review = (TextView) view.findViewById(R.id.tv_rate_review);
 
-//            Picasso.with(mcontext)
-//                    .load(data[i])
-//                    .placeholder(R.drawable.image_null_square)
-//                    .into(image);
+            Picasso.with(mcontext)
+                    .load(R.drawable.image_null_tran)
+                    .fit().centerCrop()
+                    .placeholder(R.drawable.image_null_tran)
+                    .into(image);
+
             tv_name.setText(attraction.getName());
             tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 " + attraction.getComment_count() + " Reviews");
             layout_attraction.addView(view);

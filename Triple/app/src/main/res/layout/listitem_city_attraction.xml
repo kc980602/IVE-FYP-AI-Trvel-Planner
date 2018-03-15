@@ -15,17 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.itheima.roundedimageview.RoundedImageView
+        <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/a8"
-            app:riv_corner_radius_top_left="2dp"
-            app:riv_corner_radius_top_right="2dp"
-            app:riv_mutate_background="true" />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_name"
-                style="@style/TextAppearance.AppCompat.Title"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"

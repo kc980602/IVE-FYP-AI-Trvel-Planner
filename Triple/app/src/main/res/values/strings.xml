@@ -108,7 +108,7 @@
     <string name="city_detail_info">Info</string>
     <string name="city_detail_favorities">Favorities</string>
     <string name="city_detail_plan">Get Plan</string>
-    <string name="city_detail_topattraction">Top Attractions</string>
+    <string name="city_detail_topattraction">Attractions</string>
 
     <string name="attraction_detail_seeall">See All</string>
     <string name="attraction_detail_share">Share</string>

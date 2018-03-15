@@ -32,9 +32,6 @@ public class Trip implements Serializable {
     @SerializedName("owner_id")
     @Expose
     private int owner_id;
-    @SerializedName("image")
-    @Expose
-    private String image;
     @SerializedName("city")
     @Expose
     private City city;
@@ -77,14 +74,6 @@ public class Trip implements Serializable {
 
     public void setOwner(String owner) {
         this.owner = owner;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getOwner_id() {

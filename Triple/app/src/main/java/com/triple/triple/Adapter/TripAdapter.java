@@ -47,11 +47,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         public TextView tv_tripdestination;
         public TextView tv_tripdate;
         public TextView tv_saved;
-        public RoundedImageView image1;
+        public RoundedImageView image;
 
         public TripViewHolder(View itemView) {
             super(itemView);
-            image1 = (RoundedImageView) itemView.findViewById(R.id.image1);
+            image = (RoundedImageView) itemView.findViewById(R.id.image);
             tv_tripid = (TextView) itemView.findViewById(R.id.tv_tripid);
             tv_tripname = (TextView) itemView.findViewById(R.id.tv_tripname);
             tv_owner = (TextView) itemView.findViewById(R.id.tv_owner);
@@ -89,11 +89,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     public void onBindViewHolder(TripViewHolder holder, int i) {
         Trip trip = trips.get(i);
         String date = DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
-
         Picasso.with(activity)
-                .load(trip.getImage())
+                .load(trip.getCity().getPhoto())
+                .fit().centerCrop()
                 .placeholder(R.drawable.image_null_tran)
-                .into(holder.image1);
+                .into(holder.image);
 
         holder.tv_tripid.setText(String.valueOf(trip.getId()));
         holder.tv_tripname.setText(trip.getName());

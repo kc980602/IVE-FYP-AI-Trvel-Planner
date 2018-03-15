@@ -22,6 +22,7 @@ import com.triple.triple.Sync.GetPreference;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TravelStyleActivity extends AppCompatActivity {
@@ -38,9 +39,9 @@ public class TravelStyleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_style);
 
-        int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4, R.id.iv_5};
-        int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4, R.id.tv_5};
-        for (int i = 0; i <= 4; i++) {
+        int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4};
+        int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4};
+        for (int i = 0; i <= 3; i++) {
             imageViewsList[i] = (ImageView) findViewById(imageViewIdList[i]);
             textViewsList[i] = (TextView) findViewById(textViewIdList[i]);
         }
@@ -108,17 +109,41 @@ public class TravelStyleActivity extends AppCompatActivity {
                 }.getType();
                 Gson gson = new Gson();
                 List<KeyValue> keyValueList = (List<KeyValue>) gson.fromJson(respone, type);
-                for (int i = 0; i <= 4; i++) {
+                List<KeyValue> keyValueListSorted = new ArrayList<>();
+//                int i;
+//                int index;
+//                float max = 0;
+//                KeyValue tmpMax = new KeyValue();
+//                for (int j = 0; j <= 3; j++) {
+//                    max = Float.parseFloat(keyValueList.get(0).getValue());
+//                    index = 0;
+//                    for (i = 1; i < keyValueList.size(); i++) {
+//                        if (max < Float.parseFloat(keyValueList.get(i).getValue())) {
+//                            max = Float.parseFloat(keyValueList.get(i).getValue());
+//                            tmpMax = keyValueList.get(i);
+//                            index = i;
+//                        }
+//                    }
+//                    keyValueListSorted.add(j, tmpMax);
+//                    array[index] = Integer.MIN_VALUE;
+//
+//                    System.out.println("Largest " + j +  " : " + large[j]);
+//                }
+
+
+
+                for (int i = 0; i <= 5; i++) {
                     String filename = "preference_" + keyValueList.get(i).getKey();
                     if (keyValueList.get(i).getKey().equals("60+_traveller")) {
                         filename = "preference_60_traveller";
                     }
                     imageViewsList[i].setImageResource(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()));
-                    int percent = (int) Math.floor(Double.parseDouble(keyValueList.get(i).getValue()) * 100);
-                    textViewsList[i].setText(percent + "% you will like it");
+                    String key = keyValueList.get(i).getKey().replace('_', ' ');
+                    String titile = key.substring(0,1).toUpperCase() + key.substring(1).toLowerCase();
+                    textViewsList[i].setText(titile);
                 }
             } catch (Exception e) {
-                Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
             }
             stopAnim();
         }

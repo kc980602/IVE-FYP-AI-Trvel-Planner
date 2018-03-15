@@ -321,6 +321,7 @@ public class TripDetailActivity extends AppCompatActivity {
         tv_tripdaysleft.setText(String.valueOf(dayLeft));
         Picasso.with(mcontext)
                 .load(tripDetail.getCity().getPhoto())
+                .fit().centerCrop()
                 .placeholder(R.drawable.image_null_tran)
                 .into(image);
         cv_trip.setVisibility(View.VISIBLE);
