@@ -20,10 +20,12 @@ public class City implements Serializable {
     @SerializedName("country")
     @Expose
     private String country;
-
     @SerializedName("photo")
     @Expose
     private String photo;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     public int getId() {
         return id;
@@ -57,13 +59,11 @@ public class City implements Serializable {
         this.photo = photo;
     }
 
-    @Override
-    public String toString() {
-        return "City{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country='" + country + '\'' +
-                ", photo='" + photo + '\'' +
-                '}';
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

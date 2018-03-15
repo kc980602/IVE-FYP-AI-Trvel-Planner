@@ -129,7 +129,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                         new FilterableListDialog.OnListItemSelectedListener() {
                             @Override
                             public void onItemSelected(String item) {
-                                City city = SystemPropertyHelper.getSystemPropertySearchCity(mcontext, item);
+                                City city = SystemPropertyHelper.getSystemPropertyByCityName(mcontext, item);
                                 et_detination.setText(city.getName() + ", " + city.getCountry());
                                 destination = String.valueOf(city.getId());
                             }

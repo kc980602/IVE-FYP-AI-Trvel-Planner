@@ -60,7 +60,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                     int position = getAdapterPosition();
                     int cityid = Integer.parseInt(tv_cityid.getText().toString());
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("cityid", cityid);
+                    bundle.putInt("cityid", cityid);
                     Intent indent = new Intent(activity, CityDetailActivity.class);
                     indent.putExtras(bundle);
                     activity.startActivity(indent);

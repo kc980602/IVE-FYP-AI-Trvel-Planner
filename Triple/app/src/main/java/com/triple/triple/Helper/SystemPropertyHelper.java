@@ -93,11 +93,21 @@ public class SystemPropertyHelper {
         return cityName;
     }
 
-    public static City getSystemPropertySearchCity(Context mcontext, String name) {
+    public static City getSystemPropertyByCityName(Context mcontext, String name) {
         List<City> cities = getSystemProperty(mcontext).getCity();
         for (City city : cities) {
             String location = city.getName() + ", " + city.getCountry();
             if (location.equals(name)) {
+                return city;
+            }
+        }
+        return null;
+    }
+
+    public static City getSystemPropertyByCityId(Context mcontext, int id) {
+        List<City> cities = getSystemProperty(mcontext).getCity();
+        for (City city : cities) {
+            if (city.getId() == id) {
                 return city;
             }
         }

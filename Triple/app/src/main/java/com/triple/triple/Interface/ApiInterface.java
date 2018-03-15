@@ -2,6 +2,7 @@ package com.triple.triple.Interface;
 
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
+import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
@@ -53,10 +54,7 @@ public interface ApiInterface {
     );
 
     @GET("attraction")
-    Call<Attraction> getRows();
-
-    @GET("/")
-    Call<List<Attraction>> getAttractions();
+    Call <DataMeta> getAttractions();
 
     @GET("attraction/{id}")
     Call<Attraction> getInfo(

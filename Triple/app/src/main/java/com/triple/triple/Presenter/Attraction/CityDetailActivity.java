@@ -17,8 +17,12 @@ import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
+import com.triple.triple.Model.City;
+import com.triple.triple.Model.DataMeta;
+import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.ApiClientTestingDemo;
@@ -32,33 +36,51 @@ import retrofit2.Response;
 public class CityDetailActivity extends AppCompatActivity {
 
     private Context mcontext = CityDetailActivity.this;
-    ApiInterface apiService = ApiClientTestingDemo.getClient().create(ApiInterface.class);
+    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private Toolbar toolbar;
     private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
     private LinearLayout layout_attraction;
     private LayoutInflater mInflater;
     private List<Attraction> attractions;
+    private int cityid;
+    private City city;
+    private ImageView image;
+    private TextView tv_city, tv_country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
+        Intent intent = new Intent();
+        Bundle bundle = intent.getExtras();
+        cityid = 1;
         findViews();
         initView();
-        getUserDetails();
+        getCityDetail();
     }
 
     private void findViews() {
         mInflater = LayoutInflater.from(this);
         nav_bar = (BottomNavigationViewEx) findViewById(R.id.nav_bar);
         layout_attraction = (LinearLayout) findViewById(R.id.layout_attraction);
+        image = (ImageView) findViewById(R.id.image);
+        tv_city = (TextView) findViewById(R.id.tv_city);
+        tv_country = (TextView) findViewById(R.id.tv_country);
     }
 
     private void initView() {
+        city = SystemPropertyHelper.getSystemPropertyByCityId(mcontext, cityid);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle("Tokyo");
+        ab.setTitle(city.getName());
         ab.setElevation(0);
+
+        Picasso.with(mcontext)
+                .load(city.getPhoto())
+                .placeholder(R.drawable.image_null)
+                .into(image);
+
+        tv_city.setText(city.getName());
 
         nav_bar.enableAnimation(false);
         nav_bar.enableItemShiftingMode(false);
@@ -109,20 +131,20 @@ public class CityDetailActivity extends AppCompatActivity {
     };
 
     private void loadDataToView() {
-        int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7};
+        int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7, R.drawable.a8, R.drawable.a9, R.drawable.a9, R.drawable.a7, R.drawable.a7};
         for (int i = 0; i < attractions.size(); i++) {
             Attraction attraction = attractions.get(i);
             View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
             ImageView image = (ImageView) view.findViewById(R.id.image);
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-            TextView tv_rate_review = (TextView) findViewById(R.id.tv_rate_review);
+            TextView tv_rate_review = (TextView) view.findViewById(R.id.tv_rate_review);
 
-            Picasso.with(mcontext)
-                    .load(data[i])
-                    .placeholder(R.drawable.image_null_square)
-                    .into(image);
+//            Picasso.with(mcontext)
+//                    .load(data[i])
+//                    .placeholder(R.drawable.image_null_square)
+//                    .into(image);
             tv_name.setText(attraction.getName());
-            tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 " + attraction.getComment_count() + "Reviews");
+            tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 " + attraction.getComment_count() + " Reviews");
             layout_attraction.addView(view);
             if (i == 9) {
                 break;
@@ -130,14 +152,15 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void getUserDetails() {
+    public void getCityDetail() {
 
-        Call<List<Attraction>> call = apiService.getAttractions();
-        call.enqueue(new Callback<List<Attraction>>() {
+        Call<DataMeta> call = apiService.getAttractions();
+        call.enqueue(new Callback<DataMeta>() {
             @Override
-            public void onResponse(Call<List<Attraction>> call, Response<List<Attraction>> response) {
+            public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
-                    attractions = response.body();
+                    attractions = response.body().getAttractions();
+                    Log.e("onResponse", response.body().getAttractions().toString());
                     loadDataToView();
                 } else {
                     Log.d("onResponse", "Null respone");
@@ -145,7 +168,7 @@ public class CityDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Attraction>> call, Throwable t) {
+            public void onFailure(Call<DataMeta> call, Throwable t) {
                 Log.e("onFailure", t.toString());
             }
 
