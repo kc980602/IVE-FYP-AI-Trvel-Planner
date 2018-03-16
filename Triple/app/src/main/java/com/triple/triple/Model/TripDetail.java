@@ -111,4 +111,19 @@ public class TripDetail implements Serializable {
     public void setCity(City city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "TripDetail{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", owner_id='" + owner_id + '\'' +
+                ", image='" + image + '\'' +
+                ", visit_date='" + visit_date + '\'' +
+                ", visit_length=" + visit_length +
+                ", collaborators=" + collaborators +
+                ", itinerary=" + itinerary +
+                ", city=" + city +
+                '}';
+    }
 }

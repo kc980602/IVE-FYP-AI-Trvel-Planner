@@ -58,7 +58,7 @@ public class TripDetailActivity extends AppCompatActivity {
 
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
-    private Boolean isSaved;
+    private Boolean isSaved = false;
     private CardView cv_trip;
     private ImageView image;
     private ActionBar ab;
@@ -71,28 +71,26 @@ public class TripDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_detail);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        try{
-            isNew = (Boolean) bundle.getBoolean("isNew");
-            Log.e("tripDetail", isNew.toString());
-            tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
-        } catch (Exception e){
-            Log.e("tripDetail", "null object");
-        }
-
-        isSaved = (Boolean) bundle.getBoolean("isSaved");
-        tripid = bundle.getInt("tripid");
         findView();
         initView();
-
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        isNew = (Boolean) bundle.getBoolean("isNew");
         if (!isNew) {
+            isSaved = (Boolean) bundle.getBoolean("isSaved");
+            tripid = bundle.getInt("tripid");
+            findView();
+            initView();
             if (isSaved) {
-//            getTripFromLocal();
                 requestTripItinerary();
             } else {
                 requestTripItinerary();
             }
+        } else {
+            tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
+            findView();
+            initView();
+            afterGetData();
         }
     }
 
@@ -317,6 +315,7 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void afterGetData() {
+        Log.e("tripDetail", tripDetail.toString());
         List<TripItinerary> itineraryList = tripDetail.getItinerary();
         for (int i = 0; i < itineraryList.size(); i++) {
             TripDay tripday = new TripDay();
