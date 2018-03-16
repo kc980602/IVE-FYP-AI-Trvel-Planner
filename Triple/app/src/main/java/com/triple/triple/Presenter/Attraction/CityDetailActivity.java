@@ -19,16 +19,24 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
+import com.triple.triple.Sync.ApiWeather;
 import com.triple.triple.Sync.CreateTrip;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.json.JSONObject;
+
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +45,7 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private Context mcontext = CityDetailActivity.this;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    WeatherInterface weatherApi = ApiWeather.getClient().create(WeatherInterface.class);
     private Toolbar toolbar;
     private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
@@ -45,7 +54,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private int cityid;
     private City city;
     private ImageView image;
-    private TextView tv_city, tv_country;
+    private TextView tv_city, tv_country, tv_time, tv_weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,8 @@ public class CityDetailActivity extends AppCompatActivity {
         findViews();
         initView();
         getCityDetail();
+        getTime();
+        //getWeather();
     }
 
     private void findViews() {
@@ -65,6 +76,8 @@ public class CityDetailActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.image);
         tv_city = (TextView) findViewById(R.id.tv_city);
         tv_country = (TextView) findViewById(R.id.tv_country);
+        tv_time = (TextView) findViewById(R.id.tv_time);
+        tv_weather = (TextView) findViewById(R.id.tv_weather);
     }
 
     private void initView() {
@@ -188,7 +201,47 @@ public class CityDetailActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
+        public void getTime(){
+            DateTimeZone zone = DateTimeZone.forID ( city.getTimezone() );
+            DateTime dateTime = new DateTime ( zone );
+            String output = dateTime.toLocalTime ().getHourOfDay() + ":" + dateTime.toLocalTime ().getMinuteOfHour();
+            tv_time.setText(output);
+        }
+
+        public void getWeather(){
+            Call<ResponseBody> call = weatherApi.getWeather(city.getLatitude(), city.getLongitude(), "51595da2afec13ba782f96a781ac158a");
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body() != null) {
+                        String result = null;
+                        String output;
+                        try
+                        {
+                            result = response.body().string();
+                            JSONObject jsonObject = new JSONObject(result);
+                            output = jsonObject.getJSONObject("weather").getString("icon");
+                            output += jsonObject.getJSONObject("main").getString("temp");
+                            tv_weather.setText(output);
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                        Log.e("onResponse", response.body().toString());
+                        loadDataToView();
+                    } else {
+                        Log.d("onResponse", "Null respone");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("onFailure", t.toString());
+                }
+
+            });
+        }
 }
