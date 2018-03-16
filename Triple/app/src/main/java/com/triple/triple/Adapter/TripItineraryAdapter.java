@@ -232,13 +232,11 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
             holder.layout_direction.setVisibility(View.INVISIBLE);
         }
 
-
+        List<String> photos = tripItineraryNode.getAttraction().getPhotos();
         Picasso.with(activity)
-                .load(String.valueOf(tripItineraryNode.getAttraction().getPhotos()))
+                .load(!photos.isEmpty() ? photos.get(0) : null)
                 .placeholder(R.drawable.ic_image_null_square)
                 .into(holder.image1);
-
-
     }
 
     private void initLayoutAccommodation(TripItineraryViewHolderAccommodation holder, int pos) {
