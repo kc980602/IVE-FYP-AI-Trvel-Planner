@@ -156,13 +156,19 @@ public class CityDetailActivity extends AppCompatActivity {
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
             TextView tv_rate_review = (TextView) view.findViewById(R.id.tv_rate_review);
 
-//            if (attraction.getPhotos()!=null) {
-//                Picasso.with(mcontext)
-//                        .load(attraction.getPhotos().get(1))
-//                        .fit().centerCrop()
-//                        .placeholder(R.drawable.image_null_tran)
-//                        .into(image);
-//            }
+            if (attraction.getPhotos().size() > 0) {
+                Picasso.with(mcontext)
+                        .load(attraction.getPhotos().get(0))
+                        .fit().centerCrop()
+                        .placeholder(R.drawable.image_null_tran)
+                        .into(image);
+            } else {
+                Picasso.with(mcontext)
+                        .load(R.drawable.image_null_tran)
+                        .fit().centerCrop()
+                        .placeholder(R.drawable.image_null_tran)
+                        .into(image);
+            }
 
 
             tv_name.setText(attraction.getName());

@@ -62,16 +62,16 @@ public class TripInfoContentFragment extends Fragment {
                         articles = response.body();
                         afterGetData();
                     } catch (Exception e) {
-                        Log.e("loadDataToView","catch");
+                        Log.e("loadDataToView", "catch");
                     }
                 } else {
-                    Log.e("loadDataToView","else");
+                    Log.e("loadDataToView", "else");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
-                Log.e("loadDataToView","onFailure");
+                Log.e("loadDataToView", "onFailure");
             }
         });
     }
@@ -87,17 +87,18 @@ public class TripInfoContentFragment extends Fragment {
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
             TextView tv_desc = (TextView) view.findViewById(R.id.tv_desc);
 
-//            if (attraction.getPhotos() != null) {
-//                Picasso.with(mcontext)
-//                        .load(attraction.getPhotos().get(1))
-//                        .fit().centerCrop()
-//                        .placeholder(R.drawable.image_null_tran)
-//                        .into(image);
-
-                tv_name.setText(article.getName());
-                tv_desc.setText(article.getDescription());
-                layout_nsv.addView(view);
+            if (article.getPhotos().get(0) != null) {
+                Picasso.with(getContext())
+                        .load(article.getPhotos().get(0))
+                        .fit().centerCrop()
+                        .placeholder(R.drawable.image_null_tran)
+                        .into(image);
             }
-        }
 
+            tv_name.setText(article.getName());
+            tv_desc.setText(article.getDescription());
+            layout_nsv.addView(view);
+        }
     }
+
+}
