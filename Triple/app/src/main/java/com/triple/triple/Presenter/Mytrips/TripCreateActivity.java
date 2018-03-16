@@ -28,6 +28,7 @@ import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
+import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.ApiClientDuration;
@@ -60,6 +61,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
     private String tripname, tripdateStart, dateCount, destination, generate;
     ApiInterface apiService = ApiClientDuration.getClient().create(ApiInterface.class);
+    private TripDetail tripDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,20 +251,21 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
         String token = "Bearer ";
         token += Token.getToken(mcontext);
-        Call<Void> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
-        call.enqueue(new Callback<Void>() {
+        Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
+        call.enqueue(new Callback<TripDetail>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
                 Log.d("ReturnResponse", String.valueOf(response.code()));
-                if (response.code() != 201) {
+                if (response.body() == null) {
                     stopCreateTrip();
                 } else {
                     Log.d("ReturnResponse", String.valueOf(response.code()));
+                    tripDetail = response.body();
                     continueCreateTrip();
                 }
             }
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<TripDetail> call, Throwable t) {
                 Log.d("ReturnResponse", t.getMessage());
                 stopCreateTrip();
             }
@@ -270,8 +273,12 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     }
 
     public void continueCreateTrip(){
-        Intent i_home = new Intent(mcontext, MytripsActivity.class);
-        startActivity(i_home);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("tripDetail", tripDetail);
+        bundle.putBoolean("isNew", true);
+        Intent intent = new Intent(mcontext, TripDetailActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
         Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
         finish();
         progressDialog.dismiss();

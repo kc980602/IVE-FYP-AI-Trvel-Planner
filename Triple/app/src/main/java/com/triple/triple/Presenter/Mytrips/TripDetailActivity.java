@@ -64,6 +64,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private ActionBar ab;
     private int tripid;
     private TextView tv_tripdestination;
+    private Boolean isNew = false;
 
 
     @Override
@@ -72,15 +73,26 @@ public class TripDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mytrips_detail);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        try{
+            isNew = (Boolean) bundle.getBoolean("isNew");
+            Log.e("tripDetail", isNew.toString());
+            tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
+        } catch (Exception e){
+            Log.e("tripDetail", "null object");
+        }
+
         isSaved = (Boolean) bundle.getBoolean("isSaved");
         tripid = bundle.getInt("tripid");
         findView();
         initView();
-        if (isSaved) {
+
+        if (!isNew) {
+            if (isSaved) {
 //            getTripFromLocal();
-            requestTripItinerary();
-        } else {
-            requestTripItinerary();
+                requestTripItinerary();
+            } else {
+                requestTripItinerary();
+            }
         }
     }
 

@@ -34,9 +34,12 @@ public class Attraction implements Serializable {
     @SerializedName("tags")
     @Expose
     private Object tags;
+    @SerializedName("bestPhoto")
+    @Expose
+    private String bestPhoto;
     @SerializedName("photos")
     @Expose
-    private List<String> photos = new ArrayList<String>();
+    private List<String> photos;
     @SerializedName("latitude")
     @Expose
     private float latitude;
@@ -112,12 +115,12 @@ public class Attraction implements Serializable {
         this.tags = tags;
     }
 
-    public List<String> getPhotos() {
-        return photos;
+    public String getBestPhoto() {
+        return bestPhoto;
     }
 
-    public void setPhotos(List<String> photos) {
-        this.photos = photos;
+    public void setBestPhoto(String bestPhoto) {
+        this.bestPhoto = bestPhoto;
     }
 
     public float getLatitude() {
@@ -166,5 +169,13 @@ public class Attraction implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

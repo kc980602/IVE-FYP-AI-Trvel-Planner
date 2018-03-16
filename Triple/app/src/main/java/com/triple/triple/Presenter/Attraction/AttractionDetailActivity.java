@@ -92,6 +92,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private String attractionName = "";
     private TextView tv_title;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         tv_attInfo_phone = (TextView) findViewById(R.id.tv_attInfo_phone);
         tv_attInfo_website = (TextView) findViewById(R.id.tv_attInfo_website);
         tv_attInfo_address = (TextView) findViewById(R.id.tv_attInfo_address);
+        image = (ImageView) findViewById(R.id.image);
     }
 
     private void initView() {
@@ -234,21 +236,30 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         layout_gallery = (LinearLayout) findViewById(R.id.layout_gallery);
 
-        int[] data = new int[]{R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7};
-        for (int i = 0; i < data.length; i++) {
-            View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery, false);
-            ImageView img = (ImageView) view.findViewById(R.id.image_gallery_item);
+        if (attraction.getPhotos().size() > 0) {
             Picasso.with(mcontext)
-                    .load(data[i])
-                    .placeholder(R.color.white)
-                    .into(img);
-            layout_gallery.addView(view);
-            if (i == 9) {
-                break;
+                    .load(attraction.getPhotos().get(0))
+                    .fit().centerCrop()
+                    .placeholder(R.drawable.image_null_tran)
+                    .into(image);
+            for (int i = 0; i < attraction.getPhotos().size(); i++) {
+                View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
+                        false);
+                ImageView image = (ImageView) view.findViewById(R.id.image_gallery_item);
+                Picasso.with(mcontext)
+                        .load(attraction.getPhotos().get(i))
+                        .fit().centerCrop()
+                        .placeholder(R.drawable.image_null_tran)
+                        .into(image);
+                layout_gallery.addView(view);
+                if (i == 9) {
+                    break;
+                }
+//                view = mInflater.inflate(R.layout.listitem_gallery_more, layout_gallery, false);
+//                layout_gallery.addView(view);
             }
         }
-        View view = mInflater.inflate(R.layout.listitem_gallery_more, layout_gallery, false);
-        layout_gallery.addView(view);
+
         layout_main.setVisibility(View.VISIBLE);
         layout_main.invalidate();
     }
