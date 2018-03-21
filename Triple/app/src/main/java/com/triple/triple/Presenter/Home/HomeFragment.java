@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.triple.triple.Adapter.CityAdapter;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Model.City;
 import com.triple.triple.R;
+import com.triple.triple.Sync.GetSystemProperty;
 
 import java.util.List;
 
@@ -26,21 +26,19 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private RecyclerView rv_cities;
-    private List<City> cities;
     private CityAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        cities = (List<City>) getArguments().getSerializable("cities");
-        View view = inflater.inflate(R.layout.activity_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         rv_cities = (RecyclerView) view.findViewById(R.id.rv_cities);
         initView();
         return view;
     }
 
     private void initView() {
-        adapter = new CityAdapter(getActivity(), cities);
+        adapter = new CityAdapter(getActivity(), SystemPropertyHelper.getSystemProperty(getContext()).getCity());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rv_cities.setHasFixedSize(true);
         rv_cities.setLayoutManager(mLayoutManager);
@@ -48,4 +46,6 @@ public class HomeFragment extends Fragment {
         rv_cities.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
+
 }
