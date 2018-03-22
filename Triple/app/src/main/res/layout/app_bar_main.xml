@@ -23,6 +23,7 @@
             app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay">
 
             <ImageView
+                android:id="@+id/iv_iconText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -35,6 +36,8 @@
 
 
     </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/page_start" />
 
     <FrameLayout
         android:id="@+id/frame_layout_main"

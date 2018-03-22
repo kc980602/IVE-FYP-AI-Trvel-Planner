@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.triple.triple.Adapter.FragmentAdapter;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 
@@ -22,7 +23,6 @@ public class MytripsFragment extends Fragment {
 
     private ViewPager mViewPager;
     private TabLayout tabLayout;
-    private MytripsFragment.SectionsPagerAdapter mSectionsPagerAdapter;
 
     public MytripsFragment() {
         // Required empty public constructor
@@ -32,59 +32,33 @@ public class MytripsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mytrips, container, false);
         mViewPager = (ViewPager) view.findViewById(R.id.container);
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        initView();
         return view;
     }
 
     private void initView() {
 
-        mSectionsPagerAdapter = new MytripsFragment.SectionsPagerAdapter(getActivity().getSupportFragmentManager(), tripDetail);
-
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        ArrayList<List<Trip>> twoTrips = new ArrayList<>();
-//        twoTrips.add();
-//        twoTrips.add();
-
-        for (int i = 0; i < twoTrips.size(); i++) {
-            TripItinerary itinerary = twoTrips.get(i);
-            String dayName = getString(R.string.mytrips_detail_itinerary_dayname_pre) + (i + 1) + getString(R.string.mytrips_detail_itinerary_dayname_post);
-            tabLayout.addTab(tabLayout.newTab().setText(dayName).setTag(itinerary.getId()));
-        }
-
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
-//        TabLayout.Tab tab = tabLayout.getTag("");
-//        tab.select();
+        initViewPager();
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private void initViewPager() {
+        List<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.mytrips_all));
+        titles.add(getString(R.string.mytrips_saved));
+        tabLayout.addTab(tabLayout.newTab().setText(titles.get(0)));
+        tabLayout.addTab(tabLayout.newTab().setText(titles.get(1)));
 
-        private ArrayList<List<Trip>> twoTrips;
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new MytripsTabFragment());
+        fragments.add(new MytripsTabFragment());
 
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<List<Trip>> twoTrips) {
-            super(fm);
-            this.twoTrips = twoTrips;
-        }
+        mViewPager.setOffscreenPageLimit(1);
 
-        @Override
-        public Fragment getItem(int position) {
-            Fragment fragment = new ItineraryFragment();
-            List<Trip> trips = twoTrips.get(position);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("trips", (Serializable) trips);
-            fragment.setArguments(bundle);
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return twoTrips.size();
-        }
+        FragmentAdapter mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), fragments, titles);
+        mViewPager.setAdapter(mFragmentAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setTabsFromPagerAdapter(mFragmentAdapter);
     }
 
 }

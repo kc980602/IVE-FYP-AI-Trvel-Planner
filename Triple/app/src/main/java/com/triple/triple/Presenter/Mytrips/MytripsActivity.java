@@ -102,13 +102,11 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Trace.beginSection("MytripsActivity.initView");
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
 
         String indicator = getIntent().getStringExtra("indicator");
-
         avi.setIndicator(indicator);
 
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
@@ -131,7 +129,6 @@ public class MytripsActivity extends AppCompatActivity {
         rv_trips.setLayoutManager(mLayoutManager);
         rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter_allTrips);
-        Trace.endSection();
     }
 
     @Override
