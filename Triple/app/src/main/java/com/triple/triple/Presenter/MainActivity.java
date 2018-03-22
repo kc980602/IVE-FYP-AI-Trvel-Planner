@@ -1,50 +1,27 @@
 package com.triple.triple.Presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.securepreferences.SecurePreferences;
-import com.triple.triple.Helper.CheckLogin;
-import com.triple.triple.Helper.DrawerUtil;
-import com.triple.triple.Helper.SystemPropertyHelper;
-import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Presenter.Home.HomeFragment;
-import com.triple.triple.Presenter.Mytrips.MyTripFragment;
-import com.triple.triple.Presenter.Mytrips.MytripsActivity;
-import com.triple.triple.Presenter.Profile.ProfileActivity;
-import com.triple.triple.Presenter.Profile.TravelStyleActivity;
-import com.triple.triple.Presenter.Search.SearchActivity;
+import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-
-import java.io.Serializable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -131,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_mytrips:
-                fragment = new MyTripFragment();
+                fragment = new MytripsFragment();
                 break;
         }
 
