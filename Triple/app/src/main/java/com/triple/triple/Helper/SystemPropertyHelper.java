@@ -35,7 +35,6 @@ public class SystemPropertyHelper {
     public static final String DEFAULT = "N/A";
     static ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-
     public static void refreshData(Context mcontext) {
         try {
             final Context context = mcontext;
@@ -65,6 +64,10 @@ public class SystemPropertyHelper {
     public static SystemProperty getSystemProperty(Context mcontext) {
         SharedPreferences data = new SecurePreferences(mcontext);
         String json = data.getString("systemProperty", DEFAULT);
+        Log.e("getSystemProperty", json);
+        if (json.equals(DEFAULT)) {
+            refreshData(mcontext);
+        }
         try {
             JSONObject jsonObject = new JSONObject(json);
             Type type = new TypeToken<SystemProperty>() {
@@ -74,18 +77,16 @@ public class SystemPropertyHelper {
             return systemProperty;
         } catch (Exception e) {
             Log.e("getSystemProperty", e.toString());
-            e.printStackTrace();
             return null;
         }
 
     }
 
-
     public static ArrayList<String> getSystemPropertyCityName(Context mcontext) {
         ArrayList<String> cityName = new ArrayList<String>();
         List<City> cities = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
         Iterator<City> itrTemp = cities.iterator();
-        while(itrTemp.hasNext()){
+        while (itrTemp.hasNext()) {
             City city = itrTemp.next();
             String strTemp = city.getName() + ", " + city.getCountry();
             cityName.add(strTemp);
