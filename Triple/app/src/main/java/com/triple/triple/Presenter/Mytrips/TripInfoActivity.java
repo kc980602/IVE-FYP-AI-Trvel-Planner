@@ -46,7 +46,7 @@ public class TripInfoActivity extends AppCompatActivity {
         fragment_cover.setArguments(bundle);
         fragment_content = new TripInfoContentFragment();
         Bundle bundle2 = new Bundle();
-        bundle.putInt("tripid", tripDetail.getId());
+        bundle2.putInt("tripid", tripDetail.getId());
         fragment_content.setArguments(bundle2);
 
         getSupportFragmentManager().beginTransaction()

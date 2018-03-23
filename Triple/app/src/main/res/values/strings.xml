@@ -153,4 +153,10 @@
         %1$s\nCheck it out in Triple!\nTriple - An A.I. Driven Travel Planner\n%2$s
     </string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="action_settings">Settings</string>
+
 </resources>

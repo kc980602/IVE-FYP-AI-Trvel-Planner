@@ -92,7 +92,7 @@
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripInfoActivity"
-            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity"></activity>
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
     </application>
 
 </manifest>

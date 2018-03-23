@@ -29,31 +29,19 @@ import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.DrawerUtil;
-import com.triple.triple.Helper.SMFrameCallback;
 import com.triple.triple.Helper.Token;
 import com.triple.triple.Helper.UserInfoHelper;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
-import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -102,13 +90,11 @@ public class MytripsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Trace.beginSection("MytripsActivity.initView");
         toolbar.setTitle(getString(R.string.title_mytrips));
         setSupportActionBar(toolbar);
         DrawerUtil.getDrawer(this, toolbar);
 
         String indicator = getIntent().getStringExtra("indicator");
-
         avi.setIndicator(indicator);
 
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.mytrips_all)).setTag("all"));
@@ -131,7 +117,6 @@ public class MytripsActivity extends AppCompatActivity {
         rv_trips.setLayoutManager(mLayoutManager);
         rv_trips.setItemAnimator(new DefaultItemAnimator());
         rv_trips.setAdapter(adapter_allTrips);
-        Trace.endSection();
     }
 
     @Override

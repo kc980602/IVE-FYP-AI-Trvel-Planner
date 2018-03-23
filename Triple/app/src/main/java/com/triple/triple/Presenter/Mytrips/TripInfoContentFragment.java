@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -32,14 +33,17 @@ import retrofit2.Response;
 
 public class TripInfoContentFragment extends Fragment {
     private List<Article> articles;
-    private NestedScrollView layout_nsv;
+    private LinearLayout layout_card;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private int tripid;
+    private NestedScrollView layout_nsv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tripid = (int) getArguments().getInt("tripid");
+        Log.e("onCreateView", String.valueOf(tripid));
         View view = inflater.inflate(R.layout.fragment_trip_info_content, container, false);
+        layout_card = (LinearLayout) view.findViewById(R.id.layout_card);
         layout_nsv = (NestedScrollView) view.findViewById(R.id.layout_nsv);
         initView();
         return view;
@@ -53,10 +57,11 @@ public class TripInfoContentFragment extends Fragment {
     public void requestTripItinerary() {
         String token = "Bearer ";
         token += Token.getToken(getContext());
-        Call<List<Article>> call = apiService.getTripArticle(token, 371);
+        Call<List<Article>> call = apiService.getTripArticle(token, tripid);
         call.enqueue(new Callback<List<Article>>() {
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
+
                 if (response.body() != null) {
                     try {
                         articles = response.body();
@@ -82,7 +87,7 @@ public class TripInfoContentFragment extends Fragment {
             Log.e("loadDataToView", article.toString());
             Log.e("loadDataToView", article.getPhotos().size() + "is");
             LayoutInflater mInflater = LayoutInflater.from(getContext());
-            View view = mInflater.inflate(R.layout.listitem_trip_info, layout_nsv, false);
+            View view = mInflater.inflate(R.layout.listitem_trip_info, layout_card, false);
             ImageView image = (ImageView) view.findViewById(R.id.image);
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
             TextView tv_desc = (TextView) view.findViewById(R.id.tv_desc);
@@ -97,7 +102,7 @@ public class TripInfoContentFragment extends Fragment {
 
             tv_name.setText(article.getName());
             tv_desc.setText(article.getDescription());
-            layout_nsv.addView(view);
+            layout_card.addView(view);
         }
     }
 
