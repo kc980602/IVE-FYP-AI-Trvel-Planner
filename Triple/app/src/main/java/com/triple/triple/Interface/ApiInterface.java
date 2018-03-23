@@ -18,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by HaYYY on 2018/3/9.
@@ -56,7 +57,8 @@ public interface ApiInterface {
 
     @GET("/city/{id}/attractions")
     Call <DataMeta> getAttractions(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("limit") Integer limit
     );
 
     @GET("attraction/{id}")

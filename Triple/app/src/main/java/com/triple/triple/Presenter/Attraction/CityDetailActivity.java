@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,10 +32,12 @@ import com.triple.triple.Sync.CreateTrip;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.json.JSONObject;
 
 
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -81,12 +84,14 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        city = SystemPropertyHelper.getSystemPropertyByCityId(mcontext, cityid);
+        city = SystemPropertyHelper.getSystemPropertyByCityId(this, cityid);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle(city.getName());
-        ab.setElevation(0);
+        if (ab != null) {
+            ab.setTitle(city.getName());
+            ab.setElevation(0);
+        }
 
-        Picasso.with(mcontext)
+        Picasso.with(this)
                 .load(city.getPhoto())
                 .fit().centerCrop()
                 .placeholder(R.drawable.image_null)
@@ -98,9 +103,6 @@ public class CityDetailActivity extends AppCompatActivity {
         nav_bar.enableItemShiftingMode(false);
         nav_bar.enableShiftingMode(false);
         nav_bar.setOnNavigationItemSelectedListener(nav_barListener);
-        Menu menu = nav_bar.getMenu();
-
-
     }
 
     @Override
@@ -111,12 +113,7 @@ public class CityDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_search) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return item.getItemId() == R.id.action_search || super.onOptionsItemSelected(item);
     }
 
     private BottomNavigationViewEx.OnNavigationItemSelectedListener nav_barListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
@@ -145,44 +142,37 @@ public class CityDetailActivity extends AppCompatActivity {
     };
 
     private void loadDataToView() {
-
-        for (int i = 0; i < attractions.size(); i++) {
-            Attraction attraction = attractions.get(i);
-            Log.e("loadDataToView", attraction.toString());
-            Log.e("loadDataToView", attraction.getPhotos().size() + "is");
-            LayoutInflater mInflater = LayoutInflater.from(this);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+        for (final Attraction attraction : attractions) {
             View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
-            ImageView image = (ImageView) view.findViewById(R.id.image);
-            TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-            TextView tv_rate_review = (TextView) view.findViewById(R.id.tv_rate_review);
-
-            if (attraction.getPhotos().size() > 0) {
-                Picasso.with(mcontext)
-                        .load(attraction.getPhotos().get(0))
-                        .fit().centerCrop()
-                        .placeholder(R.drawable.image_null_tran)
-                        .into(image);
-            } else {
-                Picasso.with(mcontext)
-                        .load(R.drawable.image_null_tran)
-                        .fit().centerCrop()
-                        .placeholder(R.drawable.image_null_tran)
-                        .into(image);
-            }
-
-
+            CardView cardView = view.findViewById(R.id.cv_trip);
+            ImageView image = view.findViewById(R.id.image);
+            TextView tv_name = view.findViewById(R.id.tv_name);
+            TextView tv_rate_review = view.findViewById(R.id.tv_rate_review);
+            Picasso.with(mcontext)
+                    .load(attraction.getBestPhoto())
+                    .fit().centerCrop()
+                    .placeholder(R.drawable.image_null_tran)
+                    .error(R.drawable.image_null_tran)
+                    .into(image);
             tv_name.setText(attraction.getName());
-            tv_rate_review.setText(String.format("%.1f", attraction.getRating()) + "/10 - " + attraction.getComment_count() + " Reviews");
+            tv_rate_review.setText(String.format(Locale.ENGLISH,"%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    Context context = v.getContext();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("attractionId", attraction.getId());
+                    Intent intent = new Intent(context, AttractionDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
             layout_attraction.addView(view);
-            if (i == 9) {
-                break;
-            }
         }
     }
 
     public void getCityDetail() {
-
-        Call<DataMeta> call = apiService.getAttractions(cityid);
+        Call<DataMeta> call = apiService.getAttractions(cityid, 10);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
@@ -199,15 +189,13 @@ public class CityDetailActivity extends AppCompatActivity {
             public void onFailure(Call<DataMeta> call, Throwable t) {
                 Log.e("onFailure", t.toString());
             }
-
         });
     }
 
         public void getTime(){
-            DateTimeZone zone = DateTimeZone.forID ( city.getTimezone() );
-            DateTime dateTime = new DateTime ( zone );
-            String output = dateTime.toLocalTime ().getHourOfDay() + ":" + dateTime.toLocalTime ().getMinuteOfHour();
-            tv_time.setText(output);
+            DateTime dateTime = new DateTime(DateTimeZone.forID(city.getTimezone()));
+            LocalTime localTime = dateTime.toLocalTime();
+            tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay(), localTime.getMinuteOfHour()));
         }
 
         public void getWeather(){
