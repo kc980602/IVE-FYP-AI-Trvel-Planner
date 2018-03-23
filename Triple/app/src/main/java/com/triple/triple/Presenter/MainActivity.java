@@ -40,75 +40,27 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-    private Context mcontext = MainActivity.this;
     private Toolbar toolbar;
-    private RelativeLayout relative_main;
-    private ImageView img_page_start;
     private ImageView iv_iconText;
     private DrawerLayout drawer;
-
-    private static boolean isShowPageStart = true;
-    private final int MESSAGE_SHOW_LOGIN = 0x001;
-    private final int MESSAGE_SHOW_START_PAGE = 0x002;
-
-    public Handler mHandler = new Handler() {
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MESSAGE_SHOW_LOGIN:
-                    CheckLogin.directLogin(mcontext);
-                    break;
-                case MESSAGE_SHOW_START_PAGE:
-                    AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-                    alphaAnimation.setDuration(100);
-                    alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            relative_main.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    relative_main.startAnimation(alphaAnimation);
-                    break;
-            }
-        }
-    };
     private NavigationView navigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppThemeNoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        requestData();
         findView();
         initView();
-
-        if (isShowPageStart) {
-            relative_main.setVisibility(View.VISIBLE);
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE, 100);
-            isShowPageStart = false;
-        }
-
-        if (!Token.checkTokenExist(mcontext)) {
-            mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_LOGIN, 0);
+        if (!Token.checkTokenExist(this)) {
+            CheckLogin.directLogin(this);
         }
     }
 
     private void findView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         iv_iconText = (ImageView) findViewById(R.id.iv_iconText);
-        relative_main = findViewById(R.id.relative_main);
-        img_page_start = findViewById(R.id.img_page_start);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
@@ -146,12 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_search) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return item.getItemId() == R.id.action_search || super.onOptionsItemSelected(item);
     }
 
 
@@ -211,10 +158,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
                 SystemProperty sp = response.body();
                 Gson gson = new Gson();
-                SharedPreferences data = new SecurePreferences(mcontext);
+                SharedPreferences data = new SecurePreferences(MainActivity.this);
                 SharedPreferences.Editor editor = data.edit();
                 editor.putString("systemProperty", gson.toJson(sp));
-                editor.commit();
+                editor.apply();
             }
 
             @Override

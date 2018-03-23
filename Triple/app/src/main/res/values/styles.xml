@@ -38,6 +38,9 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 
     <style name="tabs">
         <item name="android:textColor">@color/white</item>
