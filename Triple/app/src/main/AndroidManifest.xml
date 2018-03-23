@@ -23,6 +23,7 @@
 
         <activity
             android:name=".Presenter.MainActivity"
+            android:theme="@style/SplashTheme"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
