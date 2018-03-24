@@ -1,84 +1,82 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.triple.triple.Presenter.Mytrips.TripInfoCoverFragment">
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center_vertical"
+    tools:context="com.triple.triple.Presenter.Mytrips.TripInfoCoverFragment">>
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/a8" />
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical">
+        android:src="@drawable/gradient_city"
+        android:translationZ="10dp" />
 
-        <ImageView
-            android:id="@+id/image"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/mdtp_minimum_margin_sides"
+        android:translationZ="20dp">
+
+        <TextView
+            android:id="@+id/tv_tripdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/a8" />
+            android:text="Mar 20, 2018 - Mar 22, 2018"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/tv_days"
+            style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/gradient_city"
-            android:translationZ="10dp" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp"
+            android:text="7 days"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_city"
+            style="@style/TextAppearance.AppCompat.Display2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/mdtp_minimum_margin_sides"
-            android:translationZ="20dp">
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Tokyo, Japan"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_tripdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Mar 20, 2018 - Mar 22, 2018"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tv_days"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="32dp"
-                android:text="7 days"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_city"
-                style="@style/TextAppearance.AppCompat.Display2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Tokyo, Japan"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_tripname"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="32dp"
-                android:text="Trip to Japan"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_alignParentBottom="true"
+        <TextView
+            android:id="@+id/tv_tripname"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_arrow_down"
-            android:scaleType="fitCenter"
-            android:tint="@color/white"/>
-    </RelativeLayout>
-</FrameLayout>
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingTop="32dp"
+            android:text="Trip to Japan"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arrow_down"
+        android:tint="@color/white" />
+</RelativeLayout>

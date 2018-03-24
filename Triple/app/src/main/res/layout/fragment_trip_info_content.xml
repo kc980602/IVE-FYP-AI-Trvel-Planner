@@ -1,23 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.triple.triple.Presenter.Mytrips.TripInfoContentFragment"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.triple.triple.Presenter.Mytrips.TripInfoContentFragment">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/layout_nsv"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
-        <LinearLayout
-            android:id="@+id/layout_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-        </LinearLayout>
+        android:layout_height="match_parent" />
 
-    </android.support.v4.widget.NestedScrollView>
 
-</FrameLayout>
+</LinearLayout>

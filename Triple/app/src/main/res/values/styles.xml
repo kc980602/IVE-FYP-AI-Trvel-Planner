@@ -66,6 +66,13 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="MyToolbarBlack" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:colorAccent">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
     <style name="MyTextDisplay1" parent="Base.TextAppearance.AppCompat.Display1">
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>

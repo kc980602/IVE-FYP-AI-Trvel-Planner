@@ -19,7 +19,7 @@
 //
 //import com.securepreferences.SecurePreferences;
 //import com.triple.triple.Presenter.Account.LoginActivity;
-//import com.triple.triple.Presenter.MainActivity;
+//import com.triple.triple.Presenter.testActivity;
 //import com.triple.triple.R;
 //
 ///**
@@ -91,7 +91,7 @@
 //        switch (item.getItemId()) {
 //            case android.R.id.home:
 //                NavUtils.navigateUpFromSameTask(getActivity());
-//                MainActivity.openDrawer();
+//                testActivity.openDrawer();
 //                break;
 //        }
 //        return true;

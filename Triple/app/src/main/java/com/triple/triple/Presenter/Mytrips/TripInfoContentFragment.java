@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Adapter.TripArticleAdapter;
 import com.triple.triple.Helper.DateTimeHelper;
+import com.triple.triple.Helper.RecycleViewPaddingHelper;
 import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Article;
@@ -24,6 +28,8 @@ import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
+import com.triple.triple.UILibrary.DummyViewPager;
+import com.triple.triple.UILibrary.VerticalVPOnTouchListener;
 
 import java.util.List;
 
@@ -37,24 +43,23 @@ public class TripInfoContentFragment extends Fragment {
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private int tripid;
     private NestedScrollView layout_nsv;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tripid = (int) getArguments().getInt("tripid");
-        Log.e("onCreateView", String.valueOf(tripid));
         View view = inflater.inflate(R.layout.fragment_trip_info_content, container, false);
-        layout_card = (LinearLayout) view.findViewById(R.id.layout_card);
-        layout_nsv = (NestedScrollView) view.findViewById(R.id.layout_nsv);
+        recyclerView = (RecyclerView) view.findViewById(R.id.content_list);
         initView();
         return view;
     }
 
     private void initView() {
-        requestTripItinerary();
+        requestArticle();
 
     }
 
-    public void requestTripItinerary() {
+    public void requestArticle() {
         String token = "Bearer ";
         token += Token.getToken(getContext());
         Call<List<Article>> call = apiService.getTripArticle(token, tripid);
@@ -76,34 +81,27 @@ public class TripInfoContentFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
-                Log.e("loadDataToView", "onFailure");
+                Log.e("loadDataToView", t.getMessage());
             }
         });
     }
 
     private void afterGetData() {
-        for (int i = 0; i < articles.size(); i++) {
-            Article article = articles.get(i);
-            Log.e("loadDataToView", article.toString());
-            Log.e("loadDataToView", article.getPhotos().size() + "is");
-            LayoutInflater mInflater = LayoutInflater.from(getContext());
-            View view = mInflater.inflate(R.layout.listitem_trip_info, layout_card, false);
-            ImageView image = (ImageView) view.findViewById(R.id.image);
-            TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-            TextView tv_desc = (TextView) view.findViewById(R.id.tv_desc);
 
-            if (article.getPhotos().get(0) != null) {
-                Picasso.with(getContext())
-                        .load(article.getPhotos().get(0))
-                        .fit().centerCrop()
-                        .placeholder(R.drawable.image_null_tran)
-                        .into(image);
-            }
+        recyclerView.setOnTouchListener(new VerticalVPOnTouchListener((DummyViewPager) getArguments().getSerializable("viewpager")));//set the vertical scroll controller
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new TripArticleAdapter(getContext(), articles));
+        RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(150);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
 
-            tv_name.setText(article.getName());
-            tv_desc.setText(article.getDescription());
-            layout_card.addView(view);
-        }
+    public String getTitle() {
+        return getArguments().getString("title");
+    }
+
+    public int getPosition() {
+        return getArguments().getInt("position");
     }
 
 }

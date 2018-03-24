@@ -1,6 +1,5 @@
-package com.triple.triple.Helper;
+package com.triple.triple.UILibrary;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;

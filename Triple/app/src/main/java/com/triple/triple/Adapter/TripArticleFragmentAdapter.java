@@ -3,21 +3,13 @@ package com.triple.triple.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import com.triple.triple.Presenter.Mytrips.ItineraryFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Kevin on 2018/2/19.
- */
-
-public class ItineraryFragmentAdapter extends FragmentPagerAdapter {
-
+public class TripArticleFragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments = new ArrayList<>();
 
-    public ItineraryFragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public TripArticleFragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }
@@ -50,8 +42,9 @@ public class ItineraryFragmentAdapter extends FragmentPagerAdapter {
             return this;
         }
 
-        public ItineraryFragmentAdapter set() {
-            return new ItineraryFragmentAdapter(manager, fragments);
+        public TripArticleFragmentAdapter set() {
+            return new TripArticleFragmentAdapter(manager, fragments);
         }
     }
+
 }

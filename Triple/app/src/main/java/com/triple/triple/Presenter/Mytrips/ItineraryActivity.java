@@ -51,8 +51,9 @@ public class ItineraryActivity extends AppCompatActivity {
         toolbar.setTitle(tripDetail.getTitle());
         setSupportActionBar(toolbar);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tripDetail);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tripDetail);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         List<TripItinerary> itineraryList = tripDetail.getItinerary();
