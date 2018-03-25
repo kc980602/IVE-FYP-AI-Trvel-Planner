@@ -42,3 +42,19 @@ $('#btnFW').click(function() {
     alert('POST -> API')
   }
 });
+
+$('input[type=range]').change(function() {
+  if($(this).val() == 0){
+    $(this).parent().children('.type-description').html('Strongly Disagree');
+  } else if ($(this).val() == 1){
+    $(this).parent().children('.type-description').html('Disagree');
+  } else if ($(this).val() == 2){
+    $(this).parent().children('.type-description').html('Neutral');
+  } else if ($(this).val() == 3){
+    $(this).parent().children('.type-description').html('Slightly Agree');
+  } else if ($(this).val() == 4){
+    $(this).parent().children('.type-description').html('Agree');
+  } else if ($(this).val() == 5){
+    $(this).parent().children('.type-description').html('Strongly Agree');
+  }
+});
