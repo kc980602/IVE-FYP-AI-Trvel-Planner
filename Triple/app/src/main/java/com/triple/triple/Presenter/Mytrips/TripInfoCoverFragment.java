@@ -2,13 +2,11 @@ package com.triple.triple.Presenter.Mytrips;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.DateTimeHelper;
@@ -39,9 +37,6 @@ public class TripInfoCoverFragment extends Fragment {
     }
 
     private void initView() {
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setPopupTheme(R.style.MyToolbarBlack);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         layout_relative.setOnTouchListener(new VerticalVPOnTouchListener((DummyViewPager) getArguments().getSerializable("viewpager")));//set the vertical scroll controller
         Picasso.with(getContext())
                 .load(tripDetail.getCity().getPhoto())
@@ -50,7 +45,7 @@ public class TripInfoCoverFragment extends Fragment {
                 .into(image);
         String date = DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length()));
         tv_tripdate.setText(date);
-        tv_days.setText(tripDetail.getVisit_length() + " " + getString(R.string.mytrips_info_days));
+        tv_days.setText(tripDetail.getVisit_length() + " " + getString(R.string.mytrips_article_days));
         tv_city.setText(tripDetail.getCity().getName() + ", " + tripDetail.getCity().getCountry());
         tv_tripname.setText(tripDetail.getTitle());
     }

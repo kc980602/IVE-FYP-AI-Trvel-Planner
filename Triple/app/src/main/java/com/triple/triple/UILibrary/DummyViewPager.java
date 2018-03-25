@@ -55,7 +55,6 @@ public class DummyViewPager extends ViewPager implements Serializable {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        Log.d(TAG, "onScrollChanged " + l + "," + t + "," + oldl + "," + oldt);
         if (currentScrollState == ViewPager.SCROLL_STATE_IDLE) {
             baseScrollX = getScrollX();
         }

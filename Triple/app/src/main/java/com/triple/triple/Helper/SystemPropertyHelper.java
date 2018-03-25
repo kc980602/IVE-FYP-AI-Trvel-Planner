@@ -35,19 +35,18 @@ public class SystemPropertyHelper {
     public static final String DEFAULT = "N/A";
     static ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-    public static void refreshData(Context mcontext) {
+    public static void refreshData(final Context mcontext) {
         try {
-            final Context context = mcontext;
             Call<SystemProperty> call = apiService.getProperty();
             call.enqueue(new Callback<SystemProperty>() {
                 @Override
                 public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
                     SystemProperty sp = response.body();
                     Gson gson = new Gson();
-                    SharedPreferences data = new SecurePreferences(context);
-                    SharedPreferences.Editor editor = data.edit();
-                    editor.putString("systemProperty", gson.toJson(sp));
-                    editor.commit();
+                    SharedPreferences data = mcontext.getSharedPreferences(Constant.SharedPreferences, 0);
+                    data.edit()
+                            .putString("systemProperty", gson.toJson(sp))
+                            .commit();
                 }
 
                 @Override
@@ -62,9 +61,8 @@ public class SystemPropertyHelper {
     }
 
     public static SystemProperty getSystemProperty(Context mcontext) {
-        SharedPreferences data = new SecurePreferences(mcontext);
+        SharedPreferences data = mcontext.getSharedPreferences(Constant.SharedPreferences,0);
         String json = data.getString("systemProperty", DEFAULT);
-        Log.e("getSystemProperty", json);
         if (json.equals(DEFAULT)) {
             refreshData(mcontext);
         }

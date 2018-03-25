@@ -39,9 +39,12 @@ import com.google.gson.reflect.TypeToken;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.AppBarStateChangeListener;
+import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.GetAttractionDetail;
@@ -67,6 +70,7 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class AttractionDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = "AttractionDetail";
     private Context mcontext = AttractionDetailActivity.this;
 
     private Toolbar toolbar;
@@ -91,7 +95,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private Integer attractionId;
     private String attractionName = "";
     private TextView tv_title;
-    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private ImageView image;
 
     @Override
@@ -240,7 +243,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .placeholder(R.drawable.image_null_tran)
+                    .placeholder(R.drawable.image_null)
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -264,56 +267,51 @@ public class AttractionDetailActivity extends AppCompatActivity {
         layout_main.invalidate();
     }
 
-    private class RequestAttractionDetail extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            startAnim();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-//                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
-//                respone = new GetAttractionDetail().run(url);
-                url = getResources().getString(R.string.api_prefix);
-                respone = new GetAttractionDetail().run(url, attractionId);
-            } catch (Exception e) {
-                e.printStackTrace();
+    public void setBookmark() {
+        String token = "Bearer ";
+        token += Token.getToken(mcontext);
+        Call<Void> call = Constant.apiService.setBookmark(token, attractionId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    setBookmarkSuccess();
+                    fab.setImageResource(R.drawable.ic_bookmark_saved);
+                } else {
+                    Log.e(TAG, "respone fail");
+                    setBookmarkFail();
+                }
             }
-            return respone;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject data = new JSONObject(result);
-                Type type = new TypeToken<Attraction>() {
-                }.getType();
-                Gson gson = new Gson();
-                attraction = (Attraction) gson.fromJson(data.toString(), type);
-                loadDataToView();
-            } catch (Exception e) {
-//                new AttractionDetailActivity.RequestAttractionDetail().execute();
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        }).show();
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+                setBookmarkFail();
             }
-            stopAnim();
-        }
+        });
+    }
+
+    private void setBookmarkSuccess() {
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, getString(R.string.attraction_detail_bookmark_success), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {}
+                }).show();
+    }
+
+    private void setBookmarkFail() {
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, getString(R.string.attraction_detail_bookmark_fail), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {}
+                }).show();
     }
 
     public void getUserDetails() {
         startAnim();
-
-        Call<Attraction> call = apiService.getInfo(attractionId);
+        Call<Attraction> call = Constant.apiService.getInfo(attractionId);
         call.enqueue(new Callback<Attraction>() {
             @Override
             public void onResponse(Call<Attraction> call, Response<Attraction> response) {
@@ -342,6 +340,18 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
     public void stopAnim() {
         avi.hide();
+    }
+
+    public void onImageClick(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("attraction", attraction);
+        Intent intent = new Intent(mcontext, AttractionImageActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void onFabClick(View view) {
+        setBookmark();
     }
 
     class MyGlobalListenerClass implements ViewTreeObserver.OnGlobalLayoutListener {

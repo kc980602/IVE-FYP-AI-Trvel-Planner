@@ -1,6 +1,8 @@
 package com.triple.triple.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Model.Article;
+import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.R;
 
 import java.util.List;
@@ -53,15 +56,12 @@ public class TripArticleAdapter extends RecyclerView.Adapter<TripArticleAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-//                    int tripid = Integer.valueOf(tv_tripid.getText().toString());
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("tripid", tripid);
-//                    if (tv_saved.getVisibility() == View.VISIBLE) {
-//                        bundle.putBoolean("isSaved", true);
-//                    }
-//                    Intent indent = new Intent(activity, TripDetailActivity.class);
-//                    indent.putExtras(bundle);
-//                    activity.startActivity(indent);
+                    int attractionId = Integer.parseInt(tv_attId.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("attractionId", attractionId);
+                    Intent intent = new Intent(context, AttractionDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -78,7 +78,7 @@ public class TripArticleAdapter extends RecyclerView.Adapter<TripArticleAdapter.
                     .placeholder(R.drawable.image_null_tran)
                     .into(holder.image);
         }
-//        holder.tv_attId.setText(article.getId());
+        holder.tv_attId.setText(String.valueOf(article.getId()));
         holder.tv_name.setText(article.getName());
         holder.tv_desc.setText(article.getDescription());
     }

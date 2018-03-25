@@ -56,7 +56,7 @@ public interface ApiInterface {
     );
 
     @GET("/city/{id}/attractions")
-    Call <DataMeta> getAttractions(
+    Call<DataMeta> getAttractions(
             @Path("id") Integer id,
             @Query("limit") Integer limit
     );
@@ -66,8 +66,17 @@ public interface ApiInterface {
             @Path("id") Integer id
     );
 
-    @GET("trip/bookmarks")
-    Call<List<Trip>> getBookmark();
+    @POST("attraction/{id}/bookmark")
+    Call<Void> setBookmark(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
+
+    @GET("city/{id}/attraction/bookmarks")
+    Call<List<Trip>> getBookmark(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
 
     @GET("trip")
     Call<List<Trip>> listTrip(

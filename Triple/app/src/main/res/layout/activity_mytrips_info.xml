@@ -18,20 +18,12 @@
         android:translationZ="20dp"
         app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
 
-    <com.triple.triple.UILibrary.DragLayout
-        android:id="@+id/draglayout"
+    <com.triple.triple.UILibrary.DummyViewPager
+        android:id="@+id/vertical_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
-        <FrameLayout
-            android:id="@+id/first"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <FrameLayout
-            android:id="@+id/second"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.triple.triple.UILibrary.DragLayout>
 
 </RelativeLayout>

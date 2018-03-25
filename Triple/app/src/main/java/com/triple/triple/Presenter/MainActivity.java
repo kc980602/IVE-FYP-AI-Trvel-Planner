@@ -20,9 +20,11 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.Token;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.SystemProperty;
+import com.triple.triple.Presenter.Attraction.AttractionImageActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.R;
@@ -112,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarNormal(R.string.title_mytrips);
                 fragment = new MytripsFragment();
                 break;
+            case R.id.nav_help:
+                Intent intent = new Intent(MainActivity.this, AttractionImageActivity.class);
+                startActivity(intent);
         }
 
         //replacing the fragment
@@ -146,17 +151,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void requestData(){
+    public void requestData() {
         Call<SystemProperty> call = apiService.getProperty();
         call.enqueue(new Callback<SystemProperty>() {
             @Override
             public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
                 SystemProperty sp = response.body();
                 Gson gson = new Gson();
-                SharedPreferences data = new SecurePreferences(MainActivity.this);
-                SharedPreferences.Editor editor = data.edit();
-                editor.putString("systemProperty", gson.toJson(sp));
-                editor.apply();
+                SharedPreferences data = getSharedPreferences(Constant.SharedPreferences, 0);
+                data.edit()
+                        .putString("systemProperty", gson.toJson(sp))
+                        .commit();
             }
 
             @Override

@@ -1,6 +1,9 @@
 package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +27,7 @@ public class TripInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mytrips_info2);
+        setContentView(R.layout.activity_mytrips_info);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
@@ -88,6 +91,29 @@ public class TripInfoActivity extends AppCompatActivity {
                 .set());
 
         viewPager.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                Drawable backArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+                switch (position) {
+                    case 0:
+                        backArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+                        getSupportActionBar().setHomeAsUpIndicator(backArrow);
+                        break;
+                    case 1:
+                        backArrow.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+                        getSupportActionBar().setHomeAsUpIndicator(backArrow);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 
 }

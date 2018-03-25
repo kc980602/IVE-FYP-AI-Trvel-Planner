@@ -34,7 +34,6 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
      */
     @Override
     public boolean onTouch(View v, MotionEvent e) {
-        Log.i(TAG, "onTouchEvent " + ", action " + e.getAction() + ", e.rawY " + e.getRawY() + ",lastMotionY " + lastMotionY + ",downY " + downY);
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downY = e.getRawY();
@@ -50,13 +49,11 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
                 float diff = e.getRawY() - (lastMotionY == Float.MIN_VALUE ? downY : lastMotionY);
                 lastMotionY = e.getRawY();
                 diff = diff / 2; //slow down viewpager scroll
-                Log.e(TAG, "scrollX " + dummyViewPager.getScrollX() + ",basescrollX " + dummyViewPager.getBaseScrollX());
 
                 if (dummyViewPager.getScrollX() != dummyViewPager.getBaseScrollX()) {
                     if (fakeDragVp(v, e, diff)) return true;
                 } else {
                     if (ViewCompat.canScrollVertically(v, (-diff) > 0 ? 1 : -1)) {
-                        Log.e(TAG, "scroll vertically  " + diff + ", move.lastMotionY " + e.getY());
                         break;
                     } else {
                         dummyViewPager.beginFakeDrag();
@@ -91,7 +88,6 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
                 step = dummyViewPager.getScrollX() - dummyViewPager.getBaseScrollX();
             }
             dummyViewPager.fakeDragBy(step);
-            Log.e(TAG, "fake drag, diff " + diff + ",step " + step + ",scrollX " + dummyViewPager.getScrollX());
             adjustDownMotion(v, e);
 
             return true;

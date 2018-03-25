@@ -1,11 +1,14 @@
 package com.triple.triple.Presenter.Mytrips;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,7 +59,6 @@ public class TripInfoContentFragment extends Fragment {
 
     private void initView() {
         requestArticle();
-
     }
 
     public void requestArticle() {
@@ -72,28 +74,25 @@ public class TripInfoContentFragment extends Fragment {
                         articles = response.body();
                         afterGetData();
                     } catch (Exception e) {
-                        Log.e("loadDataToView", "catch");
+                        requestArticle();
                     }
                 } else {
-                    Log.e("loadDataToView", "else");
+                    requestArticle();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
-                Log.e("loadDataToView", t.getMessage());
+                requestArticle();
             }
         });
     }
 
     private void afterGetData() {
-
         recyclerView.setOnTouchListener(new VerticalVPOnTouchListener((DummyViewPager) getArguments().getSerializable("viewpager")));//set the vertical scroll controller
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new TripArticleAdapter(getContext(), articles));
-        RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(150);
-        recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     public String getTitle() {
