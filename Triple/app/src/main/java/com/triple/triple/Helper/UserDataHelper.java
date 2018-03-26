@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  * Created by KC on 2/28/2018.
  */
 
-public class UserInfoHelper {
+public class UserDataHelper {
 
     public static final String DEFAULT = "N/A";
 
@@ -33,4 +33,21 @@ public class UserInfoHelper {
 
         return user;
     }
+
+    public static String getToken(Context mcontext) {
+        SharedPreferences data = new SecurePreferences(mcontext);
+        return data.getString("token", DEFAULT);
+    }
+
+    public static Boolean checkTokenExist(Context mcontext) {
+        SharedPreferences data = new SecurePreferences(mcontext);
+        String token = data.getString("token", DEFAULT);
+        return !token.equals(DEFAULT);
+    }
+
+    public static void removeAllData(Context mcontext) {
+        SharedPreferences data = new SecurePreferences(mcontext);
+        data.edit().clear().commit();
+    }
+
 }

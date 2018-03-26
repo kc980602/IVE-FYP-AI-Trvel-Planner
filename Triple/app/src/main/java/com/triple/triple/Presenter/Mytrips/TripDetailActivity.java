@@ -3,7 +3,6 @@ package com.triple.triple.Presenter.Mytrips;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -27,7 +26,7 @@ import com.securepreferences.SecurePreferences;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripDayAdapter;
 import com.triple.triple.Helper.DateTimeHelper;
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
@@ -269,7 +268,7 @@ public class TripDetailActivity extends AppCompatActivity {
     public void requestTripItinerary() {
         startAnim();
         String token = "Bearer ";
-        token += Token.getToken(mcontext);
+        token += UserDataHelper.getToken(mcontext);
         Call<TripDetail> call = apiService.listTripByUser(token, tripid);
         call.enqueue(new Callback<TripDetail>() {
             @Override
@@ -315,7 +314,6 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void afterGetData() {
-        Log.e("tripDetail", tripDetail.toString());
         List<TripItinerary> itineraryList = tripDetail.getItinerary();
         for (int i = 0; i < itineraryList.size(); i++) {
             TripDay tripday = new TripDay();

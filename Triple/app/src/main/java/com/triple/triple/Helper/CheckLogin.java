@@ -13,7 +13,7 @@ import com.triple.triple.Presenter.Account.LoginActivity;
 public class CheckLogin {
 
     public static Boolean directLogin(Context context) {
-        if (!Token.checkTokenExist(context)) {
+        if (!UserDataHelper.checkTokenExist(context)) {
             Log.d("sss", "sss`");
             Intent intent = new Intent(context, LoginActivity.class);
             context.startActivity(intent);

@@ -3,9 +3,7 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,7 @@ import android.widget.TextView;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.DateTimeHelper;
-import com.triple.triple.Helper.UserInfoHelper;
 import com.triple.triple.Model.Trip;
-import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
@@ -110,12 +106,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             holder.tv_saved.setVisibility(View.INVISIBLE);
         }
 
-    }
-
-    public void setTrips(List<Trip> trips) {
-        this.trips.clear();
-        this.trips.addAll(trips);
-        this.notifyDataSetChanged();
     }
 
     @Override

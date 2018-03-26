@@ -2,7 +2,7 @@ package com.triple.triple.Sync;
 
 import android.content.Context;
 
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserDataHelper;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -19,7 +19,7 @@ public class CreateTrip {
 
     public String run(String url, Context mcontext, String tripname, String tripdateStart, String dateCount, String destination, String generate) throws Exception {
         String token = "Bearer ";
-        token += Token.getToken(mcontext);
+        token += UserDataHelper.getToken(mcontext);
         RequestBody formBody = new FormBody.Builder()
                 .add("title", tripname)
                 .add("visit_date", tripdateStart)

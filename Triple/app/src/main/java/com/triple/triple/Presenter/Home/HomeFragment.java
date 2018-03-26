@@ -10,12 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.securepreferences.SecurePreferences;
 import com.triple.triple.Adapter.CityAdapter;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
@@ -46,6 +50,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         rv_cities = (RecyclerView) view.findViewById(R.id.rv_cities);
         requestData();
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -67,10 +72,10 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
                 SystemProperty sp = response.body();
                 Gson gson = new Gson();
-                SharedPreferences data = new SecurePreferences(getContext());
-                SharedPreferences.Editor editor = data.edit();
-                editor.putString("systemProperty", gson.toJson(sp));
-                editor.commit();
+                SharedPreferences data = getActivity().getSharedPreferences(Constant.SharedPreferences, 0);
+                data.edit()
+                        .putString("systemProperty", gson.toJson(sp))
+                        .commit();
                 initView();
             }
 
@@ -79,6 +84,24 @@ public class HomeFragment extends Fragment {
                 Log.e("getSystemProperty", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+//                Intent intent = new Intent(getContext(), TripCreateActivity.class);
+//                startActivity(intent);
+                break;
+
+        }
+        return true;
     }
 
 }

@@ -148,6 +148,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="snackbar_ok">OK</string>
+    <string name="snackbar_refersh">Refersh</string>
     <string name="dialog_progress_title">Processing...</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="intent_share_header">Share this by</string>

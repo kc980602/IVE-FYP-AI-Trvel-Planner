@@ -1,34 +1,19 @@
 package com.triple.triple.Presenter.Mytrips;
 
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripArticleAdapter;
-import com.triple.triple.Helper.DateTimeHelper;
-import com.triple.triple.Helper.RecycleViewPaddingHelper;
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Article;
-import com.triple.triple.Model.Attraction;
-import com.triple.triple.Model.Trip;
-import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.UILibrary.DummyViewPager;
@@ -63,7 +48,7 @@ public class TripInfoContentFragment extends Fragment {
 
     public void requestArticle() {
         String token = "Bearer ";
-        token += Token.getToken(getContext());
+        token += UserDataHelper.getToken(getContext());
         Call<List<Article>> call = apiService.getTripArticle(token, tripid);
         call.enqueue(new Callback<List<Article>>() {
             @Override

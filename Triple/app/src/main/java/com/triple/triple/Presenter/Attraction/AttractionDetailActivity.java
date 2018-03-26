@@ -2,20 +2,15 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ScrollingView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,47 +21,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.Helper.Constant;
-import com.triple.triple.Helper.Token;
-import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
-import com.triple.triple.Model.Trip;
-import com.triple.triple.Presenter.MainActivity;
 import com.triple.triple.R;
-import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.GetAttractionDetail;
-import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class AttractionDetailActivity extends AppCompatActivity {
 
@@ -269,7 +240,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
     public void setBookmark() {
         String token = "Bearer ";
-        token += Token.getToken(mcontext);
+        token += UserDataHelper.getToken(mcontext);
         Call<Void> call = Constant.apiService.setBookmark(token, attractionId);
         call.enqueue(new Callback<Void>() {
             @Override

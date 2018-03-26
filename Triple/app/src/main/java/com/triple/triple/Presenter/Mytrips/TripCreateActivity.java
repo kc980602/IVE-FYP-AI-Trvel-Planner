@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -24,13 +22,11 @@ import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.SystemPropertyHelper;
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
-import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
-import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.ApiClientDuration;
 import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
@@ -38,11 +34,7 @@ import com.triple.triple.Helper.HideKeyboardHelper;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 
 import me.rohanpeshkar.filterablelistdialog.FilterableListDialog;
 import retrofit2.Call;
@@ -199,50 +191,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         if (isSuccess) {
             tripname = et_tripname.getText().toString();
             generate = String.valueOf((cb_generate.isChecked()) ? 1 : 0);
-//            new TripCreateActivity.RequestCreateTrip().execute();
             createTrip();
-        }
-    }
-
-    private class RequestCreateTrip extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "error";
-            try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_trip_create);
-                Log.d("request", tripname +  tripdateStart + dateCount + destination + generate);
-                respone = new CreateTrip().run(url, mcontext, tripname, tripdateStart, dateCount, destination, generate);
-            } catch (Exception e) {
-                Log.d(TAG, e.toString());
-            }
-            return respone;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if (!result.equals("201")) {
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        }).show();
-            } else {
-                Intent i_home = new Intent(mcontext, MytripsActivity.class);
-                startActivity(i_home);
-                Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            progressDialog.dismiss();
         }
     }
 
@@ -250,7 +199,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         progressDialog.show();
 
         String token = "Bearer ";
-        token += Token.getToken(mcontext);
+        token += UserDataHelper.getToken(mcontext);
         Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
         call.enqueue(new Callback<TripDetail>() {
             @Override
