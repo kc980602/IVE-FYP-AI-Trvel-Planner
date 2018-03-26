@@ -118,7 +118,7 @@
               <h5>Select a destination from the most popular travel destinations.<span class="mustChoose">*</span></h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <select>
+                  <select id="destination">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">Bangkok, Thailand</option>
                     <option value="2">London, England</option>
@@ -287,9 +287,30 @@
                 </div>
               </div>
             </div>
+
             <div class="col s12 center">
-              <button id="btnGenerate" class="btn waves-effect waves-light">Preview</button>
+              <button id="btnGenerate" class="btn waves-effect waves-light"
+              data-toggle="modal" data-target="#myModal">Preview</button>
+              <!-- Modal -->
+               <div class="modal" id="myModal" role="dialog">
+                 <div class="modal-dialog">
+                   <!-- Modal content-->
+                   <div class="modal-content">
+                     <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal">&times;</button>
+                       <h4 class="modal-title">Preview Your Selection</h4>
+                     </div>
+                     <div class="modal-body">
+                       <p>Some text in the modal.</p>
+                     </div>
+                     <div class="modal-footer">
+                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
+
           </div>
         </div>
         <div class="center" id="bottom-wizard">
@@ -303,6 +324,7 @@
       </div>
     </div>
   </section>
+
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
