@@ -56,32 +56,16 @@ $('#btnFW').click(function() {
 
 $('input[type=range]').change(function() {
   if($(this).val() == 0){
-    $(this).parent().children('.type-description').html('Strongly Disagree');
+    $(this).parent().children('.type-description').html('<span style=\'color:#DD0000\'>Strongly Disagree</span>');
   } else if ($(this).val() == 1){
-    $(this).parent().children('.type-description').html('Disagree');
+    $(this).parent().children('.type-description').html('<span style=\'color:#AA0000\'>Disagree</span>');
   } else if ($(this).val() == 2){
-    $(this).parent().children('.type-description').html('Neutral');
+    $(this).parent().children('.type-description').html('<span style=\'color:#000000\'>Neutral</span>');
   } else if ($(this).val() == 3){
-    $(this).parent().children('.type-description').html('Slightly Agree');
+    $(this).parent().children('.type-description').html('<span style=\'color:#009900\'>Slightly Agree</span>');
   } else if ($(this).val() == 4){
-    $(this).parent().children('.type-description').html('Agree');
+    $(this).parent().children('.type-description').html('<span style=\'color:#00BB00\'>Agree</span>');
   } else if ($(this).val() == 5){
-    $(this).parent().children('.type-description').html('Strongly Agree');
-  }
-});
-
-$('input[type=range]').click(function() {
-  if($(this).val() == 0){
-    $(this).parent().children('.type-description').html('Strongly Disagree');
-  } else if ($(this).val() == 1){
-    $(this).parent().children('.type-description').html('Disagree');
-  } else if ($(this).val() == 2){
-    $(this).parent().children('.type-description').html('Neutral');
-  } else if ($(this).val() == 3){
-    $(this).parent().children('.type-description').html('Slightly Agree');
-  } else if ($(this).val() == 4){
-    $(this).parent().children('.type-description').html('Agree');
-  } else if ($(this).val() == 5){
-    $(this).parent().children('.type-description').html('Strongly Agree');
+    $(this).parent().children('.type-description').html('<span style=\'color:#00DD00\'>Strongly Agree</span>');
   }
 });

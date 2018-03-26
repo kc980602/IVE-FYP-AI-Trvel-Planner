@@ -103,7 +103,11 @@ main {
   color: #db4437;
 }
 
-.perference:nth-child(4n-2), .perference:nth-child(4n-3) {
+/* .perference:nth-child(4n-2), .perference:nth-child(4n-3) {
+  background: rgba(0, 0, 0, .05);
+} */
+
+.perference:nth-child(8n-6), .perference:nth-child(8n-4), .perference:nth-child(8n-3), .perference:nth-child(8n-1) {
   background: rgba(0, 0, 0, .05);
 }
 
