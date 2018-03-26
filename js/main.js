@@ -25,16 +25,27 @@ $('#btnBW').click(function() {
 $('#btnFW').click(function() {
   var step = $('#content-wizard').data('step')
   if (step == 1 || step == undefined) {
-    $('#btnBW').prop('disabled', false)
-    $('#content-wizard').data('step', 2)
-    $('#top-wizard .determinate').css({width: '50%'})
-    $('#step1').removeClass('show')
-    $('#step2').addClass('show')
-    setTimeout(() => {
-      $('#step1').hide()
-      $('#step2').show()
-    }, 150)
-    $(this).html('Submit <i class="material-icons right">send</i>')
+    var gender      = $('input[name=gender]:checked').val();
+    var ageGroup    = $('#ageGroup').val();
+    var income      = $('#income').val();
+    var expenditure = $('#expenditure').val();
+    if(gender==undefined || ageGroup==null ||
+       income==null || expenditure==null )
+      {
+        alert("Please Fill All Required Field");
+              return false;
+    } else {
+      $('#btnBW').prop('disabled', false)
+      $('#content-wizard').data('step', 2)
+      $('#top-wizard .determinate').css({width: '50%'})
+      $('#step1').removeClass('show')
+      $('#step2').addClass('show')
+      setTimeout(() => {
+        $('#step1').hide()
+        $('#step2').show()
+      }, 150)
+      $(this).html('Submit <i class="material-icons right">send</i>')
+    }
   } else if (step == 2) {
     $('#top-wizard .determinate').css({width: '100%'})
     $('#middle-wizard').html(`<h5 class="light">Thank you for your response</h5>`)
@@ -44,6 +55,22 @@ $('#btnFW').click(function() {
 });
 
 $('input[type=range]').change(function() {
+  if($(this).val() == 0){
+    $(this).parent().children('.type-description').html('Strongly Disagree');
+  } else if ($(this).val() == 1){
+    $(this).parent().children('.type-description').html('Disagree');
+  } else if ($(this).val() == 2){
+    $(this).parent().children('.type-description').html('Neutral');
+  } else if ($(this).val() == 3){
+    $(this).parent().children('.type-description').html('Slightly Agree');
+  } else if ($(this).val() == 4){
+    $(this).parent().children('.type-description').html('Agree');
+  } else if ($(this).val() == 5){
+    $(this).parent().children('.type-description').html('Strongly Agree');
+  }
+});
+
+$('input[type=range]').click(function() {
   if($(this).val() == 0){
     $(this).parent().children('.type-description').html('Strongly Disagree');
   } else if ($(this).val() == 1){

@@ -48,13 +48,13 @@
               <div class="row">
                 <div class="col s2">
                   <p>
-                    <input class="with-gap" name="gender" type="radio" id="male" />
+                    <input class="with-gap" name="gender" type="radio" id="male" value="male"/>
                     <label for="male">Male</label>
                   </p>
                 </div>
                 <div class="col s2">
                   <p>
-                    <input class="with-gap" name="gender" type="radio" id="female" />
+                    <input class="with-gap" name="gender" type="radio" id="female" value="female"/>
                     <label for="female">Female</label>
                   </p>
                 </div>
@@ -64,7 +64,7 @@
               <h5>Age Group? <span class="mustChoose">*</span></h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <select>
+                  <select id="ageGroup">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="under18">Under 18</option>
                     <option value="18to24">18-24</option>
@@ -155,138 +155,140 @@
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Family Vacationer</span>
-                    <input type="range" id="input1" min="0" max="5" value="0" />
-                    <span class="type-description">No Thanks</span>
+                    <input type="range" id="family_holiday_maker" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Foodie</span>
-                    <input type="range" id="input2" min="0" max="5" value="2" />
-                    <span class="type-description">Like to Eat</span>
+                    <input type="range" id="foodie" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Backpacker</span>
-                    <input type="range" id="input3" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="backpacker" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>History Buff</span>
-                    <input type="range" id="input4" min="0" max="5" value="3" />
-                    <span class="type-description">Important to Me</span>
+                    <input type="range" id="history_buff" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Nightlife Seeker</span>
-                    <input type="range" id="input5" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="nightlife_seeker" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Eco-tourist</span>
-                    <input type="range" id="input6" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="eco_tourist" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Trendsetter</span>
-                    <input type="range" id="input7" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="trendsetter" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Nature Lover</span>
-                    <input type="range" id="input8" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="nature_lover" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span>Thrifty Traveler</span>
-                    <input type="range" id="input9" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="thrifty_traveller" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
                 <div class="col s6 perference">
                   <p class="range-field">
                     <span style="font-size: 12px">Art and Architecture Lover</span>
-                    <input type="range" id="input10" min="0" max="5" value="1" />
-                    <span class="type-description">Limited Interest</span>
+                    <input type="range" id="art_and_architecture_lover" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
                   </p>
                 </div>
               </div>
             </div>
             <div class="col s12 m6">
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Urban Explorer</span>
-                  <input type="range" id="input11" min="0" max="5" value="0" />
-                  <span class="type-description">No Thanks</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Thrill Seeker</span>
-                  <input type="range" id="input12" min="0" max="5" value="2" />
-                  <span class="type-description">Like to Eat</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Beach Goer</span>
-                  <input type="range" id="input13" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>60+ Traveler</span>
-                  <input type="range" id="input14" min="0" max="5" value="3" />
-                  <span class="type-description">Important to Me</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Like a Local</span>
-                  <input type="range" id="input15" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Luxury Traveller</span>
-                  <input type="range" id="input16" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Vegetarian</span>
-                  <input type="range" id="input17" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span>Shopping Fanatic</span>
-                  <input type="range" id="input18" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
-              </div>
-              <div class="col s6 perference">
-                <p class="range-field">
-                  <span style="font-size: 14px">Peace and Quiet See</span>
-                  <input type="range" id="input19" min="0" max="5" value="1" />
-                  <span class="type-description">Limited Interest</span>
-                </p>
+              <div class="row center">
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Urban Explorer</span>
+                    <input type="range" id="urban_explorer" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Thrill Seeker</span>
+                    <input type="range" id="thrill_seeker" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Beach Goer</span>
+                    <input type="range" id="beach_goer" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>60+ Traveler</span>
+                    <input type="range" id="sixtyPlus_traveller" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Like a Local</span>
+                    <input type="range" id="like_a_local" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Luxury Traveller</span>
+                    <input type="range" id="luxury_traveller" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Vegetarian</span>
+                    <input type="range" id="vegetarian" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span>Shopping Fanatic</span>
+                    <input type="range" id="shopping_fanatic" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
+                <div class="col s6 perference">
+                  <p class="range-field">
+                    <span style="font-size: 14px">Peace and Quiet See</span>
+                    <input type="range" id="peace_and_quiet_seeker" min="0" max="5" value="2" />
+                    <span class="type-description">Neutral</span>
+                  </p>
+                </div>
               </div>
             </div>
             <div class="col s12 center">
