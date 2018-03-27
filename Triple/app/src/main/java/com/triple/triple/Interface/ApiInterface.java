@@ -9,6 +9,8 @@ import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
 
+import org.w3c.dom.Attr;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -73,7 +75,7 @@ public interface ApiInterface {
     );
 
     @GET("city/{id}/attraction/bookmarks")
-    Call<List<Trip>> getBookmark(
+    Call<List<Attraction>> getBookmark(
             @Header("Authorization") String authHeader,
             @Path("id") Integer id
     );

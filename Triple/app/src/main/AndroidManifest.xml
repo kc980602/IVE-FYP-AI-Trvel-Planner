@@ -42,8 +42,8 @@
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
-            android:theme="@style/AppTheme"
             android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
@@ -71,6 +71,7 @@
             android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -89,7 +90,8 @@
         <activity
             android:name=".Presenter.Mytrips.TripInfoActivity"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity android:name=".Presenter.Attraction.AttractionImageActivity"></activity>
+        <activity android:name=".Presenter.Attraction.AttractionImageActivity" />
+        <activity android:name=".Presenter.Attraction.CityBookmarksActivity"></activity>
     </application>
 
 </manifest>

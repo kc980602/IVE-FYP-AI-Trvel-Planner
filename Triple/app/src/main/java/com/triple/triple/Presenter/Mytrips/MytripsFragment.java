@@ -80,7 +80,6 @@ public class MytripsFragment extends Fragment {
             Snackbar.make(view, "Login or Register First", Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    requestTrip();
                 }
             }).show();
         }

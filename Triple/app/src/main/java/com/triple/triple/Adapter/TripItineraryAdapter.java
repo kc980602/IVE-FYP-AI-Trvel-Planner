@@ -89,7 +89,6 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-
                     int attractionId = Integer.parseInt(tv_attId.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("attractionId", attractionId);
