@@ -135,7 +135,8 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_favorities:
-
+                    intent.setClass(mcontext, CityBookmarksActivity.class);
+                    startActivity(intent);
                     break;
             }
 
