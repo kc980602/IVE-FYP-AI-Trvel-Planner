@@ -215,7 +215,7 @@ public class CityDetailActivity extends AppCompatActivity {
                         Log.e("getWeather", "Result: " + result);
                         JSONObject jsonObject = new JSONObject(result);
                         output = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
-                        output += "\n" + (Double.parseDouble(jsonObject.getJSONObject("main").getString("temp"))-273.15) + "°C";
+                        output += "\n" + String.format("%.1f",(Double.parseDouble(jsonObject.getJSONObject("main").getString("temp"))-273.15)) + "°C";
                         tv_weather.setText(output);
                     } catch (Exception e) {
                         e.printStackTrace();
