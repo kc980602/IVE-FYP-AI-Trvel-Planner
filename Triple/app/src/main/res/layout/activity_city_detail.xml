@@ -63,7 +63,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="left"
-                                android:text="tokyo"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
@@ -74,7 +73,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="left"
-                                android:text="Japan"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white" />
                         </LinearLayout>
@@ -92,17 +90,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="right"
-                                android:text="10:35"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:layout_gravity="right"
                                 android:id="@+id/tv_weather"
                                 style="@style/TextAppearance.AppCompat.Title"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="right"
+                                android:gravity="right|center"
+                                android:drawablePadding="3dp"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white" />
                         </LinearLayout>

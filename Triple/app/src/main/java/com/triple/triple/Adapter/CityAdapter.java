@@ -61,9 +61,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                     int cityid = Integer.parseInt(tv_cityid.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putInt("cityid", cityid);
-                    Intent indent = new Intent(activity, CityDetailActivity.class);
-                    indent.putExtras(bundle);
-                    activity.startActivity(indent);
+                    Intent intent = new Intent(activity, CityDetailActivity.class);
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
                 }
             });
         }

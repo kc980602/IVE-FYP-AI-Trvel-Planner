@@ -75,11 +75,16 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
     @Override
     public void onBindViewHolder(AttractionViewHolder holder, int position) {
         Attraction attraction = attractions.get(position);
-        Picasso.with(mcontext)
-                .load(attraction.getBestPhoto())
-                .fit().centerCrop()
-                .placeholder(R.drawable.image_null_tran)
-                .into(holder.image);
+        if (attraction.getPhotos().size() > 0) {
+            Picasso.with(mcontext)
+                    .load(attraction.getPhotos().get(0))
+                    .fit().centerCrop()
+                    .placeholder(R.drawable.image_null_tran)
+                    .into(holder.image);
+        }
+
+
+
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
         holder.tv_name.setText(attraction.getName());

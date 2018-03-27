@@ -1,6 +1,7 @@
 package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +10,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.triple.triple.Adapter.AttractionAdapter;
 import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.R;
@@ -30,12 +33,15 @@ public class CityBookmarksActivity extends AppCompatActivity {
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_attractions;
-    private int cityId;
+    private int cityid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_bookmarks);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        cityid = bundle.getInt("cityid");
         findView();
         requestBookmarks();
         initView();
@@ -44,10 +50,17 @@ public class CityBookmarksActivity extends AppCompatActivity {
     private void findView() {
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
-        rv_attractions = (RecyclerView) findViewById(R.id.rv_trips);
+        rv_attractions = (RecyclerView) findViewById(R.id.rv_attractions);
     }
 
     private void initView() {
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle(getString(R.string.city_detail_favorites));
+            ab.setElevation(0);
+        }
+
+
         String indicator = getIntent().getStringExtra("indicator");
         avi.setIndicator(indicator);
 
@@ -71,14 +84,13 @@ public class CityBookmarksActivity extends AppCompatActivity {
             }).show();
         }
 
-
     }
 
     public void requestBookmarks() {
         startAnim();
         String token = "Bearer ";
         token += UserDataHelper.getToken(mcontext);
-        Call<List<Attraction>> call = Constant.apiService.getBookmark(token, cityId);
+        Call<List<Attraction>> call = Constant.apiService.getBookmark(token, cityid);
         call.enqueue(new Callback<List<Attraction>>() {
             @Override
             public void onResponse(Call<List<Attraction>> call, Response<List<Attraction>> response) {
@@ -118,6 +130,15 @@ public class CityBookmarksActivity extends AppCompatActivity {
         }).show();
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//
+//    }
 
     public void startAnim() {
         avi.show();

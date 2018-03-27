@@ -3,7 +3,8 @@
     android:id="@+id/cv_trip"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginBottom="8dp"
     android:elevation="@dimen/cardview_default_elevation"
     android:foreground="?selectableItemBackgroundBorderless">
 
@@ -19,8 +20,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/a8"
         app:riv_corner_radius="2dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/gradient_city"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +38,6 @@
             style="@style/TextAppearance.AppCompat.Large.Inverse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/city_detail_plan"
             android:textStyle="bold" />
 
 
@@ -43,12 +47,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
-            android:text="9.1/10 - 0 Reviews"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/layout_bookmark"
@@ -61,7 +63,9 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:src="@drawable/ic_bookmark_fill"
-            android:tint="@color/gray_light" />
+            android:tint="@color/gray_very_light" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

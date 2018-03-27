@@ -229,8 +229,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 if (i == 9) {
                     break;
                 }
-//                view = mInflater.inflate(R.layout.listitem_gallery_more, layout_gallery, false);
-//                layout_gallery.addView(view);
             }
         }
 

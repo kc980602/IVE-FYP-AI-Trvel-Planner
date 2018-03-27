@@ -50,18 +50,16 @@
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".Presenter.Mytrips.TripInfoActivity"
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
+
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity
-            android:name=".Presenter.Account.LoginActivity"
-            android:parentActivityName=".Presenter.Profile.ProfileActivity"
-            android:theme="@style/AppThemeNoActionBar" />
-        <activity
-            android:name=".Presenter.Account.RegisterActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity"
-            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".Presenter.Profile.TravelStyleActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
@@ -81,17 +79,27 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".Presenter.Attraction.AttractionImageActivity" />
         <activity
             android:name=".Presenter.Attraction.CityDetailActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
-            android:name=".Presenter.Mytrips.TripInfoActivity"
-            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity android:name=".Presenter.Attraction.AttractionImageActivity" />
-        <activity android:name=".Presenter.Attraction.CityBookmarksActivity"></activity>
+            android:name=".Presenter.Attraction.CityBookmarksActivity"
+            android:parentActivityName=".Presenter.Attraction.CityDetailActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".Presenter.Attraction.CityInfoActivity" />
+
+        <activity
+            android:name=".Presenter.Account.LoginActivity"
+            android:parentActivityName=".Presenter.Profile.ProfileActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".Presenter.Account.RegisterActivity"
+            android:parentActivityName=".Presenter.Account.LoginActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

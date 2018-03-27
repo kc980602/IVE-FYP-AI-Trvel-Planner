@@ -2,6 +2,7 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -135,7 +137,10 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_favorities:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("cityid", cityid);
                     intent.setClass(mcontext, CityBookmarksActivity.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     break;
             }
@@ -182,7 +187,6 @@ public class CityDetailActivity extends AppCompatActivity {
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
                     attractions = response.body().getAttractions();
-                    Log.e("onResponse", response.body().getAttractions().toString());
                     loadDataToView();
                 } else {
                     Log.d("onResponse", "Null respone");
@@ -199,7 +203,9 @@ public class CityDetailActivity extends AppCompatActivity {
     public void getTime() {
         DateTime dateTime = new DateTime(DateTimeZone.forID(city.getTimezone()));
         LocalTime localTime = dateTime.toLocalTime();
-        tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay() < 10 ? "0" + localTime.getHourOfDay() : localTime.getHourOfDay(), localTime.getMinuteOfHour() < 10 ? "0" + localTime.getMinuteOfHour() : localTime.getMinuteOfHour()));
+        String hour = localTime.getHourOfDay() < 10 ? "0" + String.valueOf(localTime.getHourOfDay()): String.valueOf(localTime.getHourOfDay());
+        String min = localTime.getMinuteOfHour() < 10 ? "0" + String.valueOf(localTime.getMinuteOfHour()) : String.valueOf(localTime.getMinuteOfHour());
+        tv_time.setText(String.format(Locale.ENGLISH, "%s:%s", hour, min));
     }
 
     public void getWeather() {
@@ -209,15 +215,25 @@ public class CityDetailActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.body() != null) {
                     String result = "";
-                    String output;
-
+                    String output, icon = "weather";
                     try {
-                        result = response.body().string() ;
-                        Log.e("getWeather", "Result: " + result);
+                        result = response.body().string();
                         JSONObject jsonObject = new JSONObject(result);
-                        output = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
-                        output += "\n" + String.format("%.1f",(Double.parseDouble(jsonObject.getJSONObject("main").getString("temp"))-273.15)) + "°C";
+                        output = String.format("%.1f", (Double.parseDouble(jsonObject.getJSONObject("main").getString("temp")) - 273.15)) + "°C";
+                        icon += jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
                         tv_weather.setText(output);
+                        int imgId = getResources().getIdentifier(icon, "drawable", getPackageName());
+                        final int finalImgId = imgId;
+                        tv_weather.getViewTreeObserver()
+                                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                                    @Override
+                                    public void onGlobalLayout() {
+                                        Drawable img = getResources().getDrawable(finalImgId);
+                                        img.setBounds(0, 0, img.getIntrinsicWidth() * tv_weather.getMeasuredHeight() / img.getIntrinsicHeight(), tv_weather.getMeasuredHeight());
+                                        tv_weather.setCompoundDrawables(img, null, null, null);
+                                        tv_weather.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                    }
+                                });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
