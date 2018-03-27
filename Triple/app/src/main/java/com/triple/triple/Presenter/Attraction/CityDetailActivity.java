@@ -198,7 +198,7 @@ public class CityDetailActivity extends AppCompatActivity {
     public void getTime() {
         DateTime dateTime = new DateTime(DateTimeZone.forID(city.getTimezone()));
         LocalTime localTime = dateTime.toLocalTime();
-        tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay(), localTime.getMinuteOfHour()));
+        tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay() < 10 ? "0" + localTime.getHourOfDay() : localTime.getHourOfDay(), localTime.getMinuteOfHour() < 10 ? "0" + localTime.getMinuteOfHour() : localTime.getMinuteOfHour()));
     }
 
     public void getWeather() {
@@ -207,21 +207,21 @@ public class CityDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.body() != null) {
-                    String result = null;
+                    String result = "";
                     String output;
 
                     try {
-                        result = response.body().string();
+                        result = response.body().string() ;
                         Log.e("getWeather", "Result: " + result);
                         JSONObject jsonObject = new JSONObject(result);
-                        output = jsonObject.getJSONObject("weather").getString("icon");
-                        output += jsonObject.getJSONObject("main").getString("temp");
-                        tv_weather.setText(jsonObject.getJSONObject("main").getString("temp"));
+                        output = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
+                        output += "\n" + (Double.parseDouble(jsonObject.getJSONObject("main").getString("temp"))-273.15) + "°C";
+                        tv_weather.setText(output);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
-                    Log.d("onResponse", "Null respone");
+                    Log.d("onResponse", "Null response");
                 }
             }
 
