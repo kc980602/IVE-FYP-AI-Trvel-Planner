@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Interface.ApiInterface;
 //import com.triple.triple.Interface.WeatherInterface;
+import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
@@ -28,6 +30,7 @@ import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 //import com.triple.triple.Sync.ApiWeather;
+import com.triple.triple.Sync.ApiWeather;
 import com.triple.triple.Sync.CreateTrip;
 
 import org.joda.time.DateTime;
@@ -47,8 +50,7 @@ import retrofit2.Response;
 public class CityDetailActivity extends AppCompatActivity {
 
     private Context mcontext = CityDetailActivity.this;
-    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-//    WeatherInterface weatherApi = ApiWeather.getClient().create(WeatherInterface.class);
+    WeatherInterface weatherApi = ApiWeather.getClient().create(WeatherInterface.class);
     private Toolbar toolbar;
     private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
@@ -70,7 +72,7 @@ public class CityDetailActivity extends AppCompatActivity {
         initView();
         getCityDetail();
         getTime();
-        //getWeather();
+        getWeather();
     }
 
     private void findViews() {
@@ -156,9 +158,10 @@ public class CityDetailActivity extends AppCompatActivity {
                     .error(R.drawable.image_null_tran)
                     .into(image);
             tv_name.setText(attraction.getName());
-            tv_rate_review.setText(String.format(Locale.ENGLISH,"%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
+            tv_rate_review.setText(String.format(Locale.ENGLISH, "%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
             cardView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     Context context = v.getContext();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("attractionId", attraction.getId());
@@ -172,7 +175,7 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     public void getCityDetail() {
-        Call<DataMeta> call = apiService.getAttractions(cityid, 10);
+        Call<DataMeta> call = Constant.apiService.getAttractions(cityid, 10);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
@@ -192,44 +195,41 @@ public class CityDetailActivity extends AppCompatActivity {
         });
     }
 
-        public void getTime(){
-            DateTime dateTime = new DateTime(DateTimeZone.forID(city.getTimezone()));
-            LocalTime localTime = dateTime.toLocalTime();
-            tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay(), localTime.getMinuteOfHour()));
-        }
+    public void getTime() {
+        DateTime dateTime = new DateTime(DateTimeZone.forID(city.getTimezone()));
+        LocalTime localTime = dateTime.toLocalTime();
+        tv_time.setText(String.format(Locale.ENGLISH, "%d:%d", localTime.getHourOfDay(), localTime.getMinuteOfHour()));
+    }
 
-        public void getWeather(){
-//            Call<ResponseBody> call = weatherApi.getWeather(city.getLatitude(), city.getLongitude(), "51595da2afec13ba782f96a781ac158a");
-//            call.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    if (response.body() != null) {
-//                        String result = null;
-//                        String output;
-//                        try
-//                        {
-//                            result = response.body().string();
-//                            JSONObject jsonObject = new JSONObject(result);
-//                            output = jsonObject.getJSONObject("weather").getString("icon");
-//                            output += jsonObject.getJSONObject("main").getString("temp");
-//                            tv_weather.setText(output);
-//                        }
-//                        catch (Exception e)
-//                        {
-//                            e.printStackTrace();
-//                        }
-//                        Log.e("onResponse", response.body().toString());
-//                        loadDataToView();
-//                    } else {
-//                        Log.d("onResponse", "Null respone");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    Log.e("onFailure", t.toString());
-//                }
-//
-//            });
-        }
+    public void getWeather() {
+        Call<ResponseBody> call = weatherApi.getWeather(city.getLatitude(), city.getLongitude(), "51595da2afec13ba782f96a781ac158a");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    String result = null;
+                    String output;
+
+                    try {
+                        result = response.body().string();
+                        Log.e("getWeather", "Result: " + result);
+                        JSONObject jsonObject = new JSONObject(result);
+                        output = jsonObject.getJSONObject("weather").getString("icon");
+                        output += jsonObject.getJSONObject("main").getString("temp");
+                        tv_weather.setText(jsonObject.getJSONObject("main").getString("temp"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.d("onResponse", "Null respone");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+
+        });
+    }
 }
