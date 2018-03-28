@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.triple.triple.Presenter.Mytrips.MytripsFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -14,8 +14,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_trips"
             android:layout_width="match_parent"
-            android:clipToPadding="false"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
             android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -206,7 +206,31 @@ public class AttractionDetailActivity extends AppCompatActivity {
             tv_attInfo_address.setVisibility(View.VISIBLE);
         }
 
-        image_map.getViewTreeObserver().addOnGlobalLayoutListener(new MyGlobalListenerClass());
+        image_map.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        image_map.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+
+                        View v = (View) findViewById(R.id.image_map);
+                        StaticMap map = new StaticMap()
+                                .center(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()))
+                                .size(v.getWidth() / 2, v.getHeight() / 2)
+                                .zoom(18)
+                                .scale(2).marker(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()));
+                        try {
+                            Picasso.with(mcontext)
+                                    .load(String.valueOf(map.toURL()))
+                                    .into(image_map);
+                        } catch (MalformedURLException e) {
+                        }
+                        image_map.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    }
+
+                });
+
 
         layout_gallery = (LinearLayout) findViewById(R.id.layout_gallery);
 
@@ -323,29 +347,4 @@ public class AttractionDetailActivity extends AppCompatActivity {
         setBookmark();
     }
 
-    class MyGlobalListenerClass implements ViewTreeObserver.OnGlobalLayoutListener {
-        @Override
-        public void onGlobalLayout() {
-            View v = (View) findViewById(R.id.image_map);
-            StaticMap map = new StaticMap()
-                    .center(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()))
-                    .size(v.getWidth() / 2, v.getHeight() / 2)
-                    .zoom(18)
-                    .scale(2).marker(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()));
-            try {
-                Picasso.with(mcontext)
-                        .load(String.valueOf(map.toURL()))
-                        .into(image_map);
-            } catch (MalformedURLException e) {
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        }).show();
-            }
-        }
-    }
 }
