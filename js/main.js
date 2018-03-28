@@ -52,11 +52,11 @@ $('#btnFW').click(function() {
       $(this).html('Submit <i class="material-icons right">send</i>')
 
       $('.modal-content').children('p').html(
-        "<p>Gender\t:" + $('input[name=gender]:checked').val() + "</p>" +
-        "<p>Age Group\t:" + $('#ageGroup').val() + "</p>" +
-        "<p>Income\t:" + $('#income').val() + "</p>" +
-        "<p>Nationality\t:" + $('#nation').val() + "</p>" +
-        "<p>Education level\t:" + $('#education').val() + "</p>"
+        "<p>Gender\t: " + $('input[name=gender]:checked').val() + "</p>" +
+        "<p>Age Group\t: " + $('#ageGroup option:selected').html() + "</p>" +
+        "<p>Income\t: " + $('#income option:selected').html() + "</p>" +
+        "<p>Nationality\t: " + $('#nation option:selected').html() + "</p>" +
+        "<p>Education level\t: " + $('#education option:selected').html() + "</p>"
       );
     }
   } else if (step == 2) {
