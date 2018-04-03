@@ -43,28 +43,6 @@ public class TripInfoActivity extends AppCompatActivity {
     private void initView() {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
-//        fragment_cover = new TripInfoCoverFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("tripDetail", (Serializable) tripDetail);
-//        fragment_cover.setArguments(bundle);
-//        fragment_content = new TripInfoContentFragment();
-//        Bundle bundle2 = new Bundle();
-//        bundle2.putInt("tripid", tripDetail.getId());
-//        fragment_content.setArguments(bundle2);
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.first, fragment_cover).add(R.id.second, fragment_content)
-//                .commit();
-//
-//        DragLayout.ShowNextPageNotifier nextIntf = new DragLayout.ShowNextPageNotifier() {
-//            @Override
-//            public void onDragNext() {
-//            }
-//        };
-//        
-//        draglayout.setNextPageListener(nextIntf);
-
         initViewPager();
 
     }

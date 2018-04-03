@@ -57,7 +57,6 @@ public class TripDetailActivity extends AppCompatActivity {
 
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
-    private Boolean isSaved = false;
     private CardView cv_trip;
     private ImageView image;
     private ActionBar ab;
@@ -76,15 +75,10 @@ public class TripDetailActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         isNew = (Boolean) bundle.getBoolean("isNew");
         if (!isNew) {
-            isSaved = (Boolean) bundle.getBoolean("isSaved");
             tripid = bundle.getInt("tripid");
             findView();
             initView();
-            if (isSaved) {
-                requestTripItinerary();
-            } else {
-                requestTripItinerary();
-            }
+            requestTripItinerary();
         } else {
             tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
             findView();
@@ -96,8 +90,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private void findView() {
         cv_trip = (CardView) findViewById(R.id.cv_trip);
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
-        bottomNavigationViewEx_all = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
-        bottomNavigationViewEx_saved = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card_saved);
+        bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
         tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
         tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
         tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
@@ -116,15 +109,6 @@ public class TripDetailActivity extends AppCompatActivity {
         avi.setIndicator(indicator);
         avi.hide();
 
-        if (isSaved) {
-            bottomNavigationViewEx_all.setVisibility(View.INVISIBLE);
-            bottomNavigationViewEx_saved.setVisibility(View.VISIBLE);
-            bottomNavigationViewEx = bottomNavigationViewEx_saved;
-        } else {
-            bottomNavigationViewEx_all.setVisibility(View.VISIBLE);
-            bottomNavigationViewEx_saved.setVisibility(View.INVISIBLE);
-            bottomNavigationViewEx = bottomNavigationViewEx_all;
-        }
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.enableShiftingMode(false);
@@ -186,19 +170,6 @@ public class TripDetailActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                     break;
-                case R.id.action_invite:
-                    break;
-                case R.id.action_save:
-                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                    saveTripToLocal();
-                    Snackbar.make(view, getString(R.string.mytrips_detail_tripsaved), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            }).show();
-                    break;
                 case android.R.id.home:
                     NavUtils.navigateUpFromSameTask(TripDetailActivity.this);
                     finish();
@@ -207,63 +178,6 @@ public class TripDetailActivity extends AppCompatActivity {
             return false;
         }
     };
-
-    private void saveTripToLocal() {
-        List<TripDetail> savedTrips;
-        Type type = new TypeToken<List<Trip>>() {
-        }.getType();
-        Gson gson = new Gson();
-        SharedPreferences data = new SecurePreferences(mcontext);
-        SharedPreferences.Editor editor = data.edit();
-        String jsonTripList = data.getString("savedTrips", null);
-        if (jsonTripList == null || jsonTripList.equals("[]")) {
-            savedTrips = new ArrayList<>();
-            savedTrips.add(tripDetail);
-        } else {
-            savedTrips = (List<TripDetail>) gson.fromJson(jsonTripList.toString(), type);
-            Boolean isFound = false;
-            for (TripDetail tmpTripDetail : savedTrips) {
-                if (tmpTripDetail.getId() == tripDetail.getId()) {
-                    savedTrips.remove(tmpTripDetail);
-                    savedTrips.add(tmpTripDetail);
-                    isFound = true;
-                    break;
-                }
-            }
-            if (!isFound) {
-                savedTrips.add(tripDetail);
-            }
-        }
-        String json = gson.toJson(savedTrips);
-        editor.putString("savedTrips", json);
-        editor.commit();
-    }
-
-    private void getTripFromLocal() {
-//        List<TripDetail> savedTrips;
-//        Type type = new TypeToken<List<Trip>>() {
-//        }.getType();
-//        Gson gson = new Gson();
-//        SharedPreferences data = new SecurePreferences(mcontext);
-//        String json = data.getString("savedTrips", "empty");
-//        if (!json.equals("empty")) {
-//            savedTrips = (List<TripDetail>) gson.fromJson(json.toString(), type);
-//            for (TripDetail tmpTripDetail : savedTrips) {
-//                if (tmpTripDetail.getId() == tripDetail.getId()) {
-//                    tripDetail = tmpTripDetail;
-//                    break;
-//                }
-//            }
-//        } else {
-//            View view = getWindow().getDecorView().findViewById(android.R.id.content);
-//            Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-//                    .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                        }
-//                    }).show();
-//        }
-    }
 
     public void requestTripItinerary() {
         startAnim();
@@ -323,8 +237,7 @@ public class TripDetailActivity extends AppCompatActivity {
             tripdays.add(tripday);
         }
         adapter.notifyDataSetChanged();
-        String addOn = isSaved ? " (" + getString(R.string.mytrips_offline) + ")" : "";
-        ab.setTitle(tripDetail.getTitle() + addOn);
+        ab.setTitle(tripDetail.getTitle());
         tv_tripdate.setText(DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length())));
         int dayLeft = DateTimeHelper.daysLeft(tripDetail.getVisit_date());
         if (dayLeft == 0) {

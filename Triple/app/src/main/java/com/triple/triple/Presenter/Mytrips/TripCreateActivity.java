@@ -200,7 +200,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
         String token = "Bearer ";
         token += UserDataHelper.getToken(mcontext);
-        Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, generate);
+        Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, "1");
         call.enqueue(new Callback<TripDetail>() {
             @Override
             public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {

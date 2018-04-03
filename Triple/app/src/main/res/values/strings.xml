@@ -70,10 +70,10 @@
     <string name="mytrips_saved">Saved</string>
     <string name="mytrips_offline">Offline Version</string>
     <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
-    <string name="mytrips_create_title">Create a trip</string>
+    <string name="mytrips_create_title">Generate a trip</string>
     <string name="mytrips_create_advise">Remark: The trip dates cannot be changed after creating the trip. Please select the trip dates carefully.</string>
-    <string name="mytrips_create_button">Create</string>
-    <string name="mytrips_create_button_cap">CREATE</string>
+    <string name="mytrips_create_button">Generate</string>
+    <string name="mytrips_create_button_cap">GENERATE</string>
     <string name="mytrips_create_tripname">Trip name</string>
     <string name="mytrips_create_tripdestination">Destination</string>
     <string name="mytrips_create_tripdates">Trip dates</string>

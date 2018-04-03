@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new SettingFragment();
                 break;
             case R.id.nav_help:
-                Intent intent = new Intent(MainActivity.this, AttractionImageActivity.class);
+                Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
                 startActivity(intent);
         }
 
