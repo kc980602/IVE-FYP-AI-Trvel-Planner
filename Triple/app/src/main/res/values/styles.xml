@@ -70,7 +70,7 @@
         <item name="android:colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:background">@color/transparent</item>
+        <item name="android:background">@color/gradient_primary_extreme</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
     </style>

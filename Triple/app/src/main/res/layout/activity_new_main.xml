@@ -12,32 +12,60 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image"
+            <RelativeLayout
+                android:id="@+id/layout_header"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/a8" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bkg_home" />
+
+                <include layout="@layout/gradient_header" />
+
+                <RelativeLayout
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/bkg_home_content" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
-                android:background="@color/grey"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_header"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:background="@color/black"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:background="@color/white"></LinearLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/MyToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/gradient_primary_extreme"
         app:navigationIcon="?homeAsUpIndicator"
         app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay">
 

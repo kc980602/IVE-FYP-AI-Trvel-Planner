@@ -28,6 +28,7 @@
     <color name="button_pressed">#8AB73F</color>
     <color name="button_default">#8AC148</color>
 
+    <color name="gradient_primary_extreme">#858AC148</color>
     <color name="gradient_black_extreme">#85000000</color>
     <color name="gradient_black_light">#30000000</color>
 
