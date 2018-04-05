@@ -38,9 +38,12 @@ import com.triple.triple.Sync.CreateTrip;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,6 +61,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private BottomNavigationViewEx nav_bar;
     private LinearLayout layout_attraction;
     private List<Attraction> attractions;
+    private DataMeta dataMeta, attraction, hotel, restaurant;
     private int cityid;
     private City city;
     private ImageView image;
@@ -124,9 +128,17 @@ public class CityDetailActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Intent intent = new Intent();
+            Bundle bundle = new Bundle();
             switch (item.getItemId()) {
                 case R.id.action_discover:
-
+                    bundle.putSerializable("city", city);
+                    bundle.putSerializable("dataMeta", dataMeta);
+                    bundle.putSerializable("attraction", attraction);
+                    bundle.putSerializable("hotel", hotel);
+                    bundle.putSerializable("restaurants", restaurant);
+                    intent.setClass(mcontext, AttractionListActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
                 case R.id.action_info:
                     intent.setClass(mcontext, CityInfoActivity.class);
@@ -137,7 +149,6 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_favorities:
-                    Bundle bundle = new Bundle();
                     bundle.putInt("cityid", cityid);
                     intent.setClass(mcontext, CityBookmarksActivity.class);
                     intent.putExtras(bundle);
@@ -181,13 +192,67 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     public void getCityDetail() {
-        Call<DataMeta> call = Constant.apiService.getAttractions(cityid, 10);
+        Call<DataMeta> call = Constant.apiService.getAttractions(cityid,10);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
+                    dataMeta = response.body();
                     attractions = response.body().getAttractions();
                     loadDataToView();
+                } else {
+                    Log.d("onResponse", "Null respone");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataMeta> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
+    }
+
+    public void getAttractions() {
+        Call<DataMeta> call = Constant.apiService.getCityAttractions(cityid);
+        call.enqueue(new Callback<DataMeta>() {
+            @Override
+            public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
+                if (response.body() != null) {
+                    attraction = response.body();
+                } else {
+                    Log.d("onResponse", "Null respone");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataMeta> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
+
+        call = Constant.apiService.getCityHotels(cityid);
+        call.enqueue(new Callback<DataMeta>() {
+            @Override
+            public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
+                if (response.body() != null) {
+                    hotel = response.body();
+                } else {
+                    Log.d("onResponse", "Null respone");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataMeta> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
+
+        call = Constant.apiService.getCityRestaurants(cityid);
+        call.enqueue(new Callback<DataMeta>() {
+            @Override
+            public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
+                if (response.body() != null) {
+                    restaurant = response.body();
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
@@ -249,4 +314,6 @@ public class CityDetailActivity extends AppCompatActivity {
 
         });
     }
+
+
 }

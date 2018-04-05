@@ -4,6 +4,7 @@ import com.triple.triple.Model.Article;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.DataMeta;
+import com.triple.triple.Model.KeyValue;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
@@ -13,6 +14,7 @@ import org.w3c.dom.Attr;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -63,6 +65,21 @@ public interface ApiInterface {
             @Query("limit") Integer limit
     );
 
+    @GET("/city/{id}/attractions/attractions")
+    Call<DataMeta> getCityAttractions(
+            @Path("id") Integer id
+    );
+
+    @GET("/city/{id}/attractions/hotels")
+    Call<DataMeta> getCityHotels(
+            @Path("id") Integer id
+    );
+
+    @GET("/city/{id}/attractions/restaurants")
+    Call<DataMeta> getCityRestaurants(
+            @Path("id") Integer id
+    );
+
     @GET("attraction/{id}")
     Call<Attraction> getInfo(
             @Path("id") Integer id
@@ -95,6 +112,11 @@ public interface ApiInterface {
     Call<List<Article>> getTripArticle(
             @Header("Authorization") String authHeader,
             @Path("id") Integer id
+    );
+
+    @GET("member/preference")
+    Call<List<KeyValue>> getPreferences(
+            @Header("Authorization") String authHeader
     );
 
     @FormUrlEncoded
