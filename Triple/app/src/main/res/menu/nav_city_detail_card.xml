@@ -19,7 +19,7 @@
     <item
         android:id="@+id/action_favorities"
         android:icon="@drawable/ic_bookmark"
-        android:title="@string/city_detail_favorities"></item>
+        android:title="@string/city_detail_favorites"></item>
 
 
 </menu>

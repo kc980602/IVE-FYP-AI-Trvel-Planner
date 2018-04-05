@@ -2,7 +2,7 @@ package com.triple.triple.Sync;
 
 import android.content.Context;
 
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.UserDataHelper;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class GetPreference {
 
     public String run(String url, Context mcontext) throws Exception {
         String token = "Bearer ";
-        token += Token.getToken(mcontext);
+        token += UserDataHelper.getToken(mcontext);
         Request request = new Request.Builder()
                 .header("Authorization", token)
                 .url(url)

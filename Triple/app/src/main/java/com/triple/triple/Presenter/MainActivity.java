@@ -1,10 +1,8 @@
 package com.triple.triple.Presenter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,20 +12,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
-import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
-import com.triple.triple.Helper.Token;
+import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.SystemProperty;
+import com.triple.triple.Presenter.Account.SettingFragment;
+import com.triple.triple.Presenter.Attraction.AttractionImageActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.R;
@@ -50,10 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setTheme(R.style.AppThemeNoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        requestData();
         findView();
         initView();
-        if (!Token.checkTokenExist(this)) {
+        if (!UserDataHelper.checkTokenExist(this)) {
             CheckLogin.directLogin(this);
         }
     }
@@ -77,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         displaySelectedScreen(R.id.nav_home);
-        requestData();
     }
 
     @Override
@@ -89,19 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return item.getItemId() == R.id.action_search || super.onOptionsItemSelected(item);
-    }
-
-
+  
     private void displaySelectedScreen(int itemId) {
 
         //creating fragment object
@@ -117,9 +99,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarNormal(R.string.title_mytrips);
                 fragment = new MytripsFragment();
                 break;
+            case R.id.nav_settings:
+                toolbarNormal(R.string.title_settings);
+                fragment = new SettingFragment();
+                break;
+            case R.id.nav_help:
+                Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
+                startActivity(intent);
         }
 
-        //replacing the fragment
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame_layout_main, fragment);
@@ -128,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
     }
 
     private void toolbarNormal(int title) {
@@ -149,25 +138,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         displaySelectedScreen(item.getItemId());
         //make this method blank
         return true;
-    }
-
-    public void requestData(){
-        Call<SystemProperty> call = apiService.getProperty();
-        call.enqueue(new Callback<SystemProperty>() {
-            @Override
-            public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
-                SystemProperty sp = response.body();
-                Gson gson = new Gson();
-                SharedPreferences data = new SecurePreferences(MainActivity.this);
-                SharedPreferences.Editor editor = data.edit();
-                editor.putString("systemProperty", gson.toJson(sp));
-                editor.apply();
-            }
-
-            @Override
-            public void onFailure(Call<SystemProperty> call, Throwable t) {
-                Log.e("getSystemProperty", t.getMessage());
-            }
-        });
     }
 }

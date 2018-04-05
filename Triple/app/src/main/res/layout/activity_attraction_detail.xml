@@ -55,6 +55,7 @@
             android:src="@drawable/ic_bookmark_add"
             android:tint="@color/white"
             app:layout_anchor="@id/layout_appbar"
+            android:onClick="onFabClick"
             app:layout_anchorGravity="bottom|end" />
 
         <android.support.v4.widget.NestedScrollView

@@ -23,8 +23,8 @@
 
         <activity
             android:name=".Presenter.MainActivity"
-            android:theme="@style/SplashTheme"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,37 +41,37 @@
             android:name=".Presenter.Account.ForgetPasswordActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
-            android:name=".Presenter.Mytrips.MytripsActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
-        <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
-            android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
+            android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".Presenter.Mytrips.MytripsActivity"
+            android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Presenter.Mytrips.TripInfoActivity"
+            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
+        <activity
+            android:name=".Presenter.Attraction.AttractionListActivity"
+            android:parentActivityName=".Presenter.Attraction.CityDetailActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity
-            android:name=".Presenter.Account.LoginActivity"
-            android:parentActivityName=".Presenter.Profile.ProfileActivity"
-            android:theme="@style/AppThemeNoActionBar" />
-        <activity
-            android:name=".Presenter.Account.RegisterActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Profile.TravelStyleActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:launchMode="singleInstance"
             android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -85,15 +85,28 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".Presenter.Attraction.AttractionImageActivity" />
         <activity
             android:name=".Presenter.Attraction.CityDetailActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Presenter.Attraction.CityBookmarksActivity"
+            android:parentActivityName=".Presenter.Attraction.CityDetailActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
-            android:name=".Presenter.Mytrips.TripInfoActivity"
-            android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
+            android:name=".Presenter.Account.LoginActivity"
+            android:parentActivityName=".Presenter.Profile.ProfileActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".Presenter.Account.RegisterActivity"
+            android:parentActivityName=".Presenter.Account.LoginActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Presenter.NewMainActivity"
+            android:parentActivityName=".Presenter.MainActivity"></activity>
     </application>
 
 </manifest>

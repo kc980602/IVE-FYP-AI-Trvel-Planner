@@ -4,13 +4,17 @@ import com.triple.triple.Model.Article;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.DataMeta;
+import com.triple.triple.Model.KeyValue;
 import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
 
+import org.w3c.dom.Attr;
+
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -56,9 +60,24 @@ public interface ApiInterface {
     );
 
     @GET("/city/{id}/attractions")
-    Call <DataMeta> getAttractions(
+    Call<DataMeta> getAttractions(
             @Path("id") Integer id,
             @Query("limit") Integer limit
+    );
+
+    @GET("/city/{id}/attractions/attractions")
+    Call<DataMeta> getCityAttractions(
+            @Path("id") Integer id
+    );
+
+    @GET("/city/{id}/attractions/hotels")
+    Call<DataMeta> getCityHotels(
+            @Path("id") Integer id
+    );
+
+    @GET("/city/{id}/attractions/restaurants")
+    Call<DataMeta> getCityRestaurants(
+            @Path("id") Integer id
     );
 
     @GET("attraction/{id}")
@@ -66,8 +85,17 @@ public interface ApiInterface {
             @Path("id") Integer id
     );
 
-    @GET("trip/bookmarks")
-    Call<List<Trip>> getBookmark();
+    @POST("attraction/{id}/bookmark")
+    Call<Void> setBookmark(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
+
+    @GET("city/{id}/attraction/bookmarks")
+    Call<List<Attraction>> getBookmark(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
 
     @GET("trip")
     Call<List<Trip>> listTrip(
@@ -84,6 +112,11 @@ public interface ApiInterface {
     Call<List<Article>> getTripArticle(
             @Header("Authorization") String authHeader,
             @Path("id") Integer id
+    );
+
+    @GET("member/preference")
+    Call<List<KeyValue>> getPreferences(
+            @Header("Authorization") String authHeader
     );
 
     @FormUrlEncoded

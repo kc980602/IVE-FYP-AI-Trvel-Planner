@@ -61,13 +61,13 @@
 
             <com.daasuu.bl.BubbleLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_toEndOf="@+id/layout_image"
                 android:padding="8dp"
                 app:bl_arrowDirection="left"
                 app:bl_arrowHeight="15dp"
-                app:bl_arrowPosition="27dp"
+                app:bl_arrowPosition="23dp"
                 app:bl_arrowWidth="10dp"
                 app:bl_strokeWidth="0dp">
 

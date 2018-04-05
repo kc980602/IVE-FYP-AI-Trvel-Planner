@@ -67,7 +67,8 @@
             android:id="@+id/cb_generate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mytrips_create_checkbox" />
+            android:text="@string/mytrips_create_checkbox"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/bt_create"

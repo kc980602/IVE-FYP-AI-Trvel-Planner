@@ -2,20 +2,15 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ScrollingView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,47 +21,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.AppBarStateChangeListener;
-import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
-import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
-import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.GetAttractionDetail;
-import com.triple.triple.Sync.GetTrip;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
-
 public class AttractionDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = "AttractionDetail";
     private Context mcontext = AttractionDetailActivity.this;
 
     private Toolbar toolbar;
@@ -91,7 +66,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private Integer attractionId;
     private String attractionName = "";
     private TextView tv_title;
-    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private ImageView image;
 
     @Override
@@ -232,7 +206,31 @@ public class AttractionDetailActivity extends AppCompatActivity {
             tv_attInfo_address.setVisibility(View.VISIBLE);
         }
 
-        image_map.getViewTreeObserver().addOnGlobalLayoutListener(new MyGlobalListenerClass());
+        image_map.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        image_map.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+
+                        View v = (View) findViewById(R.id.image_map);
+                        StaticMap map = new StaticMap()
+                                .center(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()))
+                                .size(v.getWidth() / 2, v.getHeight() / 2)
+                                .zoom(18)
+                                .scale(2).marker(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()));
+                        try {
+                            Picasso.with(mcontext)
+                                    .load(String.valueOf(map.toURL()))
+                                    .into(image_map);
+                        } catch (MalformedURLException e) {
+                        }
+                        image_map.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    }
+
+                });
+
 
         layout_gallery = (LinearLayout) findViewById(R.id.layout_gallery);
 
@@ -240,7 +238,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .placeholder(R.drawable.image_null_tran)
+                    .placeholder(R.drawable.image_null)
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -255,8 +253,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 if (i == 9) {
                     break;
                 }
-//                view = mInflater.inflate(R.layout.listitem_gallery_more, layout_gallery, false);
-//                layout_gallery.addView(view);
             }
         }
 
@@ -264,56 +260,51 @@ public class AttractionDetailActivity extends AppCompatActivity {
         layout_main.invalidate();
     }
 
-    private class RequestAttractionDetail extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            startAnim();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-//                url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_attraction) + "/" + attractionId;
-//                respone = new GetAttractionDetail().run(url);
-                url = getResources().getString(R.string.api_prefix);
-                respone = new GetAttractionDetail().run(url, attractionId);
-            } catch (Exception e) {
-                e.printStackTrace();
+    public void setBookmark() {
+        String token = "Bearer ";
+        token += UserDataHelper.getToken(mcontext);
+        Call<Void> call = Constant.apiService.setBookmark(token, attractionId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    setBookmarkSuccess();
+                    fab.setImageResource(R.drawable.ic_bookmark_saved);
+                } else {
+                    Log.e(TAG, "respone fail");
+                    setBookmarkFail();
+                }
             }
-            return respone;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject data = new JSONObject(result);
-                Type type = new TypeToken<Attraction>() {
-                }.getType();
-                Gson gson = new Gson();
-                attraction = (Attraction) gson.fromJson(data.toString(), type);
-                loadDataToView();
-            } catch (Exception e) {
-//                new AttractionDetailActivity.RequestAttractionDetail().execute();
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        }).show();
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+                setBookmarkFail();
             }
-            stopAnim();
-        }
+        });
+    }
+
+    private void setBookmarkSuccess() {
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, getString(R.string.attraction_detail_bookmark_success), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {}
+                }).show();
+    }
+
+    private void setBookmarkFail() {
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, getString(R.string.attraction_detail_bookmark_fail), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {}
+                }).show();
     }
 
     public void getUserDetails() {
         startAnim();
-
-        Call<Attraction> call = apiService.getInfo(attractionId);
+        Call<Attraction> call = Constant.apiService.getInfo(attractionId);
         call.enqueue(new Callback<Attraction>() {
             @Override
             public void onResponse(Call<Attraction> call, Response<Attraction> response) {
@@ -344,29 +335,16 @@ public class AttractionDetailActivity extends AppCompatActivity {
         avi.hide();
     }
 
-    class MyGlobalListenerClass implements ViewTreeObserver.OnGlobalLayoutListener {
-        @Override
-        public void onGlobalLayout() {
-            View v = (View) findViewById(R.id.image_map);
-            StaticMap map = new StaticMap()
-                    .center(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()))
-                    .size(v.getWidth() / 2, v.getHeight() / 2)
-                    .zoom(18)
-                    .scale(2).marker(new StaticMap.GeoPoint(attraction.getLatitude(), attraction.getLongitude()));
-            try {
-                Picasso.with(mcontext)
-                        .load(String.valueOf(map.toURL()))
-                        .into(image_map);
-            } catch (MalformedURLException e) {
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        }).show();
-            }
-        }
+    public void onImageClick(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("attraction", attraction);
+        Intent intent = new Intent(mcontext, AttractionImageActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
+
+    public void onFabClick(View view) {
+        setBookmark();
+    }
+
 }

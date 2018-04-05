@@ -70,10 +70,10 @@
     <string name="mytrips_saved">Saved</string>
     <string name="mytrips_offline">Offline Version</string>
     <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
-    <string name="mytrips_create_title">Create a trip</string>
+    <string name="mytrips_create_title">Generate a trip</string>
     <string name="mytrips_create_advise">Remark: The trip dates cannot be changed after creating the trip. Please select the trip dates carefully.</string>
-    <string name="mytrips_create_button">Create</string>
-    <string name="mytrips_create_button_cap">CREATE</string>
+    <string name="mytrips_create_button">Generate</string>
+    <string name="mytrips_create_button_cap">GENERATE</string>
     <string name="mytrips_create_tripname">Trip name</string>
     <string name="mytrips_create_tripdestination">Destination</string>
     <string name="mytrips_create_tripdates">Trip dates</string>
@@ -101,7 +101,8 @@
     <string name="mytrips_detail_itinerary_departure">Departure time:</string>
     <string name="mytrips_detail_itinerary_return">Return time:</string>
 
-    <string name="mytrips_info_days">Days</string>
+    <string name="mytrips_article_days">Days</string>
+    <string name="mytrips_article_highlight">Trip Highlight</string>
 
     <string name="profile_preference">Your Travel Style</string>
     <string name="profile_preference_edit">Edit travel style</string>
@@ -109,7 +110,7 @@
 
     <string name="city_detail_discover">Discover</string>
     <string name="city_detail_info">Info</string>
-    <string name="city_detail_favorities">Favorities</string>
+    <string name="city_detail_favorites">Favorites</string>
     <string name="city_detail_plan">Get Plan</string>
     <string name="city_detail_topattraction">Attractions</string>
 
@@ -118,6 +119,8 @@
     <string name="attraction_detail_bookmark">Add to trip</string>
     <string name="attraction_detail_info">Essential Information</string>
     <string name="attraction_detail_review">Reviews</string>
+    <string name="attraction_detail_bookmark_success">Added to Favorites</string>
+    <string name="attraction_detail_bookmark_fail">Encounter error, try again</string>
 
     <string-array name="destination">
         <item>asssss</item>
@@ -145,6 +148,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="snackbar_ok">OK</string>
+    <string name="snackbar_refersh">Refersh</string>
     <string name="dialog_progress_title">Processing...</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="intent_share_header">Share this by</string>
@@ -153,10 +157,18 @@
         %1$s\nCheck it out in Triple!\nTriple - An A.I. Driven Travel Planner\n%2$s
     </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
-
     <string name="action_settings">Settings</string>
+
+    <string-array name="category_id">
+        <item>4bf58dd8d48988d1fa931735</item>
+        <item>4bf58dd8d48988d1d5941735</item>
+        <item>4bf58dd8d48988d1c4941735</item>
+    </string-array>
+
+    <string-array name="category_name">
+        <item>Hotel</item>
+        <item>Hotel Bar</item>
+        <item>Restaurant</item>
+    </string-array>
 
 </resources>

@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
-    <item android:drawable="@color/white"/>
+    <item android:drawable="@color/white" />
+
+
     <item
-        android:gravity="center"
-        android:drawable="@drawable/product_logo_144dp"/>
+        android:width="133dp"
+        android:height="133dp"
+        android:drawable="@drawable/icon"
+        android:gravity="center" >
+    </item>
+
+
+    <item
+        android:width="80dp"
+        android:height="33dp"
+        android:top="500dp"
+        android:drawable="@drawable/icon_text_grey"
+        android:gravity="center" />
+
+
 </layer-list>

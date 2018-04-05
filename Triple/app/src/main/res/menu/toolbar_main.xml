@@ -8,5 +8,8 @@
         android:icon="@drawable/ic_search_white"
         android:orderInCategory="300"
         android:title=" "
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView">
+
+    </item>
 </menu>

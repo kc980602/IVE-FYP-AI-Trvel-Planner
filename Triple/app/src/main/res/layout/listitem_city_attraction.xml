@@ -46,7 +46,7 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="9.1/10  - 0 Reviews" />
+                    android:text="9.1/10 - 0 Reviews" />
 
         </LinearLayout>
     </RelativeLayout>

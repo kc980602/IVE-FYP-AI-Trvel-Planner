@@ -37,8 +37,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/page_start" />
-
     <FrameLayout
         android:id="@+id/frame_layout_main"
         android:layout_width="match_parent"
