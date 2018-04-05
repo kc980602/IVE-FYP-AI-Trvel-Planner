@@ -14,32 +14,32 @@ import com.triple.triple.R;
 
 public class BottomNavigationViewHelper {
 
-    public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx){
-        bottomNavigationViewEx.enableAnimation(false);
-        bottomNavigationViewEx.enableItemShiftingMode(false);
-        bottomNavigationViewEx.enableShiftingMode(false);
-    }
-
-    public static void enableNavigation(final Context context, BottomNavigationViewEx view) {
-        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_info:
-
-                        break;
-                    case R.id.action_itenary:
-
-                        break;
-                    case R.id.action_invite:
-
-                        break;
-                    case R.id.action_save:
-
-                        break;
-                }
-                return false;
-            }
-        });
-    }
+//    public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx){
+//        bottomNavigationViewEx.enableAnimation(false);
+//        bottomNavigationViewEx.enableItemShiftingMode(false);
+//        bottomNavigationViewEx.enableShiftingMode(false);
+//    }
+//
+//    public static void enableNavigation(final Context context, BottomNavigationViewEx view) {
+//        view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.action_info:
+//
+//                        break;
+//                    case R.id.action_itenary:
+//
+//                        break;
+//                    case R.id.action_invite:
+//
+//                        break;
+//                    case R.id.action_save:
+//
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 }

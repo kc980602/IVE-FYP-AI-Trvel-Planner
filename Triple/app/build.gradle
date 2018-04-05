@@ -55,4 +55,6 @@ dependencies {
     implementation 'com.github.renaudcerrato:static-maps-api:1.0.4'
     implementation 'me.rohanpeshkar.filterablelistdialog:filterablelistdialog:0.0.1'
     implementation 'com.veinhorn.scrollgalleryview:library:1.0.8'
+    implementation 'com.github.ksoichiro:android-observablescrollview:1.6.0'
+    implementation 'com.nineoldandroids:library:2.4.0'
 }
