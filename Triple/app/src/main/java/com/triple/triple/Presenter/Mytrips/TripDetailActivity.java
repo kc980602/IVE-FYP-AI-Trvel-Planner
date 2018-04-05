@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -142,7 +143,7 @@ public class TripDetailActivity extends AppCompatActivity {
             case R.id.action_edit:
                 break;
             case R.id.action_delete:
-
+                fetchRemoveTrip();
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -150,6 +151,31 @@ public class TripDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void fetchRemoveTrip() {
+        String token = "Bearer ";
+        token += UserDataHelper.getToken(mcontext);
+        Call call = apiService.removeTrip(token, tripid);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.code() == 204) {
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                } else {
+                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                    Snackbar.make(view, "Something went wrong! (Error:1102)", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                View view = getWindow().getDecorView().findViewById(android.R.id.content);
+                Log.e("onFailure", t.getMessage());
+                Snackbar.make(view, "Something went wrong! (Error:1103)", Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {

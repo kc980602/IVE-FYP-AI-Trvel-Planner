@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -37,8 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MytripsFragment extends Fragment {
-
-
+    private View view;
+    private MytripsFragment fragment = this;
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TripAdapter adapter;
@@ -52,7 +53,7 @@ public class MytripsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mytrips, container, false);
+        view = inflater.inflate(R.layout.fragment_mytrips, container, false);
         avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         rv_trips = (RecyclerView) view.findViewById(R.id.rv_trips);
@@ -69,6 +70,7 @@ public class MytripsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                trips.clear();
                 requestTrip();
             }
         });
@@ -83,8 +85,19 @@ public class MytripsFragment extends Fragment {
                 }
             }).show();
         }
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Snackbar.make(view, "Trip removed", Snackbar.LENGTH_LONG).show();
+                swipeRefreshLayout.setRefreshing(true);
+                trips.clear();
+                requestTrip();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
 
@@ -101,7 +114,6 @@ public class MytripsFragment extends Fragment {
                 Intent intent = new Intent(getContext(), TripCreateActivity.class);
                 startActivity(intent);
                 break;
-
         }
         return true;
     }
@@ -121,7 +133,7 @@ public class MytripsFragment extends Fragment {
                     rv_trips.setHasFixedSize(true);
                     rv_trips.setLayoutManager(mLayoutManager);
                     rv_trips.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new TripAdapter(getActivity(), trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
+                    adapter = new TripAdapter(fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
                     rv_trips.setAdapter(adapter);
                 } else {
                     requestFail();

@@ -13,6 +13,7 @@ import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Mytrips.TripDetailActivity;
 import com.triple.triple.R;
 
@@ -24,13 +25,13 @@ import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
 
-    private Activity activity;
+    private MytripsFragment fragment;
     private List<Trip> trips;
     private String isSaved;
     private int userid;
 
-    public TripAdapter(Activity activity, List<Trip> trips, String isSaved, int userid) {
-        this.activity = activity;
+    public TripAdapter(MytripsFragment fragment, List<Trip> trips, String isSaved, int userid) {
+        this.fragment = fragment;
         this.trips = trips;
         this.isSaved = isSaved;
         this.userid = userid;
@@ -65,9 +66,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                     if (tv_saved.getVisibility() == View.VISIBLE) {
                         bundle.putBoolean("isSaved", true);
                     }
-                    Intent indent = new Intent(activity, TripDetailActivity.class);
+                    Intent indent = new Intent(fragment.getActivity(), TripDetailActivity.class);
                     indent.putExtras(bundle);
-                    activity.startActivity(indent);
+                    fragment.startActivityForResult(indent, 1);
                 }
             });
         }
@@ -85,7 +86,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     public void onBindViewHolder(TripViewHolder holder, int i) {
         Trip trip = trips.get(i);
         String date = DateTimeHelper.castDateToLocale(trip.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(trip.getVisit_date(), trip.getVisit_length()));
-        Picasso.with(activity)
+        Picasso.with(fragment.getActivity())
                 .load(trip.getCity().getPhoto())
                 .fit().centerCrop()
                 .placeholder(R.drawable.image_null_tran)
