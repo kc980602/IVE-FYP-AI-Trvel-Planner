@@ -3,6 +3,8 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.triple.triple.Model.TripDay;
+import com.triple.triple.Model.TripDetail;
+import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
+import com.triple.triple.Presenter.Mytrips.ItineraryActivity;
 import com.triple.triple.R;
 
 import java.util.List;
@@ -24,10 +29,15 @@ public class TripDayAdapter extends BaseAdapter {
 
     Context context;
     List<TripDay> tripDays;
+    TripDetail tripDetail;
 
     public TripDayAdapter(Context context, List<TripDay> tripDays) {
         this.context = context;
         this.tripDays = tripDays;
+    }
+
+    public void setTripDetail (TripDetail tripDetail){
+        this.tripDetail = tripDetail;
     }
 
     @Override
@@ -47,7 +57,7 @@ public class TripDayAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.listviewitem_mytrips_detail_day, parent, false);
@@ -57,10 +67,23 @@ public class TripDayAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        TripDay tripDay = tripDays.get(position);
+        final TripDay tripDay = tripDays.get(position);
         holder.tv_tripdayid.setText(String.valueOf(tripDay.getId()));
         holder.tv_day.setText(tripDay.getName());
         holder.tv_desc.setText(tripDay.getDesc());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tripday = holder.tv_day.getText().toString();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("tripday", tripday);
+                bundle.putSerializable("tripDetail", tripDetail);
+                Intent intent = new Intent(context, ItineraryActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
     }

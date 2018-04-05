@@ -56,7 +56,6 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private Context mcontext = CityDetailActivity.this;
     WeatherInterface weatherApi = ApiWeather.getClient().create(WeatherInterface.class);
-    private Toolbar toolbar;
     private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
     private LinearLayout layout_attraction;
@@ -141,7 +140,9 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_info:
+                    bundle.putSerializable("city", city);
                     intent.setClass(mcontext, CityInfoActivity.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     break;
                 case R.id.action_plan:

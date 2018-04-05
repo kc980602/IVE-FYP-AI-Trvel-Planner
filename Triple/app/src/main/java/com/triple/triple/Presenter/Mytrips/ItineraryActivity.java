@@ -27,6 +27,8 @@ public class ItineraryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private TripDetail tripDetail;
+    private String tripday;
+    private int num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class ItineraryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
+        tripday = (String) bundle.getSerializable("tripday");
+        num = (Integer.parseInt(tripday.substring(3))) - 1;
 
         toolbar.setTitle(tripDetail.getTitle());
         setSupportActionBar(toolbar);
@@ -70,8 +74,8 @@ public class ItineraryActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
 
-//        TabLayout.Tab tab = tabLayout.getTag("");
-//        tab.select();
+        TabLayout.Tab tab = tabLayout.getTabAt(num);
+        tab.select();
     }
 
 
