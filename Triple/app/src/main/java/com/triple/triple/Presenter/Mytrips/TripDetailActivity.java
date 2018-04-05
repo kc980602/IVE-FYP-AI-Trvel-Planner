@@ -228,6 +228,7 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void afterGetData() {
+        adapter.setTripDetail(tripDetail);
         List<TripItinerary> itineraryList = tripDetail.getItinerary();
         for (int i = 0; i < itineraryList.size(); i++) {
             TripDay tripday = new TripDay();
