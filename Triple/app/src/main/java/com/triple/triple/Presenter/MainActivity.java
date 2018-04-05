@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
+  
     private void displaySelectedScreen(int itemId) {
 
         //creating fragment object
