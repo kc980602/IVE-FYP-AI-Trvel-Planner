@@ -14,11 +14,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_attractions"
-            android:paddingHorizontal="8dp"
-            android:paddingTop="8dp"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
 
             android:scrollbars="vertical" />
 

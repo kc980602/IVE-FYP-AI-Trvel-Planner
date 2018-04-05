@@ -116,6 +116,7 @@ public class MytripsFragment extends Fragment {
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
                 if (response.body() != null) {
                     List<Trip> newTrips = response.body();
+                    trips.clear();
                     trips.addAll(newTrips);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                     rv_trips.setHasFixedSize(true);

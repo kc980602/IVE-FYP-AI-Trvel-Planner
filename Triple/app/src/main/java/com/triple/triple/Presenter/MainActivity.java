@@ -2,6 +2,7 @@ package com.triple.triple.Presenter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
+import com.nineoldandroids.view.ViewHelper;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 
 /**
  * Created by Kevin on 2018/3/8.
@@ -35,6 +36,7 @@ public class City implements Serializable {
     @SerializedName("longitude")
     @Expose
     private Double longitude;
+    private Timestamp timestamp;
 
     public int getId() {
         return id;
@@ -87,4 +89,6 @@ public class City implements Serializable {
     public Double getLongitude() { return longitude;}
 
     public void setLongitude(Double longitude) { this.longitude = longitude;}
+
+
 }
