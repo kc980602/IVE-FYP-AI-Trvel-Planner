@@ -162,34 +162,34 @@ public class CityDetailActivity extends AppCompatActivity {
     };
 
     private void loadDataToView() {
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        for (final Attraction attraction : attractions) {
-            View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
-            CardView cardView = view.findViewById(R.id.cv_trip);
-            ImageView image = view.findViewById(R.id.image);
-            TextView tv_name = view.findViewById(R.id.tv_name);
-            TextView tv_rate_review = view.findViewById(R.id.tv_rate_review);
-            Picasso.with(mcontext)
-                    .load(attraction.getBestPhoto())
-                    .fit().centerCrop()
-                    .placeholder(R.drawable.image_null_tran)
-                    .error(R.drawable.image_null_tran)
-                    .into(image);
-            tv_name.setText(attraction.getName());
-            tv_rate_review.setText(String.format(Locale.ENGLISH, "%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("attractionId", attraction.getId());
-                    Intent intent = new Intent(context, AttractionDetailActivity.class);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
-            });
-            layout_attraction.addView(view);
-        }
+//        LayoutInflater mInflater = LayoutInflater.from(this);
+//        for (final Attraction attraction : attractions) {
+//            View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
+//            CardView cardView = view.findViewById(R.id.cv_trip);
+//            ImageView image = view.findViewById(R.id.image);
+//            TextView tv_name = view.findViewById(R.id.tv_name);
+//            TextView tv_rate_review = view.findViewById(R.id.tv_rate_review);
+//            Picasso.with(mcontext)
+//                    .load(attraction.getBestPhoto())
+//                    .fit().centerCrop()
+//                    .placeholder(R.drawable.image_null_tran)
+//                    .error(R.drawable.image_null_tran)
+//                    .into(image);
+//            tv_name.setText(attraction.getName());
+//            tv_rate_review.setText(String.format(Locale.ENGLISH, "%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
+//            cardView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Context context = v.getContext();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("attractionId", attraction.getId());
+//                    Intent intent = new Intent(context, AttractionDetailActivity.class);
+//                    intent.putExtras(bundle);
+//                    context.startActivity(intent);
+//                }
+//            });
+//            layout_attraction.addView(view);
+//        }
     }
 
     public void getCityDetail() {

@@ -10,4 +10,5 @@ import com.triple.triple.Sync.ApiClient;
 public class Constant {
     public  static final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     public  static final String SharedPreferences = "DATA";
+    public  static final String SP_SYSTEMPROPERTY= "systemProperty";
 }

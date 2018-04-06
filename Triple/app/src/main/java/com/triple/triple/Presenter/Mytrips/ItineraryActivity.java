@@ -50,7 +50,10 @@ public class ItineraryActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         tripDetail = (TripDetail) bundle.getSerializable("tripDetail");
         tripday = (String) bundle.getSerializable("tripday");
-        num = (Integer.parseInt(tripday.substring(3))) - 1;
+        if (tripday!=null) {
+            num = (Integer.parseInt(tripday.substring(3))) - 1;
+        }
+
 
         toolbar.setTitle(tripDetail.getTitle());
         setSupportActionBar(toolbar);
@@ -73,9 +76,10 @@ public class ItineraryActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-
-        TabLayout.Tab tab = tabLayout.getTabAt(num);
-        tab.select();
+        if (tripday!=null) {
+            TabLayout.Tab tab = tabLayout.getTabAt(num);
+            tab.select();
+        }
     }
 
 

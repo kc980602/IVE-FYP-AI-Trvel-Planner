@@ -22,10 +22,10 @@
         android:scaleType="centerCrop"
         app:riv_corner_radius="2dp" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/gradient_city"/>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/gradient_black_light"/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
@@ -20,7 +21,6 @@ import com.triple.triple.R;
 public class NewMainActivity extends AppCompatActivity implements ObservableScrollViewCallbacks {
 
     private Toolbar toolbar;
-    private AppBarLayout layout_appbar;
     private ObservableScrollView layout_scroll;
     private ImageView image;
     private int mParallaxImageHeight;
@@ -50,6 +50,7 @@ public class NewMainActivity extends AppCompatActivity implements ObservableScro
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.e("ee", "onRestoreInstanceState");
         onScrollChanged(layout_scroll.getCurrentScrollY(), false, false);
     }
 
@@ -59,6 +60,7 @@ public class NewMainActivity extends AppCompatActivity implements ObservableScro
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
         toolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
         ViewHelper.setTranslationY(image, scrollY / 2);
+        Log.e("ee", "eee");
     }
 
     @Override

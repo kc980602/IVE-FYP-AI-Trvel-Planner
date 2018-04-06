@@ -128,12 +128,13 @@ public class MytripsFragment extends Fragment {
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
                 if (response.body() != null) {
                     List<Trip> newTrips = response.body();
+                    trips.clear();
                     trips.addAll(newTrips);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                     rv_trips.setHasFixedSize(true);
                     rv_trips.setLayoutManager(mLayoutManager);
                     rv_trips.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new TripAdapter(fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
+                    adapter = new TripAdapter((Fragment) fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
                     rv_trips.setAdapter(adapter);
                 } else {
                     requestFail();

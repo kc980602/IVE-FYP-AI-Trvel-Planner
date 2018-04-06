@@ -3,6 +3,7 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +26,12 @@ import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
 
-    private MytripsFragment fragment;
+    private Fragment fragment;
     private List<Trip> trips;
     private String isSaved;
     private int userid;
 
-    public TripAdapter(MytripsFragment fragment, List<Trip> trips, String isSaved, int userid) {
+    public TripAdapter(Fragment fragment, List<Trip> trips, String isSaved, int userid) {
         this.fragment = fragment;
         this.trips = trips;
         this.isSaved = isSaved;

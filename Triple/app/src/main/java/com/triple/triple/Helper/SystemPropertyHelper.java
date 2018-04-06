@@ -2,6 +2,7 @@ package com.triple.triple.Helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -43,10 +44,10 @@ public class SystemPropertyHelper {
                 public void onResponse(Call<SystemProperty> call, Response<SystemProperty> response) {
                     SystemProperty sp = response.body();
                     Gson gson = new Gson();
-                    SharedPreferences data = mcontext.getSharedPreferences(Constant.SharedPreferences, 0);
-                    data.edit()
-                            .putString("systemProperty", gson.toJson(sp))
-                            .commit();
+                    SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(mcontext);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Constant.SP_SYSTEMPROPERTY, gson.toJson(sp));
+                    editor.apply();
                 }
 
                 @Override
@@ -61,8 +62,8 @@ public class SystemPropertyHelper {
     }
 
     public static SystemProperty getSystemProperty(Context mcontext) {
-        SharedPreferences data = mcontext.getSharedPreferences(Constant.SharedPreferences,0);
-        String json = data.getString("systemProperty", DEFAULT);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mcontext);
+        String json = sharedPreferences.getString(Constant.SP_SYSTEMPROPERTY, null);
         if (json.equals(DEFAULT)) {
             refreshData(mcontext);
         }
