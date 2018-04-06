@@ -84,6 +84,11 @@
 
                 <include layout="@layout/devider_short" />
 
+                <com.yarolegovich.discretescrollview.DiscreteScrollView
+                    android:id="@+id/dsv_trips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
@@ -135,7 +140,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_suitcase"
-            android:tint="@color/white"/>
+            android:tint="@color/white"
+            app:rippleColor="@color/button_pressed"
+            app:useCompatPadding="true"/>
 
     </RelativeLayout>
 

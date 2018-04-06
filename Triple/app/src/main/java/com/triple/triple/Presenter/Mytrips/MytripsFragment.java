@@ -134,7 +134,7 @@ public class MytripsFragment extends Fragment {
                     rv_trips.setHasFixedSize(true);
                     rv_trips.setLayoutManager(mLayoutManager);
                     rv_trips.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new TripAdapter(fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
+                    adapter = new TripAdapter((Fragment) fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
                     rv_trips.setAdapter(adapter);
                 } else {
                     requestFail();

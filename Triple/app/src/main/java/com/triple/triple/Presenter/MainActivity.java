@@ -2,6 +2,7 @@ package com.triple.triple.Presenter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView iv_iconText;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private FrameLayout frame_layout_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         iv_iconText = (ImageView) findViewById(R.id.iv_iconText);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        frame_layout_main = (FrameLayout) findViewById(R.id.frame_layout_main);
     }
 
     private void initView() {
@@ -126,12 +131,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void toolbarNormal(int title) {
         getSupportActionBar().setTitle(getString(title));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
         iv_iconText.setVisibility(View.GONE);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) frame_layout_main.getLayoutParams();
+        params.setMargins(0, getActionBarSize(), 0, 0);
+        frame_layout_main.setLayoutParams(params);
     }
 
     private void toolbaHome() {
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.colorPrimary))));
         iv_iconText.setVisibility(View.VISIBLE);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) frame_layout_main.getLayoutParams();
+        params.setMargins(0, 0, 0, 0);
+        frame_layout_main.setLayoutParams(params);
+    }
+
+    public int getActionBarSize() {
+        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
+        int actionBarSize = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+        return actionBarSize;
     }
 
 

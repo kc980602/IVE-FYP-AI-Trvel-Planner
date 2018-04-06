@@ -55,6 +55,7 @@
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
             android:name=".Presenter.Attraction.AttractionListActivity"
+            android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -94,6 +95,7 @@
         <activity
             android:name=".Presenter.Attraction.CityBookmarksActivity"
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
