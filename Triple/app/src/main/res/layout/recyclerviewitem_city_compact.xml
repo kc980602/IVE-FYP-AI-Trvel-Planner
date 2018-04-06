@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="4dp"
-    android:foreground="?selectableItemBackgroundBorderless">
+    card_view:cardElevation="4dp">
 
     <TextView
         android:id="@+id/tv_cityid"
@@ -23,10 +22,10 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/gradient_city" />
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/gradient_city" />-->
 
         <TextView
             android:id="@+id/tv_city"

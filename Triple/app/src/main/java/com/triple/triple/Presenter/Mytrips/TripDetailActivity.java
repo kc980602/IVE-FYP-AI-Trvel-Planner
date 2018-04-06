@@ -26,6 +26,8 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.securepreferences.SecurePreferences;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripDayAdapter;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
@@ -277,6 +279,7 @@ public class TripDetailActivity extends AppCompatActivity {
         Picasso.with(mcontext)
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .placeholder(R.drawable.image_null_tran)
                 .into(image);
         cv_trip.setVisibility(View.VISIBLE);

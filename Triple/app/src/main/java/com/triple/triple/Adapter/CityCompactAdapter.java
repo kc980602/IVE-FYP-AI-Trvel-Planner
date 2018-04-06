@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Model.City;
 import com.triple.triple.Presenter.Attraction.CityDetailActivity;
@@ -75,6 +76,8 @@ public class CityCompactAdapter extends RecyclerView.Adapter<CityCompactAdapter.
         if (city.getPhoto() != null) {
             Picasso.with(context)
                     .load(city.getPhoto())
+                    .fit().centerCrop()
+                    .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
                     .placeholder(R.drawable.image_null_tran)
                     .into(holder.image);
         }

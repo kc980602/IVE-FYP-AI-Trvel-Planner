@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Interface.ApiInterface;
@@ -101,6 +102,7 @@ public class CityDetailActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(city.getPhoto())
                 .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .placeholder(R.drawable.image_null)
                 .into(image);
         tv_city.setText(city.getName());

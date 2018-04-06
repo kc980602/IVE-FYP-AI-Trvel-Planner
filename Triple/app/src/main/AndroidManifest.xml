@@ -73,7 +73,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
-            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
+            android:parentActivityName=".Presenter.Mytrips.ItineraryActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

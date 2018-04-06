@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
@@ -90,6 +92,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         Picasso.with(fragment.getActivity())
                 .load(trip.getCity().getPhoto())
                 .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .placeholder(R.drawable.image_null_tran)
                 .into(holder.image);
 
