@@ -84,7 +84,6 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
         Picasso.with(activity)
                 .load(attraction.getBestPhoto())
                 .fit().centerCrop()
-                .placeholder(R.drawable.image_null_tran)
                 .into(holder.image1);
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
