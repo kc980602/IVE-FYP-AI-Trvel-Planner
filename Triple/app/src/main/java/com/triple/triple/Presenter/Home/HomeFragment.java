@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Home;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -39,7 +40,10 @@ import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
+import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,10 @@ import retrofit2.Response;
  * Created by Kevin on 2018/2/7.
  */
 
-public class HomeFragment extends Fragment implements ObservableScrollViewCallbacks {
+public class HomeFragment extends Fragment implements
+        ObservableScrollViewCallbacks,
+        DiscreteScrollView.OnItemChangedListener,
+        View.OnClickListener {
     private ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private HomeFragment fragment = this;
     private ObservableScrollView layout_scroll;
@@ -67,11 +74,12 @@ public class HomeFragment extends Fragment implements ObservableScrollViewCallba
     private List<Trip> trips = new ArrayList<>();
     private TripAdapter tripAdapter;
     private CityCompactAdapter cityCompactAdapter;
+    private InfiniteScrollAdapter infiniteAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mcontext = getContext();
         sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(getContext());
         layout_scroll = (ObservableScrollView) view.findViewById(R.id.layout_scroll);
         image = (ImageView) view.findViewById(R.id.image);
@@ -90,6 +98,7 @@ public class HomeFragment extends Fragment implements ObservableScrollViewCallba
         int numberOfColumns = 3;
         City city = new City();
         city.setId(-10);
+        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
         city.setName("MORE?");
         List<City> countries = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
         countries.add(city);
@@ -100,8 +109,15 @@ public class HomeFragment extends Fragment implements ObservableScrollViewCallba
     }
 
     private void initTrip() {
-        tripAdapter = new TripAdapter((Fragment) fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
-        dsv_trips.setAdapter(tripAdapter);
+        tripAdapter = new TripAdapter((Fragment) fragment, trips, true, UserDataHelper.getUserInfo(mcontext).getId());
+        dsv_trips.setOrientation(DSVOrientation.HORIZONTAL);
+        dsv_trips.addOnItemChangedListener(this);
+        infiniteAdapter = InfiniteScrollAdapter.wrap(tripAdapter);
+        dsv_trips.setAdapter(infiniteAdapter);
+        dsv_trips.setItemTransitionTimeMillis(150);
+        dsv_trips.setItemTransformer(new ScaleTransformer.Builder()
+                .setMinScale(0.8f)
+                .build());
     }
 
     public void requestSystemProperty() {
@@ -152,7 +168,7 @@ public class HomeFragment extends Fragment implements ObservableScrollViewCallba
 
 
     private void requestFail() {
-        View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        View view = fragment.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,5 +218,26 @@ public class HomeFragment extends Fragment implements ObservableScrollViewCallba
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mcontext = context;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+        int positionInDataSet = infiniteAdapter.getRealPosition(adapterPosition);
+//        onItemChanged(data.get(positionInDataSet));
+    }
+
+    private void onItemChanged(ClipData.Item item) {
+//        changeRateButtonState(item);
     }
 }

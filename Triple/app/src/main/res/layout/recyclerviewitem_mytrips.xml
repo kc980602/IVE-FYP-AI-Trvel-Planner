@@ -8,9 +8,7 @@
     android:layout_marginEnd="@dimen/card_margin_horizontal_big_activity"
     android:layout_marginStart="@dimen/card_margin_horizontal_big_activity"
     android:layout_marginTop="@dimen/card_margin_vertical_big_activity"
-    android:foreground="?attr/selectableItemBackground"
-    card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
-    card_view:cardElevation="@dimen/card_recycler_elevation">
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,8 +27,7 @@
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
             app:riv_corner_radius_top_left="2dp"
-            app:riv_corner_radius_top_right="2dp"
-            android:visibility="gone"/>
+            app:riv_corner_radius_top_right="2dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +81,6 @@
                     android:text="@string/mytrips_offline"
                     android:visibility="invisible" />
             </LinearLayout>
-
 
         </LinearLayout>
     </RelativeLayout>

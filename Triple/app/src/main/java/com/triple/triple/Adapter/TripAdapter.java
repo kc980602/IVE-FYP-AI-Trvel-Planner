@@ -30,13 +30,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     private Fragment fragment;
     private List<Trip> trips;
-    private String isSaved;
+    private Boolean isCompact;
     private int userid;
 
-    public TripAdapter(Fragment fragment, List<Trip> trips, String isSaved, int userid) {
+    public TripAdapter(Fragment fragment, List<Trip> trips,Boolean isCompact, int userid) {
         this.fragment = fragment;
         this.trips = trips;
-        this.isSaved = isSaved;
+        this.isCompact = isCompact;
         this.userid = userid;
     }
 
@@ -81,7 +81,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     @Override
     public TripViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recyclerviewitem_mytrips, viewGroup, false);
+                .inflate(isCompact ? R.layout.recyclerviewitem_mytrips_compact : R.layout.recyclerviewitem_mytrips, viewGroup, false);
         return new TripViewHolder(itemView);
     }
 
@@ -105,11 +105,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         }
         holder.tv_tripdate.setText(date);
         holder.tv_tripdestination.setText(trip.getCity().getName() + ", " + trip.getCity().getCountry());
-        if (isSaved.equals("true")) {
-            holder.tv_saved.setVisibility(View.VISIBLE);
-        } else {
-            holder.tv_saved.setVisibility(View.INVISIBLE);
-        }
 
     }
 
