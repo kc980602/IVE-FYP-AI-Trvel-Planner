@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
@@ -41,6 +43,7 @@ public class TripInfoCoverFragment extends Fragment {
         Picasso.with(getContext())
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .into(image);
         String date = DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length()));
         tv_tripdate.setText(date);
