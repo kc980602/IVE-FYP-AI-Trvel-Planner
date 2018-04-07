@@ -241,7 +241,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                    .placeholder(R.drawable.image_null)
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -250,7 +249,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 Picasso.with(mcontext)
                         .load(attraction.getPhotos().get(i))
                         .fit().centerCrop()
-                        .placeholder(R.drawable.image_null_tran)
                         .into(image);
                 layout_gallery.addView(view);
                 if (i == 9) {

@@ -41,7 +41,6 @@ public class TripInfoCoverFragment extends Fragment {
         Picasso.with(getContext())
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
-                .placeholder(R.drawable.image_null_tran)
                 .into(image);
         String date = DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length()));
         tv_tripdate.setText(date);
