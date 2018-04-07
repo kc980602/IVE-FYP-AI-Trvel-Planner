@@ -11,4 +11,8 @@ public class Constant {
     public  static final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     public  static final String SharedPreferences = "DATA";
     public  static final String SP_SYSTEMPROPERTY= "systemProperty";
+    public static final int IMAGE_X_WIDTH = 1024;
+    public static final int IMAGE_X_HEIGHT = 768;
+    public static final int IMAGE_S_WIDTH = 720;
+    public static final int IMAGE_S_HEIGHT = 280;
 }

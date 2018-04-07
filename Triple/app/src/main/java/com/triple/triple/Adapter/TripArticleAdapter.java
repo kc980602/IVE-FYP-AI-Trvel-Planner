@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Model.Article;
 import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.R;
@@ -75,6 +77,7 @@ public class TripArticleAdapter extends RecyclerView.Adapter<TripArticleAdapter.
             Picasso.with(context)
                     .load(article.getPhotos().get(0))
                     .fit().centerCrop()
+                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                     .placeholder(R.drawable.image_null_tran)
                     .into(holder.image);
         }

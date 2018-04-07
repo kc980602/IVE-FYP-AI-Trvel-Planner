@@ -27,6 +27,7 @@ import com.google.android.gms.maps.MapView;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.AppBarStateChangeListener;
+import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
@@ -67,6 +68,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private String attractionName = "";
     private TextView tv_title;
     private ImageView image;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,6 +240,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
+                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                     .placeholder(R.drawable.image_null)
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {

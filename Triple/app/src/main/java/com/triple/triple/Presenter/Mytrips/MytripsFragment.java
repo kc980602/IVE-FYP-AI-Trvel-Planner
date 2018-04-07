@@ -1,6 +1,7 @@
 package com.triple.triple.Presenter.Mytrips;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -39,13 +40,14 @@ import retrofit2.Response;
 
 public class MytripsFragment extends Fragment {
     private View view;
-    private MytripsFragment fragment = this;
+    private Fragment fragment = this;
     private AVLoadingIndicatorView avi;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TripAdapter adapter;
 
     private List<Trip> trips = new ArrayList<>();
     private RecyclerView rv_trips;
+    private Context mcontext;
 
     public MytripsFragment() {
         // Required empty public constructor
@@ -130,11 +132,11 @@ public class MytripsFragment extends Fragment {
                     List<Trip> newTrips = response.body();
                     trips.clear();
                     trips.addAll(newTrips);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mcontext);
                     rv_trips.setHasFixedSize(true);
                     rv_trips.setLayoutManager(mLayoutManager);
                     rv_trips.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new TripAdapter((Fragment) fragment, trips, "false", UserDataHelper.getUserInfo(getContext()).getId());
+                    adapter = new TripAdapter((Fragment) fragment, trips, false, UserDataHelper.getUserInfo(mcontext).getId());
                     rv_trips.setAdapter(adapter);
                 } else {
                     requestFail();
@@ -154,7 +156,7 @@ public class MytripsFragment extends Fragment {
     }
 
     private void requestFail() {
-        View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        View view = fragment.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,5 +172,11 @@ public class MytripsFragment extends Fragment {
 
     public void stopAnim() {
         avi.hide();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mcontext = context;
     }
 }

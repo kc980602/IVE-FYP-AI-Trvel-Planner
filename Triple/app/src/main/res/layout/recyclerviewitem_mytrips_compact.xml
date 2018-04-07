@@ -8,9 +8,7 @@
     android:layout_marginEnd="@dimen/card_margin_horizontal_big_activity"
     android:layout_marginStart="@dimen/card_margin_horizontal_big_activity"
     android:layout_marginTop="@dimen/card_margin_vertical_big_activity"
-    android:background="?attr/selectableItemBackgroundBorderless"
-    card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
-    card_view:cardElevation="@dimen/card_recycler_elevation">
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -83,7 +81,6 @@
                     android:text="@string/mytrips_offline"
                     android:visibility="invisible" />
             </LinearLayout>
-
 
         </LinearLayout>
     </RelativeLayout>
