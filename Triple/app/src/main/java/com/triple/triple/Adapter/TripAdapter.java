@@ -92,8 +92,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         Picasso.with(fragment.getActivity())
                 .load(trip.getCity().getPhoto())
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                .placeholder(R.drawable.image_null_tran)
+                .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
                 .into(holder.image);
 
         holder.tv_tripid.setText(String.valueOf(trip.getId()));

@@ -28,8 +28,10 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.nineoldandroids.view.ViewHelper;
+import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.CityCompactAdapter;
 import com.triple.triple.Adapter.TripAdapter;
+import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SpacesItemDecoration;
 import com.triple.triple.Helper.SystemPropertyHelper;
@@ -88,11 +90,21 @@ public class HomeFragment extends Fragment implements
         ((AppCompatActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.colorPrimary))));
         layout_scroll.setScrollViewCallbacks(this);
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+        initView();
         requestSystemProperty();
         requestTrip();
         setHasOptionsMenu(true);
         return view;
     }
+    private void initView() {
+        Picasso.with(mcontext)
+                .load(R.drawable.bkg_home)
+                .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                .into(image);
+
+    }
+
 
     private void initCity() {
         int numberOfColumns = 3;
