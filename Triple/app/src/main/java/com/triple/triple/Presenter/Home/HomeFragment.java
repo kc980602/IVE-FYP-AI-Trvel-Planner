@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -77,6 +78,7 @@ public class HomeFragment extends Fragment implements
     private TripAdapter tripAdapter;
     private CityCompactAdapter cityCompactAdapter;
     private InfiniteScrollAdapter infiniteAdapter;
+    private TextView tv_welcome;
 
     @Nullable
     @Override
@@ -85,6 +87,7 @@ public class HomeFragment extends Fragment implements
         sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(getContext());
         layout_scroll = (ObservableScrollView) view.findViewById(R.id.layout_scroll);
         image = (ImageView) view.findViewById(R.id.image);
+        tv_welcome = (TextView) view.findViewById(R.id.tv_welcome);
         rv_all = (RecyclerView) view.findViewById(R.id.rv_all);
         dsv_trips = (DiscreteScrollView) view.findViewById(R.id.dsv_trips);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.colorPrimary))));
@@ -102,7 +105,7 @@ public class HomeFragment extends Fragment implements
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .into(image);
-
+        tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
     }
 
 

@@ -27,60 +27,36 @@
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
             app:riv_corner_radius_top_left="2dp"
-            app:riv_corner_radius_top_right="2dp"/>
+            app:riv_corner_radius_top_right="2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/image"
             android:orientation="vertical"
+            android:layout_below="@+id/image"
             android:padding="16dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_tripname"
+                style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_tripname"
-                    style="@style/TextAppearance.AppCompat.Large"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50" />
-
-                <TextView
-                    android:id="@+id/tv_owner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="right" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tv_tripdestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_tripdate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tv_tripdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50" />
-
-                <TextView
-                    android:id="@+id/tv_saved"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_offline_pin"
-                    android:drawablePadding="5dp"
-                    android:drawableTint="@color/colorPrimary"
-                    android:gravity="right|center"
-                    android:text="@string/mytrips_offline"
-                    android:visibility="invisible" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </RelativeLayout>

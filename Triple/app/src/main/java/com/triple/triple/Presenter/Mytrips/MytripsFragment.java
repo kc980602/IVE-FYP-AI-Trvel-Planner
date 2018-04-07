@@ -72,10 +72,16 @@ public class MytripsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                trips.clear();
                 requestTrip();
             }
         });
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mcontext);
+        rv_trips.setHasFixedSize(true);
+        rv_trips.setLayoutManager(mLayoutManager);
+        rv_trips.setItemAnimator(new DefaultItemAnimator());
+        adapter = new TripAdapter((Fragment) fragment, trips, false, UserDataHelper.getUserInfo(mcontext).getId());
+        rv_trips.setAdapter(adapter);
 
         if (UserDataHelper.checkTokenExist(getContext())) {
             requestTrip();
@@ -95,7 +101,6 @@ public class MytripsFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 Snackbar.make(view, "Trip removed", Snackbar.LENGTH_LONG).show();
                 swipeRefreshLayout.setRefreshing(true);
-                trips.clear();
                 requestTrip();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -130,14 +135,11 @@ public class MytripsFragment extends Fragment {
             public void onResponse(Call<List<Trip>> call, Response<List<Trip>> response) {
                 if (response.body() != null) {
                     List<Trip> newTrips = response.body();
+                    int size = trips.size();
                     trips.clear();
+                    adapter.notifyItemRangeRemoved(0, size);
                     trips.addAll(newTrips);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mcontext);
-                    rv_trips.setHasFixedSize(true);
-                    rv_trips.setLayoutManager(mLayoutManager);
-                    rv_trips.setItemAnimator(new DefaultItemAnimator());
-                    adapter = new TripAdapter((Fragment) fragment, trips, false, UserDataHelper.getUserInfo(mcontext).getId());
-                    rv_trips.setAdapter(adapter);
+                    adapter.notifyItemRangeInserted(0, trips.size());
                 } else {
                     requestFail();
                     Log.e("onResponse", "Null");
@@ -178,5 +180,11 @@ public class MytripsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mcontext = context;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestTrip();
     }
 }

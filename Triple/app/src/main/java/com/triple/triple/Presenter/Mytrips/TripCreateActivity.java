@@ -3,7 +3,6 @@ package com.triple.triple.Presenter.Mytrips;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
@@ -28,7 +27,6 @@ import com.triple.triple.Model.City;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClientDuration;
-import com.triple.triple.Sync.CreateTrip;
 import com.triple.triple.Helper.HideKeyboardHelper;
 
 import org.joda.time.Days;
@@ -68,7 +66,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         et_tripname.setOnFocusChangeListener(et_tripnameListener);
         et_tripdate.setOnFocusChangeListener(et_tripdateListener);
         et_detination.setOnFocusChangeListener(et_detinationListener);
-//        actw_detination.setText(SystemPropertyHelper.getSystemProperty(mcontext).getCity());
 
         if (CheckLogin.directLogin(mcontext)) {
             finish();
@@ -85,6 +82,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.mytrips_create_title);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -99,8 +97,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 requestCreateTrip();
                 break;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                finish();
+                onBackPressed();
                 break;
         }
         return true;
@@ -128,6 +125,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                                 destination = String.valueOf(city.getId());
                             }
                         }).show();
+                et_detination.clearFocus();
             }
         }
     };
@@ -135,6 +133,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     View.OnFocusChangeListener et_tripdateListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
+            HideKeyboardHelper.hideKeyboard(v);
             if (hasFocus) {
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.DAY_OF_MONTH, 1);
@@ -147,9 +146,11 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 dpd.setMinDate(now);
                 dpd.setMaxDate(DateTimeHelper.twoYearsLater());
                 dpd.show(getFragmentManager(), "Datepickerdialog");
+                et_detination.clearFocus();
             }
         }
     };
+
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
@@ -160,10 +161,11 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         if (Start.compareTo(End) == 1 || End.compareTo(Start) == -1) {
             Toast.makeText(mcontext, R.string.mytrips_create_error_date, Toast.LENGTH_LONG).show();
         } else {
-            et_tripdate.setText(date);
             Days days = Days.daysBetween(Start, End);
-            dateCount = String.valueOf(days.getDays() + 1);
+            et_tripdate.setText(date);
+            dateCount = String.valueOf(days.getDays() + 1 > 7 ? 7 : days.getDays() + 1);
             tripdateStart = year + "-" + monthOfYear + "-" + dayOfMonth;
+
         }
     }
 
@@ -195,7 +197,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         }
     }
 
-    public void createTrip(){
+    public void createTrip() {
         progressDialog.show();
 
         String token = "Bearer ";
@@ -214,6 +216,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                     continueCreateTrip();
                 }
             }
+
             @Override
             public void onFailure(Call<TripDetail> call, Throwable t) {
                 Log.d("ReturnResponse", t.getMessage());
@@ -222,7 +225,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         });
     }
 
-    public void continueCreateTrip(){
+    public void continueCreateTrip() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("tripDetail", tripDetail);
         bundle.putBoolean("isNew", true);
@@ -234,7 +237,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         progressDialog.dismiss();
     }
 
-    public void stopCreateTrip(){
+    public void stopCreateTrip() {
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {

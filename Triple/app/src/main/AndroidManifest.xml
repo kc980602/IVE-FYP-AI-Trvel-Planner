@@ -42,7 +42,6 @@
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
-            android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity

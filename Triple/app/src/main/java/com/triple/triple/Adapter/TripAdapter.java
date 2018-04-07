@@ -46,7 +46,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         public TextView tv_owner;
         public TextView tv_tripdestination;
         public TextView tv_tripdate;
-        public TextView tv_saved;
         public RoundedImageView image;
 
         public TripViewHolder(View itemView) {
@@ -57,7 +56,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             tv_owner = (TextView) itemView.findViewById(R.id.tv_owner);
             tv_tripdestination = (TextView) itemView.findViewById(R.id.tv_tripdestination);
             tv_tripdate = (TextView) itemView.findViewById(R.id.tv_tripdate);
-            tv_saved = (TextView) itemView.findViewById(R.id.tv_saved);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,9 +64,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                     int tripid = Integer.valueOf(tv_tripid.getText().toString());
                     Bundle bundle = new Bundle();
                     bundle.putInt("tripid", tripid);
-                    if (tv_saved.getVisibility() == View.VISIBLE) {
-                        bundle.putBoolean("isSaved", true);
-                    }
                     Intent indent = new Intent(fragment.getActivity(), TripDetailActivity.class);
                     indent.putExtras(bundle);
                     fragment.startActivityForResult(indent, 1);

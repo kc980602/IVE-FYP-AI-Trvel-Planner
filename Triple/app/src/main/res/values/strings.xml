@@ -64,7 +64,9 @@
         <item>F</item>
     </string-array>
 
-    <string name="home_des_button">Going somewhere?</string>
+    <string name="home_welcome">Welcome back\n%1$s!</string>
+    <string name="home_trip">Your Trips</string>
+    <string name="home_city">City Guides</string>
 
     <string name="mytrips_all">All</string>
     <string name="mytrips_saved">Saved</string>
@@ -80,6 +82,7 @@
     <string name="mytrips_create_checkbox">Add attraction for me</string>
     <string name="mytrips_create_success">Trip created</string>
     <string name="mytrips_create_error_date">End date need to greater than Start date!</string>
+    <string name="mytrips_create_error_date_duration">End date need to greater than Start date!</string>
     <string name="mytrips_create_error_process">Something went wrong! (Error code: 1001)</string>
 
     <string name="mytrips_detail_edit">Edit trip</string>
