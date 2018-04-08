@@ -3,6 +3,7 @@ package com.triple.triple.Presenter.Attraction;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,5 +50,6 @@ public class CityInfoOverviewFragment extends Fragment{
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());
         tv_description.setText(city.getDescription());
+        tv_description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
     }
 }

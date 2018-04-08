@@ -8,6 +8,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.triple.triple.Adapter.AttractionListAdapter;
 import com.triple.triple.Helper.RecycleViewPaddingHelper;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.DataMeta;
+import com.triple.triple.Model.Pagination;
 import com.triple.triple.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +32,15 @@ import java.util.List;
 
 public class AttractionFragment extends Fragment implements SearchView.OnQueryTextListener{
 
-
     private RecyclerView rv_attraction;
     private AttractionListAdapter adapter;
-    private DataMeta dataMeta;
+    private DataMeta dataMeta, displayList;
     SearchView searchView;
+    private boolean isFinal = false;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    public static final int PAGE_SIZE = 10;
+    private int lastShowItem;
 
     public AttractionFragment() {
     }
@@ -59,12 +67,16 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
     }
 
     private void initView() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        adapter = new AttractionListAdapter(getActivity(), dataMeta);
+        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        displayList = new DataMeta();
+        displayList.setAttractions(dataMeta.getAttractions().subList(0, dataMeta.getAttractions().size() < PAGE_SIZE ? dataMeta.getAttractions().size() : PAGE_SIZE  ));
+        adapter = new AttractionListAdapter(getActivity(), displayList);
+        lastShowItem = displayList.getAttractions().size();
         rv_attraction.setHasFixedSize(true);
         rv_attraction.setLayoutManager(mLayoutManager);
         rv_attraction.setItemAnimator(new DefaultItemAnimator());
         rv_attraction.setAdapter(adapter);
+        rv_attraction.addOnScrollListener(recyclerViewOnScrollListener);
         adapter.notifyDataSetChanged();
         RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
         rv_attraction.addItemDecoration(dividerItemDecoration);
@@ -74,7 +86,50 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
 //        adapter.getFilter().filter(query);
 //    }
 
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
 
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int totalCount = mLayoutManager.getItemCount();
+            int visibleItemCount = mLayoutManager.getChildCount();
+            int firstVisibleItemPosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            if (!isFinal) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalCount
+                        && firstVisibleItemPosition >= 0
+                        && totalCount >= PAGE_SIZE) {
+                    Log.e("Test","Test");
+                    adapter.addAttraction(loadAttractions());
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+    };
+
+
+    private List<Attraction> loadAttractions(){
+        final List<Attraction> tempList = new ArrayList<Attraction>();
+        int lastItem;
+        if((lastShowItem + PAGE_SIZE) > dataMeta.getAttractions().size()){
+            lastItem = dataMeta.getAttractions().size() - lastShowItem;
+        } else {
+            lastItem = lastShowItem + PAGE_SIZE;
+        }
+        for(int i = lastShowItem ; i < lastItem ; i++){
+            if(i >= dataMeta.getAttractions().size()){
+                isFinal = true;
+            }
+            tempList.add(dataMeta.getAttractions().get(i));
+        }
+        lastShowItem += PAGE_SIZE;
+        return tempList;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

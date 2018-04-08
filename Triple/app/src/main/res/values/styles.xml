@@ -85,6 +85,10 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="MyTextDisplay3" parent="Base.TextAppearance.AppCompat.Display3">
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
     <style name="MyTextTransparent">
         <item name="android:textSize">0sp</item>
         <item name="android:textColor">@color/transparent</item>
