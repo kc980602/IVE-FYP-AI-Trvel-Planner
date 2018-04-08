@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment implements
         Picasso.with(mcontext)
                 .load(R.drawable.bkg_home)
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .into(image);
         tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
     }

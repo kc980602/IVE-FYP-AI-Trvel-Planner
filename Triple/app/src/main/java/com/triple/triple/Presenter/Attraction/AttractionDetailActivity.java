@@ -20,17 +20,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.AttractionCommentAdapter;
-import com.triple.triple.Adapter.AttractionListAdapter;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
@@ -76,6 +77,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private ImageView image;
     private RecyclerView rv_attraction_comments;
     private AttractionCommentAdapter adapter;
+    private Button btn_attraction_review;
 
 
     @Override
@@ -116,6 +118,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         tv_attInfo_address = (TextView) findViewById(R.id.tv_attInfo_address);
         image = (ImageView) findViewById(R.id.image);
         rv_attraction_comments = (RecyclerView) findViewById(R.id.rv_attraction_comments);
+        btn_attraction_review = (Button) findViewById(R.id.btn_attraction_review);
     }
 
     private void initView() {
@@ -261,7 +264,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -367,6 +370,14 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
     public void onFabClick(View view) {
         setBookmark();
+    }
+
+    public void onButtonReviewClick(View view){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("attraction", attraction);
+        Intent intent = new Intent(mcontext, AttractionReviewActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -52,6 +51,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private String tripname, tripdateStart, dateCount, destination, generate;
     ApiInterface apiService = ApiClientDuration.getClient().create(ApiInterface.class);
     private TripDetail tripDetail;
+    private GeneratingDialog generatingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +59,6 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_mytrips_create);
         findViews();
         setupActionBar();
-
-        progressDialog = new ProgressDialog(mcontext);
-        progressDialog.setMessage(getString(R.string.dialog_progress_title));
 
         et_tripname.setOnFocusChangeListener(et_tripnameListener);
         et_tripdate.setOnFocusChangeListener(et_tripdateListener);
@@ -198,8 +195,8 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     }
 
     public void createTrip() {
-        progressDialog.show();
-
+        generatingDialog = GeneratingDialog.instance(tripname, Integer.valueOf(destination), tripdateStart, Integer.valueOf(dateCount));
+        generatingDialog.show(getFragmentManager(), "GeneratingDialog");
         String token = "Bearer ";
         token += UserDataHelper.getToken(mcontext);
         Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, "1");
@@ -234,7 +231,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         startActivity(intent);
         Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
         finish();
-        progressDialog.dismiss();
+        generatingDialog.dismiss();
     }
 
     public void stopCreateTrip() {
@@ -246,7 +243,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
 
                     }
                 }).show();
-        progressDialog.dismiss();
+        generatingDialog.dismiss();
     }
 
     @Override

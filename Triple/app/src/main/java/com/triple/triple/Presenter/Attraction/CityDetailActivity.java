@@ -6,13 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +19,6 @@ import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
-import com.triple.triple.Interface.ApiInterface;
 //import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Model.Attraction;
@@ -31,20 +26,15 @@ import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
-import com.triple.triple.Sync.ApiClient;
 //import com.triple.triple.Sync.ApiWeather;
 import com.triple.triple.Sync.ApiWeather;
-import com.triple.triple.Sync.CreateTrip;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,7 +99,7 @@ public class CityDetailActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(city.getPhoto())
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .into(image);
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());

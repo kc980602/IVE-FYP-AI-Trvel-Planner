@@ -187,6 +187,13 @@
 
                 <include layout="@layout/devider_short" />
 
+                <Button
+                    android:id="@+id/btn_attraction_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onButtonReviewClick"
+                    android:text="Leave your review"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_attraction_comments"
                     android:layout_width="match_parent"

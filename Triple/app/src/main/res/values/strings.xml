@@ -68,8 +68,8 @@
     <string name="home_trip">Your Trips</string>
     <string name="home_city">City Guides</string>
 
-    <string name="mytrips_all">All</string>
-    <string name="mytrips_saved">Saved</string>
+    <string name="mytrips_ongoing">Ongoing</string>
+    <string name="mytrips_ended">Ended</string>
     <string name="mytrips_offline">Offline Version</string>
     <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
     <string name="mytrips_create_title">Generate a trip</string>
@@ -152,6 +152,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="snackbar_ok">OK</string>
     <string name="snackbar_refersh">Refersh</string>
+    <string name="dialog_generating_title">Generating Itinerary</string>
     <string name="dialog_progress_title">Processing...</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="intent_share_header">Share this by</string>
@@ -174,6 +175,21 @@
         <item>Restaurant</item>
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="comment_rating_guide">Rate this attraction (0-10)</string>
+    <string-array name="rating">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

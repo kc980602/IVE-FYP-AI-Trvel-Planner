@@ -81,7 +81,7 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .into(holder.image);
         }
 
