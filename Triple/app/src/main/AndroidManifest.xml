@@ -106,7 +106,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.NewMainActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.Attraction.AttractionDetailActivity" />
+        <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
     </application>
 
 </manifest>
