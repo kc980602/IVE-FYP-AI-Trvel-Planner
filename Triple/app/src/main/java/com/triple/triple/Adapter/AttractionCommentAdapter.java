@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.List;
  * Created by HaYYY on 2018/4/8.
  */
 
-public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCommentAdapter.AttractionViewHolder> {
+public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCommentAdapter.AttractionCommentViewHolder> {
 
     private Activity activity;
     private List<AttractionComment> attractionComments;
@@ -44,32 +45,38 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
         }
     }
 
-    public class AttractionViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_commentId, tv_comment_username, tv_comment_content;
+    public class AttractionCommentViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView tv_commentId, tv_title, tv_name, tv_rate_time, tv_content;
 
-        public AttractionViewHolder(View itemView) {
+        public AttractionCommentViewHolder(View itemView) {
             super(itemView);
             tv_commentId = (TextView) itemView.findViewById(R.id.tv_commentId);
-            tv_comment_username = (TextView) itemView.findViewById(R.id.tv_comment_username);
-            tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_rate_time = (TextView) itemView.findViewById(R.id.tv_rate_time);
+            tv_content = (TextView) itemView.findViewById(R.id.tv_content);
         }
     }
 
 
     @Override
-    public AttractionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public AttractionCommentViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recyclerviewitem_attraction_comments, viewGroup, false);
-        return new AttractionViewHolder(itemView);
+        return new AttractionCommentViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AttractionViewHolder holder, int position) {
-        AttractionComment attractionComment = attractionComments.get(position);
-        holder.tv_commentId.setText(attractionComment.getId());
-        holder.tv_comment_username.setText(attractionComment.getUser().getUsername());
-        holder.tv_comment_content.setText(attractionComment.getContent());
+    public void onBindViewHolder(@NonNull AttractionCommentViewHolder holder, int position) {
+        AttractionComment ac = attractionComments.get(position);
+        holder.tv_commentId.setText(String.valueOf(ac.getId()));
+        holder.tv_title.setText(ac.getTitle());
+        holder.tv_name.setText(ac.getUser().getFirst_name() + " " + ac.getUser().getLast_name());
+        long now = System.currentTimeMillis();
+        String date = String.valueOf(DateUtils.getRelativeTimeSpanString(ac.getCreated_at(), now, DateUtils.DAY_IN_MILLIS));
+        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10.0" + " • " + date);
+        holder.tv_content.setText(ac.getContent());
     }
 
     @Override

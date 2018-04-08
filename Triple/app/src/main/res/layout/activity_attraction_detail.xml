@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="User Review" />
+                    android:text="@string/attraction_detail_review" />
 
                 <include layout="@layout/devider_short" />
 
