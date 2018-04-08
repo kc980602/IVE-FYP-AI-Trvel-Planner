@@ -68,8 +68,8 @@
     <string name="home_trip">Your Trips</string>
     <string name="home_city">City Guides</string>
 
-    <string name="mytrips_all">All</string>
-    <string name="mytrips_saved">Saved</string>
+    <string name="mytrips_ongoing">Ongoing</string>
+    <string name="mytrips_ended">Ended</string>
     <string name="mytrips_offline">Offline Version</string>
     <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
     <string name="mytrips_create_title">Generate a trip</string>

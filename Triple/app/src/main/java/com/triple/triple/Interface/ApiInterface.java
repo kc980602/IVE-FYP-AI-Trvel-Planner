@@ -113,6 +113,11 @@ public interface ApiInterface {
             @Header("Authorization") String authHeader
     );
 
+    @GET("trip/ended")
+    Call<List<Trip>> listTripEnded(
+            @Header("Authorization") String authHeader
+    );
+
     @GET("trip/{id}")
     Call<TripDetail> listTripByUser(
             @Header("Authorization") String authHeader,
