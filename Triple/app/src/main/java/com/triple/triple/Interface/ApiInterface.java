@@ -98,6 +98,16 @@ public interface ApiInterface {
             @Path("id") Integer id
     );
 
+    @FormUrlEncoded
+    @POST("attraction/{id}/review")
+    Call<Void> placeReview(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id,
+            @Field("title") String title,
+            @Field("message") String message,
+            @Field("rating") Integer rating
+    );
+
     @GET("trip")
     Call<List<Trip>> listTrip(
             @Header("Authorization") String authHeader
