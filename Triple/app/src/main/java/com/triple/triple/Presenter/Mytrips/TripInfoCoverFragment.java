@@ -17,8 +17,9 @@ import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
-import com.triple.triple.UILibrary.DummyViewPager;
+import com.triple.triple.UILibrary.VerticalViewPager;
 import com.triple.triple.UILibrary.VerticalVPOnTouchListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 public class TripInfoCoverFragment extends Fragment {
 
@@ -28,6 +29,8 @@ public class TripInfoCoverFragment extends Fragment {
     private View layout_relative;
     private ImageView iv_arrow;
     private AnimatedVectorDrawable icon;
+    private AVLoadingIndicatorView avi;
+    private VerticalVPOnTouchListener verticalVPOnTouchListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,12 +43,16 @@ public class TripInfoCoverFragment extends Fragment {
         tv_city = (TextView) view.findViewById(R.id.tv_city);
         tv_tripname = (TextView) view.findViewById(R.id.tv_tripname);
         iv_arrow = (ImageView) view.findViewById(R.id.iv_arrow);
+        avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
         initView();
         return view;
     }
 
     private void initView() {
-        layout_relative.setOnTouchListener(new VerticalVPOnTouchListener((DummyViewPager) getArguments().getSerializable("viewpager")));//set the vertical scroll controller
+        iv_arrow.setVisibility(View.INVISIBLE);
+        verticalVPOnTouchListener = new VerticalVPOnTouchListener((VerticalViewPager) getArguments().getSerializable("viewpager"));
+        verticalVPOnTouchListener.setIsLock(true);
+        layout_relative.setOnTouchListener(verticalVPOnTouchListener);
         Picasso.with(getContext())
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
@@ -69,6 +76,12 @@ public class TripInfoCoverFragment extends Fragment {
 
     public int getPosition() {
         return getArguments().getInt("position");
+    }
+
+    public void setUnlock() {
+        verticalVPOnTouchListener.setIsLock(false);
+        avi.hide();
+        iv_arrow.setVisibility(View.VISIBLE);
     }
 
 }
