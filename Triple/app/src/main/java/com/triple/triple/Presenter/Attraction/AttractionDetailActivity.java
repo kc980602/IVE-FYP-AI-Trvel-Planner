@@ -10,6 +10,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +29,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Adapter.AttractionCommentAdapter;
+import com.triple.triple.Adapter.AttractionListAdapter;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.RecycleViewPaddingHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.R;
@@ -68,6 +74,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private String attractionName = "";
     private TextView tv_title;
     private ImageView image;
+    private RecyclerView rv_attraction_comments;
+    private AttractionCommentAdapter adapter;
 
 
     @Override
@@ -107,6 +115,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         tv_attInfo_website = (TextView) findViewById(R.id.tv_attInfo_website);
         tv_attInfo_address = (TextView) findViewById(R.id.tv_attInfo_address);
         image = (ImageView) findViewById(R.id.image);
+        rv_attraction_comments = (RecyclerView) findViewById(R.id.rv_attraction_comments);
     }
 
     private void initView() {
@@ -206,6 +215,18 @@ public class AttractionDetailActivity extends AppCompatActivity {
         if (!attraction.getAddress().equals("")) {
             tv_attInfo_address.setText(attraction.getAddress().toString());
             tv_attInfo_address.setVisibility(View.VISIBLE);
+        }
+
+        if (!attraction.getComments().isEmpty()){
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
+            adapter = new AttractionCommentAdapter(this, attraction.getComments());
+            rv_attraction_comments.setHasFixedSize(true);
+            rv_attraction_comments.setLayoutManager(mLayoutManager);
+            rv_attraction_comments.setItemAnimator(new DefaultItemAnimator());
+            rv_attraction_comments.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
+            rv_attraction_comments.addItemDecoration(dividerItemDecoration);
         }
 
         image_map.getViewTreeObserver()

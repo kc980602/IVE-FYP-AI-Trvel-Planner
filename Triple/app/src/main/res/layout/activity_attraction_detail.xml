@@ -178,6 +178,23 @@
 
                 <include layout="@layout/devider" />
 
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="User Review" />
+
+                <include layout="@layout/devider_short" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_attraction_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical" />
+
+                <include layout="@layout/devider" />
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
