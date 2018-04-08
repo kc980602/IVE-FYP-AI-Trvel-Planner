@@ -30,7 +30,6 @@ import com.google.android.gms.maps.MapView;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.AttractionCommentAdapter;
-import com.triple.triple.Adapter.AttractionListAdapter;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
@@ -261,7 +260,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
