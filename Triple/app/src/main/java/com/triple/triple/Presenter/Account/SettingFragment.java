@@ -1,11 +1,7 @@
 package com.triple.triple.Presenter.Account;
 
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,13 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.UserDataHelper;
-import com.triple.triple.Presenter.MainActivity;
-import com.triple.triple.Presenter.Profile.EditProfileActivity;
 import com.triple.triple.R;
-
-import java.util.Calendar;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.triple.triple.Presenter.Attraction.AttractionReviewActivity">
 
     <LinearLayout
@@ -32,7 +33,7 @@
                 android:hint="Title"
                 android:inputType="text"
                 android:lines="1"
-                android:maxLength="20" />
+                android:maxLength="120" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -63,16 +64,17 @@
                 android:layout_height="wrap_content"
                 android:hint="Message"
                 android:inputType="text"
-                android:lines="1"
-                android:maxLength="20" />
+                android:lines="3"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_review_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="22dp"
             android:onClick="onSubmitClick"
-            android:text="Submit"/>
+            android:text="Submit"
+            android:theme="@style/MyButton"/>
 
     </LinearLayout>
 

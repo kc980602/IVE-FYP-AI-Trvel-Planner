@@ -14,12 +14,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Attraction;
-import com.triple.triple.Presenter.Account.RegisterActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 

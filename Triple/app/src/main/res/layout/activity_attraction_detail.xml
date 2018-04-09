@@ -191,8 +191,10 @@
                     android:id="@+id/btn_attraction_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="22dp"
                     android:onClick="onButtonReviewClick"
-                    android:text="Leave your review"/>
+                    android:text="Leave your review"
+                    android:theme="@style/MyButton"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_attraction_comments"

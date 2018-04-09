@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 import com.triple.triple.Adapter.MyTripsFragmentAdapter;
 import com.triple.triple.Adapter.TripAdapter;
+import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -51,8 +53,14 @@ public class MytripsFragment extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
 
-        initView();
-        setHasOptionsMenu(true);
+
+        if (!UserDataHelper.checkTokenExist(mcontext)) {
+            CheckLogin.directLogin(mcontext);
+        } else {
+            initView();
+            setHasOptionsMenu(true);
+
+        }
         return view;
     }
 

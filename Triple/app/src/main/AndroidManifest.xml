@@ -35,10 +35,10 @@
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.ProfileActivity"
+            android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.EditProfileActivity"
+            android:name=".Presenter.Account.EditProfileActivity"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
@@ -69,10 +69,6 @@
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
-            android:name=".Presenter.Profile.TravelStyleActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
@@ -102,10 +98,10 @@
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
             android:name=".Presenter.Account.LoginActivity"
-            android:parentActivityName=".Presenter.Profile.ProfileActivity"
+            android:parentActivityName=".Presenter.Account.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".Presenter.Account.RegisterActivity"
+            android:name=".Presenter.Registration.RegisterActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
         <activity

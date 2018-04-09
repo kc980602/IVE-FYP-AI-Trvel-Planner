@@ -1,11 +1,13 @@
 package com.triple.triple.Presenter.Account;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +24,13 @@ import com.securepreferences.SecurePreferences;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Presenter.MainActivity;
+import com.triple.triple.Presenter.Registration.RegisterActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.triple.triple.Sync.Authentication;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +60,15 @@ public class LoginActivity extends AppCompatActivity {
         setupToolbar();
         et_username = (TextInputEditText) findViewById(R.id.et_username);
         et_password = (TextInputEditText) findViewById(R.id.et_password);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
+            }
+        }
     }
 
     private void setupToolbar() {
@@ -99,8 +110,8 @@ public class LoginActivity extends AppCompatActivity {
         Intent indent = new Intent();
         switch (id) {
             case R.id.link_signup:
-                indent.setClass(mcontext, RegisterActivity.class);
-                break;
+                startActivityForResult(new Intent(mcontext, RegisterActivity.class), 1);
+                return;
             case R.id.link_forget:
                 indent.setClass(mcontext, ForgetPasswordActivity.class);
                 break;

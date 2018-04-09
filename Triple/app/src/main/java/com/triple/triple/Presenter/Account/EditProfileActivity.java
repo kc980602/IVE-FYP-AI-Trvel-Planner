@@ -4,12 +4,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -17,37 +15,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.interfaces.CountryPickerListener;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.ResponeMessage;
+import com.triple.triple.Model.User;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.Registration;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
-    private Context mcontext = RegisterActivity.this;
+    private Context mcontext = EditProfileActivity.this;
 
 
     private TextInputEditText et_username, et_fname, et_lname, et_email, et_password, et_cpassword, et_age, et_gender, et_country;
     private String username, fname, lname, password, cPassword, email, age, gender, country;
     private ProgressDialog progressDialog;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_edit_profile);
 
         progressDialog = new ProgressDialog(mcontext);
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
@@ -67,23 +61,36 @@ public class RegisterActivity extends AppCompatActivity {
         et_country.setOnClickListener(et_countryListener);
 
         setupActionBar();
+        getInfo();
     }
 
     private void setupActionBar() {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.register_title);
+        ab.setTitle("Edit Profile");
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void getInfo(){
+        user = UserDataHelper.getUserInfo(mcontext);
+        et_username.setText(user.getUsername());
+        et_fname.setText(user.getFirst_name());
+        et_lname.setText(user.getLast_name());
+        et_email.setText(user.getEmail());
+        et_age.setText(getResources().getStringArray(R.array.age)[user.getAge()]);
+        et_gender.setText(user.getGender());
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_account_register, menu);
+        getMenuInflater().inflate(R.menu.actionbar_profile_edit, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_create:
-                requestRegister();
+            case R.id.action_save:
+                requestSave();
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -97,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String[] singleChoiceItems = getResources().getStringArray(R.array.age);
-            int itemSelected = 0;
+            int itemSelected = user.getAge();
             new AlertDialog.Builder(mcontext)
                     .setTitle(getString(R.string.register_age_guide))
                     .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
@@ -116,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String[] singleChoiceItems = getResources().getStringArray(R.array.gender);
-            int itemSelected = 0;
+            int itemSelected = user.getGender() == "M" ? 1 : 0 ;
             new AlertDialog.Builder(mcontext)
                     .setTitle(getString(R.string.register_gender_guide))
                     .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
@@ -148,115 +155,48 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
-    public void requestRegister() {
+    public void requestSave() {
         Boolean isSuccess = false;
 
-        if (et_username.getText().toString().length() < 6) {
-            et_username.setError(getResources().getString(R.string.register_error_username));
-        } else if (TextUtils.isEmpty(et_fname.getText())) {
+        if (TextUtils.isEmpty(et_fname.getText())) {
             et_fname.setError(getResources().getString(R.string.register_error_required));
         } else if (TextUtils.isEmpty(et_lname.getText())) {
             et_lname.setError(getResources().getString(R.string.register_error_required));
-        } else if (checkEmail(et_email.getText().toString())) {
-            et_email.setError(getResources().getString(R.string.register_error_email));
-        } else if (et_password.getText().toString().equals("") || et_password.getText().toString().length() < 6) {
-            et_password.setError(getResources().getString(R.string.register_error_password));
-        } else if (!et_password.getText().toString().equals(et_cpassword.getText().toString())) {
-            et_password.setError(getResources().getString(R.string.register_error_password2));
         } else if (et_age.getText().toString().equals("")) {
             et_age.setError(getResources().getString(R.string.register_error_age));
         } else if (et_gender.getText().toString().equals("")) {
             et_gender.setError(getResources().getString(R.string.register_error_gender));
-        } else if (et_country.getText().toString().equals("")) {
-            et_country.setError(getResources().getString(R.string.register_error_country));
         } else {
             isSuccess = true;
         }
 
         if (isSuccess) {
-            username = et_username.getText().toString();
             fname = et_fname.getText().toString();
             lname = et_lname.getText().toString();
-            password = et_password.getText().toString();
-            cPassword = et_cpassword.getText().toString();
-            email = et_email.getText().toString();
-            new RegisterActivity.RequestRegister().execute();
-//            register();
+            save();
         }
     }
 
-    public boolean checkEmail(String email) {
-        return TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    private class RequestRegister extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "";
-            try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_registration);
-                respone = new Registration().run(url, username, fname, lname, password, cPassword, email, age, gender, country);
-            } catch (Exception e) {
-            }
-            return respone;
-        }
-
-        @Override
-        protected void onPostExecute(String respone) {
-            super.onPostExecute(respone);
-            if (!respone.equals("")) {
-                Type type = new TypeToken<ResponeMessage>() {
-                }.getType();
-                Gson gson = new Gson();
-                try {
-                    ResponeMessage message = (ResponeMessage) gson.fromJson(respone, type);
-                    Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Intent i = new Intent(mcontext, LoginActivity.class);
-                startActivity(i);
-                finish();
-                Toast.makeText(mcontext, R.string.register_success_create, Toast.LENGTH_LONG).show();
-            }
-            progressDialog.hide();
-        }
-    }
-
-    public void register() {
+    public void save() {
         progressDialog.show();
-        Call<Void> call = apiService.register(username, fname, lname, password, cPassword, gender, age, email, "0");
+        Call<Void> call = apiService.editInfo( fname, lname, gender, age);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 201){
-                    continueRegister();
+                    Toast.makeText(mcontext, "Successful!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mcontext, "Username or password has been used!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mcontext, "Error!", Toast.LENGTH_LONG).show();
+                    Log.e("respose", String.valueOf(response.code()));
                 }
                 progressDialog.dismiss();
             }
             @Override
-             public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(mcontext, "Somethings goes wrong!", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
     }
 
-    public void continueRegister(){
-        Intent i = new Intent(mcontext, LoginActivity.class);
-        startActivity(i);
-        finish();
-        Toast.makeText(mcontext, "Click the link in the verify email to activate your account.", Toast.LENGTH_LONG).show();
-
-        progressDialog.dismiss();
-    }
 }

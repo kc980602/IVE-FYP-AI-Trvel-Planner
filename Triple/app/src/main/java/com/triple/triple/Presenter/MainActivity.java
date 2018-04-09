@@ -1,14 +1,17 @@
 package com.triple.triple.Presenter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,11 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.squareup.picasso.Picasso;
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
@@ -32,7 +36,7 @@ import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.Account.SettingFragment;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
-import com.triple.triple.Presenter.Profile.TravelStyleFragment;
+import com.triple.triple.Presenter.Account.ProfileActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView iv_avatar;
     private TextView tv_username;
     private TextView tv_email;
+    private LinearLayout layout_nav_header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         findView();
         initView();
-        if (!UserDataHelper.checkTokenExist(this)) {
-            CheckLogin.directLogin(this);
-        }
     }
 
     private void findView() {
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         frame_layout_main = (FrameLayout) findViewById(R.id.frame_layout_main);
         View navView = navigationView.getHeaderView(0);
+        layout_nav_header = (LinearLayout) navView.findViewById(R.id.layout_nav_header);
         iv_avatar = (ImageView) navView.findViewById(R.id.iv_avatar);
         tv_username = (TextView) navView.findViewById(R.id.tv_username);
         tv_email = (TextView) navView.findViewById(R.id.tv_email);
@@ -77,7 +80,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView() {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        initNavHeader();
+        if (!UserDataHelper.checkTokenExist(this)) {
+            CheckLogin.directLogin(this);
+        } else {
+            initNavHeader();
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -89,6 +97,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initNavHeader() {
+        layout_nav_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mcontext, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         User user = UserDataHelper.getUserInfo(mcontext);
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(user.getFirst_name().charAt(0)), getResources().getColor(Constant.GETCOLOR()), 1000);
@@ -122,13 +137,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarNormal(R.string.title_mytrips);
                 fragment = new MytripsFragment();
                 break;
-            case R.id.nav_settings:
-                toolbarNormal(R.string.title_settings);
-                fragment = new SettingFragment();
-                break;
-            case R.id.nav_travelstyle:
-                toolbarNormal(R.string.title_travelstyle);
-                fragment = new TravelStyleFragment();
+            case R.id.nav_logout:
+//                SharedPreferences data = new SecurePreferences(mcontext);
+//                data.edit().clear().commit();
+//                PackageManager packageManager = mcontext.getPackageManager();
+//                Intent i = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());
+//                ComponentName componentName = i.getComponent();
+//                Intent logout = IntentCompat.makeRestartActivityTask(componentName);
+//                mcontext.startActivity(logout);
+//                System.exit(0);
+//
+//
+//                Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
+//                ComponentName cn = intentToBeNewRoot.getComponent();
+//
+//                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+//
+//                startActivity(mainIntent);
+
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
@@ -171,14 +197,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return actionBarSize;
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        //calling the method displayselectedscreen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
-        //make this method blank
         return true;
     }
 }

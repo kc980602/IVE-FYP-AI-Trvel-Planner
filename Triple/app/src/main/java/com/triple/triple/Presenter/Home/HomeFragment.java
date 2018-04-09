@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.CityCompactAdapter;
 import com.triple.triple.Adapter.TripAdapter;
 import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SpacesItemDecoration;
 import com.triple.triple.Helper.SystemPropertyHelper;
@@ -95,7 +96,13 @@ public class HomeFragment extends Fragment implements
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
         initView();
         requestSystemProperty();
-        requestTrip();
+        if (!UserDataHelper.checkTokenExist(mcontext)) {
+            CheckLogin.directLogin(mcontext);
+        } else {
+            tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
+            requestTrip();
+        }
+
         setHasOptionsMenu(true);
         return view;
     }
@@ -105,7 +112,6 @@ public class HomeFragment extends Fragment implements
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .into(image);
-        tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
     }
 
 

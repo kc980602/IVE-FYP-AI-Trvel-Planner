@@ -12,27 +12,18 @@
             android:id="@+id/nav_mytrips"
             android:icon="@drawable/ic_suitcase"
             android:title="@string/title_mytrips" />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search"
-            android:title="@string/title_search" />
-
-        <item
-            android:id="@+id/nav_travelstyle"
-            android:icon="@drawable/ic_tag_faces"
-            android:title="@string/title_travelstyle" />
 
     </group>
 
     <group android:id="@+id/group_config_help">
         <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/title_logout" />
+        <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help"
             android:title="@string/title_help" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/title_settings" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info"
