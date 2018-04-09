@@ -27,14 +27,17 @@
     <string name="edit_profile_title">Edit Profile</string>
     <string name="edit_profile_button">Save</string>
     <string name="edit_profile_guide">Change your personal information</string>
-
+    <string name="basic_info_title">Basic Info</string>
+    <string name="user_details_title">User Details</string>
+    <string name="prediction_title">Prediction</string>
     <string name="register_title">Create an account</string>
-    <string name="register_guide">Enter your personal information to create account.</string>
-    <string name="register_username">Username (At least 6 characters)</string>
+    <string name="register_demographic_hint">Enter your personal information.</string>
+    <string name="register_auth_hint">Enter your basic information.</string>
+    <string name="register_username">Username</string>
     <string name="register_fname">First Name</string>
     <string name="register_lname">Last Name</string>
     <string name="register_email">Email</string>
-    <string name="register_password">Password (At least 6 characters)</string>
+    <string name="register_password">Password</string>
     <string name="register_cpassword">Confirm Password</string>
     <string name="register_age">Age Group</string>
     <string name="register_gender">Gender</string>
@@ -55,7 +58,6 @@
     <string name="register_error_create">Something went wrong! (Error code: 1003)</string>
     <string name="register_success_create">Click the link in the verify email to activate your account.</string>
     <string-array name="age">
-        <item>0-12</item>
         <item>13-17</item>
         <item>18-24</item>
         <item>25-34</item>
@@ -64,8 +66,8 @@
         <item>65+</item>
     </string-array>
     <string-array name="gender">
-        <item>M</item>
-        <item>F</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string name="home_welcome">Welcome back\n%1$s!</string>

@@ -38,7 +38,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("member/register")
-    Call<Void> register(
+    Call<AuthData> register(
             @Field("username") String username,
             @Field("first_name") String fname,
             @Field("last_name") String lname,

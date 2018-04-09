@@ -101,7 +101,7 @@
             android:parentActivityName=".Presenter.Account.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".Presenter.Account.RegisterActivity"
+            android:name=".Presenter.Registration.RegisterActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
         <activity

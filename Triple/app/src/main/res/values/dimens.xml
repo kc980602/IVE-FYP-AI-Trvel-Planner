@@ -16,4 +16,6 @@
     <dimen name="card_margin_vertical_big_activity">4dp</dimen>
     <dimen name="card_recycler_corner_radius">2dp</dimen>
     <dimen name="card_recycler_elevation">2dp</dimen>
+    <dimen name="input_field_margin">16dp</dimen>
+    <dimen name="input_field_padding">16dp</dimen>
 </resources>
