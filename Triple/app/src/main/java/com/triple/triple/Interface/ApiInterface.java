@@ -9,6 +9,7 @@ import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
+import com.triple.triple.Model.User;
 
 import org.w3c.dom.Attr;
 
@@ -22,6 +23,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -46,6 +48,20 @@ public interface ApiInterface {
             @Field("age") String age,
             @Field("email") String email,
             @Field("income") String income
+    );
+
+    @FormUrlEncoded
+    @PUT("member/info")
+    Call<Void> editInfo(
+            @Field("first_name") String fname,
+            @Field("last_name") String lname,
+            @Field("gender") String gender,
+            @Field("age") String age
+    );
+
+    @GET("member/info")
+    Call<User> getInfo(
+            @Header("Authorization") String authHeader
     );
 
     @FormUrlEncoded
@@ -98,8 +114,23 @@ public interface ApiInterface {
             @Path("id") Integer id
     );
 
+    @FormUrlEncoded
+    @POST("attraction/{id}/review")
+    Call<Void> placeReview(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id,
+            @Field("title") String title,
+            @Field("message") String message,
+            @Field("rating") Integer rating
+    );
+
     @GET("trip")
     Call<List<Trip>> listTrip(
+            @Header("Authorization") String authHeader
+    );
+
+    @GET("trip/ended")
+    Call<List<Trip>> listTripEnded(
             @Header("Authorization") String authHeader
     );
 

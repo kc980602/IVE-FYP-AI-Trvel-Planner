@@ -46,10 +46,9 @@ public class AttractionListActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private List <Attraction> attractions;
-    private DataMeta dataMeta, attraction, hotel, restaurant;
+    private DataMeta attraction, hotel, restaurant, dataMeta;
     private City city;
     SearchView searchView;
-    AttractionFragment chatFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,18 +112,16 @@ public class AttractionListActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    bundle.putSerializable("dataMeta", dataMeta);
-                    //bundle.putSerializable("dataMeta", attraction);
+                    //bundle.putSerializable("dataMeta", dataMeta);
+                    bundle.putSerializable("dataMeta", attraction);
                     fragment.setArguments(bundle);
                     break;
                 case 1:
-                    bundle.putSerializable("dataMeta", dataMeta);
-                    //bundle.putSerializable("dataMeta", hotel);
+                    bundle.putSerializable("dataMeta", hotel);
                     fragment.setArguments(bundle);
                     break;
                 case 2:
-                    bundle.putSerializable("dataMeta", dataMeta);
-                    //bundle.putSerializable("dataMeta", restaurant);
+                    bundle.putSerializable("dataMeta", restaurant);
                     fragment.setArguments(bundle);
                     break;
             }

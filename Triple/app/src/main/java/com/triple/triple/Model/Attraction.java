@@ -58,6 +58,9 @@ public class Attraction implements Serializable {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("comments")
+    @Expose
+    private List<AttractionComment> comments;
 
     public int getId() {
         return id;
@@ -177,5 +180,13 @@ public class Attraction implements Serializable {
 
     public void setPhotos(List<String> photos) {
         this.photos = photos;
+    }
+
+    public List<AttractionComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<AttractionComment> comments) {
+        this.comments = comments;
     }
 }

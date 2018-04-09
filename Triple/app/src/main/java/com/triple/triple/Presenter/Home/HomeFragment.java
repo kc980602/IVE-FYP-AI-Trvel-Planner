@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -28,8 +29,11 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.nineoldandroids.view.ViewHelper;
+import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.CityCompactAdapter;
 import com.triple.triple.Adapter.TripAdapter;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SpacesItemDecoration;
 import com.triple.triple.Helper.SystemPropertyHelper;
@@ -75,6 +79,7 @@ public class HomeFragment extends Fragment implements
     private TripAdapter tripAdapter;
     private CityCompactAdapter cityCompactAdapter;
     private InfiniteScrollAdapter infiniteAdapter;
+    private TextView tv_welcome;
 
     @Nullable
     @Override
@@ -83,16 +88,32 @@ public class HomeFragment extends Fragment implements
         sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(getContext());
         layout_scroll = (ObservableScrollView) view.findViewById(R.id.layout_scroll);
         image = (ImageView) view.findViewById(R.id.image);
+        tv_welcome = (TextView) view.findViewById(R.id.tv_welcome);
         rv_all = (RecyclerView) view.findViewById(R.id.rv_all);
         dsv_trips = (DiscreteScrollView) view.findViewById(R.id.dsv_trips);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.colorPrimary))));
         layout_scroll.setScrollViewCallbacks(this);
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
+        initView();
         requestSystemProperty();
-        requestTrip();
+        if (!UserDataHelper.checkTokenExist(mcontext)) {
+            CheckLogin.directLogin(mcontext);
+        } else {
+            tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
+            requestTrip();
+        }
+
         setHasOptionsMenu(true);
         return view;
     }
+    private void initView() {
+        Picasso.with(mcontext)
+                .load(R.drawable.bkg_home)
+                .fit().centerCrop()
+                .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .into(image);
+    }
+
 
     private void initCity() {
         int numberOfColumns = 3;

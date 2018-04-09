@@ -10,6 +10,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,18 +20,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.mypopsy.maps.StaticMap;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Adapter.AttractionCommentAdapter;
 import com.triple.triple.Helper.AppBarStateChangeListener;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.RecycleViewPaddingHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.R;
@@ -39,6 +46,8 @@ import java.net.MalformedURLException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.triple.triple.Helper.CheckLogin.directLogin;
 
 public class AttractionDetailActivity extends AppCompatActivity {
 
@@ -68,6 +77,9 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private String attractionName = "";
     private TextView tv_title;
     private ImageView image;
+    private RecyclerView rv_attraction_comments;
+    private AttractionCommentAdapter adapter;
+    private Button btn_attraction_review;
 
 
     @Override
@@ -107,6 +119,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
         tv_attInfo_website = (TextView) findViewById(R.id.tv_attInfo_website);
         tv_attInfo_address = (TextView) findViewById(R.id.tv_attInfo_address);
         image = (ImageView) findViewById(R.id.image);
+        rv_attraction_comments = (RecyclerView) findViewById(R.id.rv_attraction_comments);
+        btn_attraction_review = (Button) findViewById(R.id.btn_attraction_review);
     }
 
     private void initView() {
@@ -208,6 +222,18 @@ public class AttractionDetailActivity extends AppCompatActivity {
             tv_attInfo_address.setVisibility(View.VISIBLE);
         }
 
+        if (!attraction.getComments().isEmpty()){
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
+            adapter = new AttractionCommentAdapter(this, attraction.getComments());
+            rv_attraction_comments.setHasFixedSize(true);
+            rv_attraction_comments.setLayoutManager(mLayoutManager);
+            rv_attraction_comments.setItemAnimator(new DefaultItemAnimator());
+            rv_attraction_comments.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
+            rv_attraction_comments.addItemDecoration(dividerItemDecoration);
+        }
+
         image_map.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -240,8 +266,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                    .placeholder(R.drawable.image_null)
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -250,7 +275,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 Picasso.with(mcontext)
                         .load(attraction.getPhotos().get(i))
                         .fit().centerCrop()
-                        .placeholder(R.drawable.image_null_tran)
                         .into(image);
                 layout_gallery.addView(view);
                 if (i == 9) {
@@ -350,4 +374,12 @@ public class AttractionDetailActivity extends AppCompatActivity {
         setBookmark();
     }
 
+    public void onButtonReviewClick(View view){
+        directLogin(mcontext);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("attraction", attraction);
+        Intent intent = new Intent(mcontext, AttractionReviewActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

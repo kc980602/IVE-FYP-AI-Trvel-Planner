@@ -8,21 +8,17 @@ import android.view.MotionEvent;
 
 import java.io.Serializable;
 
-/**
- * Don't intercept any MotionEvent, delegate to {@link VerticalVPOnTouchListener}<br>
- * Created by chadguo on 17/3/1.
- */
-public class DummyViewPager extends ViewPager implements Serializable {
+public class VerticalViewPager extends ViewPager implements Serializable {
 
     private static final String TAG = "DummyViewPager";
     private int baseScrollX;
     private int currentScrollState;
 
-    public DummyViewPager(Context context) {
+    public VerticalViewPager(Context context) {
         this(context, null);
     }
 
-    public DummyViewPager(Context context, AttributeSet attrs) {
+    public VerticalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         setPageTransformer(false, new DefaultTransformer());// vertical scroll trick
         addOnPageChangeListener(new SimpleOnPageChangeListener() {
@@ -37,7 +33,6 @@ public class DummyViewPager extends ViewPager implements Serializable {
         });
 
     }
-
 
     public int getBaseScrollX() {
         return baseScrollX;

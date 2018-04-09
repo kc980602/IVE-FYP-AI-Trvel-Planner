@@ -15,12 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Helper.Constant;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,9 +86,9 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
     public void onBindViewHolder(AttractionViewHolder holder, int i) {
         Attraction attraction = attractions.get(i);
         Picasso.with(activity)
-                .load(attraction.getBestPhoto())
+                .load(!attraction.getPhotos().isEmpty() ? attraction.getPhotos().get(0) : null)
                 .fit().centerCrop()
-                .placeholder(R.drawable.image_null_tran)
+                .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
                 .into(holder.image1);
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
@@ -114,6 +118,17 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
             attractions = new ArrayList<>();
             attractions.addAll(attractionList);
             notifyDataSetChanged();
+        }
+    }
+
+    public void addAttraction (List<Attraction> atts){
+        if(atts == null){
+            notifyDataSetChanged();
+        } else {
+            for( int i = 0; i < atts.size() ; i++){
+                attractions.add(atts.get(i));
+                //notifyDataSetChanged();
+            }
         }
     }
 

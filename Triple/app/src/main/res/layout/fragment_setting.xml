@@ -1,14 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.triple.triple.Presenter.Account.SettingFragment">
 
-
     <RelativeLayout
         android:id="@+id/relLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,6 +25,14 @@
                 android:theme="@style/MyButton" />
 
             <Button
+                android:id="@+id/bt_edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="22dp"
+                android:text="Edit Profile"
+                android:theme="@style/MyButton" />
+
+            <Button
                 android:id="@+id/bt_signout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,4 +42,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>

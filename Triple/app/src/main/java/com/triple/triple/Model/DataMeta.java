@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class DataMeta implements Serializable{
-    @SerializedName("data")
+    @SerializedName("attractions")
     @Expose
     private List<Attraction> attractions;
     @SerializedName("meta")

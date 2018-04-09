@@ -3,7 +3,6 @@ package com.triple.triple.Presenter.Mytrips;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -20,10 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.securepreferences.SecurePreferences;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Adapter.TripDayAdapter;
 import com.triple.triple.Helper.BitmapTransform;
@@ -31,7 +27,6 @@ import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.Model.TripItinerary;
@@ -39,7 +34,6 @@ import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -279,8 +273,7 @@ public class TripDetailActivity extends AppCompatActivity {
         Picasso.with(mcontext)
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                .placeholder(R.drawable.image_null_tran)
+                .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .into(image);
         cv_trip.setVisibility(View.VISIBLE);
     }

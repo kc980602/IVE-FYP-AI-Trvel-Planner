@@ -26,13 +26,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="217dp"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax">
 
                 <TextView
                     android:id="@+id/tv_city"
-                    style="@style/TextAppearance.AppCompat.Display1"
+                    style="@style/TextAppearance.AppCompat.Display3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -43,7 +45,7 @@
 
                 <TextView
                     android:id="@+id/tv_country"
-                    style="@style/TextAppearance.AppCompat.Title"
+                    style="@style/TextAppearance.AppCompat.Display1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -52,6 +54,12 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
+
+        <WebView
+            android:id="@+id/textContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="WebViewLayout" />
 
         <TextView
             android:id="@+id/tv_description"

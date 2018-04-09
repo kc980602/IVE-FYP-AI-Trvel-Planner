@@ -35,14 +35,17 @@
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.ProfileActivity"
+            android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
+        <activity
+            android:name=".Presenter.Profile.EditProfileActivity"
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Account.ForgetPasswordActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
-            android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity
@@ -99,7 +102,7 @@
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
             android:name=".Presenter.Account.LoginActivity"
-            android:parentActivityName=".Presenter.Profile.ProfileActivity"
+            android:parentActivityName=".Presenter.Account.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Presenter.Account.RegisterActivity"
@@ -107,7 +110,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.NewMainActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
+            android:parentActivityName=".Presenter.Attraction.AttractionDetailActivity" />
+        <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
     </application>
 
 </manifest>
