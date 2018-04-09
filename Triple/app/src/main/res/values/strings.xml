@@ -179,20 +179,14 @@
         <item>Restaurant</item>
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
-
-    <string name="comment_rating_guide">Rate this attraction (0-10)</string>
+    <string name="attraction_comment_title">Leave your review</string>
+    <string name="comment_rating_guide">Rate this attraction</string>
     <string-array name="rating">
-        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

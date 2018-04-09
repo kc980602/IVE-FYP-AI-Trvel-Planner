@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.BitmapTransform;
@@ -48,6 +49,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
     public class AttractionCommentViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_commentId, tv_title, tv_name, tv_rate_time, tv_content;
+        public RoundedImageView image;
 
         public AttractionCommentViewHolder(View itemView) {
             super(itemView);
@@ -56,6 +58,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_rate_time = (TextView) itemView.findViewById(R.id.tv_rate_time);
             tv_content = (TextView) itemView.findViewById(R.id.tv_content);
+            image = (RoundedImageView) itemView.findViewById(R.id.image);
         }
     }
 
@@ -75,8 +78,14 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
         holder.tv_name.setText(ac.getUser().getFirst_name() + " " + ac.getUser().getLast_name());
         long now = System.currentTimeMillis();
         String date = String.valueOf(DateUtils.getRelativeTimeSpanString(ac.getCreated_at(), now, DateUtils.DAY_IN_MILLIS));
-        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10.0" + " • " + date);
+        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 5" + " • " + date);
         holder.tv_content.setText(ac.getContent());
+
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRoundRect(String.valueOf(ac.getUser().getFirst_name().charAt(0)), activity.getResources().getColor(Constant.GETCOLOR()), 1000);
+        //iv_avatar.setImageDrawable(drawable);
+        holder.image.setImageDrawable(drawable);
     }
 
     @Override
