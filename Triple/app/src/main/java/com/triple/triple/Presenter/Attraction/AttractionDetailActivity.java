@@ -47,6 +47,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.triple.triple.Helper.CheckLogin.directLogin;
+
 public class AttractionDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "AttractionDetail";
@@ -373,11 +375,11 @@ public class AttractionDetailActivity extends AppCompatActivity {
     }
 
     public void onButtonReviewClick(View view){
+        directLogin(mcontext);
         Bundle bundle = new Bundle();
         bundle.putSerializable("attraction", attraction);
         Intent intent = new Intent(mcontext, AttractionReviewActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
 }
