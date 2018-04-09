@@ -24,8 +24,12 @@
     <string name="forget_password_reset">Reset</string>
     <string name="forget_password_guide">Forget your password? Enter your username to reset passowrd.</string>
 
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_profile_button">Save</string>
+    <string name="edit_profile_guide">Change your personal information</string>
+
     <string name="register_title">Create an account</string>
-    <string name="register_guide">Enter your personal infotmation to create account.</string>
+    <string name="register_guide">Enter your personal information to create account.</string>
     <string name="register_username">Username (At least 6 characters)</string>
     <string name="register_fname">First Name</string>
     <string name="register_lname">Last Name</string>
