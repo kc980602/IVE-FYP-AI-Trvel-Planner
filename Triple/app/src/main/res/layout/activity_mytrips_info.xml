@@ -18,7 +18,7 @@
         android:translationZ="20dp"
         app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
 
-    <com.triple.triple.UILibrary.DummyViewPager
+    <com.triple.triple.UILibrary.VerticalViewPager
         android:id="@+id/vertical_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

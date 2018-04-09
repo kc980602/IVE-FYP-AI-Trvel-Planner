@@ -79,8 +79,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
             Picasso.with(activity)
                     .load(city.getPhoto())
                     .centerCrop().fit()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                    .placeholder(R.drawable.image_null_tran)
+                    .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
                     .into(holder.image);
         }
         holder.tv_cityid.setText(String.valueOf(city.getId()));

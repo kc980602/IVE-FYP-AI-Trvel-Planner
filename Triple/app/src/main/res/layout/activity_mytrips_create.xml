@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:hint="@string/mytrips_create_tripdates"
-                android:inputType="number"
                 android:lines="1" />
         </android.support.design.widget.TextInputLayout>
 
@@ -59,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:hint="@string/mytrips_create_tripdestination"
-                android:inputType="number"
                 android:lines="1" />
         </android.support.design.widget.TextInputLayout>
 

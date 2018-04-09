@@ -9,6 +9,7 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
@@ -26,7 +27,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:translationZ="100dp">
+        android:translationZ="1000dp">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/avi"

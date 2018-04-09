@@ -24,6 +24,9 @@
     <string name="forget_password_reset">Reset</string>
     <string name="forget_password_guide">Forget your password? Enter your username to reset passowrd.</string>
 
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_profile_button">Save</string>
+    <string name="edit_profile_guide">Change your personal information</string>
     <string name="basic_info_title">Basic Info</string>
     <string name="user_details_title">User Details</string>
     <string name="prediction_title">Prediction</string>
@@ -67,10 +70,12 @@
         <item>Female</item>
     </string-array>
 
-    <string name="home_des_button">Going somewhere?</string>
+    <string name="home_welcome">Welcome back\n%1$s!</string>
+    <string name="home_trip">Your Trips</string>
+    <string name="home_city">City Guides</string>
 
-    <string name="mytrips_all">All</string>
-    <string name="mytrips_saved">Saved</string>
+    <string name="mytrips_ongoing">Ongoing</string>
+    <string name="mytrips_ended">Ended</string>
     <string name="mytrips_offline">Offline Version</string>
     <string name="mytrips_error">Something went wrong! (Error code: 1002)</string>
     <string name="mytrips_create_title">Generate a trip</string>
@@ -83,6 +88,7 @@
     <string name="mytrips_create_checkbox">Add attraction for me</string>
     <string name="mytrips_create_success">Trip created</string>
     <string name="mytrips_create_error_date">End date need to greater than Start date!</string>
+    <string name="mytrips_create_error_date_duration">End date need to greater than Start date!</string>
     <string name="mytrips_create_error_process">Something went wrong! (Error code: 1001)</string>
 
     <string name="mytrips_detail_edit">Edit trip</string>
@@ -125,6 +131,12 @@
     <string name="attraction_detail_bookmark_success">Added to Favorites</string>
     <string name="attraction_detail_bookmark_fail">Encounter error, try again</string>
 
+    <string name="profile_account">Account</string>
+    <string name="profile_edit">Edit Profile</string>
+    <string name="profile_share">Share Triple</string>
+
+    <string name="nav_bar_login">Click here to login</string>
+
     <string-array name="destination">
         <item>asssss</item>
         <item>assssss</item>
@@ -152,6 +164,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="snackbar_ok">OK</string>
     <string name="snackbar_refersh">Refersh</string>
+    <string name="dialog_generating_title">Generating Itinerary</string>
     <string name="dialog_progress_title">Processing...</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="intent_share_header">Share this by</string>
@@ -174,5 +187,15 @@
         <item>Restaurant</item>
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="attraction_comment_title">Leave your review</string>
+    <string name="comment_rating_guide">Rate this attraction</string>
+    <string-array name="rating">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 
 </resources>

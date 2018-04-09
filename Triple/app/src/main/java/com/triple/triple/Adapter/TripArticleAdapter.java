@@ -77,8 +77,7 @@ public class TripArticleAdapter extends RecyclerView.Adapter<TripArticleAdapter.
             Picasso.with(context)
                     .load(article.getPhotos().get(0))
                     .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                    .placeholder(R.drawable.image_null_tran)
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .into(holder.image);
         }
         holder.tv_attId.setText(String.valueOf(article.getId()));

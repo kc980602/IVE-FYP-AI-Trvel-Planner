@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginBottom="8dp"
-    android:elevation="@dimen/cardview_default_elevation"
     android:foreground="?selectableItemBackgroundBorderless">
 
     <TextView

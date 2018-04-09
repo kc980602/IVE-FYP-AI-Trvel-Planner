@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -16,7 +17,7 @@ import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.Article;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.UILibrary.DummyViewPager;
+import com.triple.triple.UILibrary.VerticalViewPager;
 import com.triple.triple.UILibrary.VerticalVPOnTouchListener;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class TripInfoContentFragment extends Fragment {
     private int tripid;
     private NestedScrollView layout_nsv;
     private RecyclerView recyclerView;
+    private Context mcontext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class TripInfoContentFragment extends Fragment {
 
     public void requestArticle() {
         String token = "Bearer ";
-        token += UserDataHelper.getToken(getContext());
+        token += UserDataHelper.getToken(mcontext);
         Call<List<Article>> call = apiService.getTripArticle(token, tripid);
         call.enqueue(new Callback<List<Article>>() {
             @Override
@@ -58,6 +60,7 @@ public class TripInfoContentFragment extends Fragment {
                     try {
                         articles = response.body();
                         afterGetData();
+                        ((TripInfoActivity) getActivity()).setUnlock();
                     } catch (Exception e) {
                         requestArticle();
                     }
@@ -74,10 +77,11 @@ public class TripInfoContentFragment extends Fragment {
     }
 
     private void afterGetData() {
-        recyclerView.setOnTouchListener(new VerticalVPOnTouchListener((DummyViewPager) getArguments().getSerializable("viewpager")));//set the vertical scroll controller
+        VerticalVPOnTouchListener verticalVPOnTouchListener = new VerticalVPOnTouchListener((VerticalViewPager) getArguments().getSerializable("viewpager"));
+        recyclerView.setOnTouchListener(verticalVPOnTouchListener);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new TripArticleAdapter(getContext(), articles));
+        recyclerView.setAdapter(new TripArticleAdapter(mcontext, articles));
     }
 
     public String getTitle() {
@@ -88,4 +92,9 @@ public class TripInfoContentFragment extends Fragment {
         return getArguments().getInt("position");
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mcontext = context;
+    }
 }

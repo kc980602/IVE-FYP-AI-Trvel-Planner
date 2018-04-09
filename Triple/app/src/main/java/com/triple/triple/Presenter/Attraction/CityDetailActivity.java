@@ -6,13 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +19,6 @@ import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
-import com.triple.triple.Interface.ApiInterface;
 //import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Model.Attraction;
@@ -31,20 +26,15 @@ import com.triple.triple.Model.City;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
-import com.triple.triple.Sync.ApiClient;
 //import com.triple.triple.Sync.ApiWeather;
 import com.triple.triple.Sync.ApiWeather;
-import com.triple.triple.Sync.CreateTrip;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,11 +51,15 @@ public class CityDetailActivity extends AppCompatActivity {
     private BottomNavigationViewEx nav_bar;
     private LinearLayout layout_attraction;
     private List<Attraction> attractions;
-    private DataMeta dataMeta, attraction, hotel, restaurant;
+    private DataMeta dataMeta;
+    private DataMeta attraction;
+    private DataMeta hotel;
+    private DataMeta restaurant;
     private int cityid;
     private City city;
     private ImageView image;
     private TextView tv_city, tv_country, tv_time, tv_weather;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +72,9 @@ public class CityDetailActivity extends AppCompatActivity {
         initView();
         getCityDetail();
         getTime();
+        getHotel();
+        getRestaurant();
+        getAttraction();
         getWeather();
     }
 
@@ -102,8 +99,7 @@ public class CityDetailActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(city.getPhoto())
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
-                .placeholder(R.drawable.image_null)
+                .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .into(image);
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());
@@ -136,7 +132,7 @@ public class CityDetailActivity extends AppCompatActivity {
                     bundle.putSerializable("dataMeta", dataMeta);
                     bundle.putSerializable("attraction", attraction);
                     bundle.putSerializable("hotel", hotel);
-                    bundle.putSerializable("restaurants", restaurant);
+                    bundle.putSerializable("restaurant", restaurant);
                     intent.setClass(mcontext, AttractionListActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -203,6 +199,7 @@ public class CityDetailActivity extends AppCompatActivity {
                     dataMeta = response.body();
                     attractions = response.body().getAttractions();
                     loadDataToView();
+                    setDataMeta(dataMeta, "dataMeta");
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
@@ -215,13 +212,15 @@ public class CityDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void getAttractions() {
+    public void getAttraction() {
         Call<DataMeta> call = Constant.apiService.getCityAttractions(cityid);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
                     attraction = response.body();
+                    setDataMeta(attraction, "attraction");
+                    Log.d("Response", attraction.toString());
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
@@ -232,13 +231,16 @@ public class CityDetailActivity extends AppCompatActivity {
                 Log.e("onFailure", t.toString());
             }
         });
+    }
 
-        call = Constant.apiService.getCityHotels(cityid);
+    public void getHotel() {
+        Call<DataMeta> call = Constant.apiService.getCityHotels(cityid);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
-                    hotel = response.body();
+                    hotel = (DataMeta) response.body();
+                    setDataMeta(hotel, "hotel");
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
@@ -249,13 +251,16 @@ public class CityDetailActivity extends AppCompatActivity {
                 Log.e("onFailure", t.toString());
             }
         });
+    }
 
-        call = Constant.apiService.getCityRestaurants(cityid);
+    public void getRestaurant() {
+        Call<DataMeta> call = Constant.apiService.getCityRestaurants(cityid);
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
-                    restaurant = response.body();
+                    restaurant = (DataMeta) response.body();
+                    setDataMeta(restaurant, "restaurant");
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
@@ -316,6 +321,22 @@ public class CityDetailActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void setDataMeta(DataMeta dm, String type){
+        switch (type){
+            case "hotel":
+                hotel.setAttractions(dm.getAttractions());
+                break;
+            case "attraction":
+                attraction.setAttractions(dm.getAttractions());
+                break;
+            case "restaurant":
+                restaurant.setAttractions(dm.getAttractions());
+                break;
+            case "dataMeta":
+                dataMeta.setAttractions(dm.getAttractions());
+        }
     }
 
 }

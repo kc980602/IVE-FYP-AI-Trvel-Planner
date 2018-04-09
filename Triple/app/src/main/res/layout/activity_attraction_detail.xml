@@ -178,6 +178,32 @@
 
                 <include layout="@layout/devider" />
 
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/attraction_detail_review" />
+
+                <include layout="@layout/devider_short" />
+
+                <Button
+                    android:id="@+id/btn_attraction_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="22dp"
+                    android:onClick="onButtonReviewClick"
+                    android:text="Leave your review"
+                    android:theme="@style/MyButton"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_attraction_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical" />
+
+                <include layout="@layout/devider" />
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

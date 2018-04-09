@@ -12,7 +12,7 @@ import android.view.View;
 import com.triple.triple.Adapter.ItineraryFragmentAdapter;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
-import com.triple.triple.UILibrary.DummyViewPager;
+import com.triple.triple.UILibrary.VerticalViewPager;
 
 import java.io.Serializable;
 
@@ -22,7 +22,7 @@ public class TripInfoActivity extends AppCompatActivity {
     private TripInfoCoverFragment fragment_cover;
     private TripInfoContentFragment fragment_content;
     private TripDetail tripDetail;
-    private DummyViewPager viewPager;
+    private VerticalViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class TripInfoActivity extends AppCompatActivity {
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        viewPager = (DummyViewPager) findViewById(R.id.vertical_viewpager);
+        viewPager = (VerticalViewPager) findViewById(R.id.vertical_viewpager);
     }
 
     private void initView() {
@@ -48,7 +48,6 @@ public class TripInfoActivity extends AppCompatActivity {
     }
 
     private void initViewPager() {
-
         fragment_cover = new TripInfoCoverFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("tripDetail", (Serializable) tripDetail);
@@ -72,7 +71,8 @@ public class TripInfoActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             public void onPageSelected(int position) {
                 Drawable backArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
@@ -92,6 +92,11 @@ public class TripInfoActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+    }
+
+    public void setUnlock() {
+        TripInfoCoverFragment fragment = (TripInfoCoverFragment) getSupportFragmentManager().findFragmentByTag(fragment_cover.getTag());
+        fragment.setUnlock();
     }
 
 }

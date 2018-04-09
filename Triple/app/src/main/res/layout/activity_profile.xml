@@ -4,56 +4,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Presenter.Profile.ProfileActivity">
+    tools:context=".Presenter.Account.ProfileActivity">
 
-    <RelativeLayout
+    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+        android:id="@+id/layout_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-
-        <!-- body section -->
         <RelativeLayout
-            android:id="@+id/relLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/layout_header"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true">
+                android:layout_height="310dp"
+                android:background="@color/white">
 
-                <Button
-                    android:id="@+id/bt_signin"
+                <!--<com.github.florent37.diagonallayout.DiagonalLayout-->
+                <!--android:id="@+id/diagonalLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="250dp"-->
+                <!--app:diagonal_angle="25"-->
+                <!--app:diagonal_direction="left"-->
+                <!--app:diagonal_handleMargins="true"-->
+                <!--app:diagonal_position="bottom">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:src="@drawable/nav_bkg" />-->
+
+                <!--</com.github.florent37.diagonallayout.DiagonalLayout>-->
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
-                    android:onClick="onButtonSignInClicked"
-                    android:text="Sign in"
-                    android:theme="@style/MyButton"/>
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/bt_preference"
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_fullname"
+                        style="@style/TextAppearance.AppCompat.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:drawablePadding="5dp"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
-                    android:onClick="onButtonPreferenceClicked"
-                    android:text="my preference"
-                    android:theme="@style/MyButton"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="8dp"
+                    android:gravity="center">
 
-                <Button
-                    android:id="@+id/bt_signout"
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_edit"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:textColor="@color/grey2"
+                        android:text="@string/profile_edit"
+                        android:textAllCaps="false" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="20dp"
+                        android:background="@color/grey2" />
+
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_share_white"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/grey2"
+                        android:drawableTint="@color/colorPrimary"
+                        android:text="@string/profile_share"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_header"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:clickable="false">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
-                    android:onClick="onButtonSignOutClicked"
-                    android:text="Sign out"
-                    android:theme="@style/MyButton"/>
-            </LinearLayout>
+                    android:background="@color/white"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <LinearLayout
+                        android:id="@+id/layout_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/profile_account" />
+
+                        <include layout="@layout/devider_short" />
+
+                        <TextView
+                            android:id="@+id/tv_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/ic_account"
+                            android:drawableTint="@color/colorPrimary"
+                            android:gravity="center_vertical"
+                            android:padding="8dp" />
+
+                        <TextView
+                            android:id="@+id/tv_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="20dp"
+                            android:drawableStart="@drawable/ic_email"
+                            android:drawableTint="@color/colorPrimary"
+                            android:gravity="center_vertical"
+                            android:padding="8dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
         </RelativeLayout>
 
-    </RelativeLayout>
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/MyToolbarTransparent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?homeAsUpIndicator"
+        app:popupTheme="@style/AppThemeNoActionBar.PopupOverlay" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -6,22 +6,22 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Fake drag {@link DummyViewPager} <br>
- * Usage: set this to be the  {@link View.OnTouchListener} of {@link #dummyViewPager}'s children <br>
+ * Fake drag {@link VerticalViewPager} <br>
+ * Usage: set this to be the  {@link View.OnTouchListener} of {@link #verticalViewPager}'s children <br>
  * Created by chadguo on 17/3/1.
  */
 
 public class VerticalVPOnTouchListener implements View.OnTouchListener {
     private static final String TAG = "VerticalViewPager";
-    private DummyViewPager dummyViewPager;//the container ViewPager
+    private VerticalViewPager verticalViewPager;//the container ViewPager
     private float lastMotionY = Float.MIN_VALUE;
     private float downY = Float.MIN_VALUE;
-
+    private boolean isLocked;
     /**
-     * @param dummyViewPager the container
+     * @param verticalViewPager the container
      */
-    public VerticalVPOnTouchListener(DummyViewPager dummyViewPager) {
-        this.dummyViewPager = dummyViewPager;
+    public VerticalVPOnTouchListener(VerticalViewPager verticalViewPager) {
+        this.verticalViewPager = verticalViewPager;
     }
 
     /**
@@ -34,6 +34,9 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
      */
     @Override
     public boolean onTouch(View v, MotionEvent e) {
+        if (isLocked) {
+            return false;
+        }
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downY = e.getRawY();
@@ -50,13 +53,13 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
                 lastMotionY = e.getRawY();
                 diff = diff / 2; //slow down viewpager scroll
 
-                if (dummyViewPager.getScrollX() != dummyViewPager.getBaseScrollX()) {
+                if (verticalViewPager.getScrollX() != verticalViewPager.getBaseScrollX()) {
                     if (fakeDragVp(v, e, diff)) return true;
                 } else {
                     if (ViewCompat.canScrollVertically(v, (-diff) > 0 ? 1 : -1)) {
                         break;
                     } else {
-                        dummyViewPager.beginFakeDrag();
+                        verticalViewPager.beginFakeDrag();
                         fakeDragVp(v, e, diff);
                         adjustDownMotion(v, e);
                         return true;
@@ -66,9 +69,9 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (dummyViewPager.isFakeDragging()) {
+                if (verticalViewPager.isFakeDragging()) {
                     try {
-                        dummyViewPager.endFakeDrag();
+                        verticalViewPager.endFakeDrag();
                     } catch (Exception e1) {
                         Log.e(TAG, "", e1);
                     }
@@ -81,13 +84,13 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
     }
 
     private boolean fakeDragVp(View v, MotionEvent e, float diff) {
-        if (dummyViewPager.isFakeDragging()) {
+        if (verticalViewPager.isFakeDragging()) {
             float step = diff;
-            int expScrollX = (int) (dummyViewPager.getScrollX() - step);
-            if (isDiffSign(expScrollX - dummyViewPager.getBaseScrollX(), dummyViewPager.getScrollX() - dummyViewPager.getBaseScrollX())) {
-                step = dummyViewPager.getScrollX() - dummyViewPager.getBaseScrollX();
+            int expScrollX = (int) (verticalViewPager.getScrollX() - step);
+            if (isDiffSign(expScrollX - verticalViewPager.getBaseScrollX(), verticalViewPager.getScrollX() - verticalViewPager.getBaseScrollX())) {
+                step = verticalViewPager.getScrollX() - verticalViewPager.getBaseScrollX();
             }
-            dummyViewPager.fakeDragBy(step);
+            verticalViewPager.fakeDragBy(step);
             adjustDownMotion(v, e);
 
             return true;
@@ -115,5 +118,9 @@ public class VerticalVPOnTouchListener implements View.OnTouchListener {
     public void reset() {
         downY = Float.MIN_VALUE;
         lastMotionY = Float.MIN_VALUE;
+    }
+
+    public void setIsLock(boolean state) {
+        isLocked = state;
     }
 }
