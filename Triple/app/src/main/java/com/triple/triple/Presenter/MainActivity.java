@@ -33,7 +33,6 @@ import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.User;
-import com.triple.triple.Presenter.Account.SettingFragment;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Account.ProfileActivity;
@@ -138,23 +137,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MytripsFragment();
                 break;
             case R.id.nav_logout:
-//                SharedPreferences data = new SecurePreferences(mcontext);
-//                data.edit().clear().commit();
-//                PackageManager packageManager = mcontext.getPackageManager();
-//                Intent i = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());
-//                ComponentName componentName = i.getComponent();
-//                Intent logout = IntentCompat.makeRestartActivityTask(componentName);
-//                mcontext.startActivity(logout);
-//                System.exit(0);
-//
-//
-//                Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
-//                ComponentName cn = intentToBeNewRoot.getComponent();
-//
-//                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
-//
-//                startActivity(mainIntent);
+                SharedPreferences data = new SecurePreferences(mcontext);
+                data.edit().clear().commit();
 
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+                startActivity(i);
+                System.exit(0);
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(MainActivity.this, NewMainActivity.class);

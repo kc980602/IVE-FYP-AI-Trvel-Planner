@@ -17,7 +17,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginRight="10dp"
-            android:background="@color/colorPrimary"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -36,7 +35,6 @@
                 android:id="@+id/tv_attName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Japanese Temple"
                 android:textColor="@color/text_primary"
                 android:textSize="17dp" />
 
@@ -44,7 +42,6 @@
                 android:id="@+id/tv_attAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Japan, Tokyo"
                 android:textColor="@color/text_secondary"
                 android:textSize="13dp" />
 
@@ -52,7 +49,6 @@
                 android:id="@+id/tv_attType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Land Mark"
                 android:textColor="@color/text_secondary"
                 android:textSize="13dp" />
 
@@ -67,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="2048 Reviews"
                     android:textColor="@color/text_secondary"
                     android:textSize="13dp" />
 
@@ -76,7 +71,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="3.5 / 10.0"
                     android:textAlignment="textEnd"
                     android:textSize="13dp" />
 

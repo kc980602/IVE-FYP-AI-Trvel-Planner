@@ -1,18 +1,31 @@
 package com.triple.triple.Presenter.Account;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.nineoldandroids.view.ViewHelper;
+import com.squareup.picasso.Picasso;
+import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
@@ -20,6 +33,7 @@ import com.triple.triple.Model.KeyValue;
 import com.triple.triple.Model.User;
 import com.triple.triple.R;
 import com.wang.avi.AVLoadingIndicatorView;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +42,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileActivity extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity implements
+        ObservableScrollViewCallbacks,
+        DiscreteScrollView.OnItemChangedListener,
+        View.OnClickListener {
     private Context mcontext = ProfileActivity.this;
     private Toolbar toolbar;
     private ImageView iv_avatar;
     private TextView tv_email;
     private TextView tv_username;
     private TextView tv_fullname;
-    private AVLoadingIndicatorView avi;
     private ImageView[] imageViewsList = new ImageView[4];
     private TextView[] textViewsList = new TextView[4];
     private List<KeyValue> keyValueList;
+    private ImageView iv_load;
+    private ImageView image;
+    private ObservableScrollView layout_scroll;
+    private Drawable drawable;
+    private Button bt_editprofile;
+    private Button bt_editstyle;
+    private Button bt_share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +83,25 @@ public class ProfileActivity extends AppCompatActivity {
         tv_fullname = (TextView) findViewById(R.id.tv_fullname);
         tv_username = (TextView) findViewById(R.id.tv_username);
         tv_email = (TextView) findViewById(R.id.tv_email);
-
+        image = (ImageView) findViewById(R.id.image);
+        layout_scroll = (ObservableScrollView) findViewById(R.id.layout_scroll);
         int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4};
         int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4};
         for (int i = 0; i <= 3; i++) {
             imageViewsList[i] = (ImageView) findViewById(imageViewIdList[i]);
             textViewsList[i] = (TextView) findViewById(textViewIdList[i]);
         }
-        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
-        String indicator = getIntent().getStringExtra("indicator");
-        avi.setIndicator(indicator);
-    }
+        iv_load = (ImageView) findViewById(R.id.iv_load);
 
+        bt_editprofile = (Button) findViewById(R.id.bt_editprofile);
+        bt_share = (Button) findViewById(R.id.bt_share);
+        bt_editstyle = (Button) findViewById(R.id.bt_editstyle);
+    }
 
     private void initView() {
         toolbar.setTitle(R.string.title_profile);
         setSupportActionBar(toolbar);
-
+        layout_scroll.setScrollViewCallbacks(this);
         final User user = UserDataHelper.getUserInfo(mcontext);
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(user.getFirst_name().charAt(0)), getResources().getColor(Constant.GETCOLOR()), 10);
@@ -96,6 +120,11 @@ public class ProfileActivity extends AppCompatActivity {
                 });
         tv_username.setText(user.getUsername());
         tv_email.setText(user.getEmail());
+
+        bt_editprofile.setOnClickListener(this);
+        bt_share.setOnClickListener(this);
+        bt_editstyle.setOnClickListener(this);
+
     }
 
     public void getPreferences() {
@@ -114,23 +143,30 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.e("onResponse", "Null");
                 }
             }
+
             @Override
             public void onFailure(Call<List<KeyValue>> call, Throwable t) {
                 Log.e("onFailure", t.getMessage());
                 requestFail();
             }
         });
-        stopAnim();
+
     }
 
     private void afterGetDate() {
+        stopAnim();
         for (int i = 0; i <= 3; i++) {
             String filename = "preference_" + keyValueList.get(i).getKey();
             if (keyValueList.get(i).getKey().equals("60+_traveller")) {
                 filename = "preference_60_traveller";
             }
-            Log.e("filename", filename);
-            imageViewsList[i].setImageResource(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()));
+
+            Picasso.with(mcontext)
+                    .load(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()))
+                    .fit().centerCrop()
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
+                    .into(imageViewsList[i]);
             String key = keyValueList.get(i).getKey().replace('_', ' ');
             String titile = key.substring(0,1).toUpperCase() + key.substring(1).toLowerCase();
             textViewsList[i].setText(titile);
@@ -139,6 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void requestFail() {
+        stopAnim();
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
             @Override
@@ -148,13 +185,70 @@ public class ProfileActivity extends AppCompatActivity {
         }).show();
     }
 
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        Intent intent = new Intent();
+        switch (id) {
+            case R.id.bt_editprofile:
+                intent.setClass(mcontext, EditProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_share:
+
+                break;
+            case R.id.bt_editstyle:
+                intent.setClass(mcontext, EditProfileActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        int baseColor = getResources().getColor(R.color.primary);
+        float alpha = Math.min(1, (float) scrollY / 300);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(alpha, baseColor)));
+        ViewHelper.setTranslationY(image, scrollY / 2);
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+
+    }
+
+    @Override
+    public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        onScrollChanged(layout_scroll.getCurrentScrollY(), false, false);
+    }
+
     public void startAnim() {
-        avi.show();
+        iv_load.setVisibility(View.VISIBLE);
+        drawable = iv_load.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
     }
 
     public void stopAnim() {
-        avi.hide();
+        iv_load.setVisibility(View.GONE);
+        drawable = iv_load.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).stop();
+        }
     }
-
 
 }

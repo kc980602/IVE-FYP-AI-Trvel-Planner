@@ -89,6 +89,7 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
                 .load(!attraction.getPhotos().isEmpty() ? attraction.getPhotos().get(0) : null)
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(holder.image1);
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));

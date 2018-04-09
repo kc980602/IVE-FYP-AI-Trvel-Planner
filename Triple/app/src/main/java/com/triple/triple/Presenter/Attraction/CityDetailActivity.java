@@ -97,6 +97,7 @@ public class CityDetailActivity extends AppCompatActivity {
                 .load(city.getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());

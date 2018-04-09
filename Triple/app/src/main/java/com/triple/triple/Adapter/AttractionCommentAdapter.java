@@ -84,7 +84,6 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
 
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(ac.getUser().getFirst_name().charAt(0)), activity.getResources().getColor(Constant.GETCOLOR()), 1000);
-        //iv_avatar.setImageDrawable(drawable);
         holder.image.setImageDrawable(drawable);
     }
 

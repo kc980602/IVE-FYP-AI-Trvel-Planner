@@ -250,6 +250,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                         try {
                             Picasso.with(mcontext)
                                     .load(String.valueOf(map.toURL()))
+                                    .placeholder(R.drawable.ic_image_null_h)
                                     .into(image_map);
                         } catch (MalformedURLException e) {
                         }
@@ -267,6 +268,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
                     .into(image);
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
@@ -275,6 +277,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 Picasso.with(mcontext)
                         .load(attraction.getPhotos().get(i))
                         .fit().centerCrop()
+                        .placeholder(R.drawable.ic_image_null_s)
                         .into(image);
                 layout_gallery.addView(view);
                 if (i == 9) {

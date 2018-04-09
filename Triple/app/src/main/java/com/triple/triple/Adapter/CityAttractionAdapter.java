@@ -70,6 +70,7 @@ public class CityAttractionAdapter extends RecyclerView.Adapter<CityAttractionAd
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
                     .into(holder.image);
         }
         holder.tv_name.setText(attraction.getName());

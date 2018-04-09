@@ -78,6 +78,7 @@ public class CityCompactAdapter extends RecyclerView.Adapter<CityCompactAdapter.
                     .load(city.getPhoto())
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_v)
                     .into(holder.image);
         }
         holder.tv_cityid.setText(String.valueOf(city.getId()));

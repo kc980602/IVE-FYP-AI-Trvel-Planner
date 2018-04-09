@@ -82,6 +82,7 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
                     .into(holder.image);
         }
 

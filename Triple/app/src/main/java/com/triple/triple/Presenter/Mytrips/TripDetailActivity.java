@@ -274,6 +274,7 @@ public class TripDetailActivity extends AppCompatActivity {
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
         cv_trip.setVisibility(View.VISIBLE);
     }

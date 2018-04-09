@@ -80,6 +80,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
                     .load(city.getPhoto())
                     .centerCrop().fit()
                     .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
                     .into(holder.image);
         }
         holder.tv_cityid.setText(String.valueOf(city.getId()));
