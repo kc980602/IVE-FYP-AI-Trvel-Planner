@@ -52,7 +52,7 @@ public class TravelStyleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_travel_style, container, false);
+        View view = inflater.inflate(R.layout.activity_travel_style, container, false);
         setHasOptionsMenu(true);
         int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4};
         int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4};
@@ -62,8 +62,8 @@ public class TravelStyleFragment extends Fragment {
         }
 
         avi = (AVLoadingIndicatorView) view.findViewById(R.id.avi);
-        String indicator = getActivity().getIntent().getStringExtra("indicator");
-        avi.setIndicator(indicator);
+//        String indicator = getActivity().getIntent().getStringExtra("indicator");
+//        avi.setIndicator(indicator);
         if (UserDataHelper.checkTokenExist(getContext())) {
             getPreferences();
         } else {

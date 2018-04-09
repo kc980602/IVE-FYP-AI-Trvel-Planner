@@ -1,8 +1,9 @@
 package com.triple.triple.Presenter;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,43 +14,41 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.google.gson.Gson;
-import com.nineoldandroids.view.ViewHelper;
+import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.SystemProperty;
+import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.Account.SettingFragment;
-import com.triple.triple.Presenter.Attraction.AttractionImageActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Profile.TravelStyleFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    private Context mcontext = MainActivity.this;
+
     private Toolbar toolbar;
     private ImageView iv_iconText;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private FrameLayout frame_layout_main;
+    private ImageView iv_avatar;
+    private TextView tv_username;
+    private TextView tv_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +68,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         frame_layout_main = (FrameLayout) findViewById(R.id.frame_layout_main);
+        View navView = navigationView.getHeaderView(0);
+        iv_avatar = (ImageView) navView.findViewById(R.id.iv_avatar);
+        tv_username = (TextView) navView.findViewById(R.id.tv_username);
+        tv_email = (TextView) navView.findViewById(R.id.tv_email);
     }
 
     private void initView() {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
+        initNavHeader();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -83,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         displaySelectedScreen(R.id.nav_home);
+    }
+
+    private void initNavHeader() {
+        User user = UserDataHelper.getUserInfo(mcontext);
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRoundRect(String.valueOf(user.getFirst_name().charAt(0)), getResources().getColor(Constant.GETCOLOR()), 1000);
+        iv_avatar.setImageDrawable(drawable);
+        tv_username.setText(user.getFirst_name() + " " + user.getLast_name());
+        tv_email.setText(user.getEmail());
     }
 
     @Override
@@ -94,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-  
+
     private void displaySelectedScreen(int itemId) {
 
         //creating fragment object
@@ -153,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public int getActionBarSize() {
-        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] { android.R.attr.actionBarSize });
+        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[]{android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0, 0);
         styledAttributes.recycle();
         return actionBarSize;

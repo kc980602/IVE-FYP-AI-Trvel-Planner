@@ -74,7 +74,7 @@ public class GeneratingDialog extends DialogFragment {
         Picasso.with(mcontext)
                 .load(c.getPhoto())
                 .fit().centerCrop()
-                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_WIDTH))
+                .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
                 .into(iv_bkg);
 
         String dateString = DateTimeHelper.castDateToLocale(date) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(date, duration));
