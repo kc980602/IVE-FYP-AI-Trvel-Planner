@@ -138,27 +138,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MytripsFragment();
                 break;
             case R.id.nav_logout:
-                SharedPreferences data = new SecurePreferences(mcontext);
-                data.edit().clear().commit();
-                PackageManager packageManager = mcontext.getPackageManager();
-                Intent i = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());
-                ComponentName componentName = i.getComponent();
-                Intent logout = IntentCompat.makeRestartActivityTask(componentName);
-                mcontext.startActivity(logout);
-                System.exit(0);
+//                SharedPreferences data = new SecurePreferences(mcontext);
+//                data.edit().clear().commit();
+//                PackageManager packageManager = mcontext.getPackageManager();
+//                Intent i = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());
+//                ComponentName componentName = i.getComponent();
+//                Intent logout = IntentCompat.makeRestartActivityTask(componentName);
+//                mcontext.startActivity(logout);
+//                System.exit(0);
+//
+//
+//                Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
+//                ComponentName cn = intentToBeNewRoot.getComponent();
+//
+//                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+//
+//                startActivity(mainIntent);
 
-
-                Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
-                ComponentName cn = intentToBeNewRoot.getComponent();
-
-                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
-
-                startActivity(mainIntent);
-
-                break;
-            case R.id.nav_settings:
-                toolbarNormal(R.string.title_settings);
-                fragment = new SettingFragment();
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
