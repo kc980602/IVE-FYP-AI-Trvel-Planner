@@ -38,7 +38,7 @@
             android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.EditProfileActivity"
+            android:name=".Presenter.Account.EditProfileActivity"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
@@ -68,10 +68,6 @@
             android:name=".Presenter.Mytrips.ItineraryActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity
-            android:name=".Presenter.Profile.TravelStyleActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
             android:launchMode="singleTask"

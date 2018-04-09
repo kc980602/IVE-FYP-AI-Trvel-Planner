@@ -1,13 +1,17 @@
 package com.triple.triple.Presenter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +27,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
@@ -32,7 +37,6 @@ import com.triple.triple.Presenter.Account.SettingFragment;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Account.ProfileActivity;
-import com.triple.triple.Presenter.Profile.TravelStyleFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 
@@ -133,13 +137,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarNormal(R.string.title_mytrips);
                 fragment = new MytripsFragment();
                 break;
+            case R.id.nav_logout:
+                SharedPreferences data = new SecurePreferences(mcontext);
+                data.edit().clear().commit();
+                PackageManager packageManager = mcontext.getPackageManager();
+                Intent i = packageManager.getLaunchIntentForPackage(mcontext.getPackageName());
+                ComponentName componentName = i.getComponent();
+                Intent logout = IntentCompat.makeRestartActivityTask(componentName);
+                mcontext.startActivity(logout);
+                System.exit(0);
+
+
+                Intent intentToBeNewRoot = new Intent(this, MainActivity.class);
+                ComponentName cn = intentToBeNewRoot.getComponent();
+
+                Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+
+                startActivity(mainIntent);
+
+                break;
             case R.id.nav_settings:
                 toolbarNormal(R.string.title_settings);
                 fragment = new SettingFragment();
-                break;
-            case R.id.nav_travelstyle:
-                toolbarNormal(R.string.title_travelstyle);
-                fragment = new TravelStyleFragment();
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
@@ -182,14 +201,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return actionBarSize;
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        //calling the method displayselectedscreen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
-        //make this method blank
         return true;
     }
 }

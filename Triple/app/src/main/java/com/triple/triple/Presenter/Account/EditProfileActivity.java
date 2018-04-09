@@ -1,11 +1,9 @@
-package com.triple.triple.Presenter.Profile;
+package com.triple.triple.Presenter.Account;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
@@ -17,22 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.interfaces.CountryPickerListener;
-import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.Attraction;
-import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.User;
-import com.triple.triple.Presenter.Account.LoginActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.Registration;
-
-import java.lang.reflect.Type;
 
 import retrofit2.Call;
 import retrofit2.Callback;
