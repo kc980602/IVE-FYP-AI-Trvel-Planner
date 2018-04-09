@@ -59,4 +59,5 @@ dependencies {
     implementation 'com.veinhorn.scrollgalleryview:library:1.0.8'
     implementation 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
 }
