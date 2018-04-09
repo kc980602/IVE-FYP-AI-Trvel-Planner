@@ -84,17 +84,23 @@ public interface ApiInterface {
 
     @GET("/city/{id}/attractions/attractions")
     Call<DataMeta> getCityAttractions(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("/city/{id}/attractions/hotels")
     Call<DataMeta> getCityHotels(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("/city/{id}/attractions/restaurants")
     Call<DataMeta> getCityRestaurants(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("attraction/{id}")

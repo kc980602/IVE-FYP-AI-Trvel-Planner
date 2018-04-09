@@ -171,12 +171,81 @@
         <item>4bf58dd8d48988d1fa931735</item>
         <item>4bf58dd8d48988d1d5941735</item>
         <item>4bf58dd8d48988d1c4941735</item>
+        <item>4bf58dd8d48988d175941735</item>
+        <item>4bf58dd8d48988d121941735</item>
+        <item>4bf58dd8d48988d1ee931735</item>
+        <item>4bf58dd8d48988d1ff931735</item>
+        <item>4bf58dd8d48988d190941735</item>
+        <item>507c8c4091d498d9fc8c67a9</item>
+        <item>4bf58dd8d48988d181941735</item>
+        <item>4bf58dd8d48988d18f941735</item>
+        <item>4bf58dd8d48988d18e941735</item>
+        <item>4bf58dd8d48988d114951735</item>
+        <item>4bf58dd8d48988d127951735</item>
+        <item>4bf58dd8d48988d1e2931735</item>
+        <item>4bf58dd8d48988d163941735</item>
+        <item>4bf58dd8d48988d104951735</item>
+        <item>4bf58dd8d48988d103951735</item>
+        <item>4bf58dd8d48988d108951735</item>
+        <item>4bf58dd8d48988d106951735</item>
+        <item>4bf58dd8d48988d10c951735</item>
+        <item>4bf58dd8d48988d16a941735</item>
+        <item>4bf58dd8d48988d16d941735</item>
+        <item>4bf58dd8d48988d111941735</item>
+        <item>4bf58dd8d48988d1d1941735</item>
+        <item>4bf58dd8d48988d1d3941735</item>
+        <item>4bf58dd8d48988d1d2941735</item>
+        <item>52af0bd33cf9994f4e043bdd</item>
+        <item>4bf58dd8d48988d10f941735</item>
+        <item>4bf58dd8d48988d1ce941735</item>
+        <item>4bf58dd8d48988d1cb941735</item>
+        <item>52af3b6e3cf9994f4e043c02</item>
+        <item>52af3add3cf9994f4e043bf5</item>
+        <item>55a59bace4b013909087cb30</item>
+        <item>52af3b773cf9994f4e043c03</item>
+
+
+
     </string-array>
 
     <string-array name="category_name">
         <item>Hotel</item>
         <item>Hotel Bar</item>
         <item>Restaurant</item>
+        <item>Gym / Fitness Center</item>
+        <item>Lounge</item>
+        <item>Hostel</item>
+        <item>Convention Center</item>
+        <item>History Museum</item>
+        <item>Public Art</item>
+        <item>Museum</item>
+        <item>Art Museum</item>
+        <item>Comedy Club</item>
+        <item>Bookstore</item>
+        <item>Arts and Crafts Store</item>
+        <item>Art Gallery</item>
+        <item>Park</item>
+        <item>Boutique</item>
+        <item>Clothing Store</item>
+        <item>Women's Store</item>
+        <item>Men's Store</item>
+        <item>Cosmetics Shop</item>
+        <item>Bakery</item>
+        <item>Café</item>
+        <item>Japanese Restaurant</item>
+        <item>Noodle House</item>
+        <item>Vegetarian / Vegan Restaurant</item>
+        <item>Sushi Restaurant</item>
+        <item>Hotpot Restaurant</item>
+        <item>Indian Restaurant</item>
+        <item>Seafood Restaurant</item>
+        <item>Food Truck</item>
+        <item>Shanxi Restaurant</item>
+        <item>Hong Kong Restaurant</item>
+        <item>Japanese Curry Restaurant</item>
+        <item>Szechuan Restaurant</item>
+
+
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
 

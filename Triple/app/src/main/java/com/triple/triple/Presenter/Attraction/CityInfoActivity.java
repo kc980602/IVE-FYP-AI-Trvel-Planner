@@ -21,7 +21,6 @@ import java.util.List;
 public class CityInfoActivity extends AppCompatActivity {
 
     private ViewPager container;
-    private TabLayout tabs;
     private City city;
     private Toolbar toolbar;
 
@@ -35,7 +34,6 @@ public class CityInfoActivity extends AppCompatActivity {
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabs = (TabLayout) findViewById(R.id.tabs);
         container = (ViewPager) findViewById(R.id.container);
     }
 
@@ -48,7 +46,6 @@ public class CityInfoActivity extends AppCompatActivity {
 
         List<String> titles = new ArrayList<>();
         titles.add("Overview");
-        tabs.addTab(tabs.newTab().setText(titles.get(0)));
 
         List<Fragment> fragments = new ArrayList<>();
         Fragment fragment = new CityInfoOverviewFragment();
@@ -60,8 +57,6 @@ public class CityInfoActivity extends AppCompatActivity {
 
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments, titles);
         container.setAdapter(mFragmentAdapter);
-        tabs.setupWithViewPager(container);
-        tabs.setTabsFromPagerAdapter(mFragmentAdapter);
 
     }
     @Override

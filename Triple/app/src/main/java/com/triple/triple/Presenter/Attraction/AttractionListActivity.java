@@ -46,7 +46,7 @@ public class AttractionListActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private List <Attraction> attractions;
-    private DataMeta attraction, hotel, restaurant, dataMeta;
+    private DataMeta dataMeta;
     private City city;
     SearchView searchView;
 
@@ -71,15 +71,12 @@ public class AttractionListActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         city = (City) bundle.getSerializable("city");
         dataMeta = (DataMeta) bundle.getSerializable("dataMeta");
-        attraction = (DataMeta) bundle.getSerializable("attraction");
-        hotel = (DataMeta) bundle.getSerializable("hotel");
-        restaurant = (DataMeta) bundle.getSerializable("restaurant");
         toolbar.setTitle(city.getName());
         setSupportActionBar(toolbar);
 
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), dataMeta, attraction, hotel, restaurant);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("Attractions").setTag(1));
@@ -96,14 +93,8 @@ public class AttractionListActivity extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private DataMeta dataMeta, attraction, hotel, restaurant;
-
-        public SectionsPagerAdapter(FragmentManager fm, DataMeta dataMeta, DataMeta attraction, DataMeta hotel, DataMeta restaurant) {
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.dataMeta = dataMeta;
-            this.attraction = attraction;
-            this.hotel = hotel;
-            this.restaurant = restaurant;
         }
 
         @Override
@@ -112,16 +103,18 @@ public class AttractionListActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    //bundle.putSerializable("dataMeta", dataMeta);
-                    bundle.putSerializable("dataMeta", attraction);
+                    bundle.putSerializable("city", city);
+                    bundle.putSerializable("type", "attraction");
                     fragment.setArguments(bundle);
                     break;
                 case 1:
-                    bundle.putSerializable("dataMeta", hotel);
+                    bundle.putSerializable("city", city);
+                    bundle.putSerializable("type", "hotel");
                     fragment.setArguments(bundle);
                     break;
                 case 2:
-                    bundle.putSerializable("dataMeta", restaurant);
+                    bundle.putSerializable("city", city);
+                    bundle.putSerializable("type", "restaurant");
                     fragment.setArguments(bundle);
                     break;
             }

@@ -127,7 +127,7 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
         } else {
             for( int i = 0; i < atts.size() ; i++){
                 attractions.add(atts.get(i));
-                //notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         }
     }
