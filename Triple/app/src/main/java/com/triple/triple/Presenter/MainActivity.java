@@ -3,7 +3,6 @@ package com.triple.triple.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,11 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
@@ -32,6 +31,7 @@ import com.triple.triple.Model.User;
 import com.triple.triple.Presenter.Account.SettingFragment;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
+import com.triple.triple.Presenter.Account.ProfileActivity;
 import com.triple.triple.Presenter.Profile.TravelStyleFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView iv_avatar;
     private TextView tv_username;
     private TextView tv_email;
+    private LinearLayout layout_nav_header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         findView();
         initView();
-        if (!UserDataHelper.checkTokenExist(this)) {
-            CheckLogin.directLogin(this);
-        }
     }
 
     private void findView() {
@@ -69,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         frame_layout_main = (FrameLayout) findViewById(R.id.frame_layout_main);
         View navView = navigationView.getHeaderView(0);
+        layout_nav_header = (LinearLayout) navView.findViewById(R.id.layout_nav_header);
         iv_avatar = (ImageView) navView.findViewById(R.id.iv_avatar);
         tv_username = (TextView) navView.findViewById(R.id.tv_username);
         tv_email = (TextView) navView.findViewById(R.id.tv_email);
@@ -77,7 +76,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView() {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        initNavHeader();
+        if (!UserDataHelper.checkTokenExist(this)) {
+            CheckLogin.directLogin(this);
+        } else {
+            initNavHeader();
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -89,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initNavHeader() {
+        layout_nav_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mcontext, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         User user = UserDataHelper.getUserInfo(mcontext);
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(user.getFirst_name().charAt(0)), getResources().getColor(Constant.GETCOLOR()), 1000);

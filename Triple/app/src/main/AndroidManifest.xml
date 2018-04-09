@@ -35,7 +35,7 @@
             android:name=".Presenter.Search.SearchActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.ProfileActivity"
+            android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Profile.EditProfileActivity"
@@ -102,7 +102,7 @@
         <activity android:name=".Presenter.Attraction.CityInfoActivity" />
         <activity
             android:name=".Presenter.Account.LoginActivity"
-            android:parentActivityName=".Presenter.Profile.ProfileActivity"
+            android:parentActivityName=".Presenter.Account.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Presenter.Account.RegisterActivity"
