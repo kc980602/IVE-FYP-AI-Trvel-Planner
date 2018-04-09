@@ -38,6 +38,10 @@
             android:name=".Presenter.Profile.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
+            android:name=".Presenter.Profile.EditProfileActivity"
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".Presenter.Account.ForgetPasswordActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity

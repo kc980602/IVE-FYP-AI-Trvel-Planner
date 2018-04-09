@@ -50,6 +50,5 @@ public class CityInfoOverviewFragment extends Fragment{
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());
         tv_description.setText(city.getDescription());
-        tv_description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
     }
 }

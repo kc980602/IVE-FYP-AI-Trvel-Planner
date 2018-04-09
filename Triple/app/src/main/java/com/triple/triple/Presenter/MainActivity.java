@@ -34,6 +34,7 @@ import com.triple.triple.Presenter.Account.SettingFragment;
 import com.triple.triple.Presenter.Attraction.AttractionImageActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
+import com.triple.triple.Presenter.Profile.TravelStyleFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 
@@ -112,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 toolbarNormal(R.string.title_settings);
                 fragment = new SettingFragment();
+                break;
+            case R.id.nav_travelstyle:
+                toolbarNormal(R.string.title_travelstyle);
+                fragment = new TravelStyleFragment();
                 break;
             case R.id.nav_help:
                 Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
