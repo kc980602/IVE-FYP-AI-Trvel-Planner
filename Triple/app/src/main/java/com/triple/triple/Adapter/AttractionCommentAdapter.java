@@ -79,7 +79,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
         holder.tv_name.setText(ac.getUser().getFirst_name() + " " + ac.getUser().getLast_name());
         long now = System.currentTimeMillis();
         String date = String.valueOf(DateUtils.getRelativeTimeSpanString(ac.getCreated_at(), now, DateUtils.DAY_IN_MILLIS));
-        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 5" + " • " + date);
+        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10" + " • " + date);
         holder.tv_content.setText(ac.getContent());
 
 

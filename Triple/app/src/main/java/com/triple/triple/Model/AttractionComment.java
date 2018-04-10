@@ -38,7 +38,7 @@ public class AttractionComment implements Serializable{
     private int updated_at;
     @SerializedName("user")
     @Expose
-    private User user;
+    private ReviewUser user;
 
     public int getId() {
         return id;
@@ -104,11 +104,11 @@ public class AttractionComment implements Serializable{
         this.updated_at = updated_at;
     }
 
-    public User getUser() {
+    public ReviewUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(ReviewUser user) {
         this.user = user;
     }
 }
