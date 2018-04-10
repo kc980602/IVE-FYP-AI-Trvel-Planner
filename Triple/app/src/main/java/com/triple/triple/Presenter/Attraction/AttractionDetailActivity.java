@@ -232,6 +232,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
             rv_attraction_comments.addItemDecoration(dividerItemDecoration);
+            rv_attraction_comments.setNestedScrollingEnabled(false);
         }
 
         image_map.getViewTreeObserver()

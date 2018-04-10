@@ -128,6 +128,7 @@ public class HomeFragment extends Fragment implements
         cityCompactAdapter = new CityCompactAdapter(getContext(), countries);
         rv_all.setAdapter(cityCompactAdapter);
         rv_all.addItemDecoration(new SpacesItemDecoration(10));
+        rv_all.setNestedScrollingEnabled(false);
     }
 
     private void initTrip() {

@@ -43,18 +43,11 @@
                     android:paddingVertical="8dp"
                     android:background="@drawable/gradient_shape">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center_vertical"
-                        android:weightSum="2">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_weight="1"
+                            android:layout_alignParentLeft="true"
                             android:orientation="vertical">
 
                             <TextView
@@ -80,8 +73,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -105,8 +98,6 @@
                                 android:textAllCaps="true"
                                 android:textColor="@color/white" />
                         </LinearLayout>
-
-                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"

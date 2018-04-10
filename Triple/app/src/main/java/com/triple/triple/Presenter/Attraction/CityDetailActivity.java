@@ -2,6 +2,8 @@ package com.triple.triple.Presenter.Attraction;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -99,6 +101,13 @@ public class CityDetailActivity extends AppCompatActivity {
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
+
+        if (city.getName().length() > 6) {
+            tv_city.setTextAppearance(this, R.style.TextAppearance_AppCompat_Display1);
+            tv_city.setTextColor(Color.WHITE);
+            tv_city.setTypeface(null, Typeface.BOLD);
+        }
+
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());
 

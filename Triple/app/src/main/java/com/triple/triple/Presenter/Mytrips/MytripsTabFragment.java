@@ -28,6 +28,7 @@ import com.triple.triple.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -125,6 +126,7 @@ public class MytripsTabFragment extends Fragment {
                     List<Trip> newTrips = response.body();
                     trips.clear();
                     trips.addAll(newTrips);
+                    Collections.reverse(trips);
                     if (isFirst) {
                         initRecycleView();
                         isFirst = false;

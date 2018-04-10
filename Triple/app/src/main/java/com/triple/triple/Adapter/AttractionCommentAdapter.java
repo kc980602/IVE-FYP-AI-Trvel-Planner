@@ -10,6 +10,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,7 +50,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
     public class AttractionCommentViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_commentId, tv_title, tv_name, tv_rate_time, tv_content;
-        public RoundedImageView image;
+        public ImageView image;
 
         public AttractionCommentViewHolder(View itemView) {
             super(itemView);
@@ -58,7 +59,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_rate_time = (TextView) itemView.findViewById(R.id.tv_rate_time);
             tv_content = (TextView) itemView.findViewById(R.id.tv_content);
-            image = (RoundedImageView) itemView.findViewById(R.id.image);
+            image = (ImageView) itemView.findViewById(R.id.image);
         }
     }
 
