@@ -32,9 +32,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Presenter.Search.SearchActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
-        <activity
             android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
@@ -62,7 +59,7 @@
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity">
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"></meta-data>
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
@@ -108,6 +105,11 @@
             android:name=".Presenter.NewMainActivity"
             android:parentActivityName=".Presenter.Attraction.AttractionDetailActivity" />
         <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
+        <activity
+            android:name=".Presenter.HelpInfo.HelpActivity"
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Presenter.HelpInfo.OpenSourceActivity"></activity>
     </application>
 
 </manifest>

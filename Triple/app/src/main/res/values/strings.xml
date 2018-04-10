@@ -137,6 +137,10 @@
     <string name="profile_travle_style">Travel Style</string>
     <string name="profile_edit_style">Edit</string>
 
+    <string name="help_developer">Developer</string>
+    <string name="help_copyright">Copyright</string>
+    <string name="help_open_source">Open source licenses</string>
+
     <string name="nav_bar_login">Click here to login</string>
 
     <string-array name="destination">
@@ -213,7 +217,6 @@
         <item>52af3add3cf9994f4e043bf5</item>
         <item>55a59bace4b013909087cb30</item>
         <item>52af3b773cf9994f4e043c03</item>
-
 
 
     </string-array>

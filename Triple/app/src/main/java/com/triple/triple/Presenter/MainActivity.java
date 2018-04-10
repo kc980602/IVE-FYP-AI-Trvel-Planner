@@ -33,6 +33,7 @@ import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.User;
+import com.triple.triple.Presenter.HelpInfo.HelpActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Account.ProfileActivity;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 System.exit(0);
                 break;
             case R.id.nav_help:
-                Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
+                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(intent);
         }
 
