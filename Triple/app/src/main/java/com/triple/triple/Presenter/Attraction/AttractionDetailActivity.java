@@ -386,4 +386,11 @@ public class AttractionDetailActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserDetails();
+
+    }
 }
