@@ -82,6 +82,12 @@ public interface ApiInterface {
             @Query("limit") Integer limit
     );
 
+    @GET("/city/{id}/attractions/preference")
+    Call<DataMeta> getAttractionByPreference(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
+
     @GET("/city/{id}/attractions/attractions")
     Call<DataMeta> getCityAttractions(
             @Path("id") Integer id,

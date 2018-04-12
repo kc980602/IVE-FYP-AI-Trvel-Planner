@@ -8,20 +8,29 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Adapter.CityAttractionAdapter;
+import com.triple.triple.Adapter.TripArticleAdapter;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.SystemPropertyHelper;
 //import com.triple.triple.Interface.WeatherInterface;
+import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.WeatherInterface;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.City;
@@ -49,18 +58,16 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private Context mcontext = CityDetailActivity.this;
     WeatherInterface weatherApi = ApiWeather.getClient().create(WeatherInterface.class);
-    private LinearLayout layout_cityname;
     private BottomNavigationViewEx nav_bar;
-    private LinearLayout layout_attraction;
     private List<Attraction> attractions;
     private DataMeta dataMeta;
-    private DataMeta attraction;
-    private DataMeta hotel;
-    private DataMeta restaurant;
+    private RecyclerView recyclerView;
     private int cityid;
     private City city;
+    private CardView cv_city_info;
+    private ImageButton img_arrow;
     private ImageView image;
-    private TextView tv_city, tv_country, tv_time, tv_weather;
+    private TextView tv_city, tv_country, tv_time, tv_weather, tv_description;
 
 
     @Override
@@ -79,12 +86,15 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private void findViews() {
         nav_bar = (BottomNavigationViewEx) findViewById(R.id.nav_bar);
-        layout_attraction = (LinearLayout) findViewById(R.id.layout_attraction);
         image = (ImageView) findViewById(R.id.image);
         tv_city = (TextView) findViewById(R.id.tv_city);
         tv_country = (TextView) findViewById(R.id.tv_country);
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_weather = (TextView) findViewById(R.id.tv_weather);
+        tv_description = (TextView) findViewById(R.id.tv_description);
+        img_arrow = (ImageButton) findViewById(R.id.img_arrow);
+        cv_city_info = (CardView) findViewById(R.id.cv_city_info);
+        recyclerView = (RecyclerView) findViewById(R.id.content_list);
     }
 
     private void initView() {
@@ -110,11 +120,26 @@ public class CityDetailActivity extends AppCompatActivity {
 
         tv_city.setText(city.getName());
         tv_country.setText(city.getCountry());
+        tv_description.setText(city.getDescription());
 
         nav_bar.enableAnimation(false);
         nav_bar.enableItemShiftingMode(false);
         nav_bar.enableShiftingMode(false);
         nav_bar.setOnNavigationItemSelectedListener(nav_barListener);
+        img_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(tv_description.getLayoutParams().height == LinearLayout.LayoutParams.WRAP_CONTENT) {
+                    tv_description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200, 0));
+                    img_arrow.setImageResource(R.drawable.ic_arrow_down);
+                } else {
+                    tv_description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0));
+                    img_arrow.setImageResource(R.drawable.ic_arrow_up);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -137,16 +162,7 @@ public class CityDetailActivity extends AppCompatActivity {
                 case R.id.action_discover:
                     bundle.putSerializable("city", city);
                     bundle.putSerializable("dataMeta", dataMeta);
-                    bundle.putSerializable("attraction", attraction);
-                    bundle.putSerializable("hotel", hotel);
-                    bundle.putSerializable("restaurant", restaurant);
                     intent.setClass(mcontext, AttractionListActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    break;
-                case R.id.action_info:
-                    bundle.putSerializable("city", city);
-                    intent.setClass(mcontext, CityInfoActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     break;
@@ -167,38 +183,20 @@ public class CityDetailActivity extends AppCompatActivity {
     };
 
     private void loadDataToView() {
-//        LayoutInflater mInflater = LayoutInflater.from(this);
-//        for (final Attraction attraction : attractions) {
-//            View view = mInflater.inflate(R.layout.listitem_city_attraction, layout_attraction, false);
-//            CardView cardView = view.findViewById(R.id.cv_trip);
-//            ImageView image = view.findViewById(R.id.image);
-//            TextView tv_name = view.findViewById(R.id.tv_name);
-//            TextView tv_rate_review = view.findViewById(R.id.tv_rate_review);
-//            Picasso.with(mcontext)
-//                    .load(attraction.getBestPhoto())
-//                    .fit().centerCrop()
-//                    .placeholder(R.drawable.image_null_tran)
-//                    .error(R.drawable.image_null_tran)
-//                    .into(image);
-//            tv_name.setText(attraction.getName());
-//            tv_rate_review.setText(String.format(Locale.ENGLISH, "%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
-//            cardView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("attractionId", attraction.getId());
-//                    Intent intent = new Intent(context, AttractionDetailActivity.class);
-//                    intent.putExtras(bundle);
-//                    context.startActivity(intent);
-//                }
-//            });
-//            layout_attraction.addView(view);
-//        }
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new CityAttractionAdapter(mcontext, dataMeta));
     }
 
     public void getCityDetail() {
-        Call<DataMeta> call = Constant.apiService.getAttractions(cityid,10);
+        Call<DataMeta> call = null;
+        if (!UserDataHelper.checkTokenExist(this)) {
+            call = Constant.apiService.getCityAttractions(cityid,0,5);
+        } else {
+            String token = "Bearer ";
+            token += UserDataHelper.getToken(this);
+            call = Constant.apiService.getAttractionByPreference(token, cityid);
+        }
         call.enqueue(new Callback<DataMeta>() {
             @Override
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
@@ -207,7 +205,7 @@ public class CityDetailActivity extends AppCompatActivity {
                     attractions = response.body().getAttractions();
                     loadDataToView();
                 } else {
-                    Log.d("onResponse", "Null respone");
+                    Log.d("onResponse", "Null response");
                 }
             }
 

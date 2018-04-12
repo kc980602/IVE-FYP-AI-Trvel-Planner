@@ -88,12 +88,12 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
         Picasso.with(activity)
                 .load(!attraction.getPhotos().isEmpty() ? attraction.getPhotos().get(0) : null)
                 .fit().centerCrop()
+                .placeholder(R.drawable.ic_image_null_s)
                 .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
-                .placeholder(R.drawable.ic_image_null_h)
                 .into(holder.image1);
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
-        holder.tv_attName.setText(attraction.getName());
+        holder.tv_attName.setText(attraction.getName() );
         holder.tv_attReview.setText(attraction.getComment_count() + " Reviews");
         holder.tv_rating.setText(String.valueOf(attraction.getRating()) + " / 10.0");
         holder.tv_attAddress.setText(attraction.getAddress());

@@ -190,7 +190,6 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
                     dataMeta = response.body();
                     adapter.addAttraction(dataMeta.getAttractions());
                     response.body().getPagination().getTotal_pages();
-                    Log.e("response", "Total : " + response.body().getPagination().getTotal_pages());
                 } else {
                     Log.d("onResponse", "Null respone");
                 }
