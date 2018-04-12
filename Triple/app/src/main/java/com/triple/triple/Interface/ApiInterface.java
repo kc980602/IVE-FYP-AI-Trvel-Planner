@@ -53,6 +53,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @PUT("member/info")
     Call<Void> editInfo(
+            @Header("Authorization") String authHeader,
             @Field("first_name") String fname,
             @Field("last_name") String lname,
             @Field("gender") String gender,
