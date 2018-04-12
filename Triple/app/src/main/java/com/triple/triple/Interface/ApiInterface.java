@@ -72,9 +72,11 @@ public interface ApiInterface {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
     @POST("member/password/forget")
-    Call<ResponeMessage> forgetPassword(
-            @Field("username") String username
+    Call<Void> forgetPassword(
+            @Field("username") String username,
+            @Field("email") String email
     );
 
     @GET("/city/{id}/attractions")

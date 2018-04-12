@@ -192,7 +192,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 204){
-                    Toast.makeText(mcontext, "Successful!", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(mcontext, "Profile updated!", Toast.LENGTH_LONG).show();
+                    finish();
                 } else {
                     Toast.makeText(mcontext, "Error!", Toast.LENGTH_LONG).show();
                     Log.e("respose", String.valueOf(response.code() + response.message() + response.errorBody()));
@@ -207,4 +209,9 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
