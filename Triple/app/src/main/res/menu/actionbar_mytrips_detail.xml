@@ -5,10 +5,10 @@
     tools:context=".Presenter.Mytrips.TripDetailActivity">
 
     <item
-        android:id="@+id/action_edit"
-        android:title="@string/mytrips_detail_edit" />
-    <item
         android:id="@+id/action_delete"
-        android:title="@string/mytrips_detail_delete" />
+        android:orderInCategory="300"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/attraction_detail_share"
+        app:showAsAction="ifRoom"></item>
 
 </menu>
