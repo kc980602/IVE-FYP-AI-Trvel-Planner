@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -34,10 +35,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     private Context mcontext = ForgetPasswordActivity.this;
 
-    private TextInputEditText et_username;
+    private TextInputEditText et_username, et_email;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
 
-    private String username;
+    private String username, email;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
@@ -48,9 +50,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(mcontext);
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         et_username = (TextInputEditText) findViewById(R.id.et_username);
+        et_email = (TextInputEditText) findViewById(R.id.et_email);
 
-        setupActionBar();
+        //setupActionBar();
+        toolbar.setTitle(R.string.attraction_comment_title);
+        setSupportActionBar(toolbar);
     }
 
     private void setupActionBar() {
@@ -90,14 +96,17 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(et_username.getText()) || et_username.getText().toString().length() < 6) {
             et_username.setError(getResources().getString(R.string.register_error_username));
+        } else if (checkEmail(et_email.getText().toString())) {
+            et_email.setError(getResources().getString(R.string.register_error_email));
         } else {
             isSuccess = true;
         }
 
         if (isSuccess) {
             username = et_username.getText().toString();
-            new ForgetPasswordActivity.RequestForgetPassword().execute();
-//            requestForgetPassword();
+            email = et_email.getText().toString();
+            //new ForgetPasswordActivity.RequestForgetPassword().execute();
+            requestForgetPassword();
         }
     }
 
@@ -145,37 +154,34 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     public void requestForgetPassword() {
         progressDialog.show();
 
-        Call<ResponeMessage> call = apiService.forgetPassword(username);
-        call.enqueue(new Callback<ResponeMessage>() {
+        Call<Void> call = apiService.forgetPassword(username, email);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ResponeMessage> call, Response<ResponeMessage> response) {
-                if (response.body() != null) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 201) {
                     try {
-                        Log.i("onSuccess", response.body().toString());
-                        Type type = new TypeToken<List<ResponeMessage>>() {
-                        }.getType();
-                        String editResult = "[" + new Gson().toJson(response.body()) + "]";
-                        Gson gson = new Gson();
-                        List<ResponeMessage> list = (List<ResponeMessage>) gson.fromJson(editResult, type);
-                        ResponeMessage message = list.get(0);
-                        Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mcontext, "Please check your Email for reset password.", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.d("error", "Empty response.");
+                    Log.d("error", "Error occur." + response.code() + " " + response.errorBody());
                     progressDialog.hide();
                     Intent intent = new Intent(mcontext, LoginActivity.class);
                     startActivity(intent);
                     finish();
-                    Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext, "Unexpected error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponeMessage> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("error", t.toString());
             }
         });
+    }
+
+    private boolean checkEmail(String email) {
+        return TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

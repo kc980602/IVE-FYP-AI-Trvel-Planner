@@ -41,7 +41,7 @@ public class CityAttractionAdapter extends RecyclerView.Adapter<CityAttractionAd
     @Override
     public CityAttractionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerviewitem_trip_article, parent, false);
+                .inflate(R.layout.recyclerviewitem_city_attraction, parent, false);
         return new CityAttractionViewHolder(itemView);
     }
 
@@ -57,6 +57,19 @@ public class CityAttractionAdapter extends RecyclerView.Adapter<CityAttractionAd
             tv_attId = itemView.findViewById(R.id.tv_attId);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_desc = itemView.findViewById(R.id.tv_desc);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    int attId = Integer.valueOf(tv_attId.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("attractionId", attId);
+                    Intent indent = new Intent(context, AttractionDetailActivity.class);
+                    indent.putExtras(bundle);
+                    context.startActivity(indent);
+                }
+            });
 
         }
     }
@@ -75,6 +88,7 @@ public class CityAttractionAdapter extends RecyclerView.Adapter<CityAttractionAd
         }
         holder.tv_name.setText(attraction.getName());
         holder.tv_desc.setText(attraction.getDescription());
+        holder.tv_attId.setText(String.valueOf(attraction.getId()));
     }
 
     @Override

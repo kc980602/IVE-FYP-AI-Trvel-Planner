@@ -10,8 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -38,6 +41,7 @@ public class AttractionReviewActivity extends AppCompatActivity {
     private String title, content;
     private int rating;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
     @Override
@@ -51,13 +55,22 @@ public class AttractionReviewActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.dialog_progress_title));
         findViews();
         initView();
+        toolbar.setTitle(R.string.attraction_comment_title);
+        setSupportActionBar(toolbar);
+        //setupActionBar();
     }
+
+//    private void setupActionBar() {
+//        android.support.v7.app.ActionBar ab = getSupportActionBar();
+//        ab.setTitle(R.string.attraction_comment_title);
+//    }
 
     private void findViews(){
         et_title = (TextInputEditText) findViewById(R.id.et_title);
         et_rating = (TextInputEditText) findViewById(R.id.et_rating);
         et_content = (TextInputEditText) findViewById(R.id.et_content);
         btn_review_submit = (Button) findViewById(R.id.btn_review_submit);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         et_rating.setOnClickListener(et_ratingListener);
     }
@@ -133,6 +146,22 @@ public class AttractionReviewActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                super.onBackPressed();
+                break;
+        }
+        return true;
     }
 
     @Override

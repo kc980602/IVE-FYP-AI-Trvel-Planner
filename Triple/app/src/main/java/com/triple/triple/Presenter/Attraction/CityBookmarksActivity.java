@@ -43,7 +43,6 @@ public class CityBookmarksActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         cityid = bundle.getInt("cityid");
         findView();
-        requestBookmarks();
         initView();
     }
 
@@ -129,17 +128,7 @@ public class CityBookmarksActivity extends AppCompatActivity {
             }
         }).show();
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//
-//    }
-
+    
     public void startAnim() {
         avi.show();
     }

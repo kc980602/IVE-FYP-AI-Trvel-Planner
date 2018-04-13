@@ -21,8 +21,9 @@
 
     <string name="forget_password_title">Reset password</string>
     <string name="forget_password_username">Username</string>
+    <string name="forget_password_email">Email address</string>
     <string name="forget_password_reset">Reset</string>
-    <string name="forget_password_guide">Forget your password? Enter your username to reset passowrd.</string>
+    <string name="forget_password_guide">Forget your password? Enter your username and Email address to reset passowrd.</string>
 
     <string name="edit_profile_title">Edit Profile</string>
     <string name="edit_profile_button">Save</string>

@@ -76,9 +76,10 @@ public class EditProfileActivity extends AppCompatActivity {
         et_fname.setText(user.getFirst_name());
         et_lname.setText(user.getLast_name());
         et_email.setText(user.getEmail());
-        et_age.setText(getResources().getStringArray(R.array.age)[user.getAge()]);
+        et_age.setText(getResources().getStringArray(R.array.age)[user.getAge()-1]);
+        age = "" + user.getAge();
         et_gender.setText(user.getGender());
-
+        gender = user.getGender();
     }
 
     @Override
@@ -104,7 +105,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String[] singleChoiceItems = getResources().getStringArray(R.array.age);
-            int itemSelected = user.getAge();
+            int itemSelected = user.getAge()-1;
             new AlertDialog.Builder(mcontext)
                     .setTitle(getString(R.string.register_age_guide))
                     .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
@@ -112,7 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             et_age.setText(singleChoiceItems[i].toString());
-                            age = String.valueOf(i);
+                            age = String.valueOf(i + 1);
                         }
                     })
                     .setNegativeButton(getString(R.string.dialog_cancel), null)
@@ -123,7 +124,7 @@ public class EditProfileActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String[] singleChoiceItems = getResources().getStringArray(R.array.gender);
-            int itemSelected = user.getGender() == "M" ? 1 : 0 ;
+            int itemSelected = user.getGender() == "M" ? 0 : 1 ;
             new AlertDialog.Builder(mcontext)
                     .setTitle(getString(R.string.register_gender_guide))
                     .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
@@ -179,15 +180,24 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void save() {
         progressDialog.show();
-        Call<Void> call = apiService.editInfo( fname, lname, gender, age);
+        String token = "Bearer ";
+        token += UserDataHelper.getToken(mcontext);
+        if (gender.equalsIgnoreCase("Male")) {
+            gender = "M";
+        } else if (gender.equalsIgnoreCase("Female")) {
+            gender = "F";
+        }
+        Call<Void> call = apiService.editInfo(token, fname, lname, gender, age);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 201){
-                    Toast.makeText(mcontext, "Successful!", Toast.LENGTH_LONG).show();
+                if(response.code() == 204){
+                    progressDialog.dismiss();
+                    Toast.makeText(mcontext, "Profile updated!", Toast.LENGTH_LONG).show();
+                    finish();
                 } else {
                     Toast.makeText(mcontext, "Error!", Toast.LENGTH_LONG).show();
-                    Log.e("respose", String.valueOf(response.code()));
+                    Log.e("respose", String.valueOf(response.code() + response.message() + response.errorBody()));
                 }
                 progressDialog.dismiss();
             }
@@ -199,4 +209,9 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

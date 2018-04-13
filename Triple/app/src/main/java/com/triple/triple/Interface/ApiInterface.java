@@ -53,6 +53,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @PUT("member/info")
     Call<Void> editInfo(
+            @Header("Authorization") String authHeader,
             @Field("first_name") String fname,
             @Field("last_name") String lname,
             @Field("gender") String gender,
@@ -71,15 +72,23 @@ public interface ApiInterface {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
     @POST("member/password/forget")
-    Call<ResponeMessage> forgetPassword(
-            @Field("username") String username
+    Call<Void> forgetPassword(
+            @Field("username") String username,
+            @Field("email") String email
     );
 
     @GET("/city/{id}/attractions")
     Call<DataMeta> getAttractions(
             @Path("id") Integer id,
             @Query("limit") Integer limit
+    );
+
+    @GET("/city/{id}/attractions/preference")
+    Call<DataMeta> getAttractionByPreference(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
     );
 
     @GET("/city/{id}/attractions/attractions")
