@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         if (!UserDataHelper.checkTokenExist(this)) {
             CheckLogin.directLogin(this);
+            hideItem();
+            layout_nav_header.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckLogin.directLogin(mcontext);
+                }
+            });
         } else {
             initNavHeader();
         }
@@ -142,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data.edit().clear().commit();
 
                 Intent i = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(i);
@@ -187,6 +195,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int actionBarSize = (int) styledAttributes.getDimension(0, 0);
         styledAttributes.recycle();
         return actionBarSize;
+    }
+
+    private void hideItem() {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_logout).setVisible(false);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

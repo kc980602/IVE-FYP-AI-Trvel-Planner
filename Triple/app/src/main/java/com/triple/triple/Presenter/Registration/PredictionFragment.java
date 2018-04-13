@@ -112,9 +112,15 @@ public class PredictionFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-        getActivity().setResult(Activity.RESULT_OK);
+//        getActivity().setResult(Activity.RESULT_OK);
+//        getActivity().finish();
+//        callback.complete();
+        Intent i = getActivity().getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().finish();
-        callback.complete();
+        startActivity(i);
+        System.exit(0);
     }
 
     @Override

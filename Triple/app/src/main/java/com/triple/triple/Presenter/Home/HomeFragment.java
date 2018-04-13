@@ -103,7 +103,6 @@ public class HomeFragment extends Fragment implements
             requestTrip();
         }
 
-        setHasOptionsMenu(true);
         return view;
     }
     private void initView() {
@@ -204,24 +203,6 @@ public class HomeFragment extends Fragment implements
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         onScrollChanged(layout_scroll.getCurrentScrollY(), false, false);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbar_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-//                Intent intent = new Intent(getContext(), TripCreateActivity.class);
-//                startActivity(intent);
-                break;
-
-        }
-        return true;
     }
 
     @Override

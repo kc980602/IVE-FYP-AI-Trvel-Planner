@@ -114,24 +114,5 @@
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|end">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_suitcase"
-            android:tint="@color/white"
-            app:backgroundTint="@color/colorPrimary"
-            app:pressedTranslationZ="12dp"
-            app:elevation="12dp"
-            app:borderWidth="0dp"/>
-
-    </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>
 
