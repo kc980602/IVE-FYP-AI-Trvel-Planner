@@ -59,9 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements
     private ImageView image;
     private ObservableScrollView layout_scroll;
     private Drawable drawable;
-    private Button bt_editprofile;
-    private Button bt_editstyle;
-    private Button bt_share;
+    private Button bt_editprofile;   private Button bt_share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +93,6 @@ public class ProfileActivity extends AppCompatActivity implements
 
         bt_editprofile = (Button) findViewById(R.id.bt_editprofile);
         bt_share = (Button) findViewById(R.id.bt_share);
-        bt_editstyle = (Button) findViewById(R.id.bt_editstyle);
     }
 
     private void initView() {
@@ -123,8 +120,6 @@ public class ProfileActivity extends AppCompatActivity implements
 
         bt_editprofile.setOnClickListener(this);
         bt_share.setOnClickListener(this);
-        bt_editstyle.setOnClickListener(this);
-
     }
 
     public void getPreferences() {
@@ -198,10 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements
             case R.id.bt_share:
 
                 break;
-            case R.id.bt_editstyle:
-                intent.setClass(mcontext, EditProfileActivity.class);
-                startActivity(intent);
-                break;
+
 
         }
     }

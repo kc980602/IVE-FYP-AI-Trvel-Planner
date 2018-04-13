@@ -92,8 +92,7 @@ public class CityBookmarksActivity extends AppCompatActivity {
         Call<List<Attraction>> call = Constant.apiService.getBookmark(token, cityid);
         call.enqueue(new Callback<List<Attraction>>() {
             @Override
-            public void onResponse(Call<List<Attraction>> call, Response<List<Attraction>> response) {
-                if (response.body() != null) {
+            public void onResponse(Call<List<Attraction>> call, Response<List<Attraction>> response) {                if (response.body() != null) {
                     List<Attraction> attractions = response.body();
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mcontext.getApplicationContext());
                     rv_attractions.setHasFixedSize(true);
@@ -128,7 +127,7 @@ public class CityBookmarksActivity extends AppCompatActivity {
             }
         }).show();
     }
-    
+
     public void startAnim() {
         avi.show();
     }

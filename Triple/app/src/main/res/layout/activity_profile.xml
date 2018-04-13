@@ -183,18 +183,6 @@
                     android:background="@color/white"
                     android:padding="@dimen/activity_horizontal_margin">
 
-                    <Button
-                        android:id="@+id/bt_editstyle"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/white"
-                        android:drawableRight="@drawable/ic_edit"
-                        android:drawableTint="@color/colorPrimary"
-                        android:gravity="center" />
-
                     <LinearLayout
                         android:id="@+id/layout_style_header"
                         android:layout_width="match_parent"

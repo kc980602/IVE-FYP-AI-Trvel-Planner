@@ -140,30 +140,24 @@ public class TripDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_delete:
                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
-                alert.setTitle("Alert!!");
-                alert.setMessage("Are you sure to delete record");
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                alert.setTitle(R.string.mytrips_detail_delete_title);
+                alert.setMessage(R.string.mytrips_detail_delete_content);
+                alert.setPositiveButton(R.string.mytrips_detail_delete_yes, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //do your work here
                         dialog.dismiss();
-
+                        fetchRemoveTrip();
                     }
                 });
-                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(R.string.mytrips_detail_delete_no, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         dialog.dismiss();
                     }
                 });
-
                 alert.show();
-
-
-                fetchRemoveTrip();
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);

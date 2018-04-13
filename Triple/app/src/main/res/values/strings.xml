@@ -101,6 +101,10 @@
     <string name="mytrips_detail_daysleft_after">Your trip is started!</string>
     <string name="mytrips_detail_daysleft_before">Days Left</string>
     <string name="mytrips_detail_tripsaved">Your trip is saved offline.</string>
+    <string name="mytrips_detail_delete_title">Delete Trip</string>
+    <string name="mytrips_detail_delete_content">Are you sure to delete your trip?</string>
+    <string name="mytrips_detail_delete_yes">Confirm</string>
+    <string name="mytrips_detail_delete_no">Cancel</string>
 
     <string name="mytrips_detail_itinerary_dayname_pre">Day</string>
     <string name="mytrips_detail_itinerary_dayname_post"></string>
