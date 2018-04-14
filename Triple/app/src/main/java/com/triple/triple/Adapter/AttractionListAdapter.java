@@ -3,6 +3,7 @@ package com.triple.triple.Adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
@@ -45,18 +47,19 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
 
 
     public class AttractionViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_attId, tv_attName, tv_attAddress, tv_attType, tv_attReview, tv_rating;
-        public ImageView image1;
+        public RoundedImageView image;
+        public TextView tv_attId;
+        public TextView tv_name;
+        public TextView tv_rate_review;
+        public TextView tv_tag;
 
         public AttractionViewHolder(View itemView) {
             super(itemView);
-            image1 = (ImageView) itemView.findViewById(R.id.image1);
+            image = (RoundedImageView) itemView.findViewById(R.id.image);
             tv_attId = (TextView) itemView.findViewById(R.id.tv_attId);
-            tv_attName = (TextView) itemView.findViewById(R.id.tv_attName);
-            tv_attType = (TextView) itemView.findViewById(R.id.tv_attType);
-            tv_rating = (TextView) itemView.findViewById(R.id.tv_attRating);
-            tv_attAddress = (TextView) itemView.findViewById(R.id.tv_attAddress);
-
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_rate_review = (TextView) itemView.findViewById(R.id.tv_rate_review);
+            tv_tag = (TextView) itemView.findViewById(R.id.tv_tag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,7 +73,6 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
                     activity.startActivity(indent);
                 }
             });
-            tv_attReview = (TextView) itemView.findViewById(R.id.tv_attReview);
         }
     }
 
@@ -78,31 +80,48 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
     @Override
     public AttractionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.listviewitem_attraction, viewGroup, false);
+                .inflate(R.layout.recyclerviewitem_attraction, viewGroup, false);
         return new AttractionViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(AttractionViewHolder holder, int i) {
         Attraction attraction = attractions.get(i);
-        Picasso.with(activity)
-                .load(!attraction.getPhotos().isEmpty() ? attraction.getPhotos().get(0) : null)
-                .fit().centerCrop()
-                .placeholder(R.drawable.ic_image_null_s)
-                .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
-                .into(holder.image1);
+        if (attraction.getPhotos().size() > 0) {
+            holder.tv_tag.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small_Inverse);
+            holder.tv_name.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Large_Inverse);
+            holder.tv_rate_review.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small_Inverse);
+            Picasso.with(activity)
+                    .load(attraction.getPhotos().get(0))
+                    .fit().centerCrop()
+                    .error(R.drawable.ic_image_null_uw)
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_uw)
+                    .into(holder.image);
+        } else {
+            Picasso.with(activity)
+                    .load(R.drawable.ic_image_null_uw)
+                    .fit().centerCrop()
+                    .error(R.drawable.ic_image_null_uw)
+                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_uw)
+                    .into(holder.image);
+            holder.tv_tag.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small);
+            holder.tv_name.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Large);
+            holder.tv_rate_review.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small);
+        }
+        holder.tv_tag.setTypeface(null, Typeface.BOLD);
+        holder.tv_name.setTypeface(null, Typeface.BOLD);
+        holder.tv_rate_review.setTypeface(null, Typeface.BOLD);
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
-        holder.tv_attName.setText(attraction.getName() );
-        holder.tv_attReview.setText(attraction.getComment_count() + " Reviews");
-        holder.tv_rating.setText(String.valueOf(attraction.getRating()) + " / 10.0");
-        holder.tv_attAddress.setText(attraction.getAddress());
-        String[] category_id =  activity.getResources().getStringArray(R.array.category_id);
-        String[] category_name =  activity.getResources().getStringArray(R.array.category_name);
-        for(int n = 0; n < category_id.length;n++){
-            if(((List<String>)attraction.getTags()).get(0).equals(category_id[n])){
-                holder.tv_attType.setText(category_name[n]);
-            }
+        holder.tv_name.setText(attraction.getName());
+        holder.tv_rate_review.setText(String.format("%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
+
+        int resId = activity.getResources().getIdentifier("tag_"+((List<String>)attraction.getTags()).get(0), "string",  activity.getPackageName());
+        if (resId!=0) {
+            holder.tv_tag.setText(activity.getString(resId));
+
         }
     }
 
@@ -113,7 +132,7 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
 
 
     public void setFilter(List<Attraction> attractionList) {
-        if(attractionList == null){
+        if(attractionList != null){
             notifyDataSetChanged();
         } else {
             attractions = new ArrayList<>();
@@ -123,6 +142,7 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
     }
 
     public void addAttraction (List<Attraction> atts){
+        int size = attractions.size();
         if(atts == null){
             notifyDataSetChanged();
         } else {

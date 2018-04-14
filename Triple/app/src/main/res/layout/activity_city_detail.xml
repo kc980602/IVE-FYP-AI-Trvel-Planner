@@ -24,9 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                app:cardPreventCornerOverlap="true"
                 card_view:cardCornerRadius="10dp"
-                card_view:cardElevation="4dp"
-                app:cardPreventCornerOverlap="true">
+                card_view:cardElevation="4dp">
 
                 <com.itheima.roundedimageview.RoundedImageView
                     android:id="@+id/image"
@@ -39,65 +39,65 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
+                    android:background="@drawable/gradient_shape"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:background="@drawable/gradient_shape">
+                    android:paddingVertical="8dp">
 
-                        <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            style="@style/TextAppearance.AppCompat.Display2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:orientation="vertical">
+                            android:gravity="left"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/tv_city"
-                                style="@style/TextAppearance.AppCompat.Display2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tv_country"
-                                style="@style/TextAppearance.AppCompat.Title"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/tv_country"
+                            style="@style/TextAppearance.AppCompat.Title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:orientation="vertical">
+                            android:gravity="left"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_time"
-                                style="@style/TextAppearance.AppCompat.Display1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
 
-                            <TextView
-                                android:layout_gravity="right"
-                                android:id="@+id/tv_weather"
-                                style="@style/TextAppearance.AppCompat.Title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="right|center"
-                                android:drawablePadding="3dp"
-                                android:textAllCaps="true"
-                                android:textColor="@color/white" />
-                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_time"
+                            style="@style/TextAppearance.AppCompat.Display1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_weather"
+                            style="@style/TextAppearance.AppCompat.Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:drawablePadding="3dp"
+                            android:gravity="right|center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -121,60 +121,50 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cv_city_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:clickable="false">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/activity_horizontal_margin"
-                    android:paddingVertical="32dp">
+                <!--<com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx-->
+                    <!--android:id="@+id/nav_bar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@color/transparent"-->
+                    <!--android:visibility="visible"-->
+                    <!--app:itemIconTint="@color/colorPrimary"-->
+                    <!--app:itemTextColor="@color/colorPrimary"-->
+                    <!--app:menu="@menu/nav_city_detail_card" />-->
 
-                    <TextView
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="City Info" />
-
-                    <include layout="@layout/devider_short" />
-
-                    <TextView
-                        android:id="@+id/tv_description"
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="taiwan ndsjknfdkjsfnkjdsngkjdfjkgndfkngkngnfkjdbfnkjdngjkndfjngkjdngjkangjksdngjdngksd" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <ImageButton
-                android:id="@+id/img_arrow"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="-16dp"
-                android:background="@color/white"
-                card_view:srcCompat="@drawable/anim_down_arrow" />
-
+            <!--</RelativeLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingVertical="32dp"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="City Info" />
+
+                <include layout="@layout/devider_short" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:textColor="@color/text_secondary"
+                    android:textIsSelectable="true" />
+
+                <include layout="@layout/devider" />
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -185,29 +175,16 @@
 
                 <include layout="@layout/devider_short" />
 
-
             </LinearLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/content_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/main_background"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/activity_horizontal_margin"
-                tools:context="com.triple.triple.Presenter.Mytrips.TripInfoContentFragment">
+                android:clipToPadding="false" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/content_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
-
 
     </android.support.v4.widget.NestedScrollView>
 

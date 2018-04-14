@@ -133,9 +133,6 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
         rv_attraction.setItemAnimator(new DefaultItemAnimator());
         rv_attraction.setAdapter(adapter);
         rv_attraction.addOnScrollListener(recyclerViewOnScrollListener);
-        adapter.notifyDataSetChanged();
-        RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
-        rv_attraction.addItemDecoration(dividerItemDecoration);
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {

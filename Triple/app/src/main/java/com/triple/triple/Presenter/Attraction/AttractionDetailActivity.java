@@ -99,7 +99,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         findViews();
         initView();
-//        new AttractionDetailActivity.RequestAttractionDetail().execute();
         getUserDetails();
     }
 
@@ -251,7 +250,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                         try {
                             Picasso.with(mcontext)
                                     .load(String.valueOf(map.toURL()))
-                                    .placeholder(R.drawable.ic_image_null_h)
+                                    .placeholder(R.drawable.ic_image_null_uw)
                                     .into(image_map);
                         } catch (MalformedURLException e) {
                         }
@@ -271,6 +270,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                     .placeholder(R.drawable.ic_image_null_h)
                     .into(image);
+            layout_gallery.removeAllViews();
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
                         false);
@@ -281,9 +281,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
                         .placeholder(R.drawable.ic_image_null_s)
                         .into(image);
                 layout_gallery.addView(view);
-                if (i == 9) {
-                    break;
-                }
             }
         }
 

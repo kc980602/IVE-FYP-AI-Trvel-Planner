@@ -41,7 +41,7 @@ public class CityAttractionAdapter extends RecyclerView.Adapter<CityAttractionAd
     @Override
     public CityAttractionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerviewitem_city_attraction, parent, false);
+                .inflate(R.layout.recyclerviewitem_attraction, parent, false);
         return new CityAttractionViewHolder(itemView);
     }
 

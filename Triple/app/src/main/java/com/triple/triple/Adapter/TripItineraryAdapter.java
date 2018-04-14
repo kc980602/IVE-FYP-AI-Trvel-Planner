@@ -238,7 +238,7 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 .load(!photos.isEmpty() ? photos.get(0) : null)
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
-                .placeholder(R.drawable.ic_image_null_s)
+                .placeholder(R.drawable.ic_image_null_c)
                 .into(holder.image1);
     }
 

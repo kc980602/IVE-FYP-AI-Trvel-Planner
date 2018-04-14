@@ -81,13 +81,15 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.At
             Picasso.with(mcontext)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
+                    .error(R.drawable.ic_image_null_uw)
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
-                    .placeholder(R.drawable.ic_image_null_h)
+                    .placeholder(R.drawable.ic_image_null_uw)
                     .into(holder.image);
+
+        } else {
+            holder.tv_name.setTextAppearance(mcontext, R.style.TextAppearance_AppCompat_Large);
+            holder.tv_rate_review.setTextAppearance(mcontext, R.style.TextAppearance_AppCompat_Small);
         }
-
-
-
 
         holder.tv_attId.setText(String.valueOf(attraction.getId()));
         holder.tv_name.setText(attraction.getName());

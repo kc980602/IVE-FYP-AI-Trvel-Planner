@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
+import com.triple.triple.Adapter.AttractionAdapter;
 import com.triple.triple.Adapter.CityAttractionAdapter;
 import com.triple.triple.Adapter.TripArticleAdapter;
 import com.triple.triple.Helper.BitmapTransform;
@@ -39,6 +40,7 @@ import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
 //import com.triple.triple.Sync.ApiWeather;
 import com.triple.triple.Sync.ApiWeather;
+import com.triple.triple.UILibrary.ResizableCustomView;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -64,8 +66,6 @@ public class CityDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private int cityid;
     private City city;
-    private CardView cv_city_info;
-    private ImageButton img_arrow;
     private ImageView image;
     private TextView tv_city, tv_country, tv_time, tv_weather, tv_description;
 
@@ -92,8 +92,6 @@ public class CityDetailActivity extends AppCompatActivity {
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_weather = (TextView) findViewById(R.id.tv_weather);
         tv_description = (TextView) findViewById(R.id.tv_description);
-        img_arrow = (ImageButton) findViewById(R.id.img_arrow);
-        cv_city_info = (CardView) findViewById(R.id.cv_city_info);
         recyclerView = (RecyclerView) findViewById(R.id.content_list);
     }
 
@@ -122,24 +120,12 @@ public class CityDetailActivity extends AppCompatActivity {
         tv_country.setText(city.getCountry());
         tv_description.setText(city.getDescription());
 
+        ResizableCustomView.doResizeTextView(tv_description, 4, "view more", true);
+
         nav_bar.enableAnimation(false);
         nav_bar.enableItemShiftingMode(false);
         nav_bar.enableShiftingMode(false);
         nav_bar.setOnNavigationItemSelectedListener(nav_barListener);
-        img_arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(tv_description.getLayoutParams().height == LinearLayout.LayoutParams.WRAP_CONTENT) {
-                    tv_description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200, 0));
-                    img_arrow.setImageResource(R.drawable.ic_arrow_down);
-                } else {
-                    tv_description.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0));
-                    img_arrow.setImageResource(R.drawable.ic_arrow_up);
-                }
-
-            }
-        });
     }
 
     @Override
@@ -185,7 +171,8 @@ public class CityDetailActivity extends AppCompatActivity {
     private void loadDataToView() {
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CityAttractionAdapter(mcontext, dataMeta));
+        recyclerView.setAdapter(new AttractionAdapter(mcontext, dataMeta.getAttractions(), false));
+        recyclerView.setNestedScrollingEnabled(false);
     }
 
     public void getCityDetail() {
