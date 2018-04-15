@@ -48,6 +48,7 @@ public class GeneratingDialog extends DialogFragment {
         bundle.putString("date", start);
         bundle.putInt("duration", duration);
         dialog.setArguments(bundle);
+        dialog.setCancelable(false);
         return dialog;
     }
 

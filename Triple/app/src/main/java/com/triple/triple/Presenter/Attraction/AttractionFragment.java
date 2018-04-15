@@ -109,7 +109,7 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
             public void onResponse(Call<DataMeta> call, Response<DataMeta> response) {
                 if (response.body() != null) {
                     dataMeta = response.body();
-                    setDataMeta(dataMeta);
+                    setDataMeta();
                     int output = response.body().getPagination().getTotal_pages();
                     Log.e("response", String.valueOf(output));
                 } else {
@@ -126,7 +126,7 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
         stopAnim();
     }
 
-    private void setDataMeta(DataMeta dm){
+    private void setDataMeta(){
         adapter = new AttractionListAdapter(getActivity(), dataMeta);
         rv_attraction.setHasFixedSize(true);
         rv_attraction.setLayoutManager(mLayoutManager);

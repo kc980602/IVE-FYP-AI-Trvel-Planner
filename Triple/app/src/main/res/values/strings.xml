@@ -123,9 +123,8 @@
 
 
     <string name="city_detail_discover">Discover</string>
-    <string name="city_detail_info">Info</string>
     <string name="city_detail_favorites">Favorites</string>
-    <string name="city_detail_plan">Get Plan</string>
+    <string name="city_detail_plan">Trip Plan</string>
     <string name="city_detail_topattraction">Attractions</string>
 
     <string name="attraction_detail_seeall">See All</string>
