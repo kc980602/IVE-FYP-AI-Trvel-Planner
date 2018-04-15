@@ -21,10 +21,6 @@
             android:icon="@drawable/ic_logout"
             android:title="@string/title_logout" />
         <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_help"
-            android:title="@string/title_help" />
-        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info"
             android:title="@string/title_about" />

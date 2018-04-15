@@ -212,6 +212,7 @@ public class TripDetailActivity extends AppCompatActivity {
                     break;
                 case android.R.id.home:
                     NavUtils.navigateUpFromSameTask(TripDetailActivity.this);
+                    setResult(Activity.RESULT_OK);
                     finish();
                     break;
             }
@@ -299,6 +300,7 @@ public class TripDetailActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
+        setResult(Activity.RESULT_OK);
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }

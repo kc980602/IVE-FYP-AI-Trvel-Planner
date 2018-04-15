@@ -101,15 +101,14 @@
             android:name=".Presenter.Registration.RegisterActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Presenter.NewMainActivity"
-            android:parentActivityName=".Presenter.Attraction.AttractionDetailActivity" />
         <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
         <activity
-            android:name=".Presenter.HelpInfo.HelpActivity"
+            android:name=".Presenter.HelpInfo.AboutActivity"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Presenter.HelpInfo.OpenSourceActivity"></activity>
+        <activity android:name=".Presenter.HelpInfo.OpenSourceActivity"
+            android:parentActivityName=".Presenter.HelpInfo.AboutActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

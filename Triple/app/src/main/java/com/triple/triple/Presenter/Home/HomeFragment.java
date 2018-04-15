@@ -1,7 +1,9 @@
 package com.triple.triple.Presenter.Home;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -207,7 +209,7 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.primary);
+        int baseColor = getResources().getColor(R.color.colorPrimary);
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(alpha, baseColor)));
         ViewHelper.setTranslationY(image, scrollY / 2);
@@ -241,7 +243,12 @@ public class HomeFragment extends Fragment implements
 //        onItemChanged(data.get(positionInDataSet));
     }
 
-    private void onItemChanged(ClipData.Item item) {
-//        changeRateButtonState(item);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                requestTrip();
+            }
+        }
     }
 }

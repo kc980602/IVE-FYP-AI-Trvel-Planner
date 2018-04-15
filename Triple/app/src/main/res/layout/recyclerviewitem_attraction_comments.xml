@@ -2,10 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/card_margin_vertical_big_activity"
-    android:layout_marginEnd="@dimen/card_margin_horizontal_big_activity"
-    android:layout_marginStart="@dimen/card_margin_horizontal_big_activity"
-    android:layout_marginTop="@dimen/card_margin_vertical_big_activity"
+    android:layout_margin="@dimen/card_margin_vertical_big_activity"
     android:background="@color/white">
 
     <TextView
@@ -16,7 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="8dp">
 
         <ImageView
             android:id="@+id/image"

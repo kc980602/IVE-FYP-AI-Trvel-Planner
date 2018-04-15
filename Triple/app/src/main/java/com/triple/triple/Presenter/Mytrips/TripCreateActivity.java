@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Mytrips;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -244,8 +245,9 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         intent.putExtras(bundle);
         startActivity(intent);
         Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
-        finish();
         generatingDialog.dismiss();
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     public void stopCreateTrip() {

@@ -11,5 +11,8 @@ public class OpenSourceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_source);
+
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.title_open_source);
     }
 }

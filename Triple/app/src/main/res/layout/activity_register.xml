@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:ms_stepperType="progress_bar"
     app:ms_activeStepColor="@color/colorPrimary"
-    app:ms_inactiveStepColor="@color/colorPrimaryLight"
+    app:ms_inactiveStepColor="@color/colorPrimary"
     app:ms_backButtonColor="@color/colorPrimary"
     app:ms_nextButtonColor="@color/colorPrimary"
     app:ms_completeButtonColor="@color/colorPrimary" />

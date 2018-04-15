@@ -12,9 +12,9 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.R;
 
-public class HelpActivity extends AppCompatActivity implements View.OnClickListener {
+public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Context mcontext = HelpActivity.this;
+    private Context mcontext = AboutActivity.this;
 
     private ImageView image1, image2, image3, image4;
     private CardView cv_os;
@@ -22,7 +22,10 @@ public class HelpActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_about);
+
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
+        ab.setTitle(R.string.title_about);
 
         image1 = (ImageView) findViewById(R.id.image1);
         image2 = (ImageView) findViewById(R.id.image2);

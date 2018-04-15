@@ -1,17 +1,14 @@
 package com.triple.triple.Presenter;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.IntentCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,7 +31,7 @@ import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.User;
-import com.triple.triple.Presenter.HelpInfo.HelpActivity;
+import com.triple.triple.Presenter.HelpInfo.AboutActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Account.ProfileActivity;
@@ -156,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
                 System.exit(0);
                 break;
-            case R.id.nav_help:
-                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+            case R.id.nav_about:
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
         }
 
