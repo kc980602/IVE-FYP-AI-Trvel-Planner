@@ -60,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements
     private ObservableScrollView layout_scroll;
     private Drawable drawable;
     private Button bt_editprofile;   private Button bt_share;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class ProfileActivity extends AppCompatActivity implements
             CheckLogin.directLogin(this);
         } else {
             findView();
+            getUserInfo();
             getPreferences();
             initView();
         }
@@ -99,7 +101,10 @@ public class ProfileActivity extends AppCompatActivity implements
         toolbar.setTitle(R.string.title_profile);
         setSupportActionBar(toolbar);
         layout_scroll.setScrollViewCallbacks(this);
-        final User user = UserDataHelper.getUserInfo(mcontext);
+
+    }
+
+    private void loadData() {
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(user.getFirst_name().charAt(0)), getResources().getColor(Constant.GETCOLOR()), 10);
         iv_avatar.setImageDrawable(drawable);
@@ -141,6 +146,32 @@ public class ProfileActivity extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<List<KeyValue>> call, Throwable t) {
+                Log.e("onFailure", t.getMessage());
+                requestFail();
+            }
+        });
+
+    }
+
+    public void getUserInfo() {
+        startAnim();
+        String token = "Bearer ";
+        token += UserDataHelper.getToken(mcontext);
+        Call<User> call = Constant.apiService.getInfo(token);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.body() != null) {
+                    user = response.body();
+                    loadData();
+                } else {
+                    requestFail();
+                    Log.e("onResponse", "Null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e("onFailure", t.getMessage());
                 requestFail();
             }

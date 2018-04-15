@@ -128,17 +128,6 @@ public class CityDetailActivity extends AppCompatActivity {
         nav_bar.setOnNavigationItemSelectedListener(nav_barListener);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return item.getItemId() == R.id.action_search || super.onOptionsItemSelected(item);
-    }
-
     private BottomNavigationViewEx.OnNavigationItemSelectedListener nav_barListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -153,6 +142,8 @@ public class CityDetailActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.action_plan:
+                    bundle.putInt("cityid", cityid);
+                    intent.putExtras(bundle);
                     intent.setClass(mcontext, TripCreateActivity.class);
                     startActivity(intent);
                     break;

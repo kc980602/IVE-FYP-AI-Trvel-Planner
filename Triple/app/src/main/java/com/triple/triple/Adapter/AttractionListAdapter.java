@@ -132,7 +132,7 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
 
 
     public void setFilter(List<Attraction> attractionList) {
-        if(attractionList != null){
+        if(attractionList == null){
             notifyDataSetChanged();
         } else {
             attractions = new ArrayList<>();

@@ -249,8 +249,8 @@ public class AttractionFragment extends Fragment implements SearchView.OnQueryTe
     @Override
     public boolean onQueryTextSubmit(String s) {
         final List<Attraction> filteredModelList = filter(dataMeta.getAttractions(), s);
-
         adapter.setFilter(filteredModelList);
+        adapter.notifyDataSetChanged();
         return true;
 
     }

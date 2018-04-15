@@ -52,17 +52,31 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     ApiInterface apiService = ApiClientDuration.getClient().create(ApiInterface.class);
     private TripDetail tripDetail;
     private GeneratingDialog generatingDialog;
+    private int cityid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytrips_create);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle!=null) {
+            cityid = bundle.getInt("cityid", 0);
+        }
+
         findViews();
         setupActionBar();
 
         et_tripname.setOnFocusChangeListener(et_tripnameListener);
         et_tripdate.setOnFocusChangeListener(et_tripdateListener);
         et_detination.setOnFocusChangeListener(et_detinationListener);
+        if (cityid != 0) {
+            City city = SystemPropertyHelper.getSystemPropertyByCityId(mcontext, cityid);
+            et_detination.setText(city.getName() + ", " + city.getCountry());
+            destination = String.valueOf(city.getId());
+        }
+
 
         if (CheckLogin.directLogin(mcontext)) {
             finish();
