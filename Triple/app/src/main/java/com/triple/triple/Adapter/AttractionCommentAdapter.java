@@ -85,6 +85,7 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
         String date = String.valueOf(DateUtils.getRelativeTimeSpanString(ac.getCreated_at(), now, DateUtils.DAY_IN_MILLIS));
         TimeZone.setDefault(TimeZone.getTimeZone("HKT"));
         Date time = new java.util.Date((long)ac.getCreated_at()*1000);
+        time.setHours(time.getHours()+8);
         SimpleDateFormat sdFormat = new SimpleDateFormat("MMM dd,yyyy");
         holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10" + " • " + sdFormat.format(time));
         holder.tv_content.setText(ac.getContent());
