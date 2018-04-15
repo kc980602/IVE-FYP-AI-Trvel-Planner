@@ -59,7 +59,8 @@ public class ProfileActivity extends AppCompatActivity implements
     private ImageView image;
     private ObservableScrollView layout_scroll;
     private Drawable drawable;
-    private Button bt_editprofile;   private Button bt_share;
+    private Button bt_editprofile;
+    private Button bt_share;
     private User user;
 
     @Override
@@ -72,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements
         } else {
             findView();
             getUserInfo();
-            getPreferences();
+//            getPreferences();
             initView();
         }
     }
@@ -125,6 +126,26 @@ public class ProfileActivity extends AppCompatActivity implements
 
         bt_editprofile.setOnClickListener(this);
         bt_share.setOnClickListener(this);
+
+        if (user.getPreferences() != null) {
+            for (int i = 0; i <= 3; i++) {
+                String filename = "preference_" + user.getPreferences().get(i).getTag();
+                if (user.getPreferences().get(i).getTag().equals("60+_traveller")) {
+                    filename = "preference_60_traveller";
+                }
+
+                Picasso.with(mcontext)
+                        .load(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()))
+                        .fit().centerCrop()
+                        .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                        .placeholder(R.drawable.ic_image_null_h)
+                        .into(imageViewsList[i]);
+                String key = keyValueList.get(i).getKey().replace('_', ' ');
+                String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
+                textViewsList[i].setText(titile);
+            }
+        }
+
     }
 
     public void getPreferences() {
@@ -176,6 +197,7 @@ public class ProfileActivity extends AppCompatActivity implements
                 requestFail();
             }
         });
+        stopAnim();
 
     }
 
@@ -194,7 +216,7 @@ public class ProfileActivity extends AppCompatActivity implements
                     .placeholder(R.drawable.ic_image_null_h)
                     .into(imageViewsList[i]);
             String key = keyValueList.get(i).getKey().replace('_', ' ');
-            String titile = key.substring(0,1).toUpperCase() + key.substring(1).toLowerCase();
+            String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
             textViewsList[i].setText(titile);
         }
     }
@@ -206,7 +228,7 @@ public class ProfileActivity extends AppCompatActivity implements
         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getPreferences();
+                getUserInfo();
             }
         }).show();
     }

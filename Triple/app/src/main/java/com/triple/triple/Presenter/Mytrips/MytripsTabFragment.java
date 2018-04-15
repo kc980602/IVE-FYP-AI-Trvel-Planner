@@ -113,7 +113,6 @@ public class MytripsTabFragment extends Fragment {
         String token = "Bearer ";
         token += UserDataHelper.getToken(getContext());
         Call<List<Trip>> call;
-        Log.e("requestTrip", String.valueOf(isEnded));
         if (isEnded) {
             call = Constant.apiService.listTripEnded(token);
         } else {

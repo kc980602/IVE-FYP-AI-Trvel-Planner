@@ -119,12 +119,12 @@ public class HomeFragment extends Fragment implements
 
     private void initCity() {
         int numberOfColumns = 3;
-        City city = new City();
-        city.setId(-10);
-        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
-        city.setName("MORE?");
+//        City city = new City();
+//        city.setId(-10);
+//        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
+//        city.setName("MORE?");
         List<City> countries = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
-        countries.add(city);
+//        countries.add(city);
         rv_all.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         cityCompactAdapter = new CityCompactAdapter(getContext(), countries);
         rv_all.setAdapter(cityCompactAdapter);
