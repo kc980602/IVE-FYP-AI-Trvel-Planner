@@ -19,6 +19,7 @@ import com.itheima.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.triple.triple.Helper.BitmapTransform;
 import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AttractionComment;
 import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
@@ -26,8 +27,11 @@ import com.triple.triple.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by HaYYY on 2018/4/8.
@@ -79,7 +83,10 @@ public class AttractionCommentAdapter extends RecyclerView.Adapter<AttractionCom
         holder.tv_name.setText(ac.getUser().getFirst_name() + " " + ac.getUser().getLast_name());
         long now = System.currentTimeMillis();
         String date = String.valueOf(DateUtils.getRelativeTimeSpanString(ac.getCreated_at(), now, DateUtils.DAY_IN_MILLIS));
-        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10" + " • " + date);
+        TimeZone.setDefault(TimeZone.getTimeZone("HKT"));
+        Date time = new java.util.Date((long)ac.getCreated_at()*1000);
+        SimpleDateFormat sdFormat = new SimpleDateFormat("MMM dd,yyyy");
+        holder.tv_rate_time.setText(String.valueOf(ac.getRating()) + " / 10" + " • " + sdFormat.format(time));
         holder.tv_content.setText(ac.getContent());
 
 
