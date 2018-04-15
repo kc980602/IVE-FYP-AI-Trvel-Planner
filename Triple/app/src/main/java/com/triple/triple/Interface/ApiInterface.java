@@ -5,17 +5,13 @@ import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Model.KeyValue;
-import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.Model.User;
 
-import org.w3c.dom.Attr;
-
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;

@@ -32,10 +32,8 @@ import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.KeyValue;
 import com.triple.triple.Model.User;
 import com.triple.triple.R;
-import com.wang.avi.AVLoadingIndicatorView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -129,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
         if (user.getPreferences() != null) {
             for (int i = 0; i <= 3; i++) {
-                String filename = "preference_" + user.getPreferences().get(i).getTag();
+                String filename = "preference_" + user.getPreferences().get(i).getTag().toLowerCase();
                 if (user.getPreferences().get(i).getTag().equals("60+_traveller")) {
                     filename = "preference_60_traveller";
                 }
@@ -140,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity implements
                         .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                         .placeholder(R.drawable.ic_image_null_h)
                         .into(imageViewsList[i]);
-                String key = keyValueList.get(i).getKey().replace('_', ' ');
+                String key = user.getPreferences().get(i).getTag().toLowerCase().replace('_', ' ');
                 String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
                 textViewsList[i].setText(titile);
             }
