@@ -61,4 +61,5 @@ dependencies {
     implementation 'com.github.florent37:diagonallayout:1.0.7'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+    implementation 'com.akexorcist:googledirectionlibrary:1.1.1'
 }

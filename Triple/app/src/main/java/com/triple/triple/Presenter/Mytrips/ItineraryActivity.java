@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +30,7 @@ public class ItineraryActivity extends AppCompatActivity {
     private TripDetail tripDetail;
     private String tripday;
     private int num;
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class ItineraryActivity extends AppCompatActivity {
         if (tripday!=null) {
             num = (Integer.parseInt(tripday.substring(3))) - 1;
         }
-
 
         toolbar.setTitle(tripDetail.getTitle());
         setSupportActionBar(toolbar);
@@ -86,20 +87,32 @@ public class ItineraryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main2, menu);
+        getMenuInflater().inflate(R.menu.toolbar_map, menu);
+        mMenu = menu;
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment fragment = null;
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 super.onBackPressed();
                 break;
+            case R.id.action_map:
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("itinerary", tripDetail.getItinerary().get(tabLayout.getSelectedTabPosition()));
+                intent.setClass(this, MapsActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
         }
         return true;
     }
+
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

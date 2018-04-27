@@ -168,7 +168,7 @@
     <string name="api_attraction">/attraction</string>
     <string name="local_api_prefix">http://com.triple</string>
 
-    <string name="google_maps_key">AIzaSyAgZtMqnGYDJLeajhqUV9g1_Eabe1xcuKY</string>
+    <string name="google_maps_key">AIzaSyAhUiOpN5cILuciEpCWvCWNss60owhV_vs</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -238,6 +238,7 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
