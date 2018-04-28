@@ -98,9 +98,7 @@ public class HomeFragment extends Fragment implements
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
         initView();
         requestSystemProperty();
-        if (!UserDataHelper.checkTokenExist(mcontext)) {
-            CheckLogin.directLogin(mcontext);
-        } else {
+        if (UserDataHelper.checkTokenExist(mcontext)) {
             tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
             requestTrip();
         }
