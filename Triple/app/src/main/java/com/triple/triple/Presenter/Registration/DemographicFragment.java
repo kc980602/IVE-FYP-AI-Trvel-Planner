@@ -27,8 +27,10 @@ import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.triple.triple.Helper.ErrorUtils;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Interface.DataManager;
+import com.triple.triple.Model.APIError;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
@@ -174,7 +176,7 @@ public class DemographicFragment extends Fragment implements BlockingStep {
         call.enqueue(new Callback<AuthData>() {
             @Override
             public void onResponse(Call<AuthData> call, Response<AuthData> response) {
-                if(response.code() == 201) {
+                if(response.isSuccessful()) {
                     Gson gson = new Gson();
                     AuthData auth = response.body();
                     SharedPreferences data = new SecurePreferences(getContext());
@@ -185,7 +187,8 @@ public class DemographicFragment extends Fragment implements BlockingStep {
                     editor.apply();
                     callback.goToNextStep();
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.mytrips_create_error_process), Toast.LENGTH_SHORT).show();
+                    APIError errorMessage = ErrorUtils.parseError(response);
+                    Toast.makeText(getContext(), errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
             }

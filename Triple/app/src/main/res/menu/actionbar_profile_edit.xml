@@ -5,5 +5,5 @@
         android:id="@+id/action_save"
         android:orderInCategory="300"
         android:title="@string/edit_profile_button"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
 </menu>
