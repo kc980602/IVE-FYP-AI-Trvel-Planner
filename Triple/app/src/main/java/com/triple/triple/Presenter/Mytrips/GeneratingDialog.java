@@ -48,6 +48,7 @@ public class GeneratingDialog extends DialogFragment {
         bundle.putString("date", start);
         bundle.putInt("duration", duration);
         dialog.setArguments(bundle);
+        dialog.setCancelable(false);
         return dialog;
     }
 
@@ -75,6 +76,7 @@ public class GeneratingDialog extends DialogFragment {
                 .load(c.getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_X_WIDTH, Constant.IMAGE_X_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_v)
                 .into(iv_bkg);
 
         String dateString = DateTimeHelper.castDateToLocale(date) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(date, duration));

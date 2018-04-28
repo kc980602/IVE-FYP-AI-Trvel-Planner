@@ -57,6 +57,7 @@ public class TripInfoCoverFragment extends Fragment {
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_v)
                 .into(image);
         String date = DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length()));
         tv_tripdate.setText(date);

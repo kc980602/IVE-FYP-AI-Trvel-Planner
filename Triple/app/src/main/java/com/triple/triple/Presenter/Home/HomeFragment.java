@@ -1,7 +1,9 @@
 package com.triple.triple.Presenter.Home;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -103,7 +105,6 @@ public class HomeFragment extends Fragment implements
             requestTrip();
         }
 
-        setHasOptionsMenu(true);
         return view;
     }
     private void initView() {
@@ -111,22 +112,24 @@ public class HomeFragment extends Fragment implements
                 .load(R.drawable.bkg_home)
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
     }
 
 
     private void initCity() {
         int numberOfColumns = 3;
-        City city = new City();
-        city.setId(-10);
-        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
-        city.setName("MORE?");
+//        City city = new City();
+//        city.setId(-10);
+//        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
+//        city.setName("MORE?");
         List<City> countries = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
-        countries.add(city);
+//        countries.add(city);
         rv_all.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         cityCompactAdapter = new CityCompactAdapter(getContext(), countries);
         rv_all.setAdapter(cityCompactAdapter);
         rv_all.addItemDecoration(new SpacesItemDecoration(10));
+        rv_all.setNestedScrollingEnabled(false);
     }
 
     private void initTrip() {
@@ -205,26 +208,8 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbar_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-//                Intent intent = new Intent(getContext(), TripCreateActivity.class);
-//                startActivity(intent);
-                break;
-
-        }
-        return true;
-    }
-
-    @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.primary);
+        int baseColor = getResources().getColor(R.color.colorPrimary);
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ScrollUtils.getColorWithAlpha(alpha, baseColor)));
         ViewHelper.setTranslationY(image, scrollY / 2);
@@ -258,7 +243,12 @@ public class HomeFragment extends Fragment implements
 //        onItemChanged(data.get(positionInDataSet));
     }
 
-    private void onItemChanged(ClipData.Item item) {
-//        changeRateButtonState(item);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                requestTrip();
+            }
+        }
     }
 }

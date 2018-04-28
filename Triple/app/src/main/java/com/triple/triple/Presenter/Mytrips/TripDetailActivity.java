@@ -2,11 +2,13 @@ package com.triple.triple.Presenter.Mytrips;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -136,10 +138,26 @@ public class TripDetailActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit:
-                break;
             case R.id.action_delete:
-                fetchRemoveTrip();
+                AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                alert.setTitle(R.string.mytrips_detail_delete_title);
+                alert.setMessage(R.string.mytrips_detail_delete_content);
+                alert.setPositiveButton(R.string.mytrips_detail_delete_yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        fetchRemoveTrip();
+                    }
+                });
+                alert.setNegativeButton(R.string.mytrips_detail_delete_no, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
                 break;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -156,7 +174,7 @@ public class TripDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                if(response.code() == 204) {
+                if (response.code() == 204) {
                     setResult(Activity.RESULT_OK);
                     finish();
                 } else {
@@ -194,6 +212,7 @@ public class TripDetailActivity extends AppCompatActivity {
                     break;
                 case android.R.id.home:
                     NavUtils.navigateUpFromSameTask(TripDetailActivity.this);
+                    setResult(Activity.RESULT_OK);
                     finish();
                     break;
             }
@@ -274,12 +293,14 @@ public class TripDetailActivity extends AppCompatActivity {
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
         cv_trip.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void finish() {
+        setResult(Activity.RESULT_OK);
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }

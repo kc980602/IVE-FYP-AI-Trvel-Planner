@@ -22,6 +22,9 @@ public class Pagination implements Serializable{
     private int per_page;
     @SerializedName("current_page")
     @Expose
+    private int total_pages;
+    @SerializedName("total_pages")
+    @Expose
     private int current_page;
     @SerializedName("links")
     @Expose
@@ -65,5 +68,13 @@ public class Pagination implements Serializable{
 
     public void setLinks(Links links) {
         this.links = links;
+    }
+
+    public int getTotal_pages() {
+        return total_pages;
+    }
+
+    public void setTotal_pages(int total_pages) {
+        this.total_pages = total_pages;
     }
 }

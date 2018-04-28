@@ -2,6 +2,7 @@ package com.triple.triple.Presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +25,16 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.securepreferences.SecurePreferences;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.User;
-import com.triple.triple.Presenter.Account.SettingFragment;
+import com.triple.triple.Presenter.HelpInfo.AboutActivity;
 import com.triple.triple.Presenter.Home.HomeFragment;
 import com.triple.triple.Presenter.Mytrips.MytripsFragment;
 import com.triple.triple.Presenter.Account.ProfileActivity;
-import com.triple.triple.Presenter.Profile.TravelStyleFragment;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 
@@ -78,6 +80,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         if (!UserDataHelper.checkTokenExist(this)) {
             CheckLogin.directLogin(this);
+            hideItem();
+            layout_nav_header.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckLogin.directLogin(mcontext);
+                }
+            });
         } else {
             initNavHeader();
         }
@@ -133,16 +142,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbarNormal(R.string.title_mytrips);
                 fragment = new MytripsFragment();
                 break;
-            case R.id.nav_settings:
-                toolbarNormal(R.string.title_settings);
-                fragment = new SettingFragment();
+            case R.id.nav_logout:
+                SharedPreferences data = new SecurePreferences(mcontext);
+                data.edit().clear().commit();
+
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+                startActivity(i);
+                System.exit(0);
                 break;
-            case R.id.nav_travelstyle:
-                toolbarNormal(R.string.title_travelstyle);
-                fragment = new TravelStyleFragment();
-                break;
-            case R.id.nav_help:
-                Intent intent = new Intent(MainActivity.this, NewMainActivity.class);
+            case R.id.nav_about:
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
         }
 
@@ -182,14 +194,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return actionBarSize;
     }
 
+    private void hideItem() {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_logout).setVisible(false);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        //calling the method displayselectedscreen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
-        //make this method blank
         return true;
     }
 }

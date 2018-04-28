@@ -88,6 +88,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 .load(trip.getCity().getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_S_WIDTH, Constant.IMAGE_S_HEIGHT))
+                .placeholder(R.drawable.ic_image_null_h)
                 .into(holder.image);
 
         holder.tv_tripid.setText(String.valueOf(trip.getId()));

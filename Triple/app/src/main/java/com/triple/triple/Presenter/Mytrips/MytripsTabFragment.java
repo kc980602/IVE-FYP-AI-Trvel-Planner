@@ -28,6 +28,7 @@ import com.triple.triple.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -113,7 +114,7 @@ public class MytripsTabFragment extends Fragment {
         token += UserDataHelper.getToken(getContext());
         Call<List<Trip>> call;
         if (isEnded) {
-            call = Constant.apiService.listTrip(token);
+            call = Constant.apiService.listTripEnded(token);
         } else {
             call = Constant.apiService.listTrip(token);
         }
@@ -124,6 +125,7 @@ public class MytripsTabFragment extends Fragment {
                     List<Trip> newTrips = response.body();
                     trips.clear();
                     trips.addAll(newTrips);
+                    Collections.reverse(trips);
                     if (isFirst) {
                         initRecycleView();
                         isFirst = false;

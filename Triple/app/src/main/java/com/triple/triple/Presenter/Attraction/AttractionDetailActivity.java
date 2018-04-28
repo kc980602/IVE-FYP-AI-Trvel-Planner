@@ -99,7 +99,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         findViews();
         initView();
-//        new AttractionDetailActivity.RequestAttractionDetail().execute();
         getUserDetails();
     }
 
@@ -232,6 +231,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
             rv_attraction_comments.addItemDecoration(dividerItemDecoration);
+            rv_attraction_comments.setNestedScrollingEnabled(false);
         }
 
         image_map.getViewTreeObserver()
@@ -250,6 +250,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                         try {
                             Picasso.with(mcontext)
                                     .load(String.valueOf(map.toURL()))
+                                    .placeholder(R.drawable.ic_image_null_uw)
                                     .into(image_map);
                         } catch (MalformedURLException e) {
                         }
@@ -267,7 +268,9 @@ public class AttractionDetailActivity extends AppCompatActivity {
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_h)
                     .into(image);
+            layout_gallery.removeAllViews();
             for (int i = 0; i < attraction.getPhotos().size(); i++) {
                 View view = mInflater.inflate(R.layout.listitem_gallery, layout_gallery,
                         false);
@@ -275,11 +278,9 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 Picasso.with(mcontext)
                         .load(attraction.getPhotos().get(i))
                         .fit().centerCrop()
+                        .placeholder(R.drawable.ic_image_null_s)
                         .into(image);
                 layout_gallery.addView(view);
-                if (i == 9) {
-                    break;
-                }
             }
         }
 
@@ -381,5 +382,12 @@ public class AttractionDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(mcontext, AttractionReviewActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserDetails();
+
     }
 }

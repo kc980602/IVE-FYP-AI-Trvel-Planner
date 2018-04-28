@@ -24,8 +24,8 @@
         android:layout_height="150dp"
         android:layout_below="@+id/title"
         android:padding="@dimen/activity_vertical_margin"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image_null_tran" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_icon_plane" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -119,73 +119,20 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(indent);
     }
 
-    private class RequestLogin extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_login);
-                respone = new Authentication().run(url, username, password);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return respone;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if (result.equals("Error")) {
-                progressDialog.hide();
-                Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
-            } else {
-                Type type = new TypeToken<AuthData>() {
-                }.getType();
-                Gson gson = new Gson();
-                try {
-                    AuthData auth = (AuthData) gson.fromJson(result, type);
-                    auth.toString();
-                    //save data using SharedPreferences
-                    SharedPreferences data = new SecurePreferences(mcontext);
-                    SharedPreferences.Editor editor = data.edit();
-                    editor.putString("token", auth.getToken());
-                    String json = gson.toJson(auth.getUser());
-                    editor.putString("userInfo", json);
-                    editor.commit();
-                    String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
-                    Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    Intent indent = new Intent(mcontext, MainActivity.class);
-                    startActivity(indent);
-                    finish();
-                } catch (Exception e) {
-                    Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-    public void requestLogin(String username, String password){
+    public void requestLogin(String username, String password) {
         progressDialog.show();
-
         Call<AuthData> call = apiService.authenticate(username, password);
         call.enqueue(new Callback<AuthData>() {
             @Override
             public void onResponse(Call<AuthData> call, Response<AuthData> response) {
-                try{
-                    if(response.code() != 201){
+                try {
+                    if (response.code() != 201) {
                         AuthData auth = response.body();
                         continueRequestLogin(auth);
                     } else {
                         stopRequestLogin();
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     progressDialog.hide();
                     Toast.makeText(mcontext, R.string.login_error_data, Toast.LENGTH_SHORT).show();
                 }
@@ -200,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void continueRequestLogin(AuthData auth){
+    public void continueRequestLogin(AuthData auth) {
         Gson gson = new Gson();
         auth.toString();
         //save data using SharedPreferences
@@ -213,12 +160,15 @@ public class LoginActivity extends AppCompatActivity {
         String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
         Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
         progressDialog.dismiss();
-        Intent indent = new Intent(mcontext, MainActivity.class);
-        startActivity(indent);
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
+        startActivity(i);
+        System.exit(0);
     }
 
-    public void stopRequestLogin(){
+    public void stopRequestLogin() {
         progressDialog.hide();
         Toast.makeText(mcontext, R.string.login_error_process, Toast.LENGTH_SHORT).show();
     }

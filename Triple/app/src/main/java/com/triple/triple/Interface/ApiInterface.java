@@ -5,17 +5,13 @@ import com.triple.triple.Model.Attraction;
 import com.triple.triple.Model.AuthData;
 import com.triple.triple.Model.DataMeta;
 import com.triple.triple.Model.KeyValue;
-import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.Model.User;
 
-import org.w3c.dom.Attr;
-
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -53,6 +49,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @PUT("member/info")
     Call<Void> editInfo(
+            @Header("Authorization") String authHeader,
             @Field("first_name") String fname,
             @Field("last_name") String lname,
             @Field("gender") String gender,
@@ -71,9 +68,11 @@ public interface ApiInterface {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
     @POST("member/password/forget")
-    Call<ResponeMessage> forgetPassword(
-            @Field("username") String username
+    Call<Void> forgetPassword(
+            @Field("username") String username,
+            @Field("email") String email
     );
 
     @GET("/city/{id}/attractions")
@@ -82,19 +81,31 @@ public interface ApiInterface {
             @Query("limit") Integer limit
     );
 
+    @GET("/city/{id}/attractions/preference")
+    Call<DataMeta> getAttractionByPreference(
+            @Header("Authorization") String authHeader,
+            @Path("id") Integer id
+    );
+
     @GET("/city/{id}/attractions/attractions")
     Call<DataMeta> getCityAttractions(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("/city/{id}/attractions/hotels")
     Call<DataMeta> getCityHotels(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("/city/{id}/attractions/restaurants")
     Call<DataMeta> getCityRestaurants(
-            @Path("id") Integer id
+            @Path("id") Integer id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     @GET("attraction/{id}")

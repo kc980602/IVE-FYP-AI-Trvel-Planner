@@ -191,7 +191,7 @@
                     android:id="@+id/btn_attraction_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
+                    android:layout_margin="11dp"
                     android:onClick="onButtonReviewClick"
                     android:text="Leave your review"
                     android:theme="@style/MyButton"/>

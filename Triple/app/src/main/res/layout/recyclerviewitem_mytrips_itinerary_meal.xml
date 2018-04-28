@@ -52,46 +52,24 @@
                 android:src="@drawable/ic_restaurant"
                 android:tint="@color/colorPrimary" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/image1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/image1"
-                    android:padding="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tv_name"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="50"
-                            android:ellipsize="marquee"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:marqueeRepeatLimit="marquee_forever"
-                            android:scrollHorizontally="true"
-                            android:singleLine="true" />
-
-
-                        <TextView
-                            android:id="@+id/tv_duration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_duration"
-                            android:drawablePadding="5dp"
-                            android:drawableTint="@color/colorPrimary"
-                            android:gravity="right|center" />
-                    </LinearLayout>
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tv_address"
+                        android:id="@+id/tv_name"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="50"
                         android:ellipsize="marquee"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
@@ -99,7 +77,29 @@
                         android:scrollHorizontally="true"
                         android:singleLine="true" />
 
+
+                    <TextView
+                        android:id="@+id/tv_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_duration"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="right|center" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -128,8 +128,7 @@
                 android:drawableLeft="@drawable/ic_distance"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/colorPrimary"
-                android:gravity="right|center"
-                android:text="1 km" />
+                android:gravity="right|center" />
 
             <TextView
                 android:id="@+id/tv_traveltime"
@@ -139,8 +138,7 @@
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/colorPrimary"
                 android:gravity="right|center"
-                android:paddingLeft="20dp"
-                android:text="15 min" />
+                android:paddingLeft="20dp" />
 
 
         </LinearLayout>

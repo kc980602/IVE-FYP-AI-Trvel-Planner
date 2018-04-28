@@ -3,6 +3,8 @@ package com.triple.triple.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Kevin on 2018/1/27.
  */
@@ -39,6 +41,9 @@ public class User {
     @SerializedName("updated_at")
     @Expose
     private int updated_at;
+    @SerializedName("preferences")
+    @Expose
+    private List<Tag> preferences;
 
     public int getId() {
         return id;
@@ -120,4 +125,11 @@ public class User {
         this.updated_at = updated_at;
     }
 
+    public List<Tag> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<Tag> preferences) {
+        this.preferences = preferences;
+    }
 }

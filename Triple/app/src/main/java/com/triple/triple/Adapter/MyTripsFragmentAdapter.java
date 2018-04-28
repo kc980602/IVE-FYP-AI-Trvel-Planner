@@ -24,8 +24,13 @@ public class MyTripsFragmentAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 bundle.putBoolean("isEnded", false);
+                break;
             case 1:
                 bundle.putBoolean("isEnded", true);
+                break;
+            default:
+                bundle.putBoolean("isEnded", false);
+                break;
         }
         fragment.setArguments(bundle);
         return fragment;

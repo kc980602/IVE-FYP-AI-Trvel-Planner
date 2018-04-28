@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -32,13 +33,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Presenter.Search.SearchActivity"
-            android:parentActivityName=".Presenter.MainActivity" />
-        <activity
             android:name=".Presenter.Account.ProfileActivity"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
-            android:name=".Presenter.Profile.EditProfileActivity"
+            android:name=".Presenter.Account.EditProfileActivity"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
@@ -62,16 +60,12 @@
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity">
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"></meta-data>
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
-        <activity
-            android:name=".Presenter.Profile.TravelStyleActivity"
-            android:parentActivityName=".Presenter.Account.LoginActivity"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
             android:launchMode="singleTask"
@@ -108,10 +102,18 @@
             android:name=".Presenter.Registration.RegisterActivity"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Presenter.NewMainActivity"
-            android:parentActivityName=".Presenter.Attraction.AttractionDetailActivity" />
         <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
+        <activity
+            android:name=".Presenter.HelpInfo.AboutActivity"
+            android:parentActivityName=".Presenter.MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Presenter.HelpInfo.OpenSourceActivity"
+            android:parentActivityName=".Presenter.HelpInfo.AboutActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Presenter.Mytrips.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

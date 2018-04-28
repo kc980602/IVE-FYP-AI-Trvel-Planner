@@ -78,6 +78,7 @@ public class TripArticleAdapter extends RecyclerView.Adapter<TripArticleAdapter.
                     .load(article.getPhotos().get(0))
                     .fit().centerCrop()
                     .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
+                    .placeholder(R.drawable.ic_image_null_s)
                     .into(holder.image);
         }
         holder.tv_attId.setText(String.valueOf(article.getId()));

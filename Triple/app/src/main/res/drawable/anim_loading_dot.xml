@@ -32,6 +32,7 @@
                 android:propertyName="translateY"
                 android:repeatCount="infinite"
                 android:repeatMode="reverse"
+                android:startOffset="100"
                 android:valueFrom="0"
                 android:valueTo="-4" />
         </aapt:attr>
@@ -44,7 +45,7 @@
                 android:propertyName="translateY"
                 android:repeatCount="infinite"
                 android:repeatMode="reverse"
-                android:startOffset="100"
+                android:startOffset="200"
                 android:valueFrom="0"
                 android:valueTo="-4" />
         </aapt:attr>
@@ -57,7 +58,7 @@
                 android:propertyName="translateY"
                 android:repeatCount="infinite"
                 android:repeatMode="reverse"
-                android:startOffset="200"
+                android:startOffset="300"
                 android:valueFrom="0"
                 android:valueTo="-4" />
         </aapt:attr>
