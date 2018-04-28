@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -75,21 +76,32 @@
                 android:layout_below="@+id/layout_header"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/layout_mytrips"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/home_trip" />
+                    android:visibility="gone">
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/home_trip" />
 
-                <include layout="@layout/devider_short" />
+                    <include layout="@layout/devider_short" />
 
-                <com.yarolegovich.discretescrollview.DiscreteScrollView
-                    android:id="@+id/dsv_trips"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <include
+                        layout="@layout/cardview_empty_trip"
+                        android:visibility="gone"/>
 
-                <include layout="@layout/devider_margin"/>
+                    <com.yarolegovich.discretescrollview.DiscreteScrollView
+                        android:id="@+id/dsv_trips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include layout="@layout/devider_margin"/>
+                </LinearLayout>
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Medium"

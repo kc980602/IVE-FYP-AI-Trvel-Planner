@@ -79,11 +79,7 @@ public class MytripsTabFragment extends Fragment {
             requestTrip();
         } else {
             View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-            Snackbar.make(view, "Login or Register First", Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            }).show();
+            Snackbar.make(view, "Login or Register First", Snackbar.LENGTH_LONG).show();
         }
     }
 

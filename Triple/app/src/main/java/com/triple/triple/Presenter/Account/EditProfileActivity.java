@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.interfaces.CountryPickerListener;
+import com.triple.triple.Helper.ErrorUtils;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Model.APIError;
 import com.triple.triple.Model.User;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
@@ -191,12 +193,13 @@ public class EditProfileActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 204){
+                if(response.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(mcontext, "Profile updated!", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    Toast.makeText(mcontext, "Error!", Toast.LENGTH_LONG).show();
+                    APIError errorMessage = ErrorUtils.parseError(response);
+                    Toast.makeText(mcontext, errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.e("respose", String.valueOf(response.code() + response.message() + response.errorBody()));
                 }
                 progressDialog.dismiss();

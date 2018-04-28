@@ -59,6 +59,7 @@
     <string name="register_error_country">Select your income group!</string>
     <string name="register_error_create">Something went wrong! (Error code: 1003)</string>
     <string name="register_success_create">Click the link in the verify email to activate your account.</string>
+    <string name="empty_trip_list">You don\'t have any trip yet.</string>
     <string-array name="age">
         <item>13-17</item>
         <item>18-24</item>
