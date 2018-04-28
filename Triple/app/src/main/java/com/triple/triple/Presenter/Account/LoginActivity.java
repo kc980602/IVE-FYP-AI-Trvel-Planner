@@ -91,7 +91,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.signup:
+            case R.id.lblHint:
+            case R.id.link_signup:
                 startActivityForResult(new Intent(this, RegisterActivity.class), 1);
                 return;
             case R.id.link_forget:
