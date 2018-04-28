@@ -22,9 +22,11 @@ import android.widget.Toast;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.triple.triple.Helper.DateTimeHelper;
 import com.triple.triple.Helper.CheckLogin;
+import com.triple.triple.Helper.ErrorUtils;
 import com.triple.triple.Helper.SystemPropertyHelper;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
+import com.triple.triple.Model.APIError;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.R;
@@ -101,20 +103,9 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_mytrips_create, menu);
-        return true;
-    }
-
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_create:
-                requestCreateTrip();
-                break;
-            case android.R.id.home:
+        if (item.getItemId() == android.R.id.home) {
                 onBackPressed();
-                break;
         }
         return true;
     }
@@ -227,18 +218,19 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
                 Log.d("ReturnResponse", String.valueOf(response.code()));
 
                 if (response.body() == null) {
-                    stopCreateTrip();
-                } else {
                     Log.d("ReturnResponse", String.valueOf(response.code()));
                     tripDetail = response.body();
                     continueCreateTrip();
+                } else {
+                    APIError errorMessage = ErrorUtils.parseError(response);
+                    stopCreateTrip(errorMessage.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<TripDetail> call, Throwable t) {
                 Log.d("ReturnResponse", t.getMessage());
-                stopCreateTrip();
+                stopCreateTrip(getString(R.string.mytrips_create_error_process));
             }
         });
     }
@@ -256,16 +248,10 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         finish();
     }
 
-    public void stopCreateTrip() {
+    public void stopCreateTrip(String message) {
         bt_create.setEnabled(true);
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
-        Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }).show();
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
         generatingDialog.dismiss();
     }
 

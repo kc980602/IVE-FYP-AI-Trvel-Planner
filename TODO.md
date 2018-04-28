@@ -1,0 +1,14 @@
+# TODO
+- [X] **Login screen** showed doubly.
+- [X] **Demographic Data UI** scrollable.
+- [X] Hide **MyTrips** if guest.
+- [X] Move **Remark String** Above Button
+- [X] Remove **GENERATE** from toolbar in **CreateTripPage**
+- [X] **CreateTripPage** scrollable
+- [X] **Share Triple** Color in **ProfilePage**
+- [ ] Display a string when **Trip list is empty with icon** in **HomePage** & **MyTrips** rather blank.
+- [ ] Display a string when **Attractions is empty with icon** in **CityPage** rather blank.
+- [ ] Display a string when **No Favorite with icon** in **CityPage** rather blank.
+- [ ] Display a string when **No Review with icon** in **AttractionDetailPage** rather blank.
+- [ ] Grid view for **Prediction UI**
+- [ ] Reload **HomePage** rather whole app.

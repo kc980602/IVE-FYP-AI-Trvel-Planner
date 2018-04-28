@@ -8,6 +8,6 @@
         android:orderInCategory="300"
         android:title="Create"
         android:icon="@drawable/ic_close"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
 
 </menu>

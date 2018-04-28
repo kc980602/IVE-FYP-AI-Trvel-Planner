@@ -9,6 +9,6 @@
         android:orderInCategory="300"
         android:icon="@drawable/ic_delete"
         android:title="@string/attraction_detail_share"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
 
 </menu>

@@ -8,6 +8,6 @@
         android:title="Create"
         android:icon="@drawable/ic_add"
         android:iconTint="@color/white"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom"/>
 
 </menu>

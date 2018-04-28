@@ -8,10 +8,12 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +24,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
@@ -44,6 +49,7 @@ import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
 import com.triple.triple.Model.Trip;
+import com.triple.triple.Presenter.Mytrips.TripCreateActivity;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.yarolegovich.discretescrollview.DSVOrientation;
@@ -82,6 +88,8 @@ public class HomeFragment extends Fragment implements
     private CityCompactAdapter cityCompactAdapter;
     private InfiniteScrollAdapter infiniteAdapter;
     private TextView tv_welcome;
+    private RelativeLayout cv_trip;
+    private Button bt_trip;
 
     @Nullable
     @Override
@@ -90,6 +98,8 @@ public class HomeFragment extends Fragment implements
         sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(getContext());
         layout_scroll = (ObservableScrollView) view.findViewById(R.id.layout_scroll);
         image = (ImageView) view.findViewById(R.id.image);
+        cv_trip = view.findViewById(R.id.cv_trip);
+        bt_trip = view.findViewById(R.id.bt_trip);
         tv_welcome = (TextView) view.findViewById(R.id.tv_welcome);
         rv_all = (RecyclerView) view.findViewById(R.id.rv_all);
         dsv_trips = (DiscreteScrollView) view.findViewById(R.id.dsv_trips);
@@ -98,15 +108,21 @@ public class HomeFragment extends Fragment implements
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
         initView();
         requestSystemProperty();
-        if (!UserDataHelper.checkTokenExist(mcontext)) {
-            CheckLogin.directLogin(mcontext);
-        } else {
+        if (UserDataHelper.checkTokenExist(mcontext)) {
+            LinearLayout layout_mytrips = view.findViewById(R.id.layout_mytrips);
+            layout_mytrips.setVisibility(View.VISIBLE);
             tv_welcome.setText(String.format(getResources().getString(R.string.home_welcome), UserDataHelper.getUserInfo(mcontext).getFirst_name()));
             requestTrip();
         }
 
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     private void initView() {
         Picasso.with(mcontext)
                 .load(R.drawable.bkg_home)
@@ -119,12 +135,7 @@ public class HomeFragment extends Fragment implements
 
     private void initCity() {
         int numberOfColumns = 3;
-//        City city = new City();
-//        city.setId(-10);
-//        city.setPhoto("https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0589/7283/stripesloopsbig_solidgrey_shop_preview.png");
-//        city.setName("MORE?");
         List<City> countries = SystemPropertyHelper.getSystemProperty(mcontext).getCity();
-//        countries.add(city);
         rv_all.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         cityCompactAdapter = new CityCompactAdapter(getContext(), countries);
         rv_all.setAdapter(cityCompactAdapter);
@@ -133,6 +144,16 @@ public class HomeFragment extends Fragment implements
     }
 
     private void initTrip() {
+        if (trips.size() == 0) {
+            cv_trip.setVisibility(View.VISIBLE);
+            bt_trip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), TripCreateActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
         tripAdapter = new TripAdapter((Fragment) fragment, trips, true, UserDataHelper.getUserInfo(mcontext).getId());
         dsv_trips.setOrientation(DSVOrientation.HORIZONTAL);
         dsv_trips.addOnItemChangedListener(this);
