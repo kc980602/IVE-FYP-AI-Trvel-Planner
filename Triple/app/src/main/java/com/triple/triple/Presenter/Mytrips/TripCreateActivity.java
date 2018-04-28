@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     private TripDetail tripDetail;
     private GeneratingDialog generatingDialog;
     private int cityid;
+    private Button bt_create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         et_tripdate = (TextInputEditText) findViewById(R.id.et_tripdate);
         et_detination = (TextInputEditText) findViewById(R.id.et_detination);
         cb_generate = (CheckBox) findViewById(R.id.cb_generate);
+        bt_create = (Button) findViewById(R.id.bt_create);
     }
 
     private void setupActionBar() {
@@ -203,6 +207,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
         }
 
         if (isSuccess) {
+            bt_create.setEnabled(false);
             tripname = et_tripname.getText().toString();
             generate = String.valueOf((cb_generate.isChecked()) ? 1 : 0);
             createTrip();
@@ -212,6 +217,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     public void createTrip() {
         generatingDialog = GeneratingDialog.instance(tripname, Integer.valueOf(destination), tripdateStart, Integer.valueOf(dateCount));
         generatingDialog.show(getFragmentManager(), "GeneratingDialog");
+
         String token = "Bearer ";
         token += UserDataHelper.getToken(mcontext);
         Call<TripDetail> call = apiService.createTrip(token, tripname, tripdateStart, dateCount, destination, "1");
@@ -251,6 +257,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
     }
 
     public void stopCreateTrip() {
+        bt_create.setEnabled(true);
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_create_error_process), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {

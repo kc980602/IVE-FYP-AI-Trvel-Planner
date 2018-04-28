@@ -106,6 +106,8 @@
     <string name="mytrips_detail_delete_content">Are you sure to delete your trip?</string>
     <string name="mytrips_detail_delete_yes">Confirm</string>
     <string name="mytrips_detail_delete_no">Cancel</string>
+    <string name="mytrips_detail_now">Now</string>
+    <string name="mytrips_detail_next">Comming Up</string>
 
     <string name="mytrips_detail_itinerary_dayname_pre">Day</string>
     <string name="mytrips_detail_itinerary_dayname_post"></string>

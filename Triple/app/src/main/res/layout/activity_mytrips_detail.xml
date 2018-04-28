@@ -1,129 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background"
-    android:orientation="vertical"
     tools:context=".Presenter.Mytrips.TripDetailActivity">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_trip"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="10dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.itheima.roundedimageview.RoundedImageView
-                android:id="@+id/image"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_trip"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="10dp"
-                app:riv_mutate_background="true" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                card_view:cardCornerRadius="10dp">
 
-            <RelativeLayout
-                android:paddingHorizontal="16dp"
-                android:paddingBottom="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/gradient_black_light">
-
-                <LinearLayout
-                    android:id="@+id/linear_content"
-                    android:layout_width="match_parent"
+                <Button
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:onClick="clickTest"
+                    android:text="test" />
 
-                    <TextView
-                        android:id="@+id/tv_tripdestination"
-                        style="@style/TextAppearance.AppCompat.Large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_tripdaysleftMessage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_tripdestination"
-                        android:layout_marginBottom="5dp"
-                        android:text="Days Left"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_tripdaysleft"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:layout_below="@+id/tv_tripdestination"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/textview_round"
-                        android:gravity="center"
-                        android:textSize="30dp" />
-
-                    <TextView
-                        android:id="@+id/tv_tripdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white" />
-
-
-                </LinearLayout>
+                <com.itheima.roundedimageview.RoundedImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    app:riv_corner_radius="10dp"
+                    app:riv_mutate_background="true" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/linear_content">
+                    android:layout_height="250dp"
+                    android:background="@color/gradient_black_light"
+                    android:paddingBottom="8dp"
+                    android:paddingHorizontal="16dp">
 
-                    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-                        android:id="@+id/nav_trip_card"
+                    <LinearLayout
+                        android:id="@+id/linear_content"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/gradient_shape_color"
-                        app:itemIconTint="@color/white"
-                        app:itemTextColor="@color/white"
-                        app:menu="@menu/nav_mytrips_detail_card" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_tripdestination"
+                            style="@style/TextAppearance.AppCompat.Large"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_tripdaysleftMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_tripdestination"
+                            android:layout_marginBottom="5dp"
+                            android:text="Days Left"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_tripdaysleft"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_below="@+id/tv_tripdestination"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/textview_round"
+                            android:gravity="center"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:id="@+id/tv_tripdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white" />
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/linear_content">
+
+                        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+                            android:id="@+id/nav_trip_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/gradient_shape_color"
+                            app:itemIconTint="@color/white"
+                            app:itemTextColor="@color/white"
+                            app:menu="@menu/nav_mytrips_detail_card" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_ongo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_trip"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                card_view:cardCornerRadius="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+                    android:paddingVertical="16dp">
+
+                    <com.daasuu.bl.BubbleLayout
+                        android:id="@+id/layout_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="8dp"
+                        app:bl_arrowDirection="right"
+                        app:bl_arrowHeight="20dp"
+                        app:bl_arrowPosition="0dp"
+                        app:bl_arrowWidth="15dp"
+                        app:bl_bubbleColor="@color/colorPrimary"
+                        app:bl_strokeWidth="0dp">
+
+                        <TextView
+                            android:id="@+id/tv_tag"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textColor="@color/white" />
+
+                    </com.daasuu.bl.BubbleLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout_tag"
+                        android:layout_toLeftOf="@+id/bt_go"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@color/transparent"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_time"
+                            android:layout_weight="50"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true" />
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_name"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true" />
+
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:id="@+id/bt_go"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        android:onClick="onGoClick"
+                        android:src="@drawable/ic_directions"
+                        android:tint="@color/colorPrimary" />
 
                 </RelativeLayout>
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_ongo"
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="10dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_tripdaylist"
+                    android:layout_width="match_parent"
+                    android:focusable="false"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false" />
+
+            </android.support.v7.widget.CardView>
+
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
 
-    <ListView
-        android:id="@+id/lv_tripdaylist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/cv_trip"
-        android:clipToPadding="false"
-        android:divider="@color/colorGrey"
-        android:dividerHeight="1dp"
-        android:scrollbars="none" />
+    </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:translationZ="100dp">
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:indicatorColor="@color/colorPrimary"
+        app:indicatorName="BallClipRotateIndicator" />
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi"
-            style="@style/AVLoadingIndicatorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="visible"
-            app:indicatorColor="@color/colorPrimary"
-            app:indicatorName="BallClipRotateIndicator" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

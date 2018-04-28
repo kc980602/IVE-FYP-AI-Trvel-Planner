@@ -190,7 +190,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     View.OnClickListener image_mapListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Uri gmmIntentUri = Uri.parse(String.format("geo:%f,%f?z=%d", attraction.getLatitude(), attraction.getLongitude(), 17));
+            Uri gmmIntentUri = Uri.parse(String.format("geo:%f,%f?z=%d&q=%f,%f(%s)", attraction.getLatitude(), attraction.getLongitude(), 17, attraction.getLatitude(), attraction.getLongitude(), attraction.getName()));
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
