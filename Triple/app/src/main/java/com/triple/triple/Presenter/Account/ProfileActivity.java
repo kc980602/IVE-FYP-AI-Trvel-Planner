@@ -95,7 +95,6 @@ public class ProfileActivity extends AppCompatActivity implements
         toolbar.setTitle(R.string.title_profile);
         setSupportActionBar(toolbar);
         layout_scroll.setScrollViewCallbacks(this);
-        image.setImageDrawable(getDrawable(R.drawable.nav_bkg));
     }
 
     private void loadData() {
@@ -139,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity implements
             PreferenceAdapter preferenceAdapter = new PreferenceAdapter(mcontext, keyValues);
             rv_preference.setLayoutManager(new GridLayoutManager(mcontext, 2));
             rv_preference.setAdapter(preferenceAdapter);
-            rv_preference.addItemDecoration(new SpacesItemDecoration(10));
+            rv_preference.addItemDecoration(new SpacesItemDecoration(10, 2));
         }
 
     }
