@@ -236,7 +236,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
             rv_attraction_comments.addItemDecoration(dividerItemDecoration);
             rv_attraction_comments.setNestedScrollingEnabled(false);
         } else {
-            lo_noReview.setVisibility(0);
+            lo_noReview.setVisibility(View.VISIBLE);
         }
 
         image_map.getViewTreeObserver()
