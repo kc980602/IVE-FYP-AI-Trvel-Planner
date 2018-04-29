@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("token", auth.getToken());
         String json = gson.toJson(auth.getUser());
         editor.putString("userInfo", json);
-        editor.apply();
+        editor.commit();
         String message = getResources().getString(R.string.login_success) + ", " + auth.getUser().getUsername();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         progressDialog.dismiss();
