@@ -1,7 +1,5 @@
 package com.triple.triple.Adapter;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.Model.TripDetail;
-import com.triple.triple.Presenter.Attraction.AttractionDetailActivity;
 import com.triple.triple.Presenter.Mytrips.ItineraryActivity;
 import com.triple.triple.R;
 
@@ -66,7 +61,7 @@ public class TripDayAdapter extends RecyclerView.Adapter<TripDayAdapter.TripDayV
     @Override
     public TripDayViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.listviewitem_mytrips_detail_day, viewGroup, false);
+                .inflate(R.layout.recycleviewitem_mytrips_detail_day, viewGroup, false);
         return new TripDayViewHolder(itemView);
     }
 

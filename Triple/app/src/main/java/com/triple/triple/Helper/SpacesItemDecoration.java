@@ -10,9 +10,10 @@ import android.view.View;
 
 public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
     private int space;
-
-    public SpacesItemDecoration(int space) {
+    private int itemInRow;
+    public SpacesItemDecoration(int space, int itemInRow) {
         this.space = space;
+        this.itemInRow = itemInRow;
     }
 
     @Override
@@ -20,7 +21,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         outRect.left = space;
         outRect.right = space;
         outRect.bottom = space;
-        if (parent.getChildLayoutPosition(view) >= 3) {
+        if (parent.getChildLayoutPosition(view) >= itemInRow) {
             outRect.top = space;
         } else {
             outRect.top = 0;

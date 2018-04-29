@@ -143,6 +143,17 @@ public class DateTimeHelper {
         return isToday;
     }
 
+    public static boolean isTmr(String date) {
+        boolean isTmr = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar curr = Calendar.getInstance();
+        curr.add(Calendar.DATE, 1);
+        if (date.equals(sdf.format(curr.getTime()))) {
+            isTmr = true;
+        }
+        return isTmr;
+    }
+
     public static boolean isCurrentORBefore(String date, String time, int duration) {
         boolean isTimeBefore = false;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");

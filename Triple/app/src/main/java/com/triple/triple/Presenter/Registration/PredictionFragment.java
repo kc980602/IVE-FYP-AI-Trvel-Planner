@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,9 @@ import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.triple.triple.Adapter.PreferenceAdapter;
+import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.SpacesItemDecoration;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Interface.DataManager;
@@ -30,6 +36,7 @@ import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,9 +46,8 @@ import retrofit2.Response;
 public class PredictionFragment extends Fragment implements BlockingStep {
     DataManager dataManager;
     AlertDialog dialog;
-    final ImageView[] imageViewsList = new ImageView[5];
-    final TextView[] textViewsList = new TextView[5];
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+    private RecyclerView rv_preference;
 
     @Override
     public VerificationError verifyStep() {
@@ -60,29 +66,51 @@ public class PredictionFragment extends Fragment implements BlockingStep {
         builder.setView(R.layout.dialog_loader);
         builder.setCancelable(false);
         dialog = builder.show();
-        Call<List<KeyValue>> call = apiService.getPreferences("Bearer " + UserDataHelper.getToken(getContext()));
+        Call<List<KeyValue>> call = Constant.apiService.getPreferences("Bearer " + UserDataHelper.getToken(getContext()));
         call.enqueue(new Callback<List<KeyValue>>() {
             @Override
             public void onResponse(Call<List<KeyValue>> call, Response<List<KeyValue>> response) {
                 List<KeyValue> predicts = response.body();
                 Context context = getContext();
-                for (int i = 0; i <= 3; i++) {
-                    String filename = "preference_" + predicts.get(i).getKey();
-                    if (predicts.get(i).getKey().equals("60+_traveller")) {
-                        filename = "preference_60_traveller";
+
+                if (predicts.size() != 0) {
+                    List<KeyValue> keyValues = new ArrayList<>();
+                    for (int i = 0; i <= 3; i++) {
+                        KeyValue keyValue = new KeyValue();
+
+                        String predictKey = predicts.get(i).getKey();
+
+                        String key = predictKey.toLowerCase().replace('_', ' ');
+                        String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
+                        keyValue.setKey(titile);
+
+                        keyValue.setValue("preference_" + predictKey.toLowerCase());
+                        if (predictKey.equals("60+_TRAVELLER")) {
+                            keyValue.setValue("preference_60_traveller");
+                        }
+                        keyValues.add(keyValue);
                     }
-                    imageViewsList[i].setImageResource(context.getResources().getIdentifier(filename, "drawable", context.getPackageName()));
-                    String key = predicts.get(i).getKey().replace('_', ' ');
-                    textViewsList[i].setText(String.format("%s%s", key.substring(0,1).toUpperCase(), key.substring(1).toLowerCase()));
+
+                    PreferenceAdapter preferenceAdapter = new PreferenceAdapter(context, keyValues);
+                    rv_preference.setLayoutManager(new GridLayoutManager(context, 2));
+                    rv_preference.setAdapter(preferenceAdapter);
+                    rv_preference.addItemDecoration(new SpacesItemDecoration(10, 2));
                 }
+
                 dialog.dismiss();
             }
+
             @Override
             public void onFailure(Call<List<KeyValue>> call, Throwable t) {
                 Toast.makeText(getContext(), getString(R.string.mytrips_create_error_process), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        rv_preference = (RecyclerView) view.findViewById(R.id.rv_preference);
     }
 
     @Override
@@ -97,18 +125,9 @@ public class PredictionFragment extends Fragment implements BlockingStep {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4};
-        int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4};
-        for (int i = 0; i <= 3; i++) {
-            imageViewsList[i] = (ImageView) view.findViewById(imageViewIdList[i]);
-            textViewsList[i] = (TextView) view.findViewById(textViewIdList[i]);
-        }
-    }
-
-    @Override
     @UiThread
-    public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {}
+    public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
+    }
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
@@ -125,7 +144,8 @@ public class PredictionFragment extends Fragment implements BlockingStep {
 
     @Override
     @UiThread
-    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {}
+    public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+    }
 
     @Override
     public void onAttach(Context context) {
