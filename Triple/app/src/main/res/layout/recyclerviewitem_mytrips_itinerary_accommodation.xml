@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="15dp"
+    android:layout_marginTop="8dp"
     android:background="@color/transparent"
     android:gravity="center">
 
@@ -104,7 +104,7 @@
                 android:id="@+id/tv_traveltime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_directions"
+                android:drawableLeft="@drawable/ic_directions_car"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/colorPrimary"
                 android:gravity="right|center"

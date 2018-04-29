@@ -9,6 +9,6 @@
 - [ ] Display a string when **Trip list is empty with icon** in **HomePage** & **MyTrips** rather blank.
 - [ ] Display a string when **Attractions is empty with icon** in **CityPage** rather blank.
 - [ ] Display a string when **No Favorite with icon** in **CityPage** rather blank.
-- [ ] Display a string when **No Review with icon** in **AttractionDetailPage** rather blank.
+- [X] Display a string when **No Review with icon** in **AttractionDetailPage** rather blank.
 - [ ] Grid view for **Prediction UI**
 - [ ] Reload **HomePage** rather whole app.

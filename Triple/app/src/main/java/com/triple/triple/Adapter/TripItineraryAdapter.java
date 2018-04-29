@@ -170,6 +170,19 @@ public class TripItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
                     activity.startActivity(intent);
                 }
             });
+            layout_direction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    int attractionId = Integer.parseInt(tv_attId.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("attractionId", attractionId);
+                    Intent intent = new Intent(activity, AttractionDetailActivity.class);
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 

@@ -24,6 +24,7 @@
 
         <activity
             android:name=".Presenter.MainActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -34,28 +35,35 @@
         </activity>
         <activity
             android:name=".Presenter.Account.ProfileActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.MainActivity" />
         <activity
             android:name=".Presenter.Account.EditProfileActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Account.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.Account.LoginActivity" />
         <activity
             android:name=".Presenter.Mytrips.TripCreateActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Presenter.Mytrips.TripDetailActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Mytrips.TripInfoActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
             android:name=".Presenter.Attraction.AttractionListActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity">
             <meta-data
@@ -64,10 +72,12 @@
         </activity>
         <activity
             android:name=".Presenter.Mytrips.ItineraryActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.TripDetailActivity" />
         <activity
             android:name=".Presenter.Attraction.AttractionDetailActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Mytrips.ItineraryActivity">
             <intent-filter>
@@ -82,38 +92,55 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presenter.Attraction.AttractionImageActivity" />
+        <activity
+            android:name=".Presenter.Attraction.AttractionImageActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Presenter.Attraction.CityDetailActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Attraction.CityBookmarksActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:parentActivityName=".Presenter.Attraction.CityDetailActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Presenter.Attraction.CityInfoActivity" />
+        <activity
+            android:name=".Presenter.Attraction.CityInfoActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Presenter.Account.LoginActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.Account.ProfileActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".Presenter.Registration.RegisterActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.Account.LoginActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Presenter.Attraction.AttractionReviewActivity" />
+        <activity
+            android:name=".Presenter.Attraction.AttractionReviewActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Presenter.HelpInfo.AboutActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.HelpInfo.OpenSourceActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Presenter.HelpInfo.AboutActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Presenter.Mytrips.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Presenter.Mytrips.NewTripDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:parentActivityName=".Presenter.MainActivity"></activity>
     </application>
 
 </manifest>

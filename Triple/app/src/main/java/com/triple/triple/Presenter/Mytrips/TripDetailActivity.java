@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -13,7 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +36,7 @@ import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.TripDay;
 import com.triple.triple.Model.TripDetail;
 import com.triple.triple.Model.TripItinerary;
+import com.triple.triple.Model.TripItineraryNode;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -49,7 +53,6 @@ public class TripDetailActivity extends AppCompatActivity {
 
     private Context mcontext = TripDetailActivity.this;
     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-    private ListView lv_tripdaylist;
     private BottomNavigationViewEx bottomNavigationViewEx, bottomNavigationViewEx_all, bottomNavigationViewEx_saved;
     private List<TripDay> tripdays = new ArrayList<>();
     private TripDayAdapter adapter;
@@ -57,12 +60,21 @@ public class TripDetailActivity extends AppCompatActivity {
 
     private TextView tv_tripdate, tv_tripdaysleftMessage, tv_tripdaysleft;
     private AVLoadingIndicatorView avi;
-    private CardView cv_trip;
     private ImageView image;
     private ActionBar ab;
     private int tripid;
     private TextView tv_tripdestination;
     private Boolean isNew = false;
+    private RecyclerView rv_tripdaylist;
+    private NestedScrollView layout_main;
+    private CardView layout_ongo;
+    private TextView tv_tag;
+    private TextView tv_time;
+    private TextView tv_name;
+    private TextView tv_address;
+    private int displayNodeIndex;
+    private TripItineraryNode displayNode;
+    private boolean isBefore;
 
 
     @Override
@@ -88,15 +100,20 @@ public class TripDetailActivity extends AppCompatActivity {
     }
 
     private void findView() {
-        cv_trip = (CardView) findViewById(R.id.cv_trip);
         avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.nav_trip_card);
         tv_tripdate = (TextView) findViewById(R.id.tv_tripdate);
         tv_tripdaysleftMessage = (TextView) findViewById(R.id.tv_tripdaysleftMessage);
         tv_tripdaysleft = (TextView) findViewById(R.id.tv_tripdaysleft);
-        lv_tripdaylist = (ListView) findViewById(R.id.lv_tripdaylist);
+        rv_tripdaylist = (RecyclerView) findViewById(R.id.rv_tripdaylist);
         tv_tripdestination = (TextView) findViewById(R.id.tv_tripdestination);
         image = (ImageView) findViewById(R.id.image);
+        layout_main = (NestedScrollView) findViewById(R.id.layout_main);
+        layout_ongo = (CardView) findViewById(R.id.layout_ongo);
+        tv_tag = (TextView) findViewById(R.id.tv_tag);
+        tv_time = (TextView) findViewById(R.id.tv_time);
+        tv_name = (TextView) findViewById(R.id.tv_name);
+        tv_address = (TextView) findViewById(R.id.tv_address);
     }
 
     private void initView() {
@@ -104,19 +121,16 @@ public class TripDetailActivity extends AppCompatActivity {
         ab.setElevation(0);
         String indicator = getIntent().getStringExtra("indicator");
 
-        cv_trip.setVisibility(View.INVISIBLE);
+        layout_main.setVisibility(View.INVISIBLE);
 
         avi.setIndicator(indicator);
-        avi.hide();
+        stopAnim();
 
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.setOnNavigationItemSelectedListener(bottomNavigationViewExListener);
         Menu menu = bottomNavigationViewEx.getMenu();
-
-        adapter = new TripDayAdapter(mcontext, tripdays);
-        lv_tripdaylist.setAdapter(adapter);
     }
 
     private ListView.OnItemClickListener lv_tripdaylistListener = new ListView.OnItemClickListener() {
@@ -168,31 +182,6 @@ public class TripDetailActivity extends AppCompatActivity {
         return true;
     }
 
-    private void fetchRemoveTrip() {
-        String token = "Bearer ";
-        token += UserDataHelper.getToken(mcontext);
-        Call call = apiService.removeTrip(token, tripid);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.code() == 204) {
-                    setResult(Activity.RESULT_OK);
-                    finish();
-                } else {
-                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                    Snackbar.make(view, "Something went wrong! (Error:1102)", Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Log.e("onFailure", t.getMessage());
-                Snackbar.make(view, "Something went wrong! (Error:1103)", Snackbar.LENGTH_LONG).show();
-            }
-        });
-    }
-
     private BottomNavigationViewEx.OnNavigationItemSelectedListener bottomNavigationViewExListener = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -221,6 +210,28 @@ public class TripDetailActivity extends AppCompatActivity {
         }
     };
 
+    private void fetchRemoveTrip() {
+        String token = "Bearer ";
+        token += UserDataHelper.getToken(mcontext);
+        Call call = apiService.removeTrip(token, tripid);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.code() == 204) {
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                } else {
+                    requestFail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                requestFail();
+            }
+        });
+    }
+
     public void requestTripItinerary() {
         startAnim();
         String token = "Bearer ";
@@ -229,81 +240,108 @@ public class TripDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<TripDetail>() {
             @Override
             public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
-                if (response.body() != null) {
-                    try {
-                        tripDetail = response.body();
-                        afterGetData();
-                    } catch (Exception e) {
-                        View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                        Snackbar.make(view, "Something went wrong! (Error:1101)", Snackbar.LENGTH_LONG)
-                                .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                    }
-                                }).show();
-                    }
-                } else {
-                    View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                    Snackbar.make(view, "Something went wrong! (Error:1102)", Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                }
-                            }).show();
-                }
+                tripDetail = response.body();
+                stopAnim();
+                afterGetData();
             }
 
             @Override
             public void onFailure(Call<TripDetail> call, Throwable t) {
-                View view = getWindow().getDecorView().findViewById(android.R.id.content);
-                Log.e("onFailure", t.getMessage());
-                Snackbar.make(view, "Something went wrong! (Error:1103)", Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.snackbar_ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                            }
-                        }).show();
-
+                stopAnim();
+                requestFail();
             }
         });
-        stopAnim();
     }
 
     private void afterGetData() {
-        adapter.setTripDetail(tripDetail);
-        List<TripItinerary> itineraryList = tripDetail.getItinerary();
-        for (int i = 0; i < itineraryList.size(); i++) {
-            TripDay tripday = new TripDay();
-            tripday.setId(itineraryList.get(i).getId());
-            tripday.setName("Day" + (i + 1));
-            tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itineraryList.get(i).getVisit_date()));
-            tripdays.add(tripday);
-        }
-        adapter.notifyDataSetChanged();
         ab.setTitle(tripDetail.getTitle());
-        tv_tripdate.setText(DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length())));
-        int dayLeft = DateTimeHelper.daysLeft(tripDetail.getVisit_date());
-        if (dayLeft == 0) {
-            tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_after));
-        } else {
-            tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_before));
-        }
-        tv_tripdestination.setText(tripDetail.getCity().getName() + ", " + tripDetail.getCity().getCountry());
-        tv_tripdaysleft.setText(String.valueOf(dayLeft));
+
         Picasso.with(mcontext)
                 .load(tripDetail.getCity().getPhoto())
                 .fit().centerCrop()
                 .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
                 .placeholder(R.drawable.ic_image_null_h)
                 .into(image);
-        cv_trip.setVisibility(View.VISIBLE);
+
+        List<TripItinerary> itineraryList = tripDetail.getItinerary();
+        for (int i = 0; i < itineraryList.size(); i++) {
+            TripDay tripday = new TripDay();
+            TripItinerary itinerary = itineraryList.get(i);
+            tripday.setId(itinerary.getId());
+            tripday.setName("Day" + (i + 1));
+            tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itinerary.getVisit_date()));
+            tripdays.add(tripday);
+
+            if (DateTimeHelper.isToday(itinerary.getVisit_date())) {
+                List<TripItineraryNode> tripItineraryNode = itinerary.getNodes();
+                for (int j = 0; j < tripItineraryNode.size(); j++) {
+                    TripItineraryNode node = tripItineraryNode.get(j);
+                    if (node.getType() == null) {
+                        node.setType("");
+                    }
+                    if (DateTimeHelper.isCurrentORBefore(itinerary.getVisit_date(), node.getVisit_time(), node.getDuration()) && !node.getType().equals("LODGING")) {
+                        displayNode = tripItineraryNode.get(j);
+                        displayNodeIndex = j;
+                        isBefore = DateTimeHelper.isBefore(node.getVisit_time());
+                        break;
+                    }
+                }
+            }
+        }
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mcontext.getApplicationContext());
+        rv_tripdaylist.setHasFixedSize(true);
+        rv_tripdaylist.setLayoutManager(mLayoutManager);
+        rv_tripdaylist.setItemAnimator(new DefaultItemAnimator());
+        TripDayAdapter adapter = new TripDayAdapter(mcontext, tripdays, tripDetail);
+        rv_tripdaylist.setAdapter(adapter);
+
+        tv_tripdate.setText(DateTimeHelper.castDateToLocale(tripDetail.getVisit_date()) + " - " + DateTimeHelper.castDateToLocale(DateTimeHelper.endDate(tripDetail.getVisit_date(), tripDetail.getVisit_length())));
+        int dayLeft = DateTimeHelper.daysLeft(tripDetail.getVisit_date());
+        if (dayLeft == 0) {
+            if (displayNode != null) {
+                tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_after));
+                tv_name.setText(displayNode.getAttraction().getName());
+                tv_address.setText(displayNode.getAttraction().getAddress());
+                tv_time.setText(DateTimeHelper.removeSec(displayNode.getVisit_time()) + "-" + DateTimeHelper.endTime(displayNode.getVisit_time(), displayNode.getDuration()));
+                tv_tag.setText(getString(isBefore ? R.string.mytrips_detail_next : R.string.mytrips_detail_now));
+            }
+
+        } else {
+            tv_tripdaysleftMessage.setText(getString(R.string.mytrips_detail_daysleft_before));
+            layout_ongo.setVisibility(View.GONE);
+        }
+        tv_tripdestination.setText(tripDetail.getCity().getName() + ", " + tripDetail.getCity().getCountry());
+        tv_tripdaysleft.setText(String.valueOf(dayLeft));
+
+        layout_main.setVisibility(View.VISIBLE);
+    }
+
+    private void requestFail() {
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, "Something went wrong! (Error:1103)", Snackbar.LENGTH_LONG);
     }
 
     @Override
     public void finish() {
-        setResult(Activity.RESULT_OK);
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void clickTest(View view) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("itinerary", tripDetail.getItinerary().get(0));
+        intent.setClass(this, NewTripDetailActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void onGoClick(View view) {
+        Uri gmmIntentUri = Uri.parse(String.format("geo:%f,%f?z=%d&q=%f,%f(%s)", displayNode.getAttraction().getLatitude(), displayNode.getAttraction().getLongitude(), 17, displayNode.getAttraction().getLatitude(), displayNode.getAttraction().getLongitude(), displayNode.getAttraction().getName()));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
     }
 
     public void startAnim() {
@@ -313,4 +351,5 @@ public class TripDetailActivity extends AppCompatActivity {
     public void stopAnim() {
         avi.hide();
     }
+
 }

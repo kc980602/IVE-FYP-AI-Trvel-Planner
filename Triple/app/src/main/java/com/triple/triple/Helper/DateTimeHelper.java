@@ -2,6 +2,8 @@ package com.triple.triple.Helper;
 
 import android.util.Log;
 
+import org.joda.time.LocalTime;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,7 +56,7 @@ public class DateTimeHelper {
     }
 
     public static int daysLeft(String date) {
-        int dateLeft;
+        long dateLeft;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar target = Calendar.getInstance();
         Calendar curr = Calendar.getInstance();
@@ -68,10 +70,13 @@ public class DateTimeHelper {
             Date currDate = new Date();
             long diff = targetDate.getTime() - currDate.getTime();
             dateLeft = (int) (diff / (1000L * 60L * 60L * 24L));
+            if (dateLeft < 1 || dateLeft > 0) {
+                dateLeft = 1;
+            }
         } else {
             dateLeft = 0;
         }
-        return dateLeft;
+        return (int) dateLeft;
     }
 
     public static Calendar twoYearsLater() {
@@ -126,6 +131,37 @@ public class DateTimeHelper {
         cal.add(Calendar.SECOND, duration);
         String newTime = sdfOut.format(cal.getTime());
         return newTime;
+    }
 
+    public static boolean isToday(String date) {
+        boolean isToday = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar curr = Calendar.getInstance();
+        if (date.equals(sdf.format(curr.getTime()))) {
+            isToday = true;
+        }
+        return isToday;
+    }
+
+    public static boolean isCurrentORBefore(String date, String time, int duration) {
+        boolean isTimeBefore = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+        Calendar target = Calendar.getInstance();
+        Calendar curr = Calendar.getInstance();
+        try {
+            target.setTime(sdf.parse(date + "/" + time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar targetEnd = target;
+        targetEnd.add(Calendar.SECOND, duration);
+        if (target.after(curr) || curr.before(targetEnd)) {
+            isTimeBefore = true;
+        }
+        return isTimeBefore;
+    }
+
+    public static boolean isBefore(String time) {
+        return LocalTime.now().isBefore(LocalTime.parse(time));
     }
 }

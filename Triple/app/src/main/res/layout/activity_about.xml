@@ -172,7 +172,7 @@
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/ic_github"
                             android:drawableTint="@color/grey2"
-                            android:text="pokeguys" />
+                            android:text="siuming818" />
 
                     </LinearLayout>
 
