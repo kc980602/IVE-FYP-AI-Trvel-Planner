@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,6 +81,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
     private RecyclerView rv_attraction_comments;
     private AttractionCommentAdapter adapter;
     private Button btn_attraction_review;
+    private LinearLayout lo_noReview;
 
 
     @Override
@@ -120,6 +122,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.image);
         rv_attraction_comments = (RecyclerView) findViewById(R.id.rv_attraction_comments);
         btn_attraction_review = (Button) findViewById(R.id.btn_attraction_review);
+        lo_noReview = (LinearLayout) findViewById(R.id.lo_noReview);
     }
 
     private void initView() {
@@ -232,6 +235,8 @@ public class AttractionDetailActivity extends AppCompatActivity {
             RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
             rv_attraction_comments.addItemDecoration(dividerItemDecoration);
             rv_attraction_comments.setNestedScrollingEnabled(false);
+        } else {
+            lo_noReview.setVisibility(0);
         }
 
         image_map.getViewTreeObserver()
