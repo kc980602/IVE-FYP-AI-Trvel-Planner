@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Account;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -196,6 +197,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(mcontext, "Profile updated!", Toast.LENGTH_LONG).show();
+                    setResult(Activity.RESULT_OK);
                     finish();
                 } else {
                     APIError errorMessage = ErrorUtils.parseError(response);

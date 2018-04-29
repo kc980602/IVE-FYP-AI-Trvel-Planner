@@ -1,5 +1,6 @@
 package com.triple.triple.Presenter.Account;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -224,4 +225,12 @@ public class ProfileActivity extends AppCompatActivity implements
         onScrollChanged(layout_scroll.getCurrentScrollY(), false, false);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                getUserInfo();
+            }
+        }
+    }
 }
