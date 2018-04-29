@@ -2,13 +2,15 @@ package com.triple.triple.Presenter.Account;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -24,17 +27,20 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
-import com.squareup.picasso.Picasso;
-import com.triple.triple.Helper.BitmapTransform;
+import com.triple.triple.Adapter.PreferenceAdapter;
 import com.triple.triple.Helper.CheckLogin;
 import com.triple.triple.Helper.Constant;
+import com.triple.triple.Helper.SpacesItemDecoration;
 import com.triple.triple.Helper.UserDataHelper;
 import com.triple.triple.Model.KeyValue;
 import com.triple.triple.Model.User;
 import com.triple.triple.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,16 +56,12 @@ public class ProfileActivity extends AppCompatActivity implements
     private TextView tv_email;
     private TextView tv_username;
     private TextView tv_fullname;
-    private ImageView[] imageViewsList = new ImageView[4];
-    private TextView[] textViewsList = new TextView[4];
-    private List<KeyValue> keyValueList;
-    private ImageView iv_load;
     private ImageView image;
     private ObservableScrollView layout_scroll;
-    private Drawable drawable;
     private Button bt_editprofile;
     private Button bt_share;
     private User user;
+    private RecyclerView rv_preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class ProfileActivity extends AppCompatActivity implements
         } else {
             findView();
             getUserInfo();
-//            getPreferences();
             initView();
         }
     }
@@ -84,23 +85,17 @@ public class ProfileActivity extends AppCompatActivity implements
         tv_email = (TextView) findViewById(R.id.tv_email);
         image = (ImageView) findViewById(R.id.image);
         layout_scroll = (ObservableScrollView) findViewById(R.id.layout_scroll);
-        int[] imageViewIdList = {R.id.iv_1, R.id.iv_2, R.id.iv_3, R.id.iv_4};
-        int[] textViewIdList = {R.id.tv_1, R.id.tv_2, R.id.tv_3, R.id.tv_4};
-        for (int i = 0; i <= 3; i++) {
-            imageViewsList[i] = (ImageView) findViewById(imageViewIdList[i]);
-            textViewsList[i] = (TextView) findViewById(textViewIdList[i]);
-        }
-        iv_load = (ImageView) findViewById(R.id.iv_load);
-
         bt_editprofile = (Button) findViewById(R.id.bt_editprofile);
         bt_share = (Button) findViewById(R.id.bt_share);
+        image = (ImageView) findViewById(R.id.image);
+        rv_preference = (RecyclerView) findViewById(R.id.rv_preference);
     }
 
     private void initView() {
         toolbar.setTitle(R.string.title_profile);
         setSupportActionBar(toolbar);
         layout_scroll.setScrollViewCallbacks(this);
-
+        image.setImageDrawable(getDrawable(R.drawable.nav_bkg));
     }
 
     private void loadData() {
@@ -126,54 +121,30 @@ public class ProfileActivity extends AppCompatActivity implements
         bt_share.setOnClickListener(this);
 
         if (user.getPreferences() != null) {
+            List<KeyValue> keyValues = new ArrayList<>();
             for (int i = 0; i <= 3; i++) {
-                String filename = "preference_" + user.getPreferences().get(i).getTag().toLowerCase();
-                if (user.getPreferences().get(i).getTag().equals("60+_traveller")) {
-                    filename = "preference_60_traveller";
-                }
+                KeyValue keyValue = new KeyValue();
 
-                Picasso.with(mcontext)
-                        .load(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()))
-                        .fit().centerCrop()
-                        .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
-                        .placeholder(R.drawable.ic_image_null_h)
-                        .into(imageViewsList[i]);
                 String key = user.getPreferences().get(i).getTag().toLowerCase().replace('_', ' ');
                 String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
-                textViewsList[i].setText(titile);
+                keyValue.setKey(titile);
+
+                keyValue.setValue("preference_" + user.getPreferences().get(i).getTag().toLowerCase());
+                if (user.getPreferences().get(i).getTag().equals("60+_TRAVELLER")) {
+                    keyValue.setValue("preference_60_traveller");
+                }
+                keyValues.add(keyValue);
             }
+
+            PreferenceAdapter preferenceAdapter = new PreferenceAdapter(mcontext, keyValues);
+            rv_preference.setLayoutManager(new GridLayoutManager(mcontext, 2));
+            rv_preference.setAdapter(preferenceAdapter);
+            rv_preference.addItemDecoration(new SpacesItemDecoration(10));
         }
 
     }
 
-    public void getPreferences() {
-        startAnim();
-        String token = "Bearer ";
-        token += UserDataHelper.getToken(mcontext);
-        Call<List<KeyValue>> call = Constant.apiService.getPreferences(token);
-        call.enqueue(new Callback<List<KeyValue>>() {
-            @Override
-            public void onResponse(Call<List<KeyValue>> call, Response<List<KeyValue>> response) {
-                if (response.body() != null) {
-                    keyValueList = response.body();
-                    afterGetDate();
-                } else {
-                    requestFail();
-                    Log.e("onResponse", "Null");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<KeyValue>> call, Throwable t) {
-                Log.e("onFailure", t.getMessage());
-                requestFail();
-            }
-        });
-
-    }
-
     public void getUserInfo() {
-        startAnim();
         String token = "Bearer ";
         token += UserDataHelper.getToken(mcontext);
         Call<User> call = Constant.apiService.getInfo(token);
@@ -195,33 +166,9 @@ public class ProfileActivity extends AppCompatActivity implements
                 requestFail();
             }
         });
-        stopAnim();
-
     }
-
-    private void afterGetDate() {
-        stopAnim();
-        for (int i = 0; i <= 3; i++) {
-            String filename = "preference_" + keyValueList.get(i).getKey();
-            if (keyValueList.get(i).getKey().equals("60+_traveller")) {
-                filename = "preference_60_traveller";
-            }
-
-            Picasso.with(mcontext)
-                    .load(mcontext.getResources().getIdentifier(filename, "drawable", getPackageName()))
-                    .fit().centerCrop()
-                    .transform(new BitmapTransform(Constant.IMAGE_M_WIDTH, Constant.IMAGE_M_HEIGHT))
-                    .placeholder(R.drawable.ic_image_null_h)
-                    .into(imageViewsList[i]);
-            String key = keyValueList.get(i).getKey().replace('_', ' ');
-            String titile = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
-            textViewsList[i].setText(titile);
-        }
-    }
-
 
     private void requestFail() {
-        stopAnim();
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, getString(R.string.mytrips_error), Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_refersh), new View.OnClickListener() {
             @Override
@@ -276,22 +223,6 @@ public class ProfileActivity extends AppCompatActivity implements
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         onScrollChanged(layout_scroll.getCurrentScrollY(), false, false);
-    }
-
-    public void startAnim() {
-        iv_load.setVisibility(View.VISIBLE);
-        drawable = iv_load.getDrawable();
-        if (drawable instanceof Animatable) {
-            ((Animatable) drawable).start();
-        }
-    }
-
-    public void stopAnim() {
-        iv_load.setVisibility(View.GONE);
-        drawable = iv_load.getDrawable();
-        if (drawable instanceof Animatable) {
-            ((Animatable) drawable).stop();
-        }
     }
 
 }
