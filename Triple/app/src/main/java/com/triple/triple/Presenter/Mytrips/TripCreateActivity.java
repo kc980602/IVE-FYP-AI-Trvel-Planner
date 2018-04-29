@@ -217,7 +217,7 @@ public class TripCreateActivity extends AppCompatActivity implements DatePickerD
             public void onResponse(Call<TripDetail> call, Response<TripDetail> response) {
                 Log.d("ReturnResponse", String.valueOf(response.code()));
 
-                if (response.body() == null) {
+                if (response.isSuccessful()) {
                     Log.d("ReturnResponse", String.valueOf(response.code()));
                     tripDetail = response.body();
                     continueCreateTrip();
