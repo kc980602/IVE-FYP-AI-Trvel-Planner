@@ -72,8 +72,6 @@ public class ItineraryActivity extends AppCompatActivity {
             tabLayout.addTab(tabLayout.newTab().setText(dayName).setTag(itinerary.getId()));
         }
 
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 

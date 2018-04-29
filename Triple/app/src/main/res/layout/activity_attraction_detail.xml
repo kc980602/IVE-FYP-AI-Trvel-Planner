@@ -52,10 +52,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
+            android:onClick="onFabClick"
             android:src="@drawable/ic_bookmark_add"
             android:tint="@color/white"
             app:layout_anchor="@id/layout_appbar"
-            android:onClick="onFabClick"
             app:layout_anchorGravity="bottom|end" />
 
         <android.support.v4.widget.NestedScrollView
@@ -68,7 +68,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
@@ -76,8 +78,8 @@
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin" />
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin" />
 
                 <TextView
                     android:id="@+id/tv_intro"
@@ -101,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:orientation="horizontal"/>
                 </HorizontalScrollView>
 
                 <include layout="@layout/devider" />
@@ -197,12 +199,12 @@
                     android:theme="@style/MyButton" />
 
                 <LinearLayout
+                    android:id="@+id/lo_noReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/lo_noReview"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -212,8 +214,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
-                        android:text="No review! " />
+                        android:text="No review! "
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -221,9 +223,8 @@
                     android:id="@+id/rv_attraction_comments"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical" />
-
-                <include layout="@layout/devider" />
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:nestedScrollingEnabled="false"/>
 
             </LinearLayout>
 

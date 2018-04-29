@@ -3,7 +3,6 @@ package com.triple.triple.Presenter.Account;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.triple.triple.Interface.ApiInterface;
-import com.triple.triple.Model.ResponeMessage;
 import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.ForgetPassword;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,47 +99,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             email = et_email.getText().toString();
             //new ForgetPasswordActivity.RequestForgetPassword().execute();
             requestForgetPassword();
-        }
-    }
-
-    private class RequestForgetPassword extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            String respone = "Error";
-            try {
-                String url = getResources().getString(R.string.api_prefix) + getResources().getString(R.string.api_forget_password);
-                respone = new ForgetPassword().run(url, username);
-            } catch (Exception e) {
-            }
-            return respone;
-        }
-
-        @Override
-        protected void onPostExecute(String respone) {
-            super.onPostExecute(respone);
-            if (!respone.equals("")) {
-                Type type = new TypeToken<ResponeMessage>() {
-                }.getType();
-                Gson gson = new Gson();
-                try {
-                    ResponeMessage message = (ResponeMessage) gson.fromJson(respone, type);
-                    Toast.makeText(mcontext, message.getMessage(), Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                progressDialog.hide();
-                Intent intent = new Intent(mcontext, LoginActivity.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(mcontext, R.string.mytrips_create_success, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 

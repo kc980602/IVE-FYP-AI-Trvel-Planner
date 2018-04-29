@@ -7,20 +7,15 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.securepreferences.SecurePreferences;
 import com.triple.triple.Interface.ApiInterface;
 import com.triple.triple.Model.City;
 import com.triple.triple.Model.SystemProperty;
-import com.triple.triple.R;
 import com.triple.triple.Sync.ApiClient;
-import com.triple.triple.Sync.GetSystemProperty;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 

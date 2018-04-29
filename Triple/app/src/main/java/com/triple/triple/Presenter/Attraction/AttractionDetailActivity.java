@@ -232,9 +232,6 @@ public class AttractionDetailActivity extends AppCompatActivity {
             rv_attraction_comments.setItemAnimator(new DefaultItemAnimator());
             rv_attraction_comments.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            RecyclerView.ItemDecoration dividerItemDecoration = new RecycleViewPaddingHelper(90);
-            rv_attraction_comments.addItemDecoration(dividerItemDecoration);
-            rv_attraction_comments.setNestedScrollingEnabled(false);
         } else {
             lo_noReview.setVisibility(View.VISIBLE);
         }

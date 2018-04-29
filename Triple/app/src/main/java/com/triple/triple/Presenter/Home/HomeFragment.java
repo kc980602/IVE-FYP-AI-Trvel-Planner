@@ -58,6 +58,7 @@ import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -154,6 +155,7 @@ public class HomeFragment extends Fragment implements
                 }
             });
         }
+        Collections.reverse(trips);
         tripAdapter = new TripAdapter((Fragment) fragment, trips, true, UserDataHelper.getUserInfo(mcontext).getId());
         dsv_trips.setOrientation(DSVOrientation.HORIZONTAL);
         dsv_trips.addOnItemChangedListener(this);
