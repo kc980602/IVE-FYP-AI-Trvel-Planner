@@ -286,6 +286,20 @@ public class TripDetailActivity extends AppCompatActivity {
                         break;
                     }
                 }
+            } else if(DateTimeHelper.isTmr(itinerary.getVisit_date())){
+                List<TripItineraryNode> tripItineraryNode = itinerary.getNodes();
+                for (int j = 0; j <  tripItineraryNode.size(); j++) {
+                    TripItineraryNode node = tripItineraryNode.get(j);
+                    if (node.getType() == null) {
+                        node.setType("");
+                    }
+                    if (!node.getType().equals("LODGING")) {
+                        displayNode = tripItineraryNode.get(1);
+                        displayNodeIndex = j;
+                        isBefore = true;
+                        break;
+                    }
+                }
             }
         }
 
@@ -305,6 +319,8 @@ public class TripDetailActivity extends AppCompatActivity {
                 tv_address.setText(displayNode.getAttraction().getAddress());
                 tv_time.setText(DateTimeHelper.removeSec(displayNode.getVisit_time()) + "-" + DateTimeHelper.endTime(displayNode.getVisit_time(), displayNode.getDuration()));
                 tv_tag.setText(getString(isBefore ? R.string.mytrips_detail_next : R.string.mytrips_detail_now));
+            } else {
+                layout_ongo.setVisibility(View.GONE);
             }
 
         } else {

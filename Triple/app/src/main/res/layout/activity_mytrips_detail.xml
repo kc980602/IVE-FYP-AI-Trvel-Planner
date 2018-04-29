@@ -28,11 +28,11 @@
                 android:layout_marginTop="8dp"
                 card_view:cardCornerRadius="10dp">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="clickTest"
-                    android:text="test" />
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:onClick="clickTest"-->
+                    <!--android:text="test" />-->
 
                 <com.itheima.roundedimageview.RoundedImageView
                     android:id="@+id/image"
