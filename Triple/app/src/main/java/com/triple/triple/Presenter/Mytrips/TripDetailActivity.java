@@ -76,7 +76,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private int displayNodeIndex;
     private TripItineraryNode displayNode;
     private boolean isBefore;
-    private boolean isDone;
+    private boolean isDone = false;
 
 
     @Override
@@ -290,7 +290,9 @@ public class TripDetailActivity extends AppCompatActivity {
                         break;
                     }
                 }
-            } else if(DateTimeHelper.isTmr(itinerary.getVisit_date()) || !isDone){
+            } else if(DateTimeHelper.isTmr(itinerary.getVisit_date()) && !isDone){
+                Log.e("isTmr", "true");
+                Log.e("isDone", String.valueOf(isDone));
                 List<TripItineraryNode> tripItineraryNode = itinerary.getNodes();
                 for (int j = 0; j <  tripItineraryNode.size(); j++) {
                     TripItineraryNode node = tripItineraryNode.get(j);
