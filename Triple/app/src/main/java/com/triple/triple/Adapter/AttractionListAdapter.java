@@ -91,6 +91,9 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
             holder.tv_tag.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small_Inverse);
             holder.tv_name.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Large_Inverse);
             holder.tv_rate_review.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Small_Inverse);
+            holder.tv_tag.setTextColor(activity.getResources().getColor(R.color.white));
+            holder.tv_name.setTextColor(activity.getResources().getColor(R.color.white));
+            holder.tv_rate_review.setTextColor(activity.getResources().getColor(R.color.white));
             Picasso.with(activity)
                     .load(attraction.getPhotos().get(0))
                     .fit().centerCrop()
@@ -118,11 +121,17 @@ public class AttractionListAdapter extends RecyclerView.Adapter<AttractionListAd
         holder.tv_name.setText(attraction.getName());
         holder.tv_rate_review.setText(String.format("%.1f/10 - %d Reviews", attraction.getRating(), attraction.getComment_count()));
 
-        int resId = activity.getResources().getIdentifier("tag_"+((List<String>)attraction.getTags()).get(0), "string",  activity.getPackageName());
-        if (resId!=0) {
-            holder.tv_tag.setText(activity.getString(resId));
-
+        if (((List<String>)attraction.getTags()).size() == 0) {
+            holder.tv_tag.setText("");
+        } else {
+            int resId = activity.getResources().getIdentifier("tag_"+((List<String>)attraction.getTags()).get(0), "string",  activity.getPackageName());
+            if (resId!=0) {
+                holder.tv_tag.setText(activity.getString(resId));
+            } else {
+                holder.tv_tag.setText("");
+            }
         }
+
     }
 
     @Override

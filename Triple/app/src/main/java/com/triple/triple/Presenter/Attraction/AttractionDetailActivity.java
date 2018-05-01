@@ -180,7 +180,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, getString(R.string.intent_share_header)));
                 break;
             case R.id.action_bookmark:
-
+                setBookmark();
                 break;
             case android.R.id.home:
                 super.onBackPressed();

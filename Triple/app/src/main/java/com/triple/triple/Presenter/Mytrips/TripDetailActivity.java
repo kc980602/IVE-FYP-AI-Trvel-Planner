@@ -17,6 +17,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +76,7 @@ public class TripDetailActivity extends AppCompatActivity {
     private int displayNodeIndex;
     private TripItineraryNode displayNode;
     private boolean isBefore;
+    private boolean isDone;
 
 
     @Override
@@ -272,7 +274,8 @@ public class TripDetailActivity extends AppCompatActivity {
             tripday.setDesc(DateTimeHelper.castDateToLocaleFull(itinerary.getVisit_date()));
             tripdays.add(tripday);
 
-            if (DateTimeHelper.isToday(itinerary.getVisit_date())) {
+            if (DateTimeHelper.isToday(itinerary.getVisit_date()) && !isDone) {
+                Log.e("isToday", "true");
                 List<TripItineraryNode> tripItineraryNode = itinerary.getNodes();
                 for (int j = 0; j < tripItineraryNode.size(); j++) {
                     TripItineraryNode node = tripItineraryNode.get(j);
@@ -283,10 +286,11 @@ public class TripDetailActivity extends AppCompatActivity {
                         displayNode = tripItineraryNode.get(j);
                         displayNodeIndex = j;
                         isBefore = DateTimeHelper.isBefore(node.getVisit_time());
+                        isDone = true;
                         break;
                     }
                 }
-            } else if(DateTimeHelper.isTmr(itinerary.getVisit_date())){
+            } else if(DateTimeHelper.isTmr(itinerary.getVisit_date()) || !isDone){
                 List<TripItineraryNode> tripItineraryNode = itinerary.getNodes();
                 for (int j = 0; j <  tripItineraryNode.size(); j++) {
                     TripItineraryNode node = tripItineraryNode.get(j);
@@ -297,6 +301,7 @@ public class TripDetailActivity extends AppCompatActivity {
                         displayNode = tripItineraryNode.get(1);
                         displayNodeIndex = j;
                         isBefore = true;
+                        isDone = true;
                         break;
                     }
                 }
